@@ -18,7 +18,6 @@ import java.awt.event.MouseEvent;
 import controller.Controller;
 
 public class Login extends JFrame {
-	public Controller controller;
 	private Controller controller;
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -82,7 +81,6 @@ public class Login extends JFrame {
 	
 	//METODI
 	public void onRegistratiClicked(){
-		
 		controller.onRegistratiClicked(); 
 	}
 }
