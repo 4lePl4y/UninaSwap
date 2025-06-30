@@ -10,12 +10,13 @@ public class Controller {
 	SignUp signUpFrame; 
 	
 	public static void main(String[] args) {
+		Controller controller = new Controller();
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Login loginFrame = new Login(this);
+					Login loginFrame = new Login(controller);
 					loginFrame.setVisible(true);
-					SignUp signUpFrame = new SignUp(this);
+					SignUp signUpFrame = new SignUp(controller);
 					signUpFrame.setVisible(false);
 					
 				} catch (Exception e) {
