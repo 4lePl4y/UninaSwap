@@ -68,12 +68,7 @@ public class Login extends JFrame {
 		contentPane.add(lgnButton);
 		
 		JLabel lblNewLabel = new JLabel("Non hai un account? Registrati qui.");
-		lblNewLabel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				onRegistratiClicked();
-			}
-		});
+		
 		lblNewLabel.setBounds(438, 429, 205, 16);
 		contentPane.add(lblNewLabel);
 		
@@ -81,7 +76,6 @@ public class Login extends JFrame {
 	
 	//METODI
 	public void onRegistratiClicked(){
-		
 		controller.onRegistratiClicked(); 
 	}
 }
