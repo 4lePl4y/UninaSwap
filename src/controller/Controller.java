@@ -14,11 +14,10 @@ public class Controller {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Login loginFrame = new Login(controller);
-					loginFrame.setVisible(true);
-					SignUp signUpFrame = new SignUp(controller);
-					signUpFrame.setVisible(false);
-					
+					controller.loginFrame = new Login(controller);
+					controller.loginFrame.setVisible(true);
+					controller.signUpFrame = new SignUp(controller);
+					controller.signUpFrame.setVisible(false);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -28,8 +27,8 @@ public class Controller {
 	
 	//METODI
 	public void onRegistratiClicked(){
-		loginFrame.setVisible(false);
 		signUpFrame.setVisible(true);
+		loginFrame.setVisible(false);
 	}
 	
 }

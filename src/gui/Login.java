@@ -16,6 +16,8 @@ import javax.swing.JToggleButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import controller.Controller;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Login extends JFrame {
 	private Controller controller;
@@ -67,11 +69,18 @@ public class Login extends JFrame {
 		lgnButton.setBounds(504, 347, 104, 33);
 		contentPane.add(lgnButton);
 		
-		JLabel lblNewLabel = new JLabel("Non hai un account? Registrati qui.");
-		
-		lblNewLabel.setBounds(438, 429, 205, 16);
+		JLabel lblNewLabel = new JLabel("Non hai un account?");
+		lblNewLabel.setBounds(438, 429, 116, 16);
 		contentPane.add(lblNewLabel);
 		
+		JButton btnNewButton = new JButton("Registrati qui");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				onRegistratiClicked();
+			}
+		});
+		btnNewButton.setBounds(565, 424, 144, 26);
+		contentPane.add(btnNewButton);
 		}
 	
 	//METODI
