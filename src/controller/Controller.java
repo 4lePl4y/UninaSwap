@@ -13,7 +13,7 @@ public class Controller {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Login loginFrame = new Login();
+					Login loginFrame = new Login(this);
 					loginFrame.setVisible(true);
 					SignUp signUpFrame = new SignUp(this);
 					signUpFrame.setVisible(false);
