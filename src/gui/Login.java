@@ -57,9 +57,7 @@ public class Login extends JFrame {
 	private JTextField userTxtField;
 	private JPasswordField pswTxtField;
 
-	/**
-	 * Create the frame.
-	 */
+
 	public Login(Controller controller) {
 		this.controller = controller; 
 		
