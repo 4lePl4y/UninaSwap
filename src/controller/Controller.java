@@ -1,5 +1,5 @@
 package controller;
-
+//
 import java.awt.EventQueue;
 
 import gui.*;
@@ -26,9 +26,15 @@ public class Controller {
 	}
 	
 	//METODI
-	public void onRegistratiClicked(){
+	public void onRegisterClicked(){
 		signUpFrame.setVisible(true);
 		loginFrame.setVisible(false);
+	}
+
+	public void onLoginClicked() {
+		signUpFrame.setVisible(false);
+		loginFrame.setVisible(true);
+		
 	}
 	
 }
