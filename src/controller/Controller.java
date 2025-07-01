@@ -32,8 +32,8 @@ public class Controller {
 	}
 
 	public void onLoginClicked() {
-		signUpFrame.setVisible(false);
 		loginFrame.setVisible(true);
+		signUpFrame.setVisible(false);
 		
 	}
 	

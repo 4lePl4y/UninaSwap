@@ -212,7 +212,7 @@ public class Login extends JFrame {
 				signUpLabel.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					onRegistratiClicked();
+					onRegisterClicked();
 				}
 				@Override
 				public void mouseEntered(MouseEvent e) {
@@ -266,8 +266,8 @@ public class Login extends JFrame {
 		}
 	
 	//METODI
-	public void onRegistratiClicked(){
-		controller.onRegistratiClicked();
+	public void onRegisterClicked(){
+		controller.onRegisterClicked();
 	}
 }
 
