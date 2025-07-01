@@ -115,16 +115,16 @@ public class Login extends JFrame {
 		});
 			
 					
-			JLabel userLabel = new JLabel("Username");
-			userLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-			userLabel.setLabelFor(panel);
-			userLabel.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-			GridBagConstraints gbc_userLabel = new GridBagConstraints();
-			gbc_userLabel.fill = GridBagConstraints.BOTH;
-			gbc_userLabel.insets = new Insets(0, 0, 5, 0);
-			gbc_userLabel.gridx = 0;
-			gbc_userLabel.gridy = 0;
-			panel.add(userLabel, gbc_userLabel);
+		JLabel userLabel = new JLabel("Username");
+		userLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+		userLabel.setLabelFor(panel);
+		userLabel.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+		GridBagConstraints gbc_userLabel = new GridBagConstraints();
+		gbc_userLabel.fill = GridBagConstraints.BOTH;
+		gbc_userLabel.insets = new Insets(0, 0, 5, 0);
+		gbc_userLabel.gridx = 0;
+		gbc_userLabel.gridy = 0;
+		panel.add(userLabel, gbc_userLabel);
 			
 		userTxtField = new JTextField();
 		userTxtField.setColumns(10);
@@ -135,15 +135,15 @@ public class Login extends JFrame {
 		gbc_userTxtField.gridy = 1;
 		panel.add(userTxtField, gbc_userTxtField);
 			
-			JLabel pswLabel = new JLabel("Password");
-			pswLabel.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-			GridBagConstraints gbc_pswLabel = new GridBagConstraints();
-			gbc_pswLabel.fill = GridBagConstraints.BOTH;
-			gbc_pswLabel.insets = new Insets(0, 0, 5, 0);
-			gbc_pswLabel.gridx = 0;
-			gbc_pswLabel.gridy = 2;
-			panel.add(pswLabel, gbc_pswLabel);
-			pswLabel.setLabelFor(pswTxtField);
+		JLabel pswLabel = new JLabel("Password");
+		pswLabel.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+		GridBagConstraints gbc_pswLabel = new GridBagConstraints();
+		gbc_pswLabel.fill = GridBagConstraints.BOTH;
+		gbc_pswLabel.insets = new Insets(0, 0, 5, 0);
+		gbc_pswLabel.gridx = 0;
+		gbc_pswLabel.gridy = 2;
+		panel.add(pswLabel, gbc_pswLabel);
+		pswLabel.setLabelFor(pswTxtField);
 			
 		pswTxtField = new JPasswordField();
 		GridBagConstraints gbc_pswTxtField = new GridBagConstraints();
@@ -153,66 +153,65 @@ public class Login extends JFrame {
 		gbc_pswTxtField.gridy = 3;
 		panel.add(pswTxtField, gbc_pswTxtField);
 			
-			JLabel label_3 = new JLabel("");
-			GridBagConstraints gbc_label_3 = new GridBagConstraints();
-			gbc_label_3.fill = GridBagConstraints.BOTH;
-			gbc_label_3.insets = new Insets(0, 0, 5, 0);
-			gbc_label_3.gridx = 0;
-			gbc_label_3.gridy = 4;
-			panel.add(label_3, gbc_label_3);
+		JLabel label_3 = new JLabel("");
+		GridBagConstraints gbc_label_3 = new GridBagConstraints();
+		gbc_label_3.fill = GridBagConstraints.BOTH;
+		gbc_label_3.insets = new Insets(0, 0, 5, 0);
+		gbc_label_3.gridx = 0;
+		gbc_label_3.gridy = 4;
+		panel.add(label_3, gbc_label_3);
 		
-			GridBagConstraints gbc_lgnButton = new GridBagConstraints();
-			gbc_lgnButton.fill = GridBagConstraints.BOTH;
-			gbc_lgnButton.insets = new Insets(0, 0, 5, 0);
-			gbc_lgnButton.gridx = 0;
-			gbc_lgnButton.gridy = 5;
-			panel.add(lgnButton, gbc_lgnButton);
+		GridBagConstraints gbc_lgnButton = new GridBagConstraints();
+		gbc_lgnButton.fill = GridBagConstraints.BOTH;
+		gbc_lgnButton.insets = new Insets(0, 0, 5, 0);
+		gbc_lgnButton.gridx = 0;
+		gbc_lgnButton.gridy = 5;
+		panel.add(lgnButton, gbc_lgnButton);
 			
-			JLabel label_4 = new JLabel("");
-			GridBagConstraints gbc_label_4 = new GridBagConstraints();
-			gbc_label_4.fill = GridBagConstraints.BOTH;
-			gbc_label_4.insets = new Insets(0, 0, 5, 0);
-			gbc_label_4.gridx = 0;
-			gbc_label_4.gridy = 6;
-			panel.add(label_4, gbc_label_4);
+		JLabel label_4 = new JLabel("");
+		GridBagConstraints gbc_label_4 = new GridBagConstraints();
+		gbc_label_4.fill = GridBagConstraints.BOTH;
+		gbc_label_4.insets = new Insets(0, 0, 5, 0);
+		gbc_label_4.gridx = 0;
+		gbc_label_4.gridy = 6;
+		panel.add(label_4, gbc_label_4);
 			
-			JLabel lblNewLabel_1 = new JLabel("Non hai un account?");
-			lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-			lblNewLabel_1.setForeground(Color.DARK_GRAY);
-			GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
-			gbc_lblNewLabel_1.fill = GridBagConstraints.BOTH;
-			gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 0);
-			gbc_lblNewLabel_1.gridx = 0;
-			gbc_lblNewLabel_1.gridy = 7;
-			panel.add(lblNewLabel_1, gbc_lblNewLabel_1);
+		JLabel lblNewLabel_1 = new JLabel("Non hai un account?");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_1.setForeground(Color.DARK_GRAY);
+		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
+		gbc_lblNewLabel_1.fill = GridBagConstraints.BOTH;
+		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 0);
+		gbc_lblNewLabel_1.gridx = 0;
+		gbc_lblNewLabel_1.gridy = 7;
+		panel.add(lblNewLabel_1, gbc_lblNewLabel_1);
 			
-				JLabel SignUpLabel = new JLabel("Registrati");
-				SignUpLabel.setForeground(Color.DARK_GRAY);
-				SignUpLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
-				SignUpLabel.addMouseListener(new MouseAdapter() {
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					onRegistratiClicked();
-				}
-				@Override
-				public void mouseEntered(MouseEvent e) {
+		JLabel SignUpLabel = new JLabel("Registrati");
+		SignUpLabel.setForeground(Color.DARK_GRAY);
+		SignUpLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
+		SignUpLabel.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				onRegistratiClicked();
+			}
+			@Override
+			public void mouseEntered(MouseEvent e) {
 				SignUpLabel.setForeground(Color.BLUE);
 				SignUpLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
-				}
-				@Override
-				public void mouseExited(MouseEvent e) {
+			}
+			@Override
+			public void mouseExited(MouseEvent e) {
 				SignUpLabel.setForeground(Color.DARK_GRAY);
 				SignUpLabel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-				}
+			}
 		});
-				GridBagConstraints gbc_SignUpLabel = new GridBagConstraints();
-				gbc_SignUpLabel.insets = new Insets(0, 0, 5, 0);
-				gbc_SignUpLabel.fill = GridBagConstraints.VERTICAL;
-				gbc_SignUpLabel.gridx = 0;
-				gbc_SignUpLabel.gridy = 8;
-				panel.add(SignUpLabel, gbc_SignUpLabel);
 		
-	
+		GridBagConstraints gbc_SignUpLabel = new GridBagConstraints();
+		gbc_SignUpLabel.insets = new Insets(0, 0, 5, 0);
+		gbc_SignUpLabel.fill = GridBagConstraints.VERTICAL;
+		gbc_SignUpLabel.gridx = 0;
+		gbc_SignUpLabel.gridy = 8;
+		panel.add(SignUpLabel, gbc_SignUpLabel);
 		}
 	
 	//METODI
