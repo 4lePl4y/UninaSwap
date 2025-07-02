@@ -23,6 +23,10 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.awt.GridLayout;
+import javax.swing.JLabel;
+import javax.swing.BoxLayout;
+import java.awt.Color;
 
 public class Main extends JFrame {
 	//ATTRIBUTI
@@ -45,6 +49,7 @@ public class Main extends JFrame {
 	//COSTRUTTORE
 	public Main(Controller controller) {
 		this.controller = controller;
+		setTitle("UninaSwap");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1080, 650);		
 		getContentPane().setLayout(new BorderLayout(0, 0));
@@ -65,22 +70,23 @@ public class Main extends JFrame {
 		
 		// Filter and search panel for browse
 		JPanel filterNsearchPane = new JPanel();
+		filterNsearchPane.setBackground(new Color(255, 255, 255));
 		browsePane.add(filterNsearchPane, BorderLayout.NORTH);
 		filterNsearchPane.setPreferredSize(new Dimension(800, 75));
 		GridBagLayout gbl_filterNsearchPane = new GridBagLayout();
-		gbl_filterNsearchPane.columnWidths = new int[] {1054, 264, 264, 264};
-		gbl_filterNsearchPane.rowHeights = new int[]{37, 0, 0};
-		gbl_filterNsearchPane.columnWeights = new double[]{1.0, Double.MIN_VALUE};
-		gbl_filterNsearchPane.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		gbl_filterNsearchPane.columnWidths = new int[] {264, 264, 264, 264};
+		gbl_filterNsearchPane.rowHeights = new int[] {19, 19};
+		gbl_filterNsearchPane.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0};
+		gbl_filterNsearchPane.rowWeights = new double[]{0.0, 0.0};
 		filterNsearchPane.setLayout(gbl_filterNsearchPane);
 		
 		// Search bar text field
 		srchBarTxtField = new JTextField();
-		srchBarTxtField.setPreferredSize(new Dimension(1056, 19));
+		srchBarTxtField.setPreferredSize(new Dimension(1056, 25));
 		GridBagConstraints gbc_srchBarTxtField = new GridBagConstraints();
 		gbc_srchBarTxtField.gridwidth = 4;
-		gbc_srchBarTxtField.insets = new Insets(0, 0, 5, 0);
 		gbc_srchBarTxtField.fill = GridBagConstraints.BOTH;
+		gbc_srchBarTxtField.insets = new Insets(0, 0, 5, 5);
 		gbc_srchBarTxtField.gridx = 0;
 		gbc_srchBarTxtField.gridy = 0;
 		filterNsearchPane.add(srchBarTxtField, gbc_srchBarTxtField);
@@ -89,6 +95,7 @@ public class Main extends JFrame {
 		// Radio buttons for filters
 		JRadioButton rdbtnNewRadioButton = new JRadioButton("New radio button");
 		GridBagConstraints gbc_rdbtnNewRadioButton = new GridBagConstraints();
+		gbc_rdbtnNewRadioButton.fill = GridBagConstraints.VERTICAL;
 		gbc_rdbtnNewRadioButton.insets = new Insets(0, 0, 0, 5);
 		gbc_rdbtnNewRadioButton.gridx = 0;
 		gbc_rdbtnNewRadioButton.gridy = 1;
@@ -96,6 +103,7 @@ public class Main extends JFrame {
 		
 		JRadioButton rdbtnNewRadioButton_1 = new JRadioButton("New radio button");
 		GridBagConstraints gbc_rdbtnNewRadioButton_1 = new GridBagConstraints();
+		gbc_rdbtnNewRadioButton_1.fill = GridBagConstraints.VERTICAL;
 		gbc_rdbtnNewRadioButton_1.insets = new Insets(0, 0, 0, 5);
 		gbc_rdbtnNewRadioButton_1.gridx = 1;
 		gbc_rdbtnNewRadioButton_1.gridy = 1;
@@ -103,6 +111,7 @@ public class Main extends JFrame {
 		
 		JRadioButton rdbtnNewRadioButton_2 = new JRadioButton("New radio button");
 		GridBagConstraints gbc_rdbtnNewRadioButton_2 = new GridBagConstraints();
+		gbc_rdbtnNewRadioButton_2.fill = GridBagConstraints.VERTICAL;
 		gbc_rdbtnNewRadioButton_2.insets = new Insets(0, 0, 0, 5);
 		gbc_rdbtnNewRadioButton_2.gridx = 2;
 		gbc_rdbtnNewRadioButton_2.gridy = 1;
@@ -110,6 +119,8 @@ public class Main extends JFrame {
 		
 		JRadioButton rdbtnNewRadioButton_3 = new JRadioButton("New radio button");
 		GridBagConstraints gbc_rdbtnNewRadioButton_3 = new GridBagConstraints();
+		gbc_rdbtnNewRadioButton_3.insets = new Insets(0, 0, 0, 5);
+		gbc_rdbtnNewRadioButton_3.fill = GridBagConstraints.VERTICAL;
 		gbc_rdbtnNewRadioButton_3.gridx = 3;
 		gbc_rdbtnNewRadioButton_3.gridy = 1;
 		filterNsearchPane.add(rdbtnNewRadioButton_3, gbc_rdbtnNewRadioButton_3);
@@ -151,6 +162,7 @@ public class Main extends JFrame {
 		//(Scelta delle finestre)
 		// Button panel
         buttonPane = new JPanel();
+        buttonPane.setBackground(new Color(255, 255, 255));
         FlowLayout fl_buttonPane = (FlowLayout) buttonPane.getLayout();
         fl_buttonPane.setHgap(50);
         
@@ -174,8 +186,8 @@ public class Main extends JFrame {
         
         buttonPane.add(browseButton);
         buttonPane.add(listingsButton);
-        buttonPane.add(new JButton("Button 3"));
-        buttonPane.add(new JButton("Button 4"));
+        buttonPane.add(new JButton("Offers"));
+        buttonPane.add(new JButton("My objects"));
         buttonPane.add(new JButton("Profilo"));
         getContentPane().add(buttonPane, BorderLayout.SOUTH);
     }
