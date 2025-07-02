@@ -1,51 +1,32 @@
 package gui;
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+import controller.Controller;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.border.AbstractBorder;
-import javax.swing.border.Border;
-import javax.swing.border.EmptyBorder;
-import java.awt.Window.Type;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
 
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.Color;
-import javax.swing.JToggleButton;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Cursor;
 import java.awt.Dimension;
 
-import controller.Controller;
-import java.awt.event.ActionListener;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
-import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
-import javax.swing.BoxLayout;
-import java.awt.CardLayout;
-import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.Image;
 
-import javax.swing.DropMode;
 import javax.swing.ImageIcon;
 
-import java.awt.Insets;
 import java.awt.RenderingHints;
 
-import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
-import javax.swing.JSlider;
-import java.awt.Component;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.JTextPane;
@@ -209,7 +190,7 @@ public class Login extends JFrame {
 			panel.add(questionLabel);
 			
 				JLabel signUpLabel = new JLabel("Registrati");
-				signUpLabel.setBounds(175, 315, 70, 17);
+				signUpLabel.setBounds(151, 315, 70, 17);
 				signUpLabel.setForeground(Color.DARK_GRAY);
 				signUpLabel.setFont(new Font("Times New Roman", Font.BOLD, 15));
 				signUpLabel.addMouseListener(new MouseAdapter() {
