@@ -255,7 +255,7 @@ public class SignUp extends JFrame {
         	}
         });
         registerButton.setBounds(74, 374, 216, 28);
-        registerButton.setBackground(new Color(30, 144, 255));
+        registerButton.setBackground(new Color(0, 51, 102));
         registerButton.setForeground(Color.WHITE);
         registerButton.setFont(new Font("Times New Roman", Font.PLAIN, 16));
         registerButton.setBorderPainted(false);
@@ -269,7 +269,7 @@ public class SignUp extends JFrame {
             }
             @Override
             public void mouseExited(MouseEvent e) {
-                registerButton.setBackground(new Color(30, 144, 255));
+                registerButton.setBackground(new Color(0, 51, 102));
                 registerButton.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
             }
         });

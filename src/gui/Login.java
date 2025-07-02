@@ -135,7 +135,7 @@ public class Login extends JFrame {
 			
 			@Override
 			public void mouseExited(MouseEvent e) {
-			lgnButton.setBackground(SystemColor.textHighlight);
+			lgnButton.setBackground(new Color(0, 51, 102));
 			lgnButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			}
 			
