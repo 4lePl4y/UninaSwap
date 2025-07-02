@@ -3,12 +3,15 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.border.AbstractBorder;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import java.awt.Window.Type;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 
@@ -23,6 +26,8 @@ import java.awt.Dimension;
 
 import controller.Controller;
 import java.awt.event.ActionListener;
+import java.awt.event.FocusAdapter;
+import java.awt.event.FocusEvent;
 import java.awt.event.ActionEvent;
 import java.awt.SystemColor;
 import javax.swing.BoxLayout;
@@ -35,9 +40,15 @@ import javax.swing.DropMode;
 import javax.swing.ImageIcon;
 
 import java.awt.Insets;
+import java.awt.RenderingHints;
+
 import javax.swing.SwingConstants;
+import javax.swing.SwingUtilities;
 import javax.swing.JSlider;
 import java.awt.Component;
+import javax.swing.GroupLayout;
+import javax.swing.GroupLayout.Alignment;
+import javax.swing.JTextPane;
 
 public class Login extends JFrame {
 	private Controller controller;
@@ -59,7 +70,9 @@ public class Login extends JFrame {
 	    Image backgroundImage = backgroundIcon.getImage();
 		
 		contentPane = new JPanel() {
-			  @Override
+			private static final long serialVersionUID = 1L;
+
+			@Override
 	            protected void paintComponent(Graphics g) {
 	                super.paintComponent(g);
 	                g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
@@ -69,26 +82,43 @@ public class Login extends JFrame {
 		
 		contentPane.setForeground(new Color(0, 0, 0));
 		contentPane.setBackground(new Color(255, 255, 255));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setLayout(null);
 		
-		JPanel panel = new JPanel();
-		panel.setBounds(396, 163, 374, 350);
-		contentPane.add(panel);
+		JPanel panel = new JPanel(){
+			private static final long serialVersionUID = 1L;
+			@Override
+		    protected void paintComponent(Graphics g) {
+		        Graphics2D g2 = (Graphics2D) g.create();
+		        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		        g2.setColor(getBackground());
+		        g2.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20); // 20 is the arc radius
+		        super.paintComponent(g);
+		        g2.dispose();
+		    }
+		};
+		panel.setBackground(new Color(255, 255, 255));
 		panel.setPreferredSize(new Dimension(500, 350));
-		GridBagLayout gbl_panel = new GridBagLayout();
-		gbl_panel.columnWidths = new int[]{374, 0};
-		gbl_panel.rowHeights = new int[]{38, 38, 38, 38, 38, 38, 38, 38, 0, 38, 0};
-		gbl_panel.columnWeights = new double[]{0.0, Double.MIN_VALUE};
-		gbl_panel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
-		panel.setLayout(gbl_panel);
+		panel.setOpaque(false);
+		panel.setBackground(panel.getBackground());
 		
-		JButton lgnButton = new JButton("Login");
-		lgnButton.setBackground(SystemColor.textHighlight);
+		JButton lgnButton = new JButton("Login") {
+			private static final long serialVersionUID = 1L;
+			@Override
+		    protected void paintComponent(Graphics g) {
+		        Graphics2D g2 = (Graphics2D) g.create();
+		        g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		        g2.setColor(getBackground());
+		        g2.fillRoundRect(0, 0, getWidth(), getHeight(), 25, 25); 
+		        g2.dispose();
+		        super.paintComponent(g);
+		    }
+		};
+		lgnButton.setBounds(51, 251, 183, 33);
+		lgnButton.setBackground(new Color(0, 51, 102));
 		lgnButton.setForeground(new Color(255, 255, 255));
-		lgnButton.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+		lgnButton.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 		lgnButton.setBorderPainted(false);
+		lgnButton.setContentAreaFilled(false);
 		lgnButton.setFocusPainted(false);
 		
 //		lgnButton.addActionListener(new ActionListener() {
@@ -111,109 +141,133 @@ public class Login extends JFrame {
 			lgnButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
 			}
 		});
-			
-					
-		JLabel userLabel = new JLabel("Username");
-		userLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-		userLabel.setLabelFor(panel);
-		userLabel.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-		GridBagConstraints gbc_userLabel = new GridBagConstraints();
-		gbc_userLabel.fill = GridBagConstraints.BOTH;
-		gbc_userLabel.insets = new Insets(0, 0, 5, 0);
-		gbc_userLabel.gridx = 0;
-		gbc_userLabel.gridy = 0;
-		panel.add(userLabel, gbc_userLabel);
+			panel.setLayout(null);
 			
 		userTxtField = new JTextField();
+		userTxtField.setForeground(Color.GRAY);
+		userTxtField.setText("Username");
+		userTxtField.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		userTxtField.setBounds(10, 113, 262, 33);
 		userTxtField.setColumns(10);
-		GridBagConstraints gbc_userTxtField = new GridBagConstraints();
-		gbc_userTxtField.fill = GridBagConstraints.BOTH;
-		gbc_userTxtField.insets = new Insets(0, 0, 5, 0);
-		gbc_userTxtField.gridx = 0;
-		gbc_userTxtField.gridy = 1;
-		panel.add(userTxtField, gbc_userTxtField);
-			
-		JLabel pswLabel = new JLabel("Password");
-		pswLabel.setFont(new Font("Times New Roman", Font.PLAIN, 16));
-		GridBagConstraints gbc_pswLabel = new GridBagConstraints();
-		gbc_pswLabel.fill = GridBagConstraints.BOTH;
-		gbc_pswLabel.insets = new Insets(0, 0, 5, 0);
-		gbc_pswLabel.gridx = 0;
-		gbc_pswLabel.gridy = 2;
-		panel.add(pswLabel, gbc_pswLabel);
-		pswLabel.setLabelFor(pswTxtField);
+		panel.add(userTxtField);
+		
+		userTxtField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (userTxtField.getText().equals("Username")) {
+                	userTxtField.setText("");
+                	userTxtField.setForeground(Color.BLACK);
+                }
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (userTxtField.getText().isEmpty()) {
+                	userTxtField.setText("Username");
+                	userTxtField.setForeground(Color.GRAY);
+                }
+            }
+        });
+
 			
 		pswTxtField = new JPasswordField();
-		GridBagConstraints gbc_pswTxtField = new GridBagConstraints();
-		gbc_pswTxtField.fill = GridBagConstraints.BOTH;
-		gbc_pswTxtField.insets = new Insets(0, 0, 5, 0);
-		gbc_pswTxtField.gridx = 0;
-		gbc_pswTxtField.gridy = 3;
-		panel.add(pswTxtField, gbc_pswTxtField);
+		pswTxtField.setForeground(Color.GRAY);
+		pswTxtField.setText("Password");
+		pswTxtField.setEchoChar((char)0);
+		pswTxtField.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		pswTxtField.setBounds(10, 178, 262, 33);
+		panel.add(pswTxtField);
+		panel.add(lgnButton);
 			
-		JLabel label_3 = new JLabel("");
-		GridBagConstraints gbc_label_3 = new GridBagConstraints();
-		gbc_label_3.fill = GridBagConstraints.BOTH;
-		gbc_label_3.insets = new Insets(0, 0, 5, 0);
-		gbc_label_3.gridx = 0;
-		gbc_label_3.gridy = 4;
-		panel.add(label_3, gbc_label_3);
-		
-		GridBagConstraints gbc_lgnButton = new GridBagConstraints();
-		gbc_lgnButton.fill = GridBagConstraints.BOTH;
-		gbc_lgnButton.insets = new Insets(0, 0, 5, 0);
-		gbc_lgnButton.gridx = 0;
-		gbc_lgnButton.gridy = 5;
-		panel.add(lgnButton, gbc_lgnButton);
+		pswTxtField.addFocusListener(new FocusAdapter() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (String.valueOf(pswTxtField.getPassword()).equals("Password")) {
+                	pswTxtField.setText("");
+                	pswTxtField.setEchoChar('•');
+                	pswTxtField.setForeground(Color.BLACK);
+                }
+                
+            }
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (String.valueOf(pswTxtField.getPassword()).equals("")) {
+                	pswTxtField.setText("Password");
+                	pswTxtField.setEchoChar((char)0);
+                	pswTxtField.setForeground(Color.GRAY);
+                }
+                
+            }
+        });
 			
-		JLabel label_4 = new JLabel("");
-		GridBagConstraints gbc_label_4 = new GridBagConstraints();
-		gbc_label_4.fill = GridBagConstraints.BOTH;
-		gbc_label_4.insets = new Insets(0, 0, 5, 0);
-		gbc_label_4.gridx = 0;
-		gbc_label_4.gridy = 6;
-		panel.add(label_4, gbc_label_4);
+			JLabel questionLabel = new JLabel("Non hai un account?");
+			questionLabel.setBounds(24, 307, 130, 33);
+			questionLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+			questionLabel.setForeground(Color.DARK_GRAY);
+			panel.add(questionLabel);
 			
-		JLabel lblNewLabel_1 = new JLabel("Non hai un account?");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_1.setForeground(Color.DARK_GRAY);
-		GridBagConstraints gbc_lblNewLabel_1 = new GridBagConstraints();
-		gbc_lblNewLabel_1.fill = GridBagConstraints.BOTH;
-		gbc_lblNewLabel_1.insets = new Insets(0, 0, 5, 0);
-		gbc_lblNewLabel_1.gridx = 0;
-		gbc_lblNewLabel_1.gridy = 7;
-		panel.add(lblNewLabel_1, gbc_lblNewLabel_1);
-			
-		JLabel SignUpLabel = new JLabel("Registrati");
-		SignUpLabel.setForeground(Color.DARK_GRAY);
-		SignUpLabel.setFont(new Font("Tahoma", Font.BOLD, 14));
-		SignUpLabel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				onRegistratiClicked();
-			}
-			@Override
-			public void mouseEntered(MouseEvent e) {
-				SignUpLabel.setForeground(Color.BLUE);
-				SignUpLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
-			}
-			@Override
-			public void mouseExited(MouseEvent e) {
-				SignUpLabel.setForeground(Color.DARK_GRAY);
-				SignUpLabel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
-			}
+				JLabel signUpLabel = new JLabel("Registrati");
+				signUpLabel.setBounds(175, 315, 70, 17);
+				signUpLabel.setForeground(Color.DARK_GRAY);
+				signUpLabel.setFont(new Font("Times New Roman", Font.BOLD, 15));
+				signUpLabel.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					onRegisterClicked();
+				}
+				@Override
+				public void mouseEntered(MouseEvent e) {
+				signUpLabel.setForeground(Color.BLUE);
+				signUpLabel.setCursor(new Cursor(Cursor.HAND_CURSOR));
+				}
+				@Override
+				public void mouseExited(MouseEvent e) {
+				signUpLabel.setForeground(Color.DARK_GRAY);
+				signUpLabel.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+				}
 		});
-		
-		GridBagConstraints gbc_SignUpLabel = new GridBagConstraints();
-		gbc_SignUpLabel.insets = new Insets(0, 0, 5, 0);
-		gbc_SignUpLabel.fill = GridBagConstraints.VERTICAL;
-		gbc_SignUpLabel.gridx = 0;
-		gbc_SignUpLabel.gridy = 8;
-		panel.add(SignUpLabel, gbc_SignUpLabel);
+				panel.add(signUpLabel);
+				
+				JLabel titleLabel = new JLabel("Accedi a UninaSwap");
+				titleLabel.setForeground(new Color(0, 51, 102));
+				titleLabel.setFont(new Font("Times New Roman", Font.BOLD, 25));
+				titleLabel.setBounds(24, 10, 234, 26);
+				panel.add(titleLabel);
+				GroupLayout gl_contentPane = new GroupLayout(contentPane);
+				gl_contentPane.setHorizontalGroup(
+					gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(158)
+							.addComponent(panel, GroupLayout.PREFERRED_SIZE, 284, GroupLayout.PREFERRED_SIZE)
+							.addContainerGap(624, Short.MAX_VALUE))
+				);
+				gl_contentPane.setVerticalGroup(
+					gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addContainerGap(133, Short.MAX_VALUE)
+							.addComponent(panel, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addGap(130))
+				);
+				
+				JTextPane descTxtPane = new JTextPane();
+				descTxtPane.setVerifyInputWhenFocusTarget(false);
+				descTxtPane.setRequestFocusEnabled(false);
+				descTxtPane.setFocusCycleRoot(false);
+				descTxtPane.setFocusTraversalKeysEnabled(false);
+				descTxtPane.setFocusable(false);
+				descTxtPane.setEditable(false);
+				descTxtPane.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+				descTxtPane.setText("Scambia, vendi o regala oggetti con altri studenti della Federico II");
+				descTxtPane.setBounds(24, 48, 234, 41);
+				panel.add(descTxtPane);
+				contentPane.setLayout(gl_contentPane);
+				
+				panel.setFocusable(true);
+		        SwingUtilities.invokeLater(() -> panel.requestFocusInWindow());
 		}
 	
 	//METODI
-	public void onRegistratiClicked(){
-		controller.onRegistratiClicked();
+	public void onRegisterClicked(){
+		controller.onRegisterClicked();
 	}
 }
+

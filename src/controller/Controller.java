@@ -1,5 +1,5 @@
 package controller;
-
+//
 import java.awt.EventQueue;
 
 import gui.*;
@@ -32,8 +32,8 @@ public class Controller {
 	}
 
 	public void onLoginClicked() {
-		signUpFrame.setVisible(false);
 		loginFrame.setVisible(true);
+		signUpFrame.setVisible(false);
 		
 	}
 	

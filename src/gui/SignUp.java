@@ -24,7 +24,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-import controller.Controller;
+import controller.Controller; 
 
 public class SignUp extends JFrame {
     private Controller controller;  
