@@ -132,13 +132,16 @@ public class Login extends JFrame {
 			lgnButton.setBackground(new Color(0, 102, 204));
 			lgnButton.setCursor(new Cursor(Cursor.HAND_CURSOR));
 			}
-		});
-		
-		lgnButton.addMouseListener(new MouseAdapter() {
+			
 			@Override
 			public void mouseExited(MouseEvent e) {
 			lgnButton.setBackground(SystemColor.textHighlight);
 			lgnButton.setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+			}
+			
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				onLoginClicked();
 			}
 		});
 			panel.setLayout(null);
@@ -268,6 +271,10 @@ public class Login extends JFrame {
 	//METODI
 	public void onRegisterClicked(){
 		controller.onRegisterClicked();
+	}
+	
+	public void onLoginClicked() {
+		controller.onLoginClicked();
 	}
 }
 
