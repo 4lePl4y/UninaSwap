@@ -284,7 +284,7 @@ public class SignUp extends JFrame {
         loginLabel.addMouseListener(new MouseAdapter() {
         	@Override
         	public void mouseClicked(MouseEvent e) {
-        		onLoginClicked();
+        		onReturnToLoginClicked();
         	}
         	@Override
         	public void mouseEntered(MouseEvent e) {
@@ -307,8 +307,8 @@ public class SignUp extends JFrame {
     
     
   //METODI
-  	public void onLoginClicked(){
-  		controller.onLoginClicked();
+  	public void onReturnToLoginClicked(){
+  		controller.onReturnToLoginClicked();
   	}
   	
   	

@@ -8,6 +8,7 @@ public class Controller {
 	//ATTRIBUTI
 	Login loginFrame; 
 	SignUp signUpFrame; 
+	Main mainFrame;
 	
 	public static void main(String[] args) {
 		Controller controller = new Controller();
@@ -18,6 +19,8 @@ public class Controller {
 					controller.loginFrame.setVisible(true);
 					controller.signUpFrame = new SignUp(controller);
 					controller.signUpFrame.setVisible(false);
+					controller.mainFrame = new Main(controller);
+					controller.mainFrame.setVisible(false);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -31,10 +34,14 @@ public class Controller {
 		loginFrame.setVisible(false);
 	}
 
-	public void onLoginClicked() {
+	public void onReturnToLoginClicked() {
 		loginFrame.setVisible(true);
 		signUpFrame.setVisible(false);
-		
+	}
+	
+	public void onLoginClicked() {
+		mainFrame.setVisible(true);
+		loginFrame.setVisible(false);
 	}
 	
 }
