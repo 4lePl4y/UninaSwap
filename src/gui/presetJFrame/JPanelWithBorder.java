@@ -4,7 +4,8 @@ import javax.swing.JPanel;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class JPanelWithBorder extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -13,8 +14,16 @@ public class JPanelWithBorder extends JPanel {
 		super();
 		this.setOpaque(false);
         this.setBackground(this.getBackground());
+        this.setFocusable(true);
+       
+        this.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				requestFocusInWindow();
+			}
+		});
 	}
-
+	
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);

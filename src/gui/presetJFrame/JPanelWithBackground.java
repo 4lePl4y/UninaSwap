@@ -14,6 +14,14 @@ public class JPanelWithBackground extends JPanel {
         super();
         ImageIcon backgroundIcon = new ImageIcon(img_src);
         backgroundImage = backgroundIcon.getImage();
+        this.setFocusable(true);
+        
+        this.addMouseListener(new java.awt.event.MouseAdapter() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent e) {
+				requestFocusInWindow();
+			}
+		});
     }
 
     @Override
@@ -23,4 +31,5 @@ public class JPanelWithBackground extends JPanel {
             g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
         }
     }
+    
 }

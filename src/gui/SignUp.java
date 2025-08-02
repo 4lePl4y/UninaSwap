@@ -15,8 +15,6 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
 
 public class SignUp extends JFrame {
@@ -54,9 +52,7 @@ public class SignUp extends JFrame {
         panel.setBounds(400, 70, 374, 468);
         panel.setPreferredSize(new Dimension(500, 750));
         panel.setLayout(null);
-        panel.setFocusable(true);
-        SwingUtilities.invokeLater(() -> panel.requestFocusInWindow());
-        contentPane.add(panel);
+          
         
         // Presentation Labels 
         lblNewLabel = new JLabel("Registrati a UninaSwap");
@@ -101,11 +97,6 @@ public class SignUp extends JFrame {
         JButton registerButton = new JButtonWithBorder("Registrati");
         registerButton.setBounds(74, 374, 216, 33);
         
-        registerButton.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		//Codice per la registrazione
-        	}
-        });
         
         lblNewLabel_2 = new JLabel("Hai già un account?");
         lblNewLabel_2.setFont(new Font("Times New Roman", Font.PLAIN, 14));
@@ -123,6 +114,7 @@ public class SignUp extends JFrame {
         loginLabel.setBounds(214, 430, 45, 13);
         
         
+        contentPane.add(panel);
         panel.add(lblNewLabel);
         panel.add(lblNewLabel_1);
         panel.add(nameTxtField);

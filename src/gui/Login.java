@@ -14,9 +14,6 @@ import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Dimension;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import javax.swing.SwingUtilities;
 import javax.swing.JTextPane;
 
 
@@ -38,6 +35,7 @@ public class Login extends JFrame {
 		contentPane = new JPanelWithBackground("src/img/LoginBackground.png");
 		contentPane.setForeground(new Color(0, 0, 0));
 		contentPane.setBackground(new Color(255, 255, 255));
+		contentPane.setLayout(null);	
 		setContentPane(contentPane);
 		
 		
@@ -45,10 +43,8 @@ public class Login extends JFrame {
 		panel.setBackground(new Color(255, 255, 255));
 		panel.setBounds(158, 133, 284, 350);
 		panel.setPreferredSize(new Dimension(500, 350));
-		panel.setFocusable(true);
-        SwingUtilities.invokeLater(() -> panel.requestFocusInWindow());
-        contentPane.add(panel);
 		
+        
 		JLabel titleLabel = new JLabel("Accedi a UninaSwap");
 		titleLabel.setBounds(24, 10, 234, 26);
 		titleLabel.setForeground(new Color(0, 51, 102));
@@ -71,11 +67,6 @@ public class Login extends JFrame {
 		JButton lgnButton = new JButtonWithBorder("Login");
 		lgnButton.setBounds(51, 251, 183, 33);
 		
-		lgnButton.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		//Codice per il login
-        	}
-        });
 		
 		lgnButton.addMouseListener(new MouseAdapter() {			
 			@Override
@@ -99,7 +90,7 @@ public class Login extends JFrame {
 			}
 		});
 			
-		contentPane.setLayout(null);	
+		
 		contentPane.add(panel);
 		panel.setLayout(null);
 		panel.add(titleLabel);
