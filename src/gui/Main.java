@@ -23,9 +23,6 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.awt.GridLayout;
-import javax.swing.JLabel;
-import javax.swing.BoxLayout;
 import java.awt.Color;
 
 public class Main extends JFrame {
