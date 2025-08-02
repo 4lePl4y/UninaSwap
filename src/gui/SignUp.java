@@ -42,7 +42,7 @@ public class SignUp extends JFrame {
         setBounds(100, 100, 1080, 650);
     
         
-        contentPane = new JPanelWithBackground("img/SignUpBackground.png");
+        contentPane = new JPanelWithBackground("src/img/SignUpBackground.png");
         contentPane.setForeground(new Color(0, 0, 0));
         contentPane.setBackground(new Color(255, 255, 255));
         contentPane.setLayout(null);
