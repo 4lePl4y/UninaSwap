@@ -16,8 +16,6 @@ import java.awt.event.MouseEvent;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusAdapter;
-import java.awt.event.FocusEvent;
 import javax.swing.SwingUtilities;
 import javax.swing.JTextPane;
 
@@ -57,53 +55,21 @@ public class Login extends JFrame {
 		titleLabel.setFont(new Font("Times New Roman", Font.BOLD, 25));
 		
 		
-		JTextPane descTxtPane = new JTextPane();
+		JTextPane descTxtPane = new JDisplayTextPane("Scambia, vendi o regala oggetti con altri studenti della Federico II");
 		descTxtPane.setBounds(24, 48, 234, 41);
-		descTxtPane.setVerifyInputWhenFocusTarget(false);
-		descTxtPane.setRequestFocusEnabled(false);
-		descTxtPane.setFocusCycleRoot(false);
-		descTxtPane.setFocusTraversalKeysEnabled(false);
-		descTxtPane.setFocusable(false);
-		descTxtPane.setEditable(false);
-		descTxtPane.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		descTxtPane.setText("Scambia, vendi o regala oggetti con altri studenti della Federico II");
 		
-			
-		userTxtField = new JTextField("Username");
+		
+		userTxtField = new JCustomTextField("Username");
 		userTxtField.setBounds(10, 113, 262, 33);
-		userTxtField.setForeground(Color.GRAY);
-	
-		userTxtField.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 		userTxtField.setColumns(10);
 		
-		userTxtField.addFocusListener(new FocusAdapter() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (userTxtField.getText().equals("Username")) {
-                	userTxtField.setText("");
-                	userTxtField.setForeground(Color.BLACK);
-                }
-            }
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (userTxtField.getText().isEmpty()) {
-                	userTxtField.setText("Username");
-                	userTxtField.setForeground(Color.GRAY);
-                }
-            }
-        });
-
-			
+		
 		pswTxtField = new JCustomPasswordField("Password");
 		pswTxtField.setBounds(10, 178, 262, 33);
 		
 		
-		
 		JButton lgnButton = new JButtonWithBorder("Login");
 		lgnButton.setBounds(51, 251, 183, 33);
-		lgnButton.setBorderPainted(false);
-		lgnButton.setContentAreaFilled(false);
-		lgnButton.setFocusPainted(false);
 		
 		lgnButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {

@@ -16,9 +16,13 @@ public class JButtonWithBorder extends JButton {
 	public JButtonWithBorder(String text) {
 		super(text);
 		setContentAreaFilled(false);
+		this.setBorderPainted(false);
+		this.setContentAreaFilled(false);
+		this.setFocusPainted(false);
 		this.setBackground(new Color(0, 51, 102));
         this.setForeground(Color.WHITE);
         this.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+        
         
         this.addMouseListener(new MouseAdapter() {
     		@Override

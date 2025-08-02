@@ -100,9 +100,6 @@ public class SignUp extends JFrame {
         // Registrati Button
         JButton registerButton = new JButtonWithBorder("Registrati");
         registerButton.setBounds(74, 374, 216, 33);
-        registerButton.setBorderPainted(false);
-        registerButton.setContentAreaFilled(false);
-        registerButton.setFocusPainted(false);
         
         registerButton.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
