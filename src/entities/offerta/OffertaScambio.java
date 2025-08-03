@@ -1,6 +1,9 @@
-package entities;
+package entities.offerta;
 
 import java.util.ArrayList;
+import entities.annuncio.Annuncio;
+import entities.oggetto.Oggetto;
+import entities.enumerazioni.Stato;
 
 public class OffertaScambio extends Offerta {
 	private Annuncio annuncio;

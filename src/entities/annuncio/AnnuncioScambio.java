@@ -1,6 +1,7 @@
-package entities;
+package entities.annuncio;
 
 import java.time.LocalTime;
+import entities.enumerazioni.Sede;
 
 public class AnnuncioScambio extends Annuncio{
 	

@@ -1,6 +1,6 @@
 package entities.oggetto;
 
-import entities.Studente;
+import entities.studente.Studente;
 
 public abstract class Oggetto {
 	//ATTRIBUTI

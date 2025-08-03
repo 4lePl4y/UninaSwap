@@ -1,4 +1,7 @@
-package entities;
+package entities.offerta;
+
+import entities.annuncio.Annuncio;
+import entities.enumerazioni.Stato;
 
 public class OffertaDenaro extends Offerta {
 	private Annuncio annuncio;

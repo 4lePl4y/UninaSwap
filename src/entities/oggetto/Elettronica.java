@@ -2,7 +2,7 @@ package entities.oggetto;
 
 import java.time.LocalDate;
 
-import entities.Studente;
+import entities.studente.Studente;
 
 public class Elettronica extends Oggetto {
 	// ATTRIBUTI
