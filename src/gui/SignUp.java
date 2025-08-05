@@ -19,10 +19,10 @@ public class SignUp extends JFrame {
 	private static final long serialVersionUID = 1L;
     private Controller controller;  
     private JPanel contentPane;
-    private JTextField nameTxtField;
-    private JTextField surnameTxtField;
+    private JLettersTextField nameTxtField;
+    private JLettersTextField surnameTxtField;
     private JTextField userTxtField;
-    private JTextField emailTxtField;
+    private JMailTextField emailTxtField;
     private JPasswordField pswTxtField;
     private JPasswordField checkPswTxtField;
     private JLabel loginLabel;
@@ -58,40 +58,40 @@ public class SignUp extends JFrame {
         
         
         // Name text field
-        nameTxtField = new JCustomTextField("Nome");
-        nameTxtField.setBounds(10, 91, 354, 33);
+        nameTxtField = new JLettersTextField("Nome");
+        nameTxtField.setBounds(10, 81, 354, 33);
         nameTxtField.setColumns(10);
            
                 
 		// Surname text field
-        surnameTxtField = new JCustomTextField("Cognome");
-        surnameTxtField.setBounds(10, 146, 354, 33);
+        surnameTxtField = new JLettersTextField("Cognome");
+        surnameTxtField.setBounds(10, 131, 354, 33);
         surnameTxtField.setColumns(10);
        
 
 		// Username text field
         userTxtField = new JCustomTextField("Username");
-        userTxtField.setBounds(10, 200, 354, 33);
+        userTxtField.setBounds(10, 181, 354, 33);
         userTxtField.setColumns(10);
         
         // Email text field
-        emailTxtField = new JCustomTextField("Email");
-        emailTxtField.setBounds(10, 254, 354, 33);
+        emailTxtField = new JMailTextField("Email");
+        emailTxtField.setBounds(10, 231, 354, 33);
         emailTxtField.setColumns(10);
         
         // Password text field
         pswTxtField = new JCustomPasswordField("Password");
-        pswTxtField.setBounds(10, 308, 354, 33);
+        pswTxtField.setBounds(10, 281, 354, 33);
         
 
         // Check Password text field
         checkPswTxtField = new JCustomPasswordField("Conferma Password");
-        checkPswTxtField.setBounds(10, 361, 354, 33);
+        checkPswTxtField.setBounds(10, 331, 354, 33);
         
 
         // Registrati Button
         JButton registerButton = new JButtonWithBorder("Registrati");
-        registerButton.setBounds(77, 418, 216, 33);
+        registerButton.setBounds(88, 397, 216, 33);
         registerButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -132,6 +132,24 @@ public class SignUp extends JFrame {
         lblNewLabel_1.setBounds(113, 38, 161, 23);
         panel.add(lblNewLabel_1);
         lblNewLabel_1.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        
+        JLabel wrongNameLabel = new JLabel("Attenzione! Nome non valido.");
+        wrongNameLabel.setForeground(Color.RED);
+        wrongNameLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        wrongNameLabel.setBounds(88, 443, 189, 13);
+        panel.add(wrongNameLabel);
+        
+        JLabel wrongSurnameLabel = new JLabel("Attenzione! Cognome non valido.");
+        wrongSurnameLabel.setForeground(Color.RED);
+        wrongSurnameLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        wrongSurnameLabel.setBounds(88, 443, 202, 13);
+        panel.add(wrongSurnameLabel);
+        
+        JLabel wrongEmailLabel = new JLabel("Attenzione! E-mail non valido.");
+        wrongEmailLabel.setForeground(Color.RED);
+        wrongEmailLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        wrongEmailLabel.setBounds(88, 443, 216, 13);
+        panel.add(wrongEmailLabel);
     }
     
     
@@ -146,5 +164,18 @@ public class SignUp extends JFrame {
   				);
   	}
   	
-  	
+  	public boolean areInputsValid() {
+  		if(!nameTxtField.isValidInput()) {
+  			
+  			return false;
+  		}else if(!surnameTxtField.isValidInput()) {
+  			
+  			return false;
+  		}else if(!emailTxtField.isValidInput()) {
+  			
+  			return false;
+  		}
+  			
+  		return true;
+  	}
 }
