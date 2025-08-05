@@ -1,7 +1,9 @@
 package controller;
-//
-import java.awt.EventQueue;
 
+import java.awt.EventQueue;
+import java.sql.Connection;
+
+import db.DBConnection;
 import gui.*;
 
 public class Controller {
@@ -15,6 +17,20 @@ public class Controller {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
+					Connection conn = null;
+					DBConnection dbConnection = DBConnection.getDBConnection();
+					
+					conn = dbConnection.getConnection();
+					
+					 if (conn == null) {
+				            System.out.println("Connessione NON riuscita!");
+				            System.exit(0);
+				      }
+					 
+					 else {
+						 System.out.println("Connessione OK!");
+					 }
+					 
 					controller.loginFrame = new Login(controller);
 					controller.loginFrame.setVisible(true);
 					controller.signUpFrame = new SignUp(controller);
