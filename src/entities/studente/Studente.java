@@ -16,11 +16,11 @@ public class Studente {
 	private ArrayList<Offerta> offerte;
 	
 	
-	public Studente(String nome, String cognome, String eMail, String username, String password) {
+	public Studente(String nome, String cognome, String username, String eMail, String password) {
 		this.nome = nome;
 		this.cognome = cognome;
-		this.eMail = eMail;
 		this.username = username;
+		this.eMail = eMail;
 		this.password = password;
 		this.oggetti = new ArrayList<Oggetto>();
 		this.annunci = new ArrayList<Annuncio>();

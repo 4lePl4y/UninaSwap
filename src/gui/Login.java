@@ -86,7 +86,7 @@ public class Login extends JFrame {
 		signUpLabel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				onRegisterClicked();
+				onGoToSignUpClicked();
 			}
 		});
 			

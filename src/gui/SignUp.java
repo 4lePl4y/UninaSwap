@@ -14,8 +14,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
-import javax.swing.SwingUtilities;
-
 
 public class SignUp extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -24,11 +22,9 @@ public class SignUp extends JFrame {
     private JTextField nameTxtField;
     private JTextField surnameTxtField;
     private JTextField userTxtField;
+    private JTextField emailTxtField;
     private JPasswordField pswTxtField;
     private JPasswordField checkPswTxtField;
-    private JLabel lblNewLabel;
-    private JLabel lblNewLabel_1;
-    private JLabel lblNewLabel_2;
     private JLabel loginLabel;
 
     //Create the frame
@@ -49,20 +45,16 @@ public class SignUp extends JFrame {
         // Create the panel for input fields
         JPanel panel = new JPanelWithBorder();
         panel.setBackground(new Color(255, 255, 255));
-        panel.setBounds(400, 70, 374, 468);
+        panel.setBounds(330, 70, 398, 504);
         panel.setPreferredSize(new Dimension(500, 750));
         panel.setLayout(null);
           
         
         // Presentation Labels 
-        lblNewLabel = new JLabel("Registrati a UninaSwap");
+        JLabel lblNewLabel = new JLabel("Registrati a UninaSwap");
         lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 20));
         lblNewLabel.setForeground(new Color(0, 51, 102));
-        lblNewLabel.setBounds(88, 10, 202, 21);
-        
-        lblNewLabel_1 = new JLabel("Riempi i campi sottostanti");
-        lblNewLabel_1.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-        lblNewLabel_1.setBounds(108, 41, 161, 23);
+        lblNewLabel.setBounds(88, 7, 202, 21);
         
         
         // Name text field
@@ -77,30 +69,40 @@ public class SignUp extends JFrame {
         surnameTxtField.setColumns(10);
        
 
-        // Username text field
+		// Username text field
         userTxtField = new JCustomTextField("Username");
         userTxtField.setBounds(10, 200, 354, 33);
         userTxtField.setColumns(10);
         
+        // Email text field
+        emailTxtField = new JCustomTextField("Email");
+        emailTxtField.setBounds(10, 254, 354, 33);
+        emailTxtField.setColumns(10);
         
         // Password text field
         pswTxtField = new JCustomPasswordField("Password");
-        pswTxtField.setBounds(10, 257, 354, 33);
+        pswTxtField.setBounds(10, 308, 354, 33);
         
 
         // Check Password text field
         checkPswTxtField = new JCustomPasswordField("Conferma Password");
-        checkPswTxtField.setBounds(10, 311, 354, 33);
+        checkPswTxtField.setBounds(10, 361, 354, 33);
         
 
         // Registrati Button
         JButton registerButton = new JButtonWithBorder("Registrati");
-        registerButton.setBounds(74, 374, 216, 33);
+        registerButton.setBounds(77, 418, 216, 33);
+        registerButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				onRegisterClicked();
+			}
+		});
         
         
-        lblNewLabel_2 = new JLabel("Hai già un account?");
+        JLabel lblNewLabel_2 = new JLabel("Hai già un account?");
         lblNewLabel_2.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-        lblNewLabel_2.setBounds(90, 425, 114, 22);
+        lblNewLabel_2.setBounds(88, 461, 114, 22);
         
         
         loginLabel = new JInteractiveLabel("Accedi");
@@ -111,26 +113,37 @@ public class SignUp extends JFrame {
         	}
         });
         loginLabel.setFont(new Font("Times New Roman", Font.BOLD, 14));
-        loginLabel.setBounds(214, 430, 45, 13);
+        loginLabel.setBounds(212, 466, 45, 13);
         
         
         contentPane.add(panel);
         panel.add(lblNewLabel);
-        panel.add(lblNewLabel_1);
         panel.add(nameTxtField);
         panel.add(surnameTxtField);
         panel.add(userTxtField);
+        panel.add(emailTxtField);
         panel.add(pswTxtField);
         panel.add(checkPswTxtField);
         panel.add(registerButton);
         panel.add(lblNewLabel_2);
         panel.add(loginLabel);
+        
+        JLabel lblNewLabel_1 = new JLabel("Riempi i campi sottostanti");
+        lblNewLabel_1.setBounds(113, 38, 161, 23);
+        panel.add(lblNewLabel_1);
+        lblNewLabel_1.setFont(new Font("Times New Roman", Font.PLAIN, 15));
     }
     
     
   //METODI
   	public void onReturnToLoginClicked(){
   		controller.onReturnToLoginClicked();
+  	}
+  	
+  	public void onRegisterClicked() {
+  		controller.onRegisterClicked(nameTxtField.getText(), surnameTxtField.getText(), userTxtField.getText(), emailTxtField.getText(),
+  				new String(pswTxtField.getPassword()), new String(checkPswTxtField.getPassword())
+  				);
   	}
   	
   	

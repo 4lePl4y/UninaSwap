@@ -18,7 +18,7 @@ public class StudenteDAO implements DaoInterface<Studente> {
 	
 	@Override
 	public Studente retrieve(String username) {
-		String query = "SELECT * FROM studenti WHERE username = " + username + ";";
+		String query = "SELECT * FROM studente WHERE username = " + username + ";";
 		try(PreparedStatement pstmt = conn.prepareStatement(query)) {
 			ResultSet rs = pstmt.executeQuery();
 			if(rs.next()){
@@ -38,7 +38,7 @@ public class StudenteDAO implements DaoInterface<Studente> {
 
 	@Override
 	public void create(Studente studente) {
-		String query = "INSERT INTO studenti (nome, cognome, email, username, password) VALUES (?, ?, ?, ?, ?);";
+		String query = "INSERT INTO studente (nome, cognome, email, username, password) VALUES (?, ?, ?, ?, ?);";
 		try (PreparedStatement pstmt = conn.prepareStatement(query)) {
 			pstmt.setString(1, studente.getNome());
 			pstmt.setString(2, studente.getCognome());
@@ -58,7 +58,7 @@ public class StudenteDAO implements DaoInterface<Studente> {
 
 	@Override
 	public void delete(String username) {
-		String query = "DELETE FROM studenti WHERE username = " + username + ";";
+		String query = "DELETE FROM studente WHERE username = " + username + ";";
 		try (PreparedStatement pstmt = conn.prepareStatement(query)) {
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
