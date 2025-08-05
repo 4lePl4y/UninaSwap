@@ -105,8 +105,8 @@ public class Login extends JFrame {
 	}
 	
 	//METODI
-	public void onRegisterClicked(){
-		controller.onRegisterClicked();
+	public void onGoToSignUpClicked(){
+		controller.onGoToSignUpClicked();
 	}
 	
 	public void onLoginClicked() {

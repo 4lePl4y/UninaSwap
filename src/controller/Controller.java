@@ -38,7 +38,7 @@ public class Controller {
 	}
 	
 	//METODI
-	public void onRegisterClicked(){
+	public void onGoToSignUpClicked(){
 		signUpFrame.setVisible(true);
 		loginFrame.setVisible(false);
 	}
