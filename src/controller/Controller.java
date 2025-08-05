@@ -74,17 +74,26 @@ public class Controller {
 		
 	}
 
-	public void onRegisterClicked(String name, String surname, String username, String email, String password, String confirmPassword) {
-		if (password.equals(confirmPassword)) {
-			Studente newStudente = new Studente(name, surname, username, email, password);
-			studenteDAO.create(newStudente);
-			loginFrame.setVisible(true);
-			signUpFrame.setVisible(false);
-			
-		} else {
-			System.out.println("Le password non corrispondono.");
+	public void onRegisterClicked() {
+		signUpFrame.resetErrorLabels();
+		if(!signUpFrame.areInputsValid()) {
+			return;
 		}
-		
+		String chkUsername = signUpFrame.userTxtField.getText();
+		Studente chkStudente = studenteDAO.retrieve(chkUsername);
+		if(chkStudente != null) {
+			signUpFrame.wrongUsernameLabel.setVisible(true);
+			signUpFrame.userTxtField.setText("");
+			return;
+		}
+		String newName = signUpFrame.nameTxtField.getText();
+		String newSurname = signUpFrame.surnameTxtField.getText();
+		String newEmail = signUpFrame.emailTxtField.getText();
+		String newPassword = new String(signUpFrame.pswTxtField.getPassword());
+		chkStudente = new Studente(newName, newSurname, chkUsername, newEmail, newPassword); 
+		studenteDAO.create(chkStudente);
+		loginFrame.setVisible(true);
+		signUpFrame.setVisible(false);
 	}
 	
 }

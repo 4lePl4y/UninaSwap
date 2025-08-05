@@ -8,6 +8,8 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.Arrays;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -19,13 +21,19 @@ public class SignUp extends JFrame {
 	private static final long serialVersionUID = 1L;
     private Controller controller;  
     private JPanel contentPane;
-    private JLettersTextField nameTxtField;
-    private JLettersTextField surnameTxtField;
-    private JTextField userTxtField;
-    private JMailTextField emailTxtField;
-    private JPasswordField pswTxtField;
+    public JLettersTextField nameTxtField;
+    public JLettersTextField surnameTxtField;
+    public JTextField userTxtField;
+    public JMailTextField emailTxtField;
+    public JPasswordField pswTxtField;
     private JPasswordField checkPswTxtField;
     private JLabel loginLabel;
+    private JLabel wrongNameLabel;
+    private JLabel wrongSurnameLabel;
+    private JLabel wrongEmailLabel;
+    public JLabel wrongUsernameLabel;
+    private JLabel wrongPswLabel;
+    private JLabel blankPswLabel;
 
     //Create the frame
     public SignUp(Controller controller) {
@@ -115,7 +123,47 @@ public class SignUp extends JFrame {
         loginLabel.setFont(new Font("Times New Roman", Font.BOLD, 14));
         loginLabel.setBounds(212, 466, 45, 13);
         
+        JLabel lblNewLabel_1 = new JLabel("Riempi i campi sottostanti");
+        lblNewLabel_1.setBounds(113, 38, 161, 23);
+        lblNewLabel_1.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+  		
+        wrongNameLabel = new JLabel("Attenzione! Nome non valido.");
+        wrongNameLabel.setForeground(Color.RED);
+        wrongNameLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        wrongNameLabel.setBounds(88, 443, 189, 13);
+        wrongNameLabel.setVisible(false);
         
+
+        wrongSurnameLabel = new JLabel("Attenzione! Cognome non valido.");
+        wrongSurnameLabel.setForeground(Color.RED);
+        wrongSurnameLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        wrongSurnameLabel.setBounds(88, 443, 202, 13);
+        wrongSurnameLabel.setVisible(false);
+        
+        wrongEmailLabel = new JLabel("Attenzione! E-mail non valido.");
+        wrongEmailLabel.setForeground(Color.RED);
+        wrongEmailLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        wrongEmailLabel.setBounds(88, 443, 216, 13);
+        wrongEmailLabel.setVisible(false);
+
+        wrongPswLabel = new JLabel("Attenzione! Le password non coincidono");
+        wrongPswLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        wrongPswLabel.setForeground(Color.RED);
+        wrongPswLabel.setBounds(78, 443, 247, 13);
+        wrongPswLabel.setVisible(false);
+
+        blankPswLabel = new JLabel("Attenzione! Campi password vuoti");
+        blankPswLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        blankPswLabel.setForeground(Color.RED);
+        blankPswLabel.setBounds(78, 443, 247, 13);
+        blankPswLabel.setVisible(false);
+
+        wrongUsernameLabel = new JLabel("Attenzione! Username non valido");
+        wrongUsernameLabel.setForeground(Color.RED);
+        wrongUsernameLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        wrongUsernameLabel.setBounds(88, 443, 212, 13);
+        wrongUsernameLabel.setVisible(false);
+
         contentPane.add(panel);
         panel.add(lblNewLabel);
         panel.add(nameTxtField);
@@ -127,29 +175,13 @@ public class SignUp extends JFrame {
         panel.add(registerButton);
         panel.add(lblNewLabel_2);
         panel.add(loginLabel);
-        
-        JLabel lblNewLabel_1 = new JLabel("Riempi i campi sottostanti");
-        lblNewLabel_1.setBounds(113, 38, 161, 23);
         panel.add(lblNewLabel_1);
-        lblNewLabel_1.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-        
-        JLabel wrongNameLabel = new JLabel("Attenzione! Nome non valido.");
-        wrongNameLabel.setForeground(Color.RED);
-        wrongNameLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-        wrongNameLabel.setBounds(88, 443, 189, 13);
         panel.add(wrongNameLabel);
-        
-        JLabel wrongSurnameLabel = new JLabel("Attenzione! Cognome non valido.");
-        wrongSurnameLabel.setForeground(Color.RED);
-        wrongSurnameLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-        wrongSurnameLabel.setBounds(88, 443, 202, 13);
-        panel.add(wrongSurnameLabel);
-        
-        JLabel wrongEmailLabel = new JLabel("Attenzione! E-mail non valido.");
-        wrongEmailLabel.setForeground(Color.RED);
-        wrongEmailLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-        wrongEmailLabel.setBounds(88, 443, 216, 13);
+        panel.add(wrongSurnameLabel);        
         panel.add(wrongEmailLabel);
+        panel.add(wrongPswLabel);
+        panel.add(wrongUsernameLabel);
+        panel.add(blankPswLabel);
     }
     
     
@@ -159,23 +191,48 @@ public class SignUp extends JFrame {
   	}
   	
   	public void onRegisterClicked() {
-  		controller.onRegisterClicked(nameTxtField.getText(), surnameTxtField.getText(), userTxtField.getText(), emailTxtField.getText(),
-  				new String(pswTxtField.getPassword()), new String(checkPswTxtField.getPassword())
-  				);
+  		controller.onRegisterClicked();
   	}
   	
+  	//method to mark easy and common errors in the input fields
   	public boolean areInputsValid() {
+  		String psw = new String(pswTxtField.getPassword());
+  		String checkPsw = new String(checkPswTxtField.getPassword());
+  		System.out.println("psw: " + psw);
+  		System.out.println("checkPsw: " + checkPsw);
   		if(!nameTxtField.isValidInput()) {
-  			
+  			wrongNameLabel.setVisible(true);
+  			nameTxtField.setText("");
   			return false;
   		}else if(!surnameTxtField.isValidInput()) {
-  			
+  			wrongSurnameLabel.setVisible(true);
+  			surnameTxtField.setText("");
+  			return false;
+  		}else if(userTxtField.getText().equals("")) {	
+  			wrongUsernameLabel.setVisible(true);
   			return false;
   		}else if(!emailTxtField.isValidInput()) {
-  			
+  			wrongEmailLabel.setVisible(true);
+  			emailTxtField.setText("");
+  			return false;
+  		}else if(psw.equals("Conferma Password") || checkPsw.equals("Conferma Password")) {
+  			blankPswLabel.setVisible(true);
+  			return false;
+  		}else if(!psw.equals(checkPsw)) {
+  			wrongPswLabel.setVisible(true);
+  			pswTxtField.setText("");
+  			checkPswTxtField.setText("");
   			return false;
   		}
-  			
   		return true;
+  	}
+  	
+  	public void resetErrorLabels() {
+  		wrongNameLabel.setVisible(false);
+  		wrongSurnameLabel.setVisible(false);
+  		wrongUsernameLabel.setVisible(false);
+  		wrongEmailLabel.setVisible(false);
+  		wrongPswLabel.setVisible(false);
+  		blankPswLabel.setVisible(false);
   	}
 }
