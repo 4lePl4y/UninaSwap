@@ -21,8 +21,10 @@ public class Login extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private Controller controller;
 	private JPanel contentPane;
-	private JTextField userTxtField;
-	private JPasswordField pswTxtField;
+	public JTextField userTxtField;
+	public JPasswordField pswTxtField;
+	public JLabel wrongUsrnmLabel;
+	public JLabel wrongPwdLabel;
 
 
 	public Login(Controller controller) {
@@ -90,7 +92,18 @@ public class Login extends JFrame {
 			}
 		});
 			
+		wrongUsrnmLabel = new JLabel("Attenzione! Username errato");
+		wrongUsrnmLabel.setForeground(Color.RED);
+		wrongUsrnmLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		wrongUsrnmLabel.setBounds(51, 292, 183, 13);
+		wrongUsrnmLabel.setVisible(false);
 		
+		wrongPwdLabel = new JLabel("Attenzione! Password errata");
+		wrongPwdLabel.setForeground(Color.RED);
+		wrongPwdLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		wrongPwdLabel.setBounds(51, 294, 183, 13);
+		wrongPwdLabel.setVisible(false);
+
 		contentPane.add(panel);
 		panel.setLayout(null);
 		panel.add(titleLabel);
@@ -99,7 +112,9 @@ public class Login extends JFrame {
 		panel.add(pswTxtField);
 		panel.add(lgnButton);
 		panel.add(questionLabel);
-		panel.add(signUpLabel);
+		panel.add(signUpLabel);		
+		panel.add(wrongUsrnmLabel);
+		panel.add(wrongPwdLabel);
 				
 				
 	}
@@ -111,6 +126,14 @@ public class Login extends JFrame {
 	
 	public void onLoginClicked() {
 		controller.onLoginClicked();
+	}
+	
+	public String getUsername() {
+		return userTxtField.getText();
+	}
+	
+	public String getPassword() {
+		return new String(pswTxtField.getPassword());
 	}
 }
 

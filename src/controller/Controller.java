@@ -4,6 +4,8 @@ import java.awt.EventQueue;
 import java.sql.Connection;
 
 import dao.StudenteDAO;
+
+import dao.*;
 import db.DBConnection;
 import entities.studente.Studente;
 import gui.*;
@@ -23,8 +25,8 @@ public class Controller {
 					Connection conn = null;
 					DBConnection dbConnection = DBConnection.getDBConnection();
 					conn = dbConnection.getConnection();
+
 					 System.out.println("Connessione OK!");
-					 	 
 					controller.loginFrame = new Login(controller);
 					controller.loginFrame.setVisible(true);
 					controller.signUpFrame = new SignUp(controller);
@@ -53,8 +55,24 @@ public class Controller {
 	}
 	
 	public void onLoginClicked() {
-		mainFrame.setVisible(true);
 		loginFrame.setVisible(false);
+		loginFrame.wrongPwdLabel.setVisible(false);
+		String username = loginFrame.getUsername();
+		String password = loginFrame.getPassword();
+		Studente chkStudente = studenteDAO.retrieve(username);
+		if(chkStudente == null) {
+			loginFrame.wrongUsrnmLabel.setVisible(true);
+			loginFrame.userTxtField.setText("");
+			return;
+		}else if(chkStudente != null && !chkStudente.getPassword().equals(password)) {
+			loginFrame.wrongPwdLabel.setVisible(true);
+			loginFrame.pswTxtField.setText("");
+			return; 
+		} else {
+			mainFrame.setVisible(true);
+			loginFrame.setVisible(false);
+		}
+		
 	}
 
 	public void onRegisterClicked(String name, String surname, String username, String email, String password, String confirmPassword) {

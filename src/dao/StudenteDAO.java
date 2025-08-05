@@ -18,8 +18,10 @@ public class StudenteDAO implements DaoInterface<Studente> {
 	
 	@Override
 	public Studente retrieve(String username) {
-		String query = "SELECT * FROM studente WHERE username = " + username + ";";
+		Studente studente = null;
+		String query = "SELECT * FROM studente WHERE username = ?;";
 		try(PreparedStatement pstmt = conn.prepareStatement(query)) {
+			pstmt.setString(1, username);
 			ResultSet rs = pstmt.executeQuery();
 			if(rs.next()){
 				String usrnm = rs.getString("username");
@@ -27,13 +29,12 @@ public class StudenteDAO implements DaoInterface<Studente> {
 				String cognome = rs.getString("cognome");
 				String email = rs.getString("email");
 				String password = rs.getString("password"); // Non necessario per il recupero
-				Studente studente = new Studente(nome, cognome, email, usrnm, password);
-				return studente;
+				studente = new Studente(nome, cognome, email, usrnm, password);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return studente;
 	}
 
 	@Override
@@ -58,8 +59,9 @@ public class StudenteDAO implements DaoInterface<Studente> {
 
 	@Override
 	public void delete(String username) {
-		String query = "DELETE FROM studente WHERE username = " + username + ";";
+		String query = "DELETE FROM studente WHERE username = ?;";
 		try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+			pstmt.setString(1, username);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
