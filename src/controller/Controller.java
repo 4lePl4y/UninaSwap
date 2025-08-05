@@ -22,14 +22,7 @@ public class Controller {
 					
 					conn = dbConnection.getConnection();
 					
-					 if (conn == null) {
-				            System.out.println("Connessione NON riuscita!");
-				            System.exit(0);
-				      }
-					 
-					 else {
-						 System.out.println("Connessione OK!");
-					 }
+					 System.out.println("Connessione OK!");
 					 
 					controller.loginFrame = new Login(controller);
 					controller.loginFrame.setVisible(true);
