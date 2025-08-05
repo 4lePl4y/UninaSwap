@@ -3,11 +3,10 @@ package controller;
 import java.awt.EventQueue;
 import java.sql.Connection;
 
-import dao.StudenteDAO;
 
 import dao.*;
 import db.DBConnection;
-import entities.studente.Studente;
+import entities.studente.*;
 import gui.*;
 
 public class Controller {
@@ -27,13 +26,13 @@ public class Controller {
 					conn = dbConnection.getConnection();
 
 					 System.out.println("Connessione OK!");
+					 	 					
 					controller.loginFrame = new Login(controller);
 					controller.loginFrame.setVisible(true);
 					controller.signUpFrame = new SignUp(controller);
 					controller.signUpFrame.setVisible(false);
 					controller.mainFrame = new Main(controller);
 					controller.mainFrame.setVisible(false);
-					
 					controller.studenteDAO = new StudenteDAO(conn);
 					
 				} catch (Exception e) {
@@ -55,7 +54,7 @@ public class Controller {
 	}
 	
 	public void onLoginClicked() {
-		loginFrame.setVisible(false);
+		loginFrame.wrongUsrnmLabel.setVisible(false);
 		loginFrame.wrongPwdLabel.setVisible(false);
 		String username = loginFrame.getUsername();
 		String password = loginFrame.getPassword();
