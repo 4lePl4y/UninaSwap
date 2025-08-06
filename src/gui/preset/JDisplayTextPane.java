@@ -1,4 +1,4 @@
-package gui.presetJFrame;
+package gui.preset;
 
 import java.awt.Font;
 import javax.swing.JTextPane;

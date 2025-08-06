@@ -1,4 +1,4 @@
-package gui.presetJFrame;
+package gui.preset.presetJTextField;
 
 public class JLettersTextField extends JCustomTextField {
 	private static final long serialVersionUID = 1L;

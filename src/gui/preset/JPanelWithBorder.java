@@ -1,4 +1,4 @@
-package gui.presetJFrame;
+package gui.preset;
 
 import javax.swing.JPanel;
 import java.awt.Graphics;

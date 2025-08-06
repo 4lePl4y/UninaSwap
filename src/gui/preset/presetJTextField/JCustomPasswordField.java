@@ -1,4 +1,4 @@
-package gui.presetJFrame;
+package gui.preset.presetJTextField;
 
 import javax.swing.JPasswordField;
 import java.awt.Color;

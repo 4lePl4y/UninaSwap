@@ -1,7 +1,9 @@
 package gui;
 
 import controller.Controller;
-import gui.presetJFrame.*;
+import gui.preset.*;
+import gui.preset.presetJLabel.*;
+import gui.preset.presetJTextField.*;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -92,17 +94,12 @@ public class Login extends JFrame {
 			}
 		});
 			
-		wrongUsrnmLabel = new JLabel("Attenzione! Username errato");
-		wrongUsrnmLabel.setForeground(Color.RED);
-		wrongUsrnmLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		wrongUsrnmLabel = new JWarningLabel("Attenzione! Username errato");
 		wrongUsrnmLabel.setBounds(51, 292, 183, 13);
-		wrongUsrnmLabel.setVisible(false);
 		
-		wrongPwdLabel = new JLabel("Attenzione! Password errata");
-		wrongPwdLabel.setForeground(Color.RED);
-		wrongPwdLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		wrongPwdLabel = new JWarningLabel("Attenzione! Password errata");
 		wrongPwdLabel.setBounds(51, 294, 183, 13);
-		wrongPwdLabel.setVisible(false);
+
 
 		contentPane.add(panel);
 		panel.setLayout(null);

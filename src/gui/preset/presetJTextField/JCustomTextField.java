@@ -1,4 +1,4 @@
-package gui.presetJFrame;
+package gui.preset.presetJTextField;
 
 import java.awt.Color;
 import java.awt.Font;

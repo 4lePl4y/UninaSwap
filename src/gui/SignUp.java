@@ -1,14 +1,16 @@
 package gui;
 
 import controller.Controller;
-import gui.presetJFrame.*;
+import gui.preset.*;
+import gui.preset.presetJLabel.*;
+import gui.preset.presetJTextField.*;
+
 
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.Arrays;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -134,35 +136,20 @@ public class SignUp extends JFrame {
         wrongNameLabel.setVisible(false);
         
 
-        wrongSurnameLabel = new JLabel("Attenzione! Cognome non valido.");
-        wrongSurnameLabel.setForeground(Color.RED);
-        wrongSurnameLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        wrongSurnameLabel = new JWarningLabel("Attenzione! Cognome non valido.");
         wrongSurnameLabel.setBounds(88, 443, 202, 13);
-        wrongSurnameLabel.setVisible(false);
         
-        wrongEmailLabel = new JLabel("Attenzione! E-mail non valido.");
-        wrongEmailLabel.setForeground(Color.RED);
-        wrongEmailLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        wrongEmailLabel = new JWarningLabel("Attenzione! E-mail non valida.");
         wrongEmailLabel.setBounds(88, 443, 216, 13);
-        wrongEmailLabel.setVisible(false);
 
-        wrongPswLabel = new JLabel("Attenzione! Le password non coincidono");
-        wrongPswLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-        wrongPswLabel.setForeground(Color.RED);
+        wrongPswLabel = new JWarningLabel("Attenzione! Le password non coincidono");
         wrongPswLabel.setBounds(78, 443, 247, 13);
-        wrongPswLabel.setVisible(false);
 
-        blankPswLabel = new JLabel("Attenzione! Campi password vuoti");
-        blankPswLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-        blankPswLabel.setForeground(Color.RED);
+        blankPswLabel = new JWarningLabel("Attenzione! Campi password vuoti");
         blankPswLabel.setBounds(78, 443, 247, 13);
-        blankPswLabel.setVisible(false);
 
-        wrongUsernameLabel = new JLabel("Attenzione! Username non valido");
-        wrongUsernameLabel.setForeground(Color.RED);
-        wrongUsernameLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        wrongUsernameLabel = new JWarningLabel("Attenzione! Username non valido");
         wrongUsernameLabel.setBounds(88, 443, 212, 13);
-        wrongUsernameLabel.setVisible(false);
 
         contentPane.add(panel);
         panel.add(lblNewLabel);
@@ -198,8 +185,6 @@ public class SignUp extends JFrame {
   	public boolean areInputsValid() {
   		String psw = new String(pswTxtField.getPassword());
   		String checkPsw = new String(checkPswTxtField.getPassword());
-  		System.out.println("psw: " + psw);
-  		System.out.println("checkPsw: " + checkPsw);
   		if(!nameTxtField.isValidInput()) {
   			wrongNameLabel.setVisible(true);
   			nameTxtField.setText("");

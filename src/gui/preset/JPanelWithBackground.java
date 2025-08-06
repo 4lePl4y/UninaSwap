@@ -1,4 +1,4 @@
-package gui.presetJFrame;  
+package gui.preset;  
 
 import java.awt.Graphics;
 import java.awt.Image;
