@@ -25,8 +25,7 @@ public class Login extends JFrame {
 	private JPanel contentPane;
 	private JTextField userTxtField;
 	private JPasswordField pswTxtField;
-	private JLabel wrongUsrnmLabel;
-	private JLabel wrongPwdLabel;
+	private JWarningLabel warningLabel;
 
 
 	public Login(Controller controller) {
@@ -94,12 +93,8 @@ public class Login extends JFrame {
 			}
 		});
 			
-		wrongUsrnmLabel = new JWarningLabel("Attenzione! Username errato");
-		wrongUsrnmLabel.setBounds(51, 292, 183, 13);
-		
-		wrongPwdLabel = new JWarningLabel("Attenzione! Password errata");
-		wrongPwdLabel.setBounds(51, 294, 183, 13);
-
+		warningLabel = new JWarningLabel("");
+		warningLabel.setBounds(51, 294, 183, 17);
 
 		contentPane.add(panel);
 		panel.setLayout(null);
@@ -110,8 +105,7 @@ public class Login extends JFrame {
 		panel.add(lgnButton);
 		panel.add(questionLabel);
 		panel.add(signUpLabel);		
-		panel.add(wrongUsrnmLabel);
-		panel.add(wrongPwdLabel);
+		panel.add(warningLabel);
 				
 				
 	}
@@ -123,6 +117,14 @@ public class Login extends JFrame {
 	
 	public void onLoginClicked() {
 		controller.onLoginClicked();
+	}
+	
+	public void resetWarningLabel() {
+		warningLabel.reset();
+	}
+	
+	public void setWarningLabel(String message) {
+		warningLabel.setMessage(message);
 	}
 	
 	public String getUsername() {

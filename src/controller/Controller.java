@@ -54,18 +54,16 @@ public class Controller {
 	}
 	
 	public void onLoginClicked() {
-		loginFrame.wrongUsrnmLabel.setVisible(false);
-		loginFrame.wrongPwdLabel.setVisible(false);
+		loginFrame.resetWarningLabel();
 		String username = loginFrame.getUsername();
 		String password = loginFrame.getPassword();
-		Studente chkStudente = studenteDAO.retrieve(username);
+		Studente chkStudente = studenteDAO.retrieveByPK(username);
 		if(chkStudente == null) {
-			loginFrame.wrongUsrnmLabel.setVisible(true);
-			loginFrame.userTxtField.setText("");
+			loginFrame.setWarningLabel("Attenzione! Username errato");
+			
 			return;
 		}else if(chkStudente != null && !chkStudente.getPassword().equals(password)) {
-			loginFrame.wrongPwdLabel.setVisible(true);
-			loginFrame.pswTxtField.setText("");
+			loginFrame.setWarningLabel("Attenzione! Password errata");
 			return; 
 		} else {
 			mainFrame.setVisible(true);
@@ -75,22 +73,32 @@ public class Controller {
 	}
 
 	public void onRegisterClicked() {
-		signUpFrame.resetErrorLabels();
+		signUpFrame.resetWarningLabel();
 		if(!signUpFrame.areInputsValid()) {
 			return;
 		}
-		String chkUsername = signUpFrame.getUsername();
-		Studente chkStudente = studenteDAO.retrieve(chkUsername);
+		
+		String newName = signUpFrame.getName();
+		String newSurname = signUpFrame.getSurname();
+		String newUsername = signUpFrame.getUsername();
+		String newEmail = signUpFrame.getEmail();
+		String newPassword = signUpFrame.getPassword();
+
+		Studente chkStudente = studenteDAO.retrieveByPK(newUsername);
 		if(chkStudente != null) {
-			signUpFrame.wrongUsernameLabel.setVisible(true);
+			signUpFrame.setWarningLabel("Attenzione! Username già in uso");
 			signUpFrame.setUsername("Username");
 			return;
 		}
-		String newName = signUpFrame.getName();
-		String newSurname = signUpFrame.getSurname();
-		String newEmail = signUpFrame.getEmail();
-		String newPassword = signUpFrame.getPassword();
-		chkStudente = new Studente(newName, newSurname, chkUsername, newEmail, newPassword); 
+		
+		chkStudente = studenteDAO.retrieveByEmail(newEmail);
+		if(chkStudente != null) {
+			signUpFrame.setWarningLabel("Attenzione! Email già in uso");
+			signUpFrame.setEmail("Email");
+			return;
+		}
+		
+		chkStudente = new Studente(newName, newSurname, newUsername, newEmail, newPassword); 
 		studenteDAO.create(chkStudente);
 		loginFrame.setVisible(true);
 		signUpFrame.setVisible(false);

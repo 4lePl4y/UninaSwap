@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.JLabel;
+import javax.swing.SwingConstants;
 
 public class JWarningLabel extends JLabel{
 	private static final long serialVersionUID = 1L;
@@ -12,7 +13,18 @@ public class JWarningLabel extends JLabel{
 		super(text);
 		setForeground(Color.RED);
         setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        setHorizontalAlignment(SwingConstants.CENTER);
         setVisible(false);
 	}
+	
+	public void reset() {
+  		setVisible(false);
+  		setText("");
+  	}
+  	
+  	public void setMessage(String message) {
+  		setVisible(true);
+  		setText(message);
+  	}
 
 }

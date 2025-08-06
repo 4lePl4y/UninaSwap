@@ -9,7 +9,7 @@ public class JLettersTextField extends JCustomTextField {
 	
 	public boolean isValidInput() {
 		String text = getText();
-		return text.matches("[a-zA-Z]+");
+		return text.matches("[a-zA-Z]+( [a-zA-Z]+)*");
 	}
 
 }

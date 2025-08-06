@@ -36,5 +36,10 @@ public class JCustomPasswordField extends JPasswordField {
             }
         });
 	}
+	
+	public void resetHint(String hint) {
+		setText(hint);
+		setForeground(Color.GRAY);
+	}
 
 }

@@ -16,8 +16,7 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 
 public class SignUp extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -25,17 +24,13 @@ public class SignUp extends JFrame {
     private JPanel contentPane;
     private JLettersTextField nameTxtField;
     private JLettersTextField surnameTxtField;
-    private JTextField userTxtField;
+    private JCustomTextField userTxtField;
     private JMailTextField emailTxtField;
-    private JPasswordField pswTxtField;
-    private JPasswordField checkPswTxtField;
+    private JCustomPasswordField pswTxtField;
+    private JCustomPasswordField checkPswTxtField;
     private JLabel loginLabel;
-    private JLabel wrongNameLabel;
-    private JLabel wrongSurnameLabel;
-    private JLabel wrongEmailLabel;
-    public JLabel wrongUsernameLabel;
-    private JLabel wrongPswLabel;
-    private JLabel blankPswLabel;
+    private JWarningLabel warningLabel;
+    
 
     //Create the frame
     public SignUp(Controller controller) {
@@ -128,29 +123,11 @@ public class SignUp extends JFrame {
         JLabel lblNewLabel_1 = new JLabel("Riempi i campi sottostanti");
         lblNewLabel_1.setBounds(113, 38, 161, 23);
         lblNewLabel_1.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-  		
-        wrongNameLabel = new JLabel("Attenzione! Nome non valido.");
-        wrongNameLabel.setForeground(Color.RED);
-        wrongNameLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-        wrongNameLabel.setBounds(88, 443, 189, 13);
-        wrongNameLabel.setVisible(false);
+
+        warningLabel = new JWarningLabel("");
+        warningLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        warningLabel.setBounds(63, 440, 270, 16);
         
-
-        wrongSurnameLabel = new JWarningLabel("Attenzione! Cognome non valido.");
-        wrongSurnameLabel.setBounds(88, 443, 202, 13);
-        
-        wrongEmailLabel = new JWarningLabel("Attenzione! E-mail non valida.");
-        wrongEmailLabel.setBounds(88, 443, 216, 13);
-
-        wrongPswLabel = new JWarningLabel("Attenzione! Le password non coincidono");
-        wrongPswLabel.setBounds(78, 443, 247, 13);
-
-        blankPswLabel = new JWarningLabel("Attenzione! Campi password vuoti");
-        blankPswLabel.setBounds(78, 443, 247, 13);
-
-        wrongUsernameLabel = new JWarningLabel("Attenzione! Username non valido");
-        wrongUsernameLabel.setBounds(88, 443, 212, 13);
-
         contentPane.add(panel);
         panel.add(lblNewLabel);
         panel.add(nameTxtField);
@@ -163,12 +140,7 @@ public class SignUp extends JFrame {
         panel.add(lblNewLabel_2);
         panel.add(loginLabel);
         panel.add(lblNewLabel_1);
-        panel.add(wrongNameLabel);
-        panel.add(wrongSurnameLabel);        
-        panel.add(wrongEmailLabel);
-        panel.add(wrongPswLabel);
-        panel.add(wrongUsernameLabel);
-        panel.add(blankPswLabel);
+        panel.add(warningLabel);
     }
     
     
@@ -185,43 +157,44 @@ public class SignUp extends JFrame {
   	public boolean areInputsValid() {
   		String psw = new String(pswTxtField.getPassword());
   		String checkPsw = new String(checkPswTxtField.getPassword());
-  		if(!nameTxtField.isValidInput()) {
-  			wrongNameLabel.setVisible(true);
-  			nameTxtField.setText("");
+  		if(!nameTxtField.isValidInput() || nameTxtField.getText().equals("Nome")) {
+  			warningLabel.setMessage("Attenzione! Nome non valido");
+  			nameTxtField.resetHint("Nome");
   			return false;
-  		}else if(!surnameTxtField.isValidInput()) {
-  			wrongSurnameLabel.setVisible(true);
-  			surnameTxtField.setText("");
+  		}else if(!surnameTxtField.isValidInput() || surnameTxtField.getText().equals("Cognome")) {
+  			warningLabel.setMessage("Attenzione! Cognome non valido");
+  			surnameTxtField.resetHint("Cognome");
   			return false;
-  		}else if(userTxtField.getText().equals("")) {	
-  			wrongUsernameLabel.setVisible(true);
+  		}else if(userTxtField.getText().equals("Username")) {	
+  			warningLabel.setMessage("Attenzione! Username non valido");
+  			userTxtField.resetHint("Username");
   			return false;
   		}else if(!emailTxtField.isValidInput()) {
-  			wrongEmailLabel.setVisible(true);
-  			emailTxtField.setText("");
+  			warningLabel.setMessage("Attenzione! Email non valida");
+  			emailTxtField.resetHint("Email");
   			return false;
-  		}else if(psw.equals("Conferma Password") || checkPsw.equals("Conferma Password")) {
-  			blankPswLabel.setVisible(true);
+  		}else if(psw.equals("Password") || checkPsw.equals("Conferma Password")) {
+  			warningLabel.setMessage("Attenzione! Campi password vuoti");
+  			pswTxtField.resetHint("Password");
+  			checkPswTxtField.resetHint("Conferma Password");
   			return false;
   		}else if(!psw.equals(checkPsw)) {
-  			wrongPswLabel.setVisible(true);
-  			pswTxtField.setText("");
-  			checkPswTxtField.setText("");
+  			warningLabel.setMessage("Attenzione! Le password non coincidono");
+  			pswTxtField.resetHint("Password");
+  			checkPswTxtField.resetHint("Conferma Password");
   			return false;
   		}
   		return true;
   	}
   	
-  	public void resetErrorLabels() {
-  		wrongNameLabel.setVisible(false);
-  		wrongSurnameLabel.setVisible(false);
-  		wrongUsernameLabel.setVisible(false);
-  		wrongEmailLabel.setVisible(false);
-  		wrongPswLabel.setVisible(false);
-  		blankPswLabel.setVisible(false);
+  	public void resetWarningLabel() {
+  		warningLabel.reset();
   	}
   	
-  	
+  	public void setWarningLabel(String message) {
+  		warningLabel.setMessage(message);
+  	}
+
   	public String getName() {
   		return nameTxtField.getText();
   	}
@@ -235,13 +208,17 @@ public class SignUp extends JFrame {
   	}
   	
   	public void setUsername(String username) {
-  		userTxtField.setText(username);
+  		userTxtField.resetHint(username);
   	}
   	
   	public String getEmail() {
   		return emailTxtField.getText();
   	}
   	
+  	
+  	public void setEmail(String email) {
+  		emailTxtField.resetHint(email);
+  	}
   	public String getPassword() {
   		return new String(pswTxtField.getPassword());
   	}
@@ -249,6 +226,7 @@ public class SignUp extends JFrame {
   	public String getCheckPassword() {
   		return new String(checkPswTxtField.getPassword());
   	}
+  	
   	
   	
 }

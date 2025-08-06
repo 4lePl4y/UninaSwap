@@ -33,5 +33,10 @@ public class JCustomTextField extends JTextField {
 			}
 		});
 	}
+	
+	public void resetHint(String hint) {
+		setText(hint);
+		setForeground(Color.GRAY);
+	}
 
 }
