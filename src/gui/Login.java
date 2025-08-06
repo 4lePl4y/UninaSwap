@@ -23,10 +23,10 @@ public class Login extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private Controller controller;
 	private JPanel contentPane;
-	public JTextField userTxtField;
-	public JPasswordField pswTxtField;
-	public JLabel wrongUsrnmLabel;
-	public JLabel wrongPwdLabel;
+	private JTextField userTxtField;
+	private JPasswordField pswTxtField;
+	private JLabel wrongUsrnmLabel;
+	private JLabel wrongPwdLabel;
 
 
 	public Login(Controller controller) {

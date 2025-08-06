@@ -23,11 +23,11 @@ public class SignUp extends JFrame {
 	private static final long serialVersionUID = 1L;
     private Controller controller;  
     private JPanel contentPane;
-    public JLettersTextField nameTxtField;
-    public JLettersTextField surnameTxtField;
-    public JTextField userTxtField;
-    public JMailTextField emailTxtField;
-    public JPasswordField pswTxtField;
+    private JLettersTextField nameTxtField;
+    private JLettersTextField surnameTxtField;
+    private JTextField userTxtField;
+    private JMailTextField emailTxtField;
+    private JPasswordField pswTxtField;
     private JPasswordField checkPswTxtField;
     private JLabel loginLabel;
     private JLabel wrongNameLabel;
@@ -220,4 +220,35 @@ public class SignUp extends JFrame {
   		wrongPswLabel.setVisible(false);
   		blankPswLabel.setVisible(false);
   	}
+  	
+  	
+  	public String getName() {
+  		return nameTxtField.getText();
+  	}
+  	
+  	public String getSurname() {
+  		return surnameTxtField.getText();
+  	}
+  	
+  	public String getUsername() {
+  		return userTxtField.getText();
+  	}
+  	
+  	public void setUsername(String username) {
+  		userTxtField.setText(username);
+  	}
+  	
+  	public String getEmail() {
+  		return emailTxtField.getText();
+  	}
+  	
+  	public String getPassword() {
+  		return new String(pswTxtField.getPassword());
+  	}
+  	
+  	public String getCheckPassword() {
+  		return new String(checkPswTxtField.getPassword());
+  	}
+  	
+  	
 }

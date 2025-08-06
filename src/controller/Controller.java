@@ -79,17 +79,17 @@ public class Controller {
 		if(!signUpFrame.areInputsValid()) {
 			return;
 		}
-		String chkUsername = signUpFrame.userTxtField.getText();
+		String chkUsername = signUpFrame.getUsername();
 		Studente chkStudente = studenteDAO.retrieve(chkUsername);
 		if(chkStudente != null) {
 			signUpFrame.wrongUsernameLabel.setVisible(true);
-			signUpFrame.userTxtField.setText("");
+			signUpFrame.setUsername("Username");
 			return;
 		}
-		String newName = signUpFrame.nameTxtField.getText();
-		String newSurname = signUpFrame.surnameTxtField.getText();
-		String newEmail = signUpFrame.emailTxtField.getText();
-		String newPassword = new String(signUpFrame.pswTxtField.getPassword());
+		String newName = signUpFrame.getName();
+		String newSurname = signUpFrame.getSurname();
+		String newEmail = signUpFrame.getEmail();
+		String newPassword = signUpFrame.getPassword();
 		chkStudente = new Studente(newName, newSurname, chkUsername, newEmail, newPassword); 
 		studenteDAO.create(chkStudente);
 		loginFrame.setVisible(true);
