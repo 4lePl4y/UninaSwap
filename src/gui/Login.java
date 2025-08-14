@@ -10,7 +10,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import java.awt.Font;
-import javax.swing.JPasswordField;
 import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
@@ -24,7 +23,7 @@ public class Login extends JFrame {
 	private Controller controller;
 	private JPanel contentPane;
 	private JTextField userTxtField;
-	private JPasswordField pswTxtField;
+	private JCustomPasswordField pswTxtField;
 	private JWarningLabel warningLabel;
 
 
@@ -65,6 +64,7 @@ public class Login extends JFrame {
 		
 		pswTxtField = new JCustomPasswordField("Password");
 		pswTxtField.setBounds(10, 178, 262, 33);
+		pswTxtField.getShowPswLabel().setLocation(185, 10);
 		
 		
 		JButton lgnButton = new JButtonWithBorder("Login");
@@ -102,6 +102,7 @@ public class Login extends JFrame {
 		panel.add(descTxtPane);
 		panel.add(userTxtField);
 		panel.add(pswTxtField);
+		pswTxtField.add(pswTxtField.getShowPswLabel());
 		panel.add(lgnButton);
 		panel.add(questionLabel);
 		panel.add(signUpLabel);		

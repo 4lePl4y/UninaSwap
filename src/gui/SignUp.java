@@ -61,6 +61,10 @@ public class SignUp extends JFrame {
         lblNewLabel.setForeground(new Color(0, 51, 102));
         lblNewLabel.setBounds(88, 7, 202, 21);
         
+        JLabel lblNewLabel_1 = new JLabel("Riempi i campi sottostanti");
+        lblNewLabel_1.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        lblNewLabel_1.setBounds(113, 38, 161, 23);
+        
         
         // Name text field
         nameTxtField = new JLettersTextField("Nome");
@@ -87,11 +91,13 @@ public class SignUp extends JFrame {
         // Password text field
         pswTxtField = new JCustomPasswordField("Password");
         pswTxtField.setBounds(10, 281, 354, 33);
+        pswTxtField.getShowPswLabel().setLocation(280, 10);
         
 
         // Check Password text field
         checkPswTxtField = new JCustomPasswordField("Conferma Password");
         checkPswTxtField.setBounds(10, 331, 354, 33);
+        checkPswTxtField.getShowPswLabel().setLocation(280, 10);
         
 
         // Registrati Button
@@ -111,22 +117,20 @@ public class SignUp extends JFrame {
         
         
         loginLabel = new JInteractiveLabel("Accedi");
+        loginLabel.setFont(new Font("Times New Roman", Font.BOLD, 14));
+        loginLabel.setBounds(212, 466, 45, 13);
         loginLabel.addMouseListener(new MouseAdapter() {
         	@Override
         	public void mouseClicked(MouseEvent e) {
         		onReturnToLoginClicked();
         	}
         });
-        loginLabel.setFont(new Font("Times New Roman", Font.BOLD, 14));
-        loginLabel.setBounds(212, 466, 45, 13);
         
-        JLabel lblNewLabel_1 = new JLabel("Riempi i campi sottostanti");
-        lblNewLabel_1.setBounds(113, 38, 161, 23);
-        lblNewLabel_1.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-
+        
         warningLabel = new JWarningLabel("");
         warningLabel.setHorizontalAlignment(SwingConstants.CENTER);
         warningLabel.setBounds(63, 440, 270, 16);
+        
         
         contentPane.add(panel);
         panel.add(lblNewLabel);
@@ -135,7 +139,9 @@ public class SignUp extends JFrame {
         panel.add(userTxtField);
         panel.add(emailTxtField);
         panel.add(pswTxtField);
+        pswTxtField.add(pswTxtField.getShowPswLabel());
         panel.add(checkPswTxtField);
+        checkPswTxtField.add(checkPswTxtField.getShowPswLabel());
         panel.add(registerButton);
         panel.add(lblNewLabel_2);
         panel.add(loginLabel);
