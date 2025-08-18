@@ -53,21 +53,21 @@ public class Controller {
 	}
 	
 	public void onLoginClicked() {
-		loginFrame.resetWarningLabel();
-		String username = loginFrame.getUsername();
-		String password = loginFrame.getPassword();
-		Studente chkStudente = studenteDAO.retrieveByPK(username);
-		if(chkStudente == null) {
-			loginFrame.setWarningLabel("Attenzione! Username errato");
-			
-			return;
-		}else if(chkStudente != null && !chkStudente.getPassword().equals(password)) {
-			loginFrame.setWarningLabel("Attenzione! Password errata");
-			return; 
-		} else {
+//		loginFrame.resetWarningLabel();
+//		String username = loginFrame.getUsername();
+//		String password = loginFrame.getPassword();
+//		Studente chkStudente = studenteDAO.retrieveByPK(username);
+//		if(chkStudente == null) {
+//			loginFrame.setWarningLabel("Attenzione! Username errato");
+//			
+//			return;
+//		}else if(chkStudente != null && !chkStudente.getPassword().equals(password)) {
+//			loginFrame.setWarningLabel("Attenzione! Password errata");
+//			return; 
+//		} else {
 			mainFrame.setVisible(true);
 			loginFrame.setVisible(false);
-		}
+//		}
 		
 	}
 

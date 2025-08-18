@@ -2,6 +2,8 @@
 package gui;
 import controller.Controller;
 import entities.annuncio.Annuncio;
+import gui.preset.presetJPanel.JCardsPanel;
+import gui.preset.presetJPanel.presetJCard.JCard;
 
 //package java gui;
 import javax.swing.JFrame;
@@ -39,9 +41,7 @@ public class Main extends JFrame {
 	private ArrayList<Annuncio> annunci = new ArrayList<>();
 	
 	//Cards related attributes
-	private JPanel cardsPane;
-	private int cardWidth = 240;
-	private int cardHeight = 450;
+	private JCardsPanel cardsPane;
 	private int cardCount = 7;
 	private int hGap = 30;
 	private int vGap = 15;
@@ -135,15 +135,15 @@ public class Main extends JFrame {
         browseScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         
         // Cards panel 
-		cardsPane = new JPanel();
+		cardsPane = new JCardsPanel(cardCount, hGap, vGap);
         cardsPane.setLayout(new GridBagLayout());
         browseScrollPane.setViewportView(cardsPane);
-        updateCardsLayout(getCardsPerRow(browseScrollPane.getViewport().getWidth()));
+        cardsPane.updateCardsLayout(cardsPane.getCardsPerRow(browseScrollPane.getViewport().getWidth()));
         browseScrollPane.getViewport().addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
-                int cardsPerRow = getCardsPerRow(browseScrollPane.getViewport().getWidth());
-                updateCardsLayout(cardsPerRow);
+                int cardsPerRow = cardsPane.getCardsPerRow(browseScrollPane.getViewport().getWidth());
+                cardsPane.updateCardsLayout(cardsPerRow);
             }
         });
         
@@ -194,39 +194,6 @@ public class Main extends JFrame {
         getContentPane().add(buttonPane, BorderLayout.SOUTH);
     }
 
-	
-	
-    //METODI
-    private int getCardsPerRow(int viewportWidth) {
-        if (viewportWidth >= (cardWidth + hGap) * 5 - hGap) {
-            return 5;
-        } else if (viewportWidth >= (cardWidth + hGap) * 4 - hGap) {
-            return 4;
-        } else if (viewportWidth >= (cardWidth + hGap) * 3 - hGap) {
-            return 3;
-        } else {
-            return 2;
-        }
-    }
-
-
-    private void updateCardsLayout(int cardsPerRow) {
-        cardsPane.removeAll();
-        for (int i = 0; i < cardCount; i++) {
-            JPanel card = new JPanel();
-            card.setPreferredSize(new Dimension(cardWidth, cardHeight));
-            card.setBorder(javax.swing.BorderFactory.createTitledBorder("Card " + (i + 1)));
-
-            GridBagConstraints gbc = new GridBagConstraints();
-            gbc.gridx = i % cardsPerRow;  //Imposta la colonna della card
-            gbc.gridy = i / cardsPerRow;  //Imposta la riga della card
-            gbc.insets = new Insets(vGap / 2, hGap / 2, vGap / 2, hGap / 2);  // Margini tra le card
-
-            cardsPane.add(card, gbc);
-        }
-        cardsPane.revalidate();
-        cardsPane.repaint(); 
-    }	
 				
 }
 
