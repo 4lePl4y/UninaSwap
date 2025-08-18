@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 
 import entities.annuncio.Annuncio;
-import gui.preset.presetJPanel.presetJCard.JCard;
 import gui.preset.presetJPanel.presetJCard.JListingCard;
 
 public class JCardsPanel extends JPanel {

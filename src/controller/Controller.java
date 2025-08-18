@@ -109,7 +109,12 @@ public class Controller {
 		loginFrame.setVisible(true);
 		signUpFrame.setVisible(false);
 	}
-	public ArrayList<Annuncio> getAllAnnunci() {
+	
+	public ArrayList<Annuncio> getAnnunci() {
+		
+		//TODO: Questo metodo chiama getAnnunci(int numeroAnnunci) presente in AnnuncioDAO.java per ottenere un certo numero di annunci dal database.
+		//Il codice qui sotto è un placeholder che crea una lista di annunci fittizi per il caricamento iniziale dell'applicazione.
+		
 		ArrayList<Annuncio> annunci = new ArrayList<>();
 		Studente studente = null; 
 		Oggetto oggetto = null;

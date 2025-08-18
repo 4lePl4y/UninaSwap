@@ -64,7 +64,6 @@ public class AnnuncioDAO implements DaoInterface<Annuncio> {
 	
 	//ALTRI METODI
 	private Annuncio creaAnnuncioCorretto(ResultSet rs) throws SQLException {
-		Annuncio annuncio = null;
 		String titolo = rs.getString("titolo");
 		String descrizione = rs.getString("descrizione");
 		String luogo = rs.getString("luogo");
@@ -72,8 +71,10 @@ public class AnnuncioDAO implements DaoInterface<Annuncio> {
 		Date dataPubblicazione = rs.getDate("dataPubblicazione");
 		Studente autore = studenteDAO.retrieveByPK(rs.getString("autore"));
 		Oggetto oggetto = oggettoDAO.retrieveByPK(rs.getString("oggetto"));
+		String tipoAnnuncio = rs.getString("tipoAnnuncio");
 		
-		switch(rs.getString("tipoAnnuncio")) {	
+		Annuncio annuncio = null;
+		switch(tipoAnnuncio) {	
 			case "Vendita":
 				double prezzo = rs.getDouble("prezzo");
 				annuncio = new AnnuncioVendita(titolo, autore, oggetto, descrizione, Sede.valueOf(luogo), oraIncontro.toLocalTime(), dataPubblicazione.toLocalDate(), prezzo);
@@ -93,7 +94,6 @@ public class AnnuncioDAO implements DaoInterface<Annuncio> {
 
 	
 	public ArrayList<Annuncio> getAnnunci(int numeroAnnunci) {
-		Annuncio annuncio = null;
 		ArrayList<Annuncio> annunci = new ArrayList<>();
 		String query = "SELECT * FROM annuncio LIMIT ?;";
 		
@@ -101,28 +101,7 @@ public class AnnuncioDAO implements DaoInterface<Annuncio> {
 			pstmt.setInt(1, numeroAnnunci);
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()) {
-				String titolo = rs.getString("titolo");
-				String descrizione = rs.getString("descrizione");
-				String luogo = rs.getString("luogo");
-				Time oraIncontro = rs.getTime("oraIncontro");
-				Date dataPubblicazione = rs.getDate("dataPubblicazione");
-				Studente autore = studenteDAO.retrieveByPK(rs.getString("autore"));
-				Oggetto oggetto = oggettoDAO.retrieveByPK(rs.getString("oggetto"));
-				
-				switch(rs.getString("tipoAnnuncio")) {	
-					case "Vendita":
-						double prezzo = rs.getDouble("prezzo");
-						annuncio = new AnnuncioVendita(titolo, autore, oggetto, descrizione, Sede.valueOf(luogo), oraIncontro.toLocalTime(), dataPubblicazione.toLocalDate(), prezzo);
-						break;
-				
-					case "Regalo":
-						annuncio = new AnnuncioRegalo(titolo, autore, oggetto, descrizione, Sede.valueOf(luogo), oraIncontro.toLocalTime(), dataPubblicazione.toLocalDate());
-						break;
-						
-					case "Scambio":
-						annuncio = new AnnuncioScambio(titolo, autore, oggetto, descrizione, Sede.valueOf(luogo), oraIncontro.toLocalTime(), dataPubblicazione.toLocalDate());
-				}
-						
+				Annuncio annuncio = creaAnnuncioCorretto(rs);
 				annunci.add(annuncio);					
 			}
 		} catch (SQLException e) {

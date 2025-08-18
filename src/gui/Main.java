@@ -37,7 +37,7 @@ public class Main extends JFrame {
 	private JPanel contentPane;
 	private JPanel buttonPane;
 	private JTextField srchBarTxtField;
-	private ArrayList<Annuncio> annunci = new ArrayList<>();
+	private ArrayList<Annuncio> annunciPubblicati = new ArrayList<>();
 	
 	//Cards related attributes
 	private JCardsPanel cardsPane;
@@ -49,7 +49,8 @@ public class Main extends JFrame {
 	//COSTRUTTORE
 	public Main(Controller controller) {
 		this.controller = controller;
-		this.annunci = controller.getAllAnnunci();
+		this.annunciPubblicati = controller.getAnnunci();
+		
 		setTitle("UninaSwap");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1080, 650);		
@@ -137,12 +138,12 @@ public class Main extends JFrame {
 		cardsPane = new JCardsPanel(browseCardsCount, hGap, vGap);
         cardsPane.setLayout(new GridBagLayout());
         browseScrollPane.setViewportView(cardsPane);
-        cardsPane.updateCardsLayout(cardsPane.getCardsPerRow(browseScrollPane.getViewport().getWidth()), annunci);
+        cardsPane.updateCardsLayout(cardsPane.getCardsPerRow(browseScrollPane.getViewport().getWidth()), annunciPubblicati);
         browseScrollPane.getViewport().addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
                 int cardsPerRow = cardsPane.getCardsPerRow(browseScrollPane.getViewport().getWidth());
-                cardsPane.updateCardsLayout(cardsPerRow, annunci);
+                cardsPane.updateCardsLayout(cardsPerRow, annunciPubblicati);
             }
         });
         
