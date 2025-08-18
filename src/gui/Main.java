@@ -1,6 +1,7 @@
 //my package
 package gui;
 import controller.Controller;
+import entities.annuncio.Annuncio;
 
 //package java gui;
 import javax.swing.JFrame;
@@ -9,6 +10,8 @@ import java.awt.GridBagLayout;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+
 import javax.swing.JButton;
 import java.awt.BorderLayout;
 import javax.swing.JRadioButton;
@@ -33,6 +36,7 @@ public class Main extends JFrame {
 	private JPanel contentPane;
 	private JPanel buttonPane;
 	private JTextField srchBarTxtField;
+	private ArrayList<Annuncio> annunci = new ArrayList<>();
 	
 	//Cards related attributes
 	private JPanel cardsPane;
@@ -46,6 +50,7 @@ public class Main extends JFrame {
 	//COSTRUTTORE
 	public Main(Controller controller) {
 		this.controller = controller;
+		this.annunci = controller.getAllAnnunci();
 		setTitle("UninaSwap");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1080, 650);		

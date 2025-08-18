@@ -5,7 +5,6 @@ import gui.preset.*;
 import gui.preset.presetJLabel.*;
 import gui.preset.presetJTextField.*;
 
-
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;

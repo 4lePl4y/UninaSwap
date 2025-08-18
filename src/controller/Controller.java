@@ -24,8 +24,7 @@ public class Controller {
 					Connection conn = null;
 					DBConnection dbConnection = DBConnection.getDBConnection();
 					conn = dbConnection.getConnection();
-
-					 System.out.println("Connessione OK!");
+					System.out.println("Connessione OK!");
 					 	 					
 					controller.loginFrame = new Login(controller);
 					controller.loginFrame.setVisible(true);
