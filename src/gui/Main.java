@@ -2,11 +2,7 @@
 package gui;
 import controller.Controller;
 import entities.annuncio.*;
-import entities.enumerazioni.Sede;
-import entities.oggetto.Oggetto;
-import entities.studente.Studente;
 import gui.preset.presetJPanel.JCardsPanel;
-import gui.preset.presetJPanel.presetJCard.JCard;
 
 //package java gui;
 import javax.swing.JFrame;
@@ -15,8 +11,6 @@ import java.awt.GridBagLayout;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
