@@ -2,7 +2,9 @@
 package gui;
 import controller.Controller;
 import entities.annuncio.*;
+import gui.preset.JButtonWithBorder;
 import gui.preset.presetJPanel.JCardsPanel;
+import gui.preset.presetJTextField.JCustomTextField;
 
 //package java gui;
 import javax.swing.JFrame;
@@ -80,7 +82,7 @@ public class Main extends JFrame {
 		browsePane.add(filterNsearchPane, BorderLayout.NORTH);
 		
 		// Search bar text field
-		srchBarTxtField = new JTextField();
+		srchBarTxtField = new JCustomTextField("Cerca il tuo prossimo articolo preferito");
 		srchBarTxtField.setPreferredSize(new Dimension(1056, 25));
 		GridBagConstraints gbc_srchBarTxtField = new GridBagConstraints();
 		gbc_srchBarTxtField.gridwidth = 4;
@@ -165,7 +167,7 @@ public class Main extends JFrame {
         FlowLayout fl_buttonPane = (FlowLayout) buttonPane.getLayout();
         fl_buttonPane.setHgap(50);
         
-        JButton browseButton = new JButton("Browse");
+        JButton browseButton = new JButtonWithBorder("Browse");
         browseButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -174,7 +176,7 @@ public class Main extends JFrame {
 			}
 		});
 
-        JButton listingsButton = new JButton("Listings");
+        JButton listingsButton = new JButtonWithBorder("Listings");
         listingsButton.addMouseListener(new MouseAdapter() {
         	@Override
         	public void mouseClicked(MouseEvent e) {
@@ -185,9 +187,9 @@ public class Main extends JFrame {
         
         buttonPane.add(browseButton);
         buttonPane.add(listingsButton);
-        buttonPane.add(new JButton("Offers"));
-        buttonPane.add(new JButton("My objects"));
-        buttonPane.add(new JButton("Profilo"));
+        buttonPane.add(new JButtonWithBorder("Offers"));
+        buttonPane.add(new JButtonWithBorder("My objects"));
+        buttonPane.add(new JButtonWithBorder("Profilo"));
         getContentPane().add(buttonPane, BorderLayout.SOUTH);
     }
 
