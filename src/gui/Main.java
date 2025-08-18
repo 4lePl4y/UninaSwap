@@ -66,21 +66,18 @@ public class Main extends JFrame {
 		
 		// Browse panel
 		Panel browsePane = new Panel();
-		contentPane.add(browsePane, "BROWSE");
 		browsePane.setLayout(new BorderLayout(0, 0));
+		contentPane.add(browsePane, "BROWSE");
 		
 		
 		// Filter and search panel for browse
 		JPanel filterNsearchPane = new JPanel();
 		filterNsearchPane.setBackground(new Color(255, 255, 255));
-		browsePane.add(filterNsearchPane, BorderLayout.NORTH);
 		filterNsearchPane.setPreferredSize(new Dimension(800, 75));
 		GridBagLayout gbl_filterNsearchPane = new GridBagLayout();
 		gbl_filterNsearchPane.columnWidths = new int[] {264, 264, 264, 264};
-		gbl_filterNsearchPane.rowHeights = new int[] {19, 19};
-		gbl_filterNsearchPane.columnWeights = new double[]{0.0, 0.0, 0.0, 0.0};
-		gbl_filterNsearchPane.rowWeights = new double[]{0.0, 0.0};
 		filterNsearchPane.setLayout(gbl_filterNsearchPane);
+		browsePane.add(filterNsearchPane, BorderLayout.NORTH);
 		
 		// Search bar text field
 		srchBarTxtField = new JTextField();
@@ -199,9 +196,3 @@ public class Main extends JFrame {
 }
 
  
-                
-
-
-
-
-	
