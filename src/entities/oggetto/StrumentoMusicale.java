@@ -4,12 +4,12 @@ import entities.studente.Studente;
 
 public class StrumentoMusicale extends Oggetto {
 	// ATTRIBUTI
-	private String brand;
+	private String marchio;
 
 	// COSTRUTTORE
-	public StrumentoMusicale(String descrizione, Studente proprietario, String brand) {
+	public StrumentoMusicale(String descrizione, Studente proprietario, String marchio) {
 		super(descrizione, proprietario);
-		this.brand = brand;
+		this.marchio = marchio;
 	}
 
 	// METODI

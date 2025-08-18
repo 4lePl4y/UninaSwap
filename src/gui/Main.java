@@ -1,7 +1,10 @@
 //my package
 package gui;
 import controller.Controller;
-import entities.annuncio.Annuncio;
+import entities.annuncio.*;
+import entities.enumerazioni.Sede;
+import entities.oggetto.Oggetto;
+import entities.studente.Studente;
 import gui.preset.presetJPanel.JCardsPanel;
 import gui.preset.presetJPanel.presetJCard.JCard;
 
@@ -12,6 +15,8 @@ import java.awt.GridBagLayout;
 import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 import javax.swing.JButton;
@@ -42,7 +47,7 @@ public class Main extends JFrame {
 	
 	//Cards related attributes
 	private JCardsPanel cardsPane;
-	private int cardCount = 7;
+	private int browseCardsCount = 40;
 	private int hGap = 30;
 	private int vGap = 15;
 	
@@ -135,15 +140,15 @@ public class Main extends JFrame {
         browseScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         
         // Cards panel 
-		cardsPane = new JCardsPanel(cardCount, hGap, vGap);
+		cardsPane = new JCardsPanel(browseCardsCount, hGap, vGap);
         cardsPane.setLayout(new GridBagLayout());
         browseScrollPane.setViewportView(cardsPane);
-        cardsPane.updateCardsLayout(cardsPane.getCardsPerRow(browseScrollPane.getViewport().getWidth()));
+        cardsPane.updateCardsLayout(cardsPane.getCardsPerRow(browseScrollPane.getViewport().getWidth()), annunci);
         browseScrollPane.getViewport().addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
                 int cardsPerRow = cardsPane.getCardsPerRow(browseScrollPane.getViewport().getWidth());
-                cardsPane.updateCardsLayout(cardsPerRow);
+                cardsPane.updateCardsLayout(cardsPerRow, annunci);
             }
         });
         
@@ -194,7 +199,8 @@ public class Main extends JFrame {
         getContentPane().add(buttonPane, BorderLayout.SOUTH);
     }
 
-				
+	//METODI
+	
 }
 
  

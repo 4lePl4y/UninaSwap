@@ -2,10 +2,17 @@ package controller;
 
 import java.awt.EventQueue;
 import java.sql.Connection;
-
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.util.ArrayList;
 
 import dao.*;
 import db.DBConnection;
+import entities.annuncio.Annuncio;
+import entities.annuncio.AnnuncioRegalo;
+import entities.annuncio.AnnuncioVendita;
+import entities.enumerazioni.Sede;
+import entities.oggetto.Oggetto;
 import entities.studente.*;
 import gui.*;
 
@@ -102,5 +109,14 @@ public class Controller {
 		loginFrame.setVisible(true);
 		signUpFrame.setVisible(false);
 	}
-	
+	public ArrayList<Annuncio> getAllAnnunci() {
+		ArrayList<Annuncio> annunci = new ArrayList<>();
+		Studente studente = null; 
+		Oggetto oggetto = null;
+		for(int i=0; i<30; i++) {
+			annunci.add(new AnnuncioVendita("titolo", studente, oggetto, "descrizione", Sede.MonteSantAngelo, LocalTime.now(), LocalDate.now(), i*10 )); // Placeholder for the first card, if needed
+			annunci.add(new AnnuncioRegalo("titolo", studente, oggetto, "descrizione", Sede.MonteSantAngelo, LocalTime.now(), LocalDate.now())); // Placeholder for the first card, if needed		
+		}
+		return annunci; 
+	}
 }

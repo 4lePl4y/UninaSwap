@@ -13,5 +13,8 @@ public class AnnuncioVendita extends Annuncio {
 		super(titolo, autore, oggetto, descrizione, luogo, oraIncontro, dataPubblicazione);	
 		this.prezzo = prezzo;
 	}
-
+	
+	public double getPrezzo() {
+		return prezzo;
+	}
 }

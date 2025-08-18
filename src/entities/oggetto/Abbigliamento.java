@@ -4,13 +4,13 @@ import entities.studente.Studente;
 
 public class Abbigliamento extends Oggetto {
 	// ATTRIBUTI
-	private String brand;
+	private String marchio;
 	private String taglia;
 
 	// COSTRUTTORE
-	public Abbigliamento(String descrizione, Studente proprietario, String brand, String taglia) {
+	public Abbigliamento(String descrizione, Studente proprietario, String marchio, String taglia) {
 		super(descrizione, proprietario);
-		this.brand = brand;
+		this.marchio = marchio;
 		this.taglia = taglia;
 	}
 

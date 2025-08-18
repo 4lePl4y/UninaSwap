@@ -26,5 +26,28 @@ public abstract class Annuncio {
 		this.dataPubblicazione = dataPubblicazione;
 	}
 
+	public String getTitolo() {
+		return titolo;
+	}
+	
+	public Studente getAutore() {
+		return autore;
+	}
+	
+	public String getDescrizione() {
+		return descrizione;
+	}
+	
+	public Sede getLuogo() {
+		return luogo;
+	}
+	
+	public LocalTime getOraIncontro() {
+		return oraIncontro;
+	}
+	
+	public LocalDate getDataPubblicazione() {
+		return dataPubblicazione;
+	}
 }
 

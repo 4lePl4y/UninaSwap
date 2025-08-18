@@ -2,15 +2,17 @@ package gui.preset.presetJPanel;
 
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+import entities.annuncio.Annuncio;
 import gui.preset.presetJPanel.presetJCard.JCard;
 import gui.preset.presetJPanel.presetJCard.JListingCard;
 
 public class JCardsPanel extends JPanel {
 	private static final long serialVersionUID = 1L;
-	private int cardCount = 7; // Number of cards to display
+	private int cardCount; // Number of cards to display
 	private int cardWidth = 240; // Width of each card
 	private int hGap = 30; // Horizontal gap between cards
 	private int vGap = 15; // Vertical gap between cards
@@ -22,7 +24,6 @@ public class JCardsPanel extends JPanel {
 		setLayout(new java.awt.GridBagLayout()); // Use GridBagLayout for flexible layout
 		setOpaque(false); // Make the panel transparent
 		setBackground(getBackground()); // Set the background color
-		updateCardsLayout(getCardsPerRow(1080)); // Initial layout based on default viewport width
 		
 	}
 	
@@ -39,10 +40,10 @@ public class JCardsPanel extends JPanel {
     }
 
 
-    public void updateCardsLayout(int cardsPerRow) {
+    public void updateCardsLayout(int cardsPerRow, ArrayList<Annuncio> annunci) {
         removeAll();
-        for (int i = 0; i < cardCount; i++) {
-            JPanel card = new JListingCard();
+        for (int i = 0; i < cardCount && i<annunci.size(); i++) {
+            JPanel card = new JListingCard(annunci.get(i)); // Create a new card for each announcement
 
             GridBagConstraints gbc = new GridBagConstraints();
             gbc.gridx = i % cardsPerRow;  //Imposta la colonna della card
