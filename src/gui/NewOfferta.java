@@ -29,6 +29,7 @@ public class NewOfferta extends JFrame {
         setTitle("Nuova Offerta");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 420, 320);
+        this.setFocusable(true);
 
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));
