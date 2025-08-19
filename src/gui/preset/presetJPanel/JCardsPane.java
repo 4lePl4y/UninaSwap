@@ -1,6 +1,7 @@
 package gui.preset.presetJPanel;
 
 import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 import java.awt.Insets;
 import java.util.ArrayList;
 
@@ -9,18 +10,16 @@ import javax.swing.JPanel;
 import entities.annuncio.Annuncio;
 import gui.preset.presetJPanel.presetJCard.JListingCard;
 
-public class JCardsPanel extends JPanel {
+public class JCardsPane<T> extends JPanel {
 	private static final long serialVersionUID = 1L;
-	private int cardCount; // Number of cards to display
 	private int cardWidth = 240; // Width of each card
 	private int hGap = 30; // Horizontal gap between cards
 	private int vGap = 15; // Vertical gap between cards
 	
 	
-	public JCardsPanel(int cardCount, int hGap, int vGap) {
+	public JCardsPane() {
 		super();
-		this.cardCount = cardCount;
-		setLayout(new java.awt.GridBagLayout()); // Use GridBagLayout for flexible layout
+		setLayout(new GridBagLayout()); // Use GridBagLayout for flexible layout
 		setOpaque(false); // Make the panel transparent
 		setBackground(getBackground()); // Set the background color
 		
@@ -39,10 +38,10 @@ public class JCardsPanel extends JPanel {
     }
 
 
-    public void updateCardsLayout(int cardsPerRow, ArrayList<Annuncio> annunci) {
+    public void updateCardsLayout(int cardsPerRow, ArrayList<T> contents) {
         removeAll();
-        for (int i = 0; i < cardCount && i<annunci.size(); i++) {
-            JPanel card = new JListingCard(annunci.get(i)); // Create a new card for each announcement
+        for (int i = 0; i < contents.size(); i++) {
+            JPanel card = createCard(contents.get(i)); // Create a new card for each announcement
 
             GridBagConstraints gbc = new GridBagConstraints();
             gbc.gridx = i % cardsPerRow;  //Imposta la colonna della card
@@ -53,5 +52,15 @@ public class JCardsPanel extends JPanel {
         }
         revalidate();
         repaint(); 
-    }	
+    }
+    
+    
+    private JPanel createCard(T content) {
+		if (content instanceof Annuncio) {
+			return new JListingCard((Annuncio) content); // Cast to Annuncio and create a card
+		}
+		
+		return new JPanel(); // Return an empty panel if content is not of type Annuncio
+	}
+    
 }

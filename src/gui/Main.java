@@ -3,7 +3,7 @@ package gui;
 import controller.Controller;
 import entities.annuncio.*;
 import gui.preset.JButtonWithBorder;
-import gui.preset.presetJPanel.JCardsPanel;
+import gui.preset.JCustomScrollPane;
 import gui.preset.presetJTextField.JCustomTextField;
 
 //package java gui;
@@ -20,15 +20,11 @@ import java.awt.BorderLayout;
 import javax.swing.JRadioButton;
 import java.awt.FlowLayout;
 import javax.swing.JScrollPane;
-import javax.swing.ScrollPaneConstants;
 import javax.swing.border.EmptyBorder;
-import java.awt.Panel;
 import java.awt.CardLayout;
 import javax.swing.JTextField;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import java.awt.Color;
 
 public class Main extends JFrame {
@@ -40,13 +36,7 @@ public class Main extends JFrame {
 	private JPanel buttonPane;
 	private JTextField srchBarTxtField;
 	private ArrayList<Annuncio> annunciPubblicati = new ArrayList<>();
-	
-	//Cards related attributes
-	private JCardsPanel cardsPane;
-	private int browseCardsCount = 40;
-	private int hGap = 30;
-	private int vGap = 15;
-	
+		
 
 	//COSTRUTTORE
 	public Main(Controller controller) {
@@ -67,7 +57,7 @@ public class Main extends JFrame {
 		
 		
 		// Browse panel
-		Panel browsePane = new Panel();
+		JPanel browsePane = new JPanel();
 		browsePane.setLayout(new BorderLayout(0, 0));
 		contentPane.add(browsePane, "BROWSE");
 		
@@ -128,24 +118,9 @@ public class Main extends JFrame {
 	
 		
         // Browse scroll panel with responsive cards
-		JScrollPane browseScrollPane = new JScrollPane();
+		JScrollPane browseScrollPane = new JCustomScrollPane<Annuncio>(annunciPubblicati);
 		browsePane.add(browseScrollPane, BorderLayout.CENTER);
-        browseScrollPane.getVerticalScrollBar().setUnitIncrement(15);
-        browseScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-        
-        // Cards panel 
-		cardsPane = new JCardsPanel(browseCardsCount, hGap, vGap);
-        cardsPane.setLayout(new GridBagLayout());
-        browseScrollPane.setViewportView(cardsPane);
-        cardsPane.updateCardsLayout(cardsPane.getCardsPerRow(browseScrollPane.getViewport().getWidth()), annunciPubblicati);
-        browseScrollPane.getViewport().addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                int cardsPerRow = cardsPane.getCardsPerRow(browseScrollPane.getViewport().getWidth());
-                cardsPane.updateCardsLayout(cardsPerRow, annunciPubblicati);
-            }
-        });
-        
+		
         //FINE FINESTRA DI BROWSE
         
         //INIZIO FINISTRA DI LISTINGS

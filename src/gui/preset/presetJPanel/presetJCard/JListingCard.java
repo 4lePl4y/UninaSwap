@@ -1,6 +1,4 @@
 package gui.preset.presetJPanel.presetJCard;
-import java.awt.Color;
-import java.awt.Dimension;
 
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
