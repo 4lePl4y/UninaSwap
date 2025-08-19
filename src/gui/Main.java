@@ -26,6 +26,9 @@ import javax.swing.JTextField;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import java.awt.Color;
+import javax.swing.JLabel;
+import java.awt.Font;
+import javax.swing.SwingConstants;
 
 public class Main extends JFrame {
 	//ATTRIBUTI
@@ -131,6 +134,43 @@ public class Main extends JFrame {
 		
 		JScrollPane listingsScrollPane = new JScrollPane();
 		listingsPanel.add(listingsScrollPane, BorderLayout.CENTER);
+		
+		JPanel listingsUpperPanel = new JPanel();
+		listingsUpperPanel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		listingsUpperPanel.setPreferredSize(new Dimension(10, 70));
+		listingsPanel.add(listingsUpperPanel, BorderLayout.NORTH);
+		GridBagLayout gbl_listingsUpperPanel = new GridBagLayout();
+		gbl_listingsUpperPanel.columnWidths = new int[]{0, 0, 0};
+		gbl_listingsUpperPanel.rowHeights = new int[]{36, 0, 0};
+		gbl_listingsUpperPanel.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
+		gbl_listingsUpperPanel.rowWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
+		listingsUpperPanel.setLayout(gbl_listingsUpperPanel);
+		
+		JLabel welcomingLabel = new JLabel("Ciao User! Liberati di quello che non usi più e connettiti con altri studenti della Federico II");
+		welcomingLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		GridBagConstraints gbc_welcomingLabel = new GridBagConstraints();
+		gbc_welcomingLabel.insets = new Insets(0, 0, 5, 5);
+		gbc_welcomingLabel.gridx = 0;
+		gbc_welcomingLabel.gridy = 0;
+		listingsUpperPanel.add(welcomingLabel, gbc_welcomingLabel);
+		
+		JButton newListingButton = new JButtonWithBorder("Crea un nuovo annuncio");
+		newListingButton.setText("Crea un nuovo annuncio +");
+		GridBagConstraints gbc_newListingButton = new GridBagConstraints();
+		gbc_newListingButton.insets = new Insets(0, 0, 5, 0);
+		gbc_newListingButton.gridx = 1;
+		gbc_newListingButton.gridy = 0;
+		listingsUpperPanel.add(newListingButton, gbc_newListingButton);
+		
+		JLabel yourListingsLabel = new JLabel("Ecco qui i tuoi annunci:");
+		yourListingsLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		yourListingsLabel.setHorizontalTextPosition(SwingConstants.CENTER);
+		GridBagConstraints gbc_yourListingsLabel = new GridBagConstraints();
+		gbc_yourListingsLabel.anchor = GridBagConstraints.WEST;
+		gbc_yourListingsLabel.insets = new Insets(0, 0, 0, 5);
+		gbc_yourListingsLabel.gridx = 0;
+		gbc_yourListingsLabel.gridy = 1;
+		listingsUpperPanel.add(yourListingsLabel, gbc_yourListingsLabel);
 
 		//FINE SECONDA FINESTRA
 
