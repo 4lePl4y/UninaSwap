@@ -154,8 +154,7 @@ public class Main extends JFrame {
 		gbc_welcomingLabel.gridy = 0;
 		listingsUpperPanel.add(welcomingLabel, gbc_welcomingLabel);
 		
-		JButton newListingButton = new JButtonWithBorder("Crea un nuovo annuncio");
-		newListingButton.setText("Crea un nuovo annuncio +");
+		JButton newListingButton = new JButtonWithBorder("Crea un nuovo annuncio +");
 		GridBagConstraints gbc_newListingButton = new GridBagConstraints();
 		gbc_newListingButton.insets = new Insets(0, 0, 5, 0);
 		gbc_newListingButton.gridx = 1;
@@ -179,7 +178,57 @@ public class Main extends JFrame {
 		listingsUpperPanel.add(yourListingsLabel, gbc_yourListingsLabel);
 
 		//FINE SECONDA FINESTRA
-
+		
+		//INIZIO FINESTRA MY OBJECTS
+		JPanel myObjectsPane = new JPanel();
+		contentPane.add(myObjectsPane, "MYOBJECTS");
+		myObjectsPane.setLayout(new BorderLayout(0, 0));
+			
+		JScrollPane myObjectScrollPane = new JScrollPane();
+		myObjectsPane.add(myObjectScrollPane, BorderLayout.CENTER);
+			
+		JPanel myObjectsUpperPanel = new JPanel();
+		myObjectsUpperPanel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		myObjectsUpperPanel.setPreferredSize(new Dimension(10, 70));
+		myObjectsPane.add(myObjectsUpperPanel, BorderLayout.NORTH);
+		GridBagLayout gbl_myObjectsUpperPanel = new GridBagLayout();
+		gbl_myObjectsUpperPanel.columnWidths = new int[]{0, 0, 0};
+		gbl_myObjectsUpperPanel.rowHeights = new int[]{36, 0, 0};
+		gbl_myObjectsUpperPanel.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
+		gbl_myObjectsUpperPanel.rowWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
+		myObjectsUpperPanel.setLayout(gbl_myObjectsUpperPanel);
+			
+		JLabel welcomingLabel_2 = new JLabel("Ciao User! Aggiungi i tuoi oggetti");
+		welcomingLabel_2.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		GridBagConstraints gbc_welcomingLabel_2 = new GridBagConstraints();
+		gbc_welcomingLabel_2.insets = new Insets(0, 0, 5, 5);
+		gbc_welcomingLabel_2.gridx = 0;
+		gbc_welcomingLabel.gridy = 0;
+		myObjectsUpperPanel.add(welcomingLabel_2, gbc_welcomingLabel_2);
+			
+		JButton newObjectButton = new JButtonWithBorder("Crea un nuovo oggetto +");
+		GridBagConstraints gbc_newObjectButton = new GridBagConstraints();
+		gbc_newObjectButton.insets = new Insets(0, 0, 5, 0);
+		gbc_newObjectButton.gridx = 1;
+		gbc_newObjectButton.gridy = 0;
+		myObjectsUpperPanel.add(newObjectButton, gbc_newObjectButton);
+		newObjectButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				controller.onNuovoOggettoClicked();
+			}
+		});
+			
+		JLabel yourObjects = new JLabel("Ecco qui i tuoi oggetti:");
+		yourObjects.setHorizontalAlignment(SwingConstants.CENTER);
+		yourObjects.setHorizontalTextPosition(SwingConstants.CENTER);
+		GridBagConstraints gbc_yourObjectsLabel = new GridBagConstraints();
+		gbc_yourObjectsLabel.anchor = GridBagConstraints.WEST;
+		gbc_yourObjectsLabel.insets = new Insets(0, 0, 0, 5);
+		gbc_yourObjectsLabel.gridx = 0;
+		gbc_yourObjectsLabel.gridy = 1;
+		listingsUpperPanel.add(yourListingsLabel, gbc_yourObjectsLabel);
+		
 		
 		//(Scelta delle finestre)
 		// Button panel
@@ -206,10 +255,20 @@ public class Main extends JFrame {
         	}
         });
         
+        
+        JButton myObjectsButton = new JButtonWithBorder("My Objects");
+        myObjectsButton.addMouseListener(new MouseAdapter() {
+        	@Override
+        	public void mouseClicked(MouseEvent e) {
+        		CardLayout cl = (CardLayout)(contentPane.getLayout());
+        		cl.show(contentPane, "MYOBJECTS");
+        	}
+        });
+        
         buttonPane.add(browseButton);
         buttonPane.add(listingsButton);
         buttonPane.add(new JButtonWithBorder("Offers"));
-        buttonPane.add(new JButtonWithBorder("My objects"));
+        buttonPane.add(myObjectsButton);
         buttonPane.add(new JButtonWithBorder("Profilo"));
         getContentPane().add(buttonPane, BorderLayout.SOUTH);
     }

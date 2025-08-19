@@ -12,7 +12,6 @@ import entities.annuncio.Annuncio;
 import entities.annuncio.AnnuncioRegalo;
 import entities.annuncio.AnnuncioVendita;
 import entities.enumerazioni.Sede;
-import entities.offerta.Offerta;
 import entities.oggetto.Oggetto;
 import entities.studente.*;
 import gui.*;
@@ -24,8 +23,8 @@ public class Controller {
 	Main mainFrame;
 	NewOfferta newOffertaFrame;
 	NewAnnuncio newAnnuncioFrame;
+	NewOggetto newOggettoFrame;
 	StudenteDAO studenteDAO;
-	
 	
 	public static void main(String[] args) {
 		Controller controller = new Controller();
@@ -125,6 +124,12 @@ public class Controller {
 		newAnnuncioFrame.setVisible(true);
 	}
 	
+	public void onNuovoOggettoClicked() {
+		newOggettoFrame = new NewOggetto(this);
+		newOggettoFrame.setVisible(true);
+	}
+
+	
 	public ArrayList<Annuncio> getAnnunci() {
 		//TODO: Questo metodo chiama getAnnunci(int numeroAnnunci) presente in AnnuncioDAO.java per ottenere un certo numero di annunci dal database.
 		//Il codice qui sotto è un placeholder che crea una lista di annunci fittizi per il caricamento iniziale dell'applicazione.
@@ -139,5 +144,6 @@ public class Controller {
 		return annunci; 
 	}
 
+	
 	
 }

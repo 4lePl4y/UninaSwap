@@ -1,18 +1,18 @@
 package gui;
 
-import gui.preset.JButtonWithBorder;
-import gui.preset.presetJTextField.JCustomTextField;
-
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-
 import controller.Controller;
 import entities.enumerazioni.Sede;
+import entities.enumerazioni.TipoOggetto;
+
+import gui.preset.JButtonWithBorder;
+import gui.preset.JCustomTextArea;
+import gui.preset.presetJTextField.JCustomTextField;
 
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.util.ArrayList;
+import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 
 public class NewAnnuncio extends JFrame {
 
@@ -23,7 +23,6 @@ public class NewAnnuncio extends JFrame {
         setTitle("Nuovo Annuncio");
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(100, 100, 500, 500);
-        setLocationRelativeTo(null); // Center the frame on the screen
         setResizable(false);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));
@@ -38,6 +37,15 @@ public class NewAnnuncio extends JFrame {
         tipoAnnuncio.add(tipoAnnuncioLabel);
         tipoAnnuncio.add(tipoAnnuncioCombo);
         contentPane.add(tipoAnnuncio);
+        
+        // Tipo Oggetto
+        JPanel tipoOggettoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JLabel tipoOggettoLabel = new JLabel("Tipo Oggetto:");
+        JComboBox<TipoOggetto> tipoOggettoCombo = new JComboBox<>(TipoOggetto.values());
+        tipoOggettoPanel.add(tipoOggettoLabel);
+        tipoOggettoPanel.add(tipoOggettoCombo);
+        contentPane.add(tipoOggettoPanel);
+
 
         // Titolo
         JPanel titoloPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
@@ -51,7 +59,7 @@ public class NewAnnuncio extends JFrame {
         // Descrizione
         JPanel descrPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JLabel descrLabel = new JLabel("Descrizione:");
-        JTextArea descrPane = new JTextArea("Inserisci la descrizione");
+        JTextArea descrPane = new JCustomTextArea("Inserisci la descrizione...");
         descrPane.setPreferredSize(new Dimension(300, 80));
         descrPanel.add(descrLabel);
         descrPanel.add(descrPane);
@@ -59,7 +67,7 @@ public class NewAnnuncio extends JFrame {
 
         // Sede
         JPanel sedePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JLabel sedeLabel = new JLabel("Luogo incontro:");
+        JLabel sedeLabel = new JLabel("Luogo d'incontro:");
         JComboBox<Sede> sedeCombo = new JComboBox<>(Sede.values());
         sedePanel.add(sedeLabel);
         sedePanel.add(sedeCombo);
@@ -98,13 +106,16 @@ public class NewAnnuncio extends JFrame {
     }
 
     private String[] generaOrari() {
-        ArrayList<String> orari = new ArrayList<String>();
-        for (int h = 8; h <= 19; h++) {
-            for (int m = 0; m < 60; m += 15) {
-                if (h == 19 && m > 0) break;
-                orari.add(String.format("%2d:%02d", h, m));
+        String[] orari = new String[45];
+        int idx = 0;
+        for (int hour = 8; hour <= 19; hour++) {
+            for (int min = 0; min < 60; min += 15) {
+                if (hour == 19 && min > 0) break;
+                String orario = String.format("%2d:%02d", hour, min);
+                orari[idx++] = orario;
             }
         }
-        return orari.toArray(new String[0]);
+        
+        return orari;
     }
 }
