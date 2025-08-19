@@ -23,6 +23,7 @@ public class Controller {
 	SignUp signUpFrame; 
 	Main mainFrame;
 	NewOfferta newOffertaFrame;
+	NewAnnuncio newAnnuncioFrame;
 	StudenteDAO studenteDAO;
 	
 	
@@ -45,6 +46,8 @@ public class Controller {
 					controller.newOffertaFrame = new NewOfferta(controller);
 					controller.newOffertaFrame.setVisible(false);
 					controller.studenteDAO = new StudenteDAO(conn);
+					
+					controller.newAnnuncioFrame = new NewAnnuncio(controller);
 					
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -115,14 +118,18 @@ public class Controller {
 		signUpFrame.setVisible(false);
 	}
 	
+
 	public void onFaiOffertaClicked(Annuncio annuncio, Studente autore) {
 		newOffertaFrame.setVisible(true);
 		newOffertaFrame.setAnnuncio(annuncio);
 		newOffertaFrame.setStudente(autore);
 	}
 	
+	public void onNuovoAnnuncioClicked() {
+		newAnnuncioFrame.setVisible(true);
+	}
+	
 	public ArrayList<Annuncio> getAnnunci() {
-		
 		//TODO: Questo metodo chiama getAnnunci(int numeroAnnunci) presente in AnnuncioDAO.java per ottenere un certo numero di annunci dal database.
 		//Il codice qui sotto è un placeholder che crea una lista di annunci fittizi per il caricamento iniziale dell'applicazione.
 		
@@ -135,4 +142,6 @@ public class Controller {
 		}
 		return annunci; 
 	}
+
+	
 }

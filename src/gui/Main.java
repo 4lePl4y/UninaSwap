@@ -161,6 +161,12 @@ public class Main extends JFrame {
 		gbc_newListingButton.gridx = 1;
 		gbc_newListingButton.gridy = 0;
 		listingsUpperPanel.add(newListingButton, gbc_newListingButton);
+		newListingButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				controller.onNuovoAnnuncioClicked();
+			}
+		});
 		
 		JLabel yourListingsLabel = new JLabel("Ecco qui i tuoi annunci:");
 		yourListingsLabel.setHorizontalAlignment(SwingConstants.CENTER);
