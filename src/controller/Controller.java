@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import dao.*;
 import db.DBConnection;
-import entities.annuncio.Annuncio;
+import entities.annuncio.*;
 import entities.annuncio.AnnuncioRegalo;
 import entities.annuncio.AnnuncioVendita;
 import entities.enumerazioni.Sede;
@@ -116,7 +116,6 @@ public class Controller {
 		newOffertaFrame = new NewOfferta(this);
 		newOffertaFrame.setVisible(true);
 		newOffertaFrame.setAnnuncio(annuncio);
-		newOffertaFrame.setStudente(autore);
 	}
 	
 	public void onNuovoAnnuncioClicked() {
@@ -135,11 +134,11 @@ public class Controller {
 		//Il codice qui sotto è un placeholder che crea una lista di annunci fittizi per il caricamento iniziale dell'applicazione.
 		
 		ArrayList<Annuncio> annunci = new ArrayList<>();
-		Studente studente = null; 
 		Oggetto oggetto = null;
-		for(int i=0; i<30; i++) {
+		for(int i=0; i<10; i++) {
+			Studente studente = new Studente("Mario", "Rossi", "m4ri0", "stocazzo", "password" );
 			annunci.add(new AnnuncioVendita("titolo", studente, oggetto, "descrizione", Sede.MonteSantAngelo, LocalTime.now(), LocalDate.now(), i*10 )); // Placeholder for the first card, if needed
-			annunci.add(new AnnuncioRegalo("titolo", studente, oggetto, "descrizione", Sede.MonteSantAngelo, LocalTime.now(), LocalDate.now())); // Placeholder for the first card, if needed		
+			annunci.add(new AnnuncioScambio("titolo", studente, oggetto, "descrizione", Sede.MonteSantAngelo, LocalTime.now(), LocalDate.now())); // Placeholder for the first card, if needed		
 		}
 		return annunci; 
 	}

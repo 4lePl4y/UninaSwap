@@ -4,7 +4,7 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import controller.Controller;
-import entities.annuncio.Annuncio;
+import entities.annuncio.*;
 import entities.annuncio.AnnuncioVendita;
 import entities.studente.Studente;
 import gui.preset.JButtonWithBorder;
@@ -53,14 +53,24 @@ public class JListingCard extends JCard {
 		placeOfferButton.setBounds(55, 405, 140, 30);
 		add(placeOfferButton);
 		
+		JLabel typeLabel = new JLabel("New label");
+		typeLabel.setBounds(10, 364, 70, 13);
+		add(typeLabel);
+		
 		
 		if (annuncio instanceof AnnuncioVendita) {
 			JLabel priceLabel = new JLabel("Prezzo: " + String.valueOf(((AnnuncioVendita)annuncio).getPrezzo()) + "€");
 			priceLabel.setBounds(10, 297, 220, 13);
 			add(priceLabel);
 			priceLabel.setVisible(true);
+			typeLabel.setText("Vendita");
+		}else if (annuncio instanceof AnnuncioScambio) {
+			typeLabel.setText("Scambio");
+		}else {
+			typeLabel.setText("Regalo");
 		}
-		
+			
+			
 		placeOfferButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -72,6 +82,6 @@ public class JListingCard extends JCard {
 	
 	//METODI
 	public void onFaiOffertaClicked() {
-		controller.onFaiOffertaClicked(annuncio, annuncio.getAutore());
+		controller.onFaiOffertaClicked(annuncio, autore);
 	}
 }
