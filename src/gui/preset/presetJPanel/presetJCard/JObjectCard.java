@@ -2,12 +2,14 @@ package gui.preset.presetJPanel.presetJCard;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import controller.Controller;
+
 
 public class JObjectCard extends JCard {
 	private static final long serialVersionUID = 1L;
 
-	public JObjectCard() {
-		super();
+	public JObjectCard(Controller controller) {
+		super(controller);
 		this.setBounds(0, 0, 240, 450);
 		this.setLayout(null);
 		

@@ -121,7 +121,7 @@ public class Main extends JFrame {
 	
 		
         // Browse scroll panel with responsive cards
-		JScrollPane browseScrollPane = new JCustomScrollPane<Annuncio>(annunciPubblicati);
+		JScrollPane browseScrollPane = new JCustomScrollPane<Annuncio>(annunciPubblicati, controller);
 		browsePane.add(browseScrollPane, BorderLayout.CENTER);
 		
         //FINE FINESTRA DI BROWSE

@@ -12,6 +12,7 @@ import entities.annuncio.Annuncio;
 import entities.annuncio.AnnuncioRegalo;
 import entities.annuncio.AnnuncioVendita;
 import entities.enumerazioni.Sede;
+import entities.offerta.Offerta;
 import entities.oggetto.Oggetto;
 import entities.studente.*;
 import gui.*;
@@ -21,7 +22,9 @@ public class Controller {
 	Login loginFrame; 
 	SignUp signUpFrame; 
 	Main mainFrame;
+	NewOfferta newOffertaFrame;
 	StudenteDAO studenteDAO;
+	
 	
 	public static void main(String[] args) {
 		Controller controller = new Controller();
@@ -39,6 +42,8 @@ public class Controller {
 					controller.signUpFrame.setVisible(false);
 					controller.mainFrame = new Main(controller);
 					controller.mainFrame.setVisible(false);
+					controller.newOffertaFrame = new NewOfferta(controller);
+					controller.newOffertaFrame.setVisible(false);
 					controller.studenteDAO = new StudenteDAO(conn);
 					
 				} catch (Exception e) {
@@ -108,6 +113,12 @@ public class Controller {
 		studenteDAO.create(chkStudente);
 		loginFrame.setVisible(true);
 		signUpFrame.setVisible(false);
+	}
+	
+	public void onFaiOffertaClicked(Annuncio annuncio, Studente autore) {
+		newOffertaFrame.setVisible(true);
+		newOffertaFrame.setAnnuncio(annuncio);
+		newOffertaFrame.setStudente(autore);
 	}
 	
 	public ArrayList<Annuncio> getAnnunci() {

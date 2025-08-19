@@ -7,23 +7,27 @@ import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 import javax.swing.JScrollPane;
 
+import controller.Controller;
+
 public class JCustomScrollPane<T> extends JScrollPane {
 	private static final long serialVersionUID = 1L;
-	JCardsPane<T> cardsPane;
+	private JCardsPane<T> cardsPane;
+	private Controller controller;
 	
-	public JCustomScrollPane(ArrayList<T> contents) {
-	this.getVerticalScrollBar().setUnitIncrement(15);
-	this.setHorizontalScrollBarPolicy(HORIZONTAL_SCROLLBAR_NEVER);
-	cardsPane = new JCardsPane<T>();
-	this.setViewportView(cardsPane);
+	public JCustomScrollPane(ArrayList<T> contents, Controller controller) {
+		this.controller = controller;
+		this.getVerticalScrollBar().setUnitIncrement(15);
+		this.setHorizontalScrollBarPolicy(HORIZONTAL_SCROLLBAR_NEVER);
+		cardsPane = new JCardsPane<T>(controller);
+		this.setViewportView(cardsPane);
 	
-	this.getViewport().addComponentListener(new ComponentAdapter() {
-		@Override
-		public void componentResized(ComponentEvent e) {
-			int viewportWidth = getViewport().getWidth();
-			int cardsPerRow = cardsPane.getCardsPerRow(viewportWidth);
-			cardsPane.updateCardsLayout(cardsPerRow, contents);
-			}
+		this.getViewport().addComponentListener(new ComponentAdapter() {
+			@Override
+			public void componentResized(ComponentEvent e) {
+				int viewportWidth = getViewport().getWidth();
+				int cardsPerRow = cardsPane.getCardsPerRow(viewportWidth);
+				cardsPane.updateCardsLayout(cardsPerRow, contents);
+				}
 		});
 	}
 	

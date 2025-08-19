@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import javax.swing.JPanel;
 
+import controller.Controller;
 import entities.annuncio.Annuncio;
 import gui.preset.presetJPanel.presetJCard.JListingCard;
 
@@ -15,10 +16,11 @@ public class JCardsPane<T> extends JPanel {
 	private int cardWidth = 240; // Width of each card
 	private int hGap = 30; // Horizontal gap between cards
 	private int vGap = 15; // Vertical gap between cards
+	private Controller controller; // Controller reference
 	
-	
-	public JCardsPane() {
+	public JCardsPane(Controller controller) {
 		super();
+		this.controller = controller; // Initialize the controller
 		setLayout(new GridBagLayout()); // Use GridBagLayout for flexible layout
 		setOpaque(false); // Make the panel transparent
 		setBackground(getBackground()); // Set the background color
@@ -57,7 +59,7 @@ public class JCardsPane<T> extends JPanel {
     
     private JPanel createCard(T content) {
 		if (content instanceof Annuncio) {
-			return new JListingCard((Annuncio) content); // Cast to Annuncio and create a card
+			return new JListingCard((Annuncio) content, controller); // Cast to Annuncio and create a card
 		}
 		
 		return new JPanel(); // Return an empty panel if content is not of type Annuncio

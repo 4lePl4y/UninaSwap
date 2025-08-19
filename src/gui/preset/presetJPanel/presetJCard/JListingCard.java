@@ -3,21 +3,30 @@ package gui.preset.presetJPanel.presetJCard;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import controller.Controller;
 import entities.annuncio.Annuncio;
 import entities.annuncio.AnnuncioVendita;
+import entities.studente.Studente;
 import gui.preset.JButtonWithBorder;
 
 import java.awt.Rectangle;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 import javax.swing.JButton;
 
 
 
 public class JListingCard extends JCard {
 	private static final long serialVersionUID = 1L;
-
-	public JListingCard(Annuncio annuncio) {
-		super();
+	private Annuncio annuncio;
+	private Studente autore; 
+	
+	public JListingCard(Annuncio annuncio, Controller controller) {
+		super(controller);
 		this.setBounds(new Rectangle(0, 0, 240, 450));
+		this.annuncio = annuncio;
+		this.autore = annuncio.getAutore();
 		
 		JLabel titleLabel = new JLabel(annuncio.getTitolo());
 		titleLabel.setHorizontalTextPosition(SwingConstants.CENTER);
@@ -52,5 +61,17 @@ public class JListingCard extends JCard {
 			priceLabel.setVisible(true);
 		}
 		
+		placeOfferButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				onFaiOffertaClicked();
+			}
+		});
+		
+	}
+	
+	//METODI
+	public void onFaiOffertaClicked() {
+		controller.onFaiOffertaClicked(annuncio, annuncio.getAutore());
 	}
 }
