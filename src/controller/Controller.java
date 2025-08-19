@@ -39,16 +39,9 @@ public class Controller {
 					 	 					
 					controller.loginFrame = new Login(controller);
 					controller.loginFrame.setVisible(true);
-					controller.signUpFrame = new SignUp(controller);
-					controller.signUpFrame.setVisible(false);
 					controller.mainFrame = new Main(controller);
 					controller.mainFrame.setVisible(false);
-					controller.newOffertaFrame = new NewOfferta(controller);
-					controller.newOffertaFrame.setVisible(false);
 					controller.studenteDAO = new StudenteDAO(conn);
-					
-					controller.newAnnuncioFrame = new NewAnnuncio(controller);
-					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -58,6 +51,7 @@ public class Controller {
 	
 	//METODI
 	public void onGoToSignUpClicked(){
+		signUpFrame = new SignUp(this);
 		signUpFrame.setVisible(true);
 		loginFrame.setVisible(false);
 	}
@@ -120,12 +114,14 @@ public class Controller {
 	
 
 	public void onFaiOffertaClicked(Annuncio annuncio, Studente autore) {
+		newOffertaFrame = new NewOfferta(this);
 		newOffertaFrame.setVisible(true);
 		newOffertaFrame.setAnnuncio(annuncio);
 		newOffertaFrame.setStudente(autore);
 	}
 	
 	public void onNuovoAnnuncioClicked() {
+		newAnnuncioFrame = new NewAnnuncio(this);
 		newAnnuncioFrame.setVisible(true);
 	}
 	

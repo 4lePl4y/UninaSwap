@@ -13,7 +13,6 @@ import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.util.ArrayList;
-import java.util.List;
 
 public class NewAnnuncio extends JFrame {
 
@@ -99,7 +98,7 @@ public class NewAnnuncio extends JFrame {
     }
 
     private String[] generaOrari() {
-        List<String> orari = new ArrayList<String>();
+        ArrayList<String> orari = new ArrayList<String>();
         for (int h = 8; h <= 19; h++) {
             for (int m = 0; m < 60; m += 15) {
                 if (h == 19 && m > 0) break;
