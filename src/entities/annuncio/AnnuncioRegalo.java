@@ -8,8 +8,8 @@ import entities.studente.Studente;
 
 public class AnnuncioRegalo extends Annuncio {
 	
-	public AnnuncioRegalo(String titolo, Studente autore, Oggetto oggetto, String descrizione, Sede luogo, LocalTime oraIncontro, LocalDate dataPubblicazione) {
-		super(titolo, autore, oggetto, descrizione, luogo, oraIncontro, dataPubblicazione);	
+	public AnnuncioRegalo(String titolo, Studente autore, Oggetto oggetto, String messaggio, Sede luogo, LocalTime oraIncontro, LocalDate dataPubblicazione) {
+		super(titolo, autore, oggetto, messaggio, luogo, oraIncontro, dataPubblicazione);	
 	}	
 
 }

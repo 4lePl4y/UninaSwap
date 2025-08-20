@@ -16,7 +16,7 @@ public class NewOfferta extends JFrame {
     private JPanel contentPane;
     private Controller controller;
     private Annuncio annuncio;
-    private Studente studente;
+    private Studente autore;
     private JLabel welcomingLabel;
     private JCustomTextArea descrizioneArea;
     private JPanel variablePanel;
@@ -24,12 +24,16 @@ public class NewOfferta extends JFrame {
     private JButtonWithBorder submitButton;
     private JTextField moneyTextField;
 
-    public NewOfferta(Controller controller) {
+    public NewOfferta(Controller controller, Annuncio annuncio, Studente autore) {
         this.controller = controller;
-        setTitle("Nuova Offerta");
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setBounds(100, 100, 420, 320);
+        this.setTitle("Nuova Offerta");
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.setBounds(new Rectangle(0, 0, 420, 400));
         this.setFocusable(true);
+        this.setResizable(false);
+        this.setAlwaysOnTop(true);
+        this.annuncio = annuncio;
+        this.autore = autore;
 
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));
@@ -39,11 +43,12 @@ public class NewOfferta extends JFrame {
         // Welcoming label
         welcomingLabel = new JLabel();
         welcomingLabel.setBounds(10, 10, 386, 23);
+        welcomingLabel.setText("Fai un'offerta per: "+annuncio.getTitolo() + " di " + annuncio.getAutore().getUsername());
         welcomingLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
         contentPane.add(welcomingLabel);
 
         // Description area
-        descrizioneArea = new JCustomTextArea("Aggiungi una descrizione alla tua offerta...");
+        descrizioneArea = new JCustomTextArea("Aggiungi un messaggio alla tua offerta...");
         descrizioneArea.setBounds(10, 43, 386, 75);
         descrizioneArea.setLineWrap(true);
         descrizioneArea.setWrapStyleWord(true);
@@ -57,20 +62,6 @@ public class NewOfferta extends JFrame {
         variablePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
         contentPane.add(variablePanel);
 
-
-
-        // Submit button
-        submitButton = new JButtonWithBorder("Crea Offerta");
-        submitButton.setBounds(140, 245, 133, 28);
-        submitButton.setAlignmentX(Component.LEFT_ALIGNMENT);
-        submitButton.addActionListener(e -> onInviaOffertaClicked());
-        contentPane.add(submitButton);
-        
-    }
-
-    public void setAnnuncio(Annuncio annuncio) {
-        this.annuncio = annuncio;
-        welcomingLabel.setText("Fai un'offerta per: "+annuncio.getTitolo() + " di " + annuncio.getAutore().getUsername());
         if(annuncio instanceof AnnuncioScambio) {		
         	System.out.println("Annuncio di tipo Scambio");
         	JPanel barterPanel = new JPanel();
@@ -107,8 +98,15 @@ public class NewOfferta extends JFrame {
         	moneyPanel.add(moneyTextField);
         	moneyTextField.setColumns(10);			
         }
-    }
 
+        // Submit button
+        submitButton = new JButtonWithBorder("Crea Offerta");
+        submitButton.setBounds(140, 245, 133, 28);
+        submitButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+        submitButton.addActionListener(e -> onInviaOffertaClicked());
+        contentPane.add(submitButton);
+        
+    }
 
     private void onInviaOffertaClicked() {
         String descrizione = descrizioneArea.getText();

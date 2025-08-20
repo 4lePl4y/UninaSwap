@@ -41,10 +41,12 @@ public class NewOggetto extends JFrame {
     private JCustomTextField categoriaField = new JCustomTextField("Inserisci la categoria");
 
     public NewOggetto(Controller controller) {
-        setTitle("Nuovo Oggetto");
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setBounds(100, 100, 500, 500);
-        setResizable(false);
+        this.setTitle("Nuovo Oggetto");
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.setBounds(100, 100, 500, 500);
+        this.setResizable(false);
+        this.setFocusable(true);
+        this.setAlwaysOnTop(true);
 
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));

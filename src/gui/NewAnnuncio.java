@@ -20,10 +20,13 @@ public class NewAnnuncio extends JFrame {
     private JPanel contentPane;
 
     public NewAnnuncio(Controller controller) {
-        setTitle("Nuovo Annuncio");
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setBounds(100, 100, 500, 500);
-        setResizable(false);
+        this.setTitle("Nuovo Annuncio");
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        this.setBounds(100, 100, 500, 500);
+        this.setResizable(false);
+        this.setFocusable(true);
+        this.setAlwaysOnTop(true);
+        
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));

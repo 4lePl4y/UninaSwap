@@ -18,13 +18,20 @@ import gui.*;
 
 public class Controller {
 	//ATTRIBUTI
+	//FRAME
 	Login loginFrame; 
 	SignUp signUpFrame; 
 	Main mainFrame;
 	NewOfferta newOffertaFrame;
 	NewAnnuncio newAnnuncioFrame;
 	NewOggetto newOggettoFrame;
+	
+	//DAO
+	AnnuncioDAO annuncioDAO;
+	OffertaDAO offertaDAO;
 	StudenteDAO studenteDAO;
+	OggettoDAO oggettoDAO;
+	
 	
 	public static void main(String[] args) {
 		Controller controller = new Controller();
@@ -113,9 +120,8 @@ public class Controller {
 	
 
 	public void onFaiOffertaClicked(Annuncio annuncio, Studente autore) {
-		newOffertaFrame = new NewOfferta(this);
+		newOffertaFrame = new NewOfferta(this, annuncio, autore);
 		newOffertaFrame.setVisible(true);
-		newOffertaFrame.setAnnuncio(annuncio);
 	}
 	
 	public void onNuovoAnnuncioClicked() {
@@ -141,6 +147,17 @@ public class Controller {
 			annunci.add(new AnnuncioScambio("titolo", studente, oggetto, "descrizione", Sede.MonteSantAngelo, LocalTime.now(), LocalDate.now())); // Placeholder for the first card, if needed		
 		}
 		return annunci; 
+	}
+	
+	public ArrayList<Annuncio> getMieiAnnunci(){
+		//TODO: Implementare questo metodo per ottenere gli annunci dell'utente loggato
+		return null; 
+		
+	}
+	
+	public ArrayList<Annuncio> getMieiOggetti(){
+		//TODO: Implementare questo metodo per ottenere gli oggetti dell'utente loggato
+		return null;
 	}
 
 	

@@ -36,17 +36,17 @@ public class OggettoDAO implements DaoInterface<Oggetto> {
 
 	@Override
 	public void create(Oggetto oggetto) {
-		// Implementazione per creare un nuovo oggetto
+		//TODO: Implementazione per creare un nuovo oggetto
 	}
 
 	@Override
 	public void update(Oggetto oggetto) {
-		// Implementazione per aggiornare un oggetto esistente
+		//TODO: Implementazione per aggiornare un oggetto esistente
 	}
 
 	@Override
 	public void delete(String id) {
-		// Implementazione per eliminare un oggetto per chiave primaria
+		//TODO: Implementazione per eliminare un oggetto per chiave primaria
 	}
 	
 	private Oggetto creaOggettoCorretto(ResultSet rs) throws SQLException {

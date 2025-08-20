@@ -11,16 +11,16 @@ public abstract class Annuncio {
 	protected String titolo;
 	protected Studente autore;
 	protected Oggetto oggetto;
-	protected String descrizione;
+	protected String messaggio;
 	protected Sede luogo;
 	protected LocalTime oraIncontro;
 	protected LocalDate dataPubblicazione;
 	
-	public Annuncio(String titolo, Studente autore, Oggetto oggetto, String descrizione, Sede luogo, LocalTime oraIncontro, LocalDate dataPubblicazione) {
+	public Annuncio(String titolo, Studente autore, Oggetto oggetto, String messaggio, Sede luogo, LocalTime oraIncontro, LocalDate dataPubblicazione) {
 		this.titolo = titolo;
 		this.autore = autore;
 		this.oggetto = oggetto;
-		this.descrizione = descrizione;
+		this.messaggio = messaggio;
 		this.luogo = luogo;
 		this.oraIncontro = oraIncontro;
 		this.dataPubblicazione = dataPubblicazione;
@@ -34,8 +34,8 @@ public abstract class Annuncio {
 		return autore;
 	}
 	
-	public String getDescrizione() {
-		return descrizione;
+	public String getMessaggio() {
+		return messaggio;
 	}
 	
 	public Sede getLuogo() {

@@ -39,12 +39,16 @@ public class Main extends JFrame {
 	private JPanel buttonPane;
 	private JTextField srchBarTxtField;
 	private ArrayList<Annuncio> annunciPubblicati = new ArrayList<>();
+	private ArrayList<Annuncio> mieiAnnunci = new ArrayList<>();
+	private ArrayList<Annuncio> mieiOggetti = new ArrayList<>();
 		
 
 	//COSTRUTTORE
 	public Main(Controller controller) {
 		this.controller = controller;
 		this.annunciPubblicati = controller.getAnnunci();
+		this.mieiAnnunci = controller.getMieiAnnunci();
+		this.mieiOggetti = controller.getMieiOggetti();
 		
 		setTitle("UninaSwap");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -219,15 +223,15 @@ public class Main extends JFrame {
 			}
 		});
 			
-		JLabel yourObjects = new JLabel("Ecco qui i tuoi oggetti:");
-		yourObjects.setHorizontalAlignment(SwingConstants.CENTER);
-		yourObjects.setHorizontalTextPosition(SwingConstants.CENTER);
+		JLabel yourObjectsLabel = new JLabel("Ecco qui i tuoi oggetti:");
+		yourObjectsLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		yourObjectsLabel.setHorizontalTextPosition(SwingConstants.CENTER);
 		GridBagConstraints gbc_yourObjectsLabel = new GridBagConstraints();
 		gbc_yourObjectsLabel.anchor = GridBagConstraints.WEST;
 		gbc_yourObjectsLabel.insets = new Insets(0, 0, 0, 5);
 		gbc_yourObjectsLabel.gridx = 0;
 		gbc_yourObjectsLabel.gridy = 1;
-		listingsUpperPanel.add(yourListingsLabel, gbc_yourObjectsLabel);
+		myObjectsUpperPanel.add(yourObjectsLabel, gbc_yourObjectsLabel);
 		
 		
 		//(Scelta delle finestre)
