@@ -2,8 +2,7 @@ package controller;
 
 import java.awt.EventQueue;
 import java.sql.Connection;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.*;
 import java.util.ArrayList;
 
 import dao.*;
@@ -12,6 +11,7 @@ import entities.annuncio.*;
 import entities.annuncio.AnnuncioRegalo;
 import entities.annuncio.AnnuncioVendita;
 import entities.enumerazioni.Sede;
+import entities.oggetto.Libro;
 import entities.oggetto.Oggetto;
 import entities.studente.*;
 import gui.*;
@@ -48,6 +48,8 @@ public class Controller {
 					controller.mainFrame = new Main(controller);
 					controller.mainFrame.setVisible(false);
 					controller.studenteDAO = new StudenteDAO(conn);
+					controller.oggettoDAO = new OggettoDAO(conn);
+					controller.oggettoDAO.create(new Libro("Libro: Harry Potter", controller.studenteDAO.retrieveByPK("4le"), "Harry Potter", "1234", Year.of(2010), "Tizia", "Fantasy"));
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

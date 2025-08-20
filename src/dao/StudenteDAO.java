@@ -24,12 +24,12 @@ public class StudenteDAO implements DaoInterface<Studente> {
 			pstmt.setString(1, username);
 			ResultSet rs = pstmt.executeQuery();
 			if(rs.next()){
-				String usrnm = rs.getString("username");
 				String nome = rs.getString("nome");
 				String cognome = rs.getString("cognome");
+				String usrnm = rs.getString("username");
 				String email = rs.getString("email");
 				String password = rs.getString("password"); // Non necessario per il recupero
-				studente = new Studente(nome, cognome, email, usrnm, password);
+				studente = new Studente(nome, cognome, usrnm, email, password);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

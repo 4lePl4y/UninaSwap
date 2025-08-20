@@ -1,6 +1,6 @@
 package entities.oggetto;
 
-import java.time.LocalDate;
+import java.time.Year;
 
 import entities.studente.Studente;
 
@@ -8,14 +8,14 @@ public class Elettronica extends Oggetto {
 	// ATTRIBUTI
 	private String marchio;
 	private String modello;
-	private LocalDate dataUscita;
+	private Year annoUscita;
 
 	// COSTRUTTORE
-	public Elettronica(String nome, Studente proprietario, String marchio, String modello, LocalDate dataUscita) {
+	public Elettronica(String nome, Studente proprietario, String marchio, String modello, Year annoUscita) {
 		super(nome, proprietario);
 		this.marchio = marchio;
 		this.modello = modello;
-		this.dataUscita = dataUscita; 
+		this.annoUscita = annoUscita; 
 	}
 
 	// METODI
@@ -27,8 +27,8 @@ public class Elettronica extends Oggetto {
 		return modello;
 	}
 	
-	public LocalDate getAnnoUscita() {
-		return dataUscita;
+	public Year getAnnoUscita() {
+		return annoUscita;
 	}
 
 }

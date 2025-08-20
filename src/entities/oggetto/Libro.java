@@ -1,6 +1,6 @@
 package entities.oggetto;
 
-import java.time.LocalDate;
+import java.time.Year;
 
 import entities.studente.Studente;
 
@@ -8,12 +8,12 @@ public class Libro extends Oggetto {
 	// ATTRIBUTI
 	private String titolo;
 	private String ISBN;
-	private LocalDate annoUscita;
+	private Year annoUscita;
 	private String autore;
 	private String genere;
 
 	// COSTRUTTORE
-	public Libro(String nome, Studente proprietario, String titolo, String ISBN, LocalDate annoUscita, String autore, String genere) {
+	public Libro(String nome, Studente proprietario, String titolo, String ISBN, Year annoUscita, String autore, String genere) {
 		super(nome, proprietario);
 		this.titolo = titolo;
 		this.ISBN = ISBN;
@@ -32,7 +32,7 @@ public class Libro extends Oggetto {
 		return ISBN;
 	}
 	
-	public LocalDate getAnnoUscita() {
+	public Year getAnnoUscita() {
 		return annoUscita;
 	}
 	
