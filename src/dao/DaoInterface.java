@@ -4,7 +4,9 @@ public interface DaoInterface<T> {
 	//ATTRIBUTI 
 	
 	//METODI
-	public T retrieveByPK(String id);
+	default public T retrieveByPK(String id) {
+		throw new UnsupportedOperationException("Method not implemented");
+	}
 	public void create(T object);
 	public void update(T object);
 	public void delete(String id);
