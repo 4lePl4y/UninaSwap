@@ -34,7 +34,7 @@ public class JListingCard extends JCard {
 		titleLabel.setBounds(10, 10, 220, 13);
 		add(titleLabel);
 		
-		JLabel descriptionLabel = new JLabel(annuncio.getMessaggio());
+		JLabel descriptionLabel = new JLabel(annuncio.getDescrizione());
 		descriptionLabel.setVerticalAlignment(SwingConstants.TOP);
 		descriptionLabel.setHorizontalTextPosition(SwingConstants.LEADING);
 		descriptionLabel.setBounds(10, 146, 220, 134);

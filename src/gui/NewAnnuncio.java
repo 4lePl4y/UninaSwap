@@ -2,6 +2,7 @@ package gui;
 
 import controller.Controller;
 import entities.enumerazioni.Sede;
+import entities.enumerazioni.TipoAnnuncio;
 import entities.enumerazioni.TipoOggetto;
 
 import gui.preset.JButtonWithBorder;
@@ -35,8 +36,7 @@ public class NewAnnuncio extends JFrame {
         // Tipo Annuncio
         JPanel tipoAnnuncio = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JLabel tipoAnnuncioLabel = new JLabel("Tipo Annuncio:");
-        String[] tipi = {"Vendita", "Scambio", "Regalo"};
-        JComboBox<String> tipoAnnuncioCombo = new JComboBox<>(tipi);
+        JComboBox<TipoAnnuncio> tipoAnnuncioCombo = new JComboBox<>(TipoAnnuncio.values());
         tipoAnnuncio.add(tipoAnnuncioLabel);
         tipoAnnuncio.add(tipoAnnuncioCombo);
         contentPane.add(tipoAnnuncio);

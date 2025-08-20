@@ -8,8 +8,6 @@ import java.util.ArrayList;
 import dao.*;
 import db.DBConnection;
 import entities.annuncio.*;
-import entities.annuncio.AnnuncioRegalo;
-import entities.annuncio.AnnuncioVendita;
 import entities.enumerazioni.Sede;
 import entities.oggetto.Libro;
 import entities.oggetto.Oggetto;

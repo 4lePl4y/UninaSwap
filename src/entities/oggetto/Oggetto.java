@@ -4,6 +4,7 @@ import entities.studente.Studente;
 
 public abstract class Oggetto {
 	//ATTRIBUTI
+	protected long id;
 	protected String nome;
 	protected Studente proprietario;
 	
@@ -13,8 +14,18 @@ public abstract class Oggetto {
 		this.proprietario = proprietario;
 	}
 	
+	public Oggetto(long id, String nome, Studente proprietario) {
+		this.id = id;
+		this.nome = nome;
+		this.proprietario = proprietario;
+	}
+	
 	//METODI
-	public String getDescrizione() {
+	public long getId() {
+		return id;
+	}
+	
+	public String getNome() {
 		return nome;
 	}
 	

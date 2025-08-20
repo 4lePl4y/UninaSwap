@@ -54,7 +54,7 @@ public class OggettoDAO implements DaoInterface<Oggetto> {
 	public void create(Oggetto oggetto) {
 		String query = "INSERT INTO oggetto (nome, \"tipoOggetto\", marchio, taglia, modello, \"annoUscita\", titolo, \"ISBN\", autore, genere, proprietario, categoria) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 		try(PreparedStatement pstmt = conn.prepareStatement(query)) {
-			pstmt.setString(1, oggetto.getDescrizione());
+			pstmt.setString(1, oggetto.getNome());
 			pstmt.setString(11, oggetto.getUsernameProprietario());
 			if (oggetto instanceof Abbigliamento) {
 				pstmt.setObject(2, TipoOggetto.Abbigliamento, java.sql.Types.OTHER);
