@@ -8,9 +8,9 @@ import java.util.ArrayList;
 import dao.*;
 import db.DBConnection;
 import entities.annuncio.*;
-import entities.enumerazioni.Sede;
-import entities.oggetto.Libro;
-import entities.oggetto.Oggetto;
+import entities.enumerazioni.*;
+import entities.offerta.*;
+import entities.oggetto.*;
 import entities.studente.*;
 import gui.*;
 
@@ -47,7 +47,15 @@ public class Controller {
 					controller.mainFrame.setVisible(false);
 					controller.studenteDAO = new StudenteDAO(conn);
 					controller.oggettoDAO = new OggettoDAO(conn);
-					controller.oggettoDAO.create(new Libro("Libro: Harry Potter", controller.studenteDAO.retrieveByPK("4le"), "Harry Potter", "1234", Year.of(2010), "Tizia", "Fantasy"));
+					controller.annuncioDAO = new AnnuncioDAO(conn);
+					controller.offertaDAO = new OffertaDAO(conn);
+					
+					ArrayList<Offerta> offerte = controller.getMieOfferte("4le");
+					for(Offerta offerta : offerte) {
+						System.out.println(offerta);
+					}
+					
+					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -160,6 +168,11 @@ public class Controller {
 		return null;
 	}
 
+	public ArrayList<Offerta> getMieOfferte(String usernameUtenteLoggato) {
+		//TODO: Implementare questo metodo per ottenere le offerte dell'utente loggato
+		ArrayList<Offerta> offerte = offertaDAO.retrieveByOfferente(usernameUtenteLoggato);
+		return offerte;
+	}
 	
 	
 }

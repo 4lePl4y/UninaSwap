@@ -1,14 +1,52 @@
 package entities.offerta;
 
+import entities.annuncio.Annuncio;
 import entities.enumerazioni.Stato;
 import entities.studente.Studente;
 
 public abstract class Offerta {
+	protected long id=0;
 	Stato stato;
+	private String messaggio;
 	private Studente offerente;
+	private Annuncio annuncio;
 	
-	public Offerta(Stato stato, Studente offerente) {
+	public Offerta(Stato stato, String messaggio, Studente offerente, Annuncio annuncio) {
 		this.stato = stato;
+		this.messaggio = messaggio;
 		this.offerente = offerente;
+		this.annuncio = annuncio;
+	}
+	
+	public Offerta(long id, Stato stato, String messaggio, Studente offerente, Annuncio annuncio) {
+		this.id = id;
+		this.stato = stato;
+		this.messaggio = messaggio;
+		this.offerente = offerente;
+		this.annuncio = annuncio;
+	}
+	
+	public long getId() {
+		return id;
+	}
+	
+	public Stato getStato() {
+		return stato;
+	}
+	
+	public String getMessaggio() {
+		return messaggio;
+	}
+	
+	public Studente getOfferente() {
+		return offerente;
+	}
+	
+	public Annuncio getAnnuncio() {
+		return annuncio;
+	}
+	
+	public String toString() {
+		return "Offerta [id=" + id + ", stato=" + stato + ", messaggio=" + messaggio + ", offerente=" + offerente.getUsername() + ", annuncio=" + annuncio.getTitolo() + "]";
 	}
 }

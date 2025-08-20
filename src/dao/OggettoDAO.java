@@ -14,11 +14,12 @@ import entities.studente.Studente;
 public class OggettoDAO implements DaoInterface<Oggetto> {
 	//ATTRIBUTI
 	private Connection conn;
-	private StudenteDAO studenteDAO = new StudenteDAO(conn);
+	private StudenteDAO studenteDAO;
 
 	//COSTRUTTORE
 	public OggettoDAO(Connection conn) {
 		this.conn = conn;
+		this.studenteDAO = new StudenteDAO(conn);
 	}
 
 	@Override
@@ -26,7 +27,7 @@ public class OggettoDAO implements DaoInterface<Oggetto> {
 		Oggetto oggetto = null;
 		String query = "SELECT * FROM oggetto WHERE id = ?;";
 		try(PreparedStatement pstmt = conn.prepareStatement(query)) {
-			pstmt.setString(1, id);
+			pstmt.setLong(1, Long.valueOf(id));
 			ResultSet rs = pstmt.executeQuery();
 			if(rs.next())
 				oggetto = creaOggettoCorretto(rs);
@@ -41,6 +42,20 @@ public class OggettoDAO implements DaoInterface<Oggetto> {
 		String query = "SELECT * FROM oggetto WHERE proprietario = ?;";
 		try(PreparedStatement pstmt = conn.prepareStatement(query)) {
 			pstmt.setString(1, username);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next())
+				oggetti.add(creaOggettoCorretto(rs));
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return oggetti;
+	}
+	
+	public ArrayList<Oggetto> retrieveOggettiScambio(long idOffertaScambio) {
+		ArrayList<Oggetto> oggetti = new ArrayList<>();
+		String query = "SELECT * FROM oggetto_per_scambio AS ops JOIN oggetto AS o on ops.\"idOggetto\" = o.id WHERE \"idOffertaScambio\"= ?;";
+		try(PreparedStatement pstmt = conn.prepareStatement(query)) {
+			pstmt.setLong(1, idOffertaScambio);
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next())
 				oggetti.add(creaOggettoCorretto(rs));
@@ -166,7 +181,6 @@ public class OggettoDAO implements DaoInterface<Oggetto> {
 				oggetto = new Misc(nome, proprietario, marchio, categoria);
 				break;
 		}
-		
 		return oggetto;
 	}
 

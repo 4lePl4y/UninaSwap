@@ -18,12 +18,15 @@ import java.sql.SQLException;
 public class AnnuncioDAO implements DaoInterface<Annuncio> {
 	//ATTRIBUTI
 	private Connection conn;
-	private StudenteDAO studenteDAO = new StudenteDAO(conn);
-	private OggettoDAO oggettoDAO = new OggettoDAO(conn);
+	private StudenteDAO studenteDAO;
+	private OggettoDAO oggettoDAO;
 	
 	//COSTRUTTORE
 	public AnnuncioDAO(Connection conn) {
 		this.conn = conn;
+		this.studenteDAO = new StudenteDAO(conn);
+		this.oggettoDAO = new OggettoDAO(conn);
+		
 	}
 	
 	//METODI CRUD
@@ -32,7 +35,7 @@ public class AnnuncioDAO implements DaoInterface<Annuncio> {
 		Annuncio annuncio = null;
 		String query = "SELECT * FROM annuncio WHERE id = ?;";
 		try(PreparedStatement pstmt = conn.prepareStatement(query)) {
-			pstmt.setString(1, id);
+			pstmt.setLong(1, Long.valueOf(id));
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()) {
 				annuncio = creaAnnuncioCorretto(rs);	
@@ -100,7 +103,7 @@ public class AnnuncioDAO implements DaoInterface<Annuncio> {
 		Time oraIncontro = rs.getTime("oraIncontro");
 		Date dataPubblicazione = rs.getDate("dataPubblicazione");
 		Studente autore = studenteDAO.retrieveByPK(rs.getString("autore"));
-		Oggetto oggetto = oggettoDAO.retrieveByPK(rs.getString("oggetto"));
+		Oggetto oggetto = oggettoDAO.retrieveByPK(rs.getString("idOggetto"));
 		String tipoAnnuncio = rs.getString("tipoAnnuncio");
 		
 		Annuncio annuncio = null;

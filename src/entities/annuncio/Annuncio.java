@@ -38,10 +38,11 @@ public abstract class Annuncio {
 		this.dataPubblicazione = dataPubblicazione;
 	}
 	
+
 	public long getId() {
 		return id;
 	}
-
+	
 	public String getTitolo() {
 		return titolo;
 	}

@@ -7,12 +7,27 @@ import entities.studente.Studente;
 import entities.enumerazioni.Stato;
 
 public class OffertaScambio extends Offerta {
-	private Annuncio annuncio;
 	private ArrayList<Oggetto> oggettiOfferti = new ArrayList<Oggetto>();
 	
-	public OffertaScambio(Stato stato, Studente offerente,Annuncio annuncio, ArrayList<Oggetto> oggettiOfferti) {
-		super(stato, offerente);
-		this.annuncio = annuncio;
+	public OffertaScambio(Stato stato, String messaggio, Studente offerente, Annuncio annuncio, ArrayList<Oggetto> oggettiOfferti) {
+		super(stato, messaggio, offerente, annuncio);
 		this.oggettiOfferti = oggettiOfferti;
+	}
+
+	public OffertaScambio(long id, Stato stato, String messaggio, Studente offerente, Annuncio annuncio, ArrayList<Oggetto> oggettiOfferti) {
+		super(id, stato, messaggio, offerente, annuncio);
+		this.oggettiOfferti = oggettiOfferti;
+	}
+	
+	public ArrayList<Oggetto> getOggettiOfferti() {
+		return oggettiOfferti;
+	}
+	
+	public String toString() {
+		 String output = "OffertaScambio [id=" + getId() + ", stato=" + getStato() + ", messaggio=" + getMessaggio() + ", offerente=" + getOfferente().getUsername() + ", annuncio=" + getAnnuncio().getTitolo();
+		for(Oggetto oggetto : oggettiOfferti) {
+			output += ", oggettiOfferti=" + oggetto.getNome();
+		}
+		return output + "]";
 	}
 }
