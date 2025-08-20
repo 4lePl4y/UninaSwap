@@ -36,9 +36,9 @@ public class OggettoDAO implements DaoInterface<Oggetto> {
 		return oggetto;
 	}
 	
-	public ArrayList<Oggetto> retrieveByNome(String username) {
+	public ArrayList<Oggetto> retrieveByUsername(String username) {
 		ArrayList<Oggetto> oggetti = new ArrayList<>();
-		String query = "SELECT * FROM oggetto WHERE nome = ?;";
+		String query = "SELECT * FROM oggetto WHERE proprietario = ?;";
 		try(PreparedStatement pstmt = conn.prepareStatement(query)) {
 			pstmt.setString(1, username);
 			ResultSet rs = pstmt.executeQuery();
