@@ -7,13 +7,15 @@ public class StrumentoMusicale extends Oggetto {
 	private String marchio;
 
 	// COSTRUTTORE
-	public StrumentoMusicale(String descrizione, Studente proprietario, String marchio) {
-		super(descrizione, proprietario);
+	public StrumentoMusicale(String nome, Studente proprietario, String marchio) {
+		super(nome, proprietario);
 		this.marchio = marchio;
 	}
 
 	// METODI
-	
+	public String getMarchio() {
+		return marchio;
+	}
 	
 
 }

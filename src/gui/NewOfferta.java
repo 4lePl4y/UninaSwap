@@ -63,7 +63,6 @@ public class NewOfferta extends JFrame {
         contentPane.add(variablePanel);
 
         if(annuncio instanceof AnnuncioScambio) {		
-        	System.out.println("Annuncio di tipo Scambio");
         	JPanel barterPanel = new JPanel();
         	barterPanel.setBounds(10, 144, 386, 91);
         	contentPane.add(barterPanel);
@@ -81,9 +80,7 @@ public class NewOfferta extends JFrame {
         	JButton addObjectButton = new JButtonWithBorder("Aggiungi un nuovo oggetto +");
         	addObjectButton.setBounds(98, 60, 230, 21);
         	barterPanel.add(addObjectButton);			        
-        } else {
-        	System.out.println("Annuncio di tipo non Scambio");
-        	
+        } else {        	
         	JPanel moneyPanel = new JPanel();
         	moneyPanel.setBounds(10, 144, 386, 28);
         	contentPane.add(moneyPanel);
@@ -100,7 +97,7 @@ public class NewOfferta extends JFrame {
         }
 
         // Submit button
-        submitButton = new JButtonWithBorder("Crea Offerta");
+        submitButton = new JButtonWithBorder("Fai Offerta");
         submitButton.setBounds(140, 245, 133, 28);
         submitButton.setAlignmentX(Component.LEFT_ALIGNMENT);
         submitButton.addActionListener(e -> onInviaOffertaClicked());

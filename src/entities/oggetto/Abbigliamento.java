@@ -8,12 +8,18 @@ public class Abbigliamento extends Oggetto {
 	private String taglia;
 
 	// COSTRUTTORE
-	public Abbigliamento(String descrizione, Studente proprietario, String marchio, String taglia) {
-		super(descrizione, proprietario);
+	public Abbigliamento(String nome, Studente proprietario, String marchio, String taglia) {
+		super(nome, proprietario);
 		this.marchio = marchio;
 		this.taglia = taglia;
 	}
 
 	// METODI
-
+	public String getMarchio() {
+		return marchio;
+	}
+	
+	public String getTaglia() {
+		return taglia;
+	}
 }

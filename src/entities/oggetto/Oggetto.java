@@ -4,15 +4,21 @@ import entities.studente.Studente;
 
 public abstract class Oggetto {
 	//ATTRIBUTI
-	protected String descrizione;
+	protected String nome;
 	protected Studente proprietario;
 	
 	//COSTRUTTORE
-	public Oggetto(String descrizione, Studente proprietario) {
-		this.descrizione = descrizione;
+	public Oggetto(String nome, Studente proprietario) {
+		this.nome = nome;
 		this.proprietario = proprietario;
 	}
 	
 	//METODI
+	public String getDescrizione() {
+		return nome;
+	}
 	
+	public String getUsernameProprietario() {
+		return proprietario.getUsername();
+	}
 }

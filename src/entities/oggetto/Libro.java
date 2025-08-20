@@ -13,8 +13,8 @@ public class Libro extends Oggetto {
 	private String genere;
 
 	// COSTRUTTORE
-	public Libro(String descrizione, Studente proprietario, String titolo, String ISBN, LocalDate annoUscita, String autore, String genere) {
-		super(descrizione, proprietario);
+	public Libro(String nome, Studente proprietario, String titolo, String ISBN, LocalDate annoUscita, String autore, String genere) {
+		super(nome, proprietario);
 		this.titolo = titolo;
 		this.ISBN = ISBN;
 		this.annoUscita = annoUscita;
@@ -24,6 +24,25 @@ public class Libro extends Oggetto {
 	}
 
 	// METODI
-
+	public String getTitolo() {
+		return titolo;
+	}
+	
+	public String getISBN() {
+		return ISBN;
+	}
+	
+	public LocalDate getAnnoUscita() {
+		return annoUscita;
+	}
+	
+	public String getAutore() {
+		return autore;
+	}
+	
+	public String getGenere() {
+		return genere;
+	}
+	
 
 }
