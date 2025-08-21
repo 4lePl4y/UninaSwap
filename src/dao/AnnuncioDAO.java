@@ -62,6 +62,24 @@ public class AnnuncioDAO implements DaoInterface<Annuncio> {
 		
 		return annunci;	
 	}
+	
+	public ArrayList<Annuncio> retrieveByOggetto(long idOggetto) {
+		ArrayList<Annuncio> annunci = new ArrayList<>();
+		String query = "SELECT * FROM annuncio WHERE \"idOggetto\" = ?;";
+		try(PreparedStatement pstmt = conn.prepareStatement(query)) {
+			pstmt.setLong(1, idOggetto);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				Annuncio annuncio = creaAnnuncioCorretto(rs);
+				annunci.add(annuncio);					
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return annunci;	
+	}
+	
 
 	@Override
 	public void create(Annuncio annuncio) {

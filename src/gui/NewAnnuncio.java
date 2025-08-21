@@ -190,7 +190,15 @@ public class NewAnnuncio extends JFrame {
 				annuncio = new AnnuncioRegalo(titolo, autore, oggettoSelezionato, descrizione, luogo, oraIncontro, dataPubblicazione);
 				break;
 		}
-		
+		if(controller.areAnnunciConStessoOggetto(annuncio)) {
+			if(annuncio instanceof AnnuncioRegalo) {
+				JOptionPane.showMessageDialog(this, "Esiste già un annuncio di scambio o vendita con lo stesso oggetto.");
+				return; 
+			} else {
+				JOptionPane.showMessageDialog(this, "Esiste già un annuncio di regalo con lo stesso oggetto.");
+				return; 
+			}
+		}
 		controller.creaAnnuncio(annuncio);
 		JOptionPane.showMessageDialog(this, "Annucio creato!");
         dispose();

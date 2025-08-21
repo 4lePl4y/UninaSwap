@@ -146,6 +146,20 @@ public class Controller {
 		annuncioDAO.create(annuncio);
 	}
 	
+	public boolean areAnnunciConStessoOggetto(Annuncio annuncio) {
+		ArrayList<Annuncio> annunciConStessoOggetto = annuncioDAO.retrieveByOggetto(annuncio.getOggetto().getId());
+		if(annuncio instanceof AnnuncioRegalo) {
+			if(!annunciConStessoOggetto.isEmpty())
+				return true;//ci sono annunci di scambio o vendita con lo stesso oggetto
+		}else{
+			for(Annuncio a : annunciConStessoOggetto) {
+				if(a instanceof AnnuncioRegalo) 
+					return true; //c'è un annuncio di regalo con lo stesso oggetto
+			}
+		}
+		return false;
+	}
+	
 	public void onCreaOggettoFromAnnuncioClicked() {
 		newOggettoFrame = new NewOggetto(this);
 		newOggettoFrame.setVisible(true);
