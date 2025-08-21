@@ -2,6 +2,7 @@
 package gui;
 import controller.Controller;
 import entities.annuncio.*;
+import entities.oggetto.*;
 import gui.main_components.browse_pane.*;
 import gui.preset.JButtonWithBorder;
 
@@ -34,17 +35,17 @@ public class Main extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JPanel buttonPane;
-	private ArrayList<Annuncio> annunciPubblicati = new ArrayList<>();
-	private ArrayList<Annuncio> mieiAnnunci = new ArrayList<>();
-	private ArrayList<Annuncio> mieiOggetti = new ArrayList<>();
+	private ArrayList<Annuncio> annunciPubblicati;
+	private ArrayList<Annuncio> mieiAnnunci;
+	private ArrayList<Oggetto> mieiOggetti;
 		
 
 	//COSTRUTTORE
 	public Main(Controller controller) {
 		this.controller = controller;
-		this.annunciPubblicati = controller.getAnnunci();
-		this.mieiAnnunci = controller.getMieiAnnunci();
-		this.mieiOggetti = controller.getMieiOggetti();
+		this.annunciPubblicati = controller.getAnnunci(40);
+		this.mieiAnnunci = controller.getMieiAnnunci("4le");
+		this.mieiOggetti = controller.getMieiOggetti("4le");
 		
 		setTitle("UninaSwap");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

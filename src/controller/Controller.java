@@ -41,20 +41,15 @@ public class Controller {
 					conn = dbConnection.getConnection();
 					System.out.println("Connessione OK!");
 					 	 					
-					controller.loginFrame = new Login(controller);
-					controller.loginFrame.setVisible(true);
-					controller.mainFrame = new Main(controller);
-					controller.mainFrame.setVisible(false);
 					controller.studenteDAO = new StudenteDAO(conn);
 					controller.oggettoDAO = new OggettoDAO(conn);
 					controller.annuncioDAO = new AnnuncioDAO(conn);
 					controller.offertaDAO = new OffertaDAO(conn);
 					
-					ArrayList<Offerta> offerte = controller.getMieOfferte("4le");
-					for(Offerta offerta : offerte) {
-						System.out.println(offerta);
-					}
-					
+					controller.loginFrame = new Login(controller);
+					controller.loginFrame.setVisible(true);
+					controller.mainFrame = new Main(controller);
+					controller.mainFrame.setVisible(false);
 					
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -143,36 +138,30 @@ public class Controller {
 	}
 
 	
-	public ArrayList<Annuncio> getAnnunci() {
-		//TODO: Questo metodo chiama getAnnunci(int numeroAnnunci) presente in AnnuncioDAO.java per ottenere un certo numero di annunci dal database.
-		//Il codice qui sotto è un placeholder che crea una lista di annunci fittizi per il caricamento iniziale dell'applicazione.
-		
-		ArrayList<Annuncio> annunci = new ArrayList<>();
-		Oggetto oggetto = null;
-		for(int i=0; i<10; i++) {
-			Studente studente = new Studente("Mario", "Rossi", "m4ri0", "stocazzo", "password" );
-			annunci.add(new AnnuncioVendita("titolo", studente, oggetto, "descrizione", Sede.MonteSantAngelo, LocalTime.now(), LocalDate.now(), i*10 )); // Placeholder for the first card, if needed
-			annunci.add(new AnnuncioScambio("titolo", studente, oggetto, "descrizione", Sede.MonteSantAngelo, LocalTime.now(), LocalDate.now())); // Placeholder for the first card, if needed		
-		}
+	public ArrayList<Annuncio> getAnnunci(int numeroAnnunci) {
+		ArrayList<Annuncio> annunci = annuncioDAO.getAnnunci(numeroAnnunci); 
 		return annunci; 
 	}
 	
-	public ArrayList<Annuncio> getMieiAnnunci(){
-		//TODO: Implementare questo metodo per ottenere gli annunci dell'utente loggato
-		return null; 
+	public ArrayList<Annuncio> getMieiAnnunci(String usernameUtenteLoggato) {
+		ArrayList<Annuncio> annunci = annuncioDAO.retrieveByAutore(usernameUtenteLoggato); 
+		return annunci; 
 		
 	}
 	
-	public ArrayList<Annuncio> getMieiOggetti(){
-		//TODO: Implementare questo metodo per ottenere gli oggetti dell'utente loggato
-		return null;
+	public ArrayList<Oggetto> getMieiOggetti(String usernameUtenteLoggato) {
+		ArrayList<Oggetto> oggetti = oggettoDAO.retrieveByUsername(usernameUtenteLoggato); // 
+		return oggetti;
 	}
 
 	public ArrayList<Offerta> getMieOfferte(String usernameUtenteLoggato) {
-		//TODO: Implementare questo metodo per ottenere le offerte dell'utente loggato
 		ArrayList<Offerta> offerte = offertaDAO.retrieveByOfferente(usernameUtenteLoggato);
 		return offerte;
 	}
 	
+	public ArrayList<Offerta> getMieOfferteRicevute(String usernameUtenteLoggato) {
+		ArrayList<Offerta> offerte = offertaDAO.retrieveByRicevente(usernameUtenteLoggato);
+		return offerte;
+	}
 	
 }

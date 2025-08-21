@@ -70,5 +70,11 @@ public abstract class Annuncio {
 	public LocalDate getDataPubblicazione() {
 		return dataPubblicazione;
 	}
+	
+	public String toString() {
+		return "Annuncio [id=" + id + ", titolo=" + titolo + ", autore=" + autore.getUsername() + ", oggetto=" + oggetto.getNome() + 
+				", descrizione=" + descrizione + ", luogo=" + luogo + ", oraIncontro=" + oraIncontro + ", dataPubblicazione=" + dataPubblicazione + "]";
+	}
+	
 }
 

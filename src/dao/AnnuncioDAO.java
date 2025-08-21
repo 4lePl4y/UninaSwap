@@ -47,6 +47,22 @@ public class AnnuncioDAO implements DaoInterface<Annuncio> {
 		return annuncio;
 	}
 	
+	public ArrayList<Annuncio> retrieveByAutore(String usernameAutore) {
+		ArrayList<Annuncio> annunci = new ArrayList<>();
+		String query = "SELECT * FROM annuncio WHERE autore = ?;";
+		try(PreparedStatement pstmt = conn.prepareStatement(query)) {
+			pstmt.setString(1, usernameAutore);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				Annuncio annuncio = creaAnnuncioCorretto(rs);
+				annunci.add(annuncio);					
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return annunci;	
+	}
 
 	@Override
 	public void create(Annuncio annucio) {

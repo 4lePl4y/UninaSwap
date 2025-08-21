@@ -22,4 +22,11 @@ public class Abbigliamento extends Oggetto {
 	public String getTaglia() {
 		return taglia;
 	}
+	
+	@Override
+	public String toString() {
+		return "Abbigliamento [id=" + id + ", nome=" + nome + ", proprietario=" + proprietario.getUsername() + 
+		       ", marchio=" + marchio + ", taglia=" + taglia + "]";
+	}
+	
 }

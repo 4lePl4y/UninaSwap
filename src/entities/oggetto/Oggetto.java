@@ -32,4 +32,9 @@ public abstract class Oggetto {
 	public String getUsernameProprietario() {
 		return proprietario.getUsername();
 	}
+	
+	public String toString() {
+		return "Oggetto [id=" + id + ", nome=" + nome + ", proprietario=" + proprietario.getUsername() + "]";
+	}
+	
 }

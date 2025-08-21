@@ -22,4 +22,9 @@ public class Misc extends Oggetto{
 	public String getCategoria() {
 		return categoria;
 	}
+	
+	@Override
+	public String toString() {
+		return "Misc [id=" + id + ", nome=" + nome + ", proprietario=" + proprietario.getUsername() + ", marchio=" + marchio + ", categoria=" + categoria + "]";
+	}
 }

@@ -43,6 +43,22 @@ public class OffertaDAO implements DaoInterface<Offerta> {
 		return offerte;
 	}
 	
+	public ArrayList<Offerta> retrieveByRicevente(String usernameRicevente) {
+		ArrayList<Offerta> offerte = new ArrayList<>();
+		String query = "SELECT * FROM offerte_unificate WHERE \"idAnnuncio\" IN (SELECT id FROM annuncio WHERE autore = ?);";
+		try(PreparedStatement pstmt = conn.prepareStatement(query)) {
+			pstmt.setString(1, usernameRicevente);
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				offerte.add(creaOffertaCorretto(rs));
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return offerte;
+	}
+	
 	public void create(Offerta offerta) {
 		String query = "";
 		if(offerta instanceof OffertaScambio)
