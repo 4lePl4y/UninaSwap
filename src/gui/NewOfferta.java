@@ -26,7 +26,8 @@ public class NewOfferta extends JFrame {
     private JCustomTextField moneyField;
     private JButtonWithBorder submitButton;
     private JTextField moneyTextField;
-    private JList<Oggetto> oggettiList;
+    private ArrayList<Oggetto> mieiOggetti;
+    private ArrayList<JCheckBox> checkBoxes; 
 
     public NewOfferta(Controller controller, Annuncio annuncio, Studente autore) {
         this.controller = controller;
@@ -69,7 +70,7 @@ public class NewOfferta extends JFrame {
 
         if(annuncio instanceof AnnuncioScambio) {		
         	JPanel barterPanel = new JPanel();
-        	barterPanel.setBounds(10, 144, 386, 91);
+        	barterPanel.setBounds(10, 144, 386, 150);
         	contentPane.add(barterPanel);
         	barterPanel.setLayout(null);
         	
@@ -77,12 +78,20 @@ public class NewOfferta extends JFrame {
         	chooseObjectLabel.setBounds(0, 0, 200, 21);
         	barterPanel.add(chooseObjectLabel);
         	
-        	oggettiList = new JList<>(controller.getMieiOggetti().toArray(new Oggetto[0]));
-        	oggettiList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
-        	oggettiList.setVisibleRowCount(4);
+        	mieiOggetti = controller.getMieiOggetti();
+        	JPanel checkBoxPanel = new JPanel();
+        	checkBoxPanel.setLayout(new BoxLayout(checkBoxPanel, BoxLayout.Y_AXIS));
+        	this.checkBoxes = new ArrayList<>();
+        	for (Oggetto oggetto : mieiOggetti) {
+        	    JCheckBox checkBox = new JCheckBox(oggetto.toString());
+        	    checkBoxPanel.add(checkBox);
+        	    checkBoxes.add(checkBox);
+        	}
         	
-        	JScrollPane scrollPane = new JScrollPane(oggettiList);
-        	scrollPane.setBounds(0, 40, 200, 80);
+
+        	
+        	JScrollPane scrollPane = new JScrollPane(checkBoxPanel);
+        	scrollPane.setBounds(0, 40, 200, 200);
         	barterPanel.add(scrollPane);
         	
         	JLabel optionLabel = new JLabel("oppure");
@@ -111,7 +120,7 @@ public class NewOfferta extends JFrame {
 
         // Submit button
         submitButton = new JButtonWithBorder("Fai Offerta");
-        submitButton.setBounds(140, 245, 133, 28);
+        submitButton.setBounds(140, 325, 133, 28);
         submitButton.setAlignmentX(Component.LEFT_ALIGNMENT);
         submitButton.addActionListener(e -> onInviaOffertaClicked());
         contentPane.add(submitButton);
@@ -122,9 +131,12 @@ public class NewOfferta extends JFrame {
         String descrizione = descrizioneArea.getText();
         String offertaDenaro = (moneyField != null) ? moneyField.getText() : null;
         // TODO: Implement offer creation logic using controller
-        ArrayList<Oggetto> selectedOggetti = new ArrayList<> (oggettiList.getSelectedValuesList());
-        for (Oggetto oggetto : selectedOggetti) {
-			System.out.println(oggetto);
+        ArrayList<Oggetto> oggettiScelti = new ArrayList<>();
+        for (int i=0; i<this.checkBoxes.size(); i++) {
+			if(checkBoxes.get(i).isSelected()) {
+				oggettiScelti.add(mieiOggetti.get(i));
+				System.out.println(oggettiScelti.get(i));
+			}
 		}
         JOptionPane.showMessageDialog(this, "Offerta inviata!");
         dispose();
