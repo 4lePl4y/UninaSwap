@@ -221,6 +221,10 @@ public class Main extends JFrame {
 	public ArrayList<Oggetto>getMieiOggetti() {
 		return mieiOggetti;
 	}
+	
+	public Studente getStudenteLoggato() {
+		return this.studenteLoggato;
+	}
 }
 
  

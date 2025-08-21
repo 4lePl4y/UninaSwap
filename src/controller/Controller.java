@@ -168,4 +168,12 @@ public class Controller {
 		return offerte;
 	}
 	
+	public void creaOfferta(Offerta offerta) {
+		offertaDAO.create(offerta);
+	}
+	
+	public Studente getStudenteLoggato() {
+		return mainFrame.getStudenteLoggato();
+	}
+	
 }
