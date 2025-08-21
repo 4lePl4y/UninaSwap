@@ -9,7 +9,6 @@ import entities.enumerazioni.TipoAnnuncio;
 import java.util.ArrayList;
 import java.sql.Connection;
 import java.sql.Time;
-import java.time.LocalDate;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -65,21 +64,21 @@ public class AnnuncioDAO implements DaoInterface<Annuncio> {
 	}
 
 	@Override
-	public void create(Annuncio annucio) {
-		String query = "INSERT INTO annuncio (titolo, descrizione, luogo, oraIncontro, dataPubblicazione, tipoAnnuncio, prezzo, autore, oggetto) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+	public void create(Annuncio annuncio) {
+		String query = "INSERT INTO annuncio (titolo, descrizione, luogo, \"oraIncontro\", \"dataPubblicazione\", \"tipoAnnuncio\", prezzo, autore, \"idOggetto\") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
 		try(PreparedStatement pstmt = conn.prepareStatement(query)) {
-			pstmt.setString(1, annucio.getTitolo());
-			pstmt.setString(2, annucio.getDescrizione());
-			pstmt.setObject(3, annucio.getLuogo(), java.sql.Types.OTHER);
-			pstmt.setTime(4, Time.valueOf(annucio.getOraIncontro()));
-			pstmt.setDate(5, Date.valueOf(LocalDate.now()));
-			pstmt.setString(8, annucio.getAutore().getUsername());
-			pstmt.setLong(9, annucio.getOggetto().getId());
+			pstmt.setString(1, annuncio.getTitolo());
+			pstmt.setString(2, annuncio.getDescrizione());
+			pstmt.setObject(3, annuncio.getLuogo(), java.sql.Types.OTHER);
+			pstmt.setTime(4, Time.valueOf(annuncio.getOraIncontro()));
+			pstmt.setDate(5, Date.valueOf(annuncio.getDataPubblicazione()));
+			pstmt.setString(8, annuncio.getAutore().getUsername());
+			pstmt.setLong(9, annuncio.getOggetto().getId());
 			
-			if (annucio instanceof AnnuncioVendita) {
+			if (annuncio instanceof AnnuncioVendita) {
 				pstmt.setObject(6, TipoAnnuncio.Vendita, java.sql.Types.OTHER);
-				pstmt.setDouble(7, ((AnnuncioVendita) annucio).getPrezzo());
-			} else if (annucio instanceof AnnuncioScambio) {
+				pstmt.setDouble(7, ((AnnuncioVendita) annuncio).getPrezzo());
+			} else if (annuncio instanceof AnnuncioScambio) {
 				pstmt.setObject(6, TipoAnnuncio.Scambio, java.sql.Types.OTHER);
 				pstmt.setNull(7, java.sql.Types.DOUBLE);
 			} else {

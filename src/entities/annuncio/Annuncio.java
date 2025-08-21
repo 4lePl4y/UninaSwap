@@ -35,7 +35,7 @@ public abstract class Annuncio {
 		this.descrizione = descrizione;
 		this.luogo = luogo;
 		this.oraIncontro = oraIncontro;
-		this.dataPubblicazione = dataPubblicazione;
+		this.dataPubblicazione = LocalDate.now();
 	}
 	
 

@@ -2,8 +2,10 @@ package controller;
 
 import java.awt.EventQueue;
 import java.sql.Connection;
-import java.time.*;
+
 import java.util.ArrayList;
+import java.time.LocalTime;
+import java.time.LocalDate;
 
 import dao.*;
 import db.DBConnection;
@@ -135,6 +137,19 @@ public class Controller {
 		newOggettoFrame = new NewOggetto(this);
 		newOggettoFrame.setVisible(true);
 	}
+	
+	public void onCreaAnnuncioClicked() {
+		newAnnuncioFrame.onCreaAnnuncioClicked();
+	}
+	
+	public void creaAnnuncio(Annuncio annuncio) {
+		annuncioDAO.create(annuncio);
+	}
+	
+	public void onCreaOggettoFromAnnuncioClicked() {
+		newOggettoFrame = new NewOggetto(this);
+		newOggettoFrame.setVisible(true);
+	}
 
 	
 	public ArrayList<Annuncio> getAnnunci(int numeroAnnunci) {
@@ -148,11 +163,15 @@ public class Controller {
 		
 	}
 	
+	
+	
+	/**Prende gli oggetti dal database di un utente loggato*/
 	public ArrayList<Oggetto> getMieiOggetti(String usernameUtenteLoggato) {
 		ArrayList<Oggetto> oggetti = oggettoDAO.retrieveByUsername(usernameUtenteLoggato); // 
 		return oggetti;
 	}
 	
+	/**Prende gli oggetti dal main frame, quindi sono già caricati in memoria*/
 	public ArrayList<Oggetto> getMieiOggetti(){
 		ArrayList<Oggetto> oggetti = mainFrame.getMieiOggetti();
 		return oggetti;
@@ -167,6 +186,10 @@ public class Controller {
 		ArrayList<Offerta> offerte = offertaDAO.retrieveByRicevente(usernameUtenteLoggato);
 		return offerte;
 	}
+
+	
+
+	
 	
 	public void creaOfferta(Offerta offerta) {
 		offertaDAO.create(offerta);
@@ -175,5 +198,7 @@ public class Controller {
 	public Studente getStudenteLoggato() {
 		return mainFrame.getStudenteLoggato();
 	}
+
+	
 	
 }
