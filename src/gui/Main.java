@@ -218,7 +218,9 @@ public class Main extends JFrame {
     }
 
 	//METODI
-	
+	public ArrayList<Oggetto>getMieiOggetti() {
+		return mieiOggetti;
+	}
 }
 
  

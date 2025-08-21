@@ -46,9 +46,7 @@ public class Libro extends Oggetto {
 	
 	@Override
 	public String toString() {
-		return "Libro [id=" + id + ", nome=" + nome + ", proprietario=" + proprietario.getUsername() + 
-		       ", titolo=" + titolo + ", ISBN=" + ISBN + ", annoUscita=" + annoUscita + 
-		       ", autore=" + autore + ", genere=" + genere + "]";
+		return "Libro: "+ nome;
 	}
 	
 

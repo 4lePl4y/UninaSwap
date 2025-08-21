@@ -18,7 +18,7 @@ public class StrumentoMusicale extends Oggetto {
 	}
 	
 	public String toString() {
-		return "StrumentoMusicale [id=" + id + ", nome=" + nome + ", proprietario=" + proprietario.getUsername() + ", marchio=" + marchio + "]";
+		return "StrumentoMusicale:"+ nome ;
 	}
 
 }

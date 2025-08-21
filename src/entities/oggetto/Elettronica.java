@@ -33,8 +33,7 @@ public class Elettronica extends Oggetto {
 	
 	@Override
 	public String toString() {
-		return "Elettronica [id=" + id + ", nome=" + nome + ", proprietario=" + proprietario.getUsername() + 
-		       ", marchio=" + marchio + ", modello=" + modello + ", annoUscita=" + annoUscita + "]";
+		return "Elettronica: "+ nome;
 	}
 
 }

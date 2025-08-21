@@ -152,6 +152,11 @@ public class Controller {
 		ArrayList<Oggetto> oggetti = oggettoDAO.retrieveByUsername(usernameUtenteLoggato); // 
 		return oggetti;
 	}
+	
+	public ArrayList<Oggetto> getMieiOggetti(){
+		ArrayList<Oggetto> oggetti = mainFrame.getMieiOggetti();
+		return oggetti;
+	}
 
 	public ArrayList<Offerta> getMieOfferte(String usernameUtenteLoggato) {
 		ArrayList<Offerta> offerte = offertaDAO.retrieveByOfferente(usernameUtenteLoggato);

@@ -1,10 +1,13 @@
 package gui;
 
 import java.awt.*;
+import java.util.ArrayList;
+
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import controller.Controller;
 import entities.annuncio.*;
+import entities.oggetto.Oggetto;
 import entities.studente.Studente;
 import gui.preset.JCustomTextArea;
 import gui.preset.presetJTextField.JCustomTextField;
@@ -23,6 +26,7 @@ public class NewOfferta extends JFrame {
     private JCustomTextField moneyField;
     private JButtonWithBorder submitButton;
     private JTextField moneyTextField;
+    private JList<Oggetto> oggettiList;
 
     public NewOfferta(Controller controller, Annuncio annuncio, Studente autore) {
         this.controller = controller;
@@ -73,13 +77,21 @@ public class NewOfferta extends JFrame {
         	chooseObjectLabel.setBounds(0, 0, 200, 21);
         	barterPanel.add(chooseObjectLabel);
         	
+        	oggettiList = new JList<>(controller.getMieiOggetti().toArray(new Oggetto[0]));
+        	oggettiList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+        	oggettiList.setVisibleRowCount(4);
+        	
+        	JScrollPane scrollPane = new JScrollPane(oggettiList);
+        	scrollPane.setBounds(0, 40, 200, 80);
+        	barterPanel.add(scrollPane);
+        	
         	JLabel optionLabel = new JLabel("oppure");
         	optionLabel.setHorizontalAlignment(SwingConstants.CENTER);
         	optionLabel.setBounds(157, 36, 58, 21);
         	barterPanel.add(optionLabel);
         	
         	JButton addObjectButton = new JButtonWithBorder("Aggiungi un nuovo oggetto +");
-        	addObjectButton.setBounds(98, 60, 230, 21);
+        	addObjectButton.setBounds(210, 40, 170, 30);
         	barterPanel.add(addObjectButton);			        
         } else {       	
         	JPanel moneyPanel = new JPanel();
@@ -104,19 +116,16 @@ public class NewOfferta extends JFrame {
         submitButton.addActionListener(e -> onInviaOffertaClicked());
         contentPane.add(submitButton);
         
-        // Submit button
-        submitButton = new JButtonWithBorder("Crea Offerta");
-        submitButton.setBounds(140, 245, 133, 28);
-        submitButton.setAlignmentX(Component.LEFT_ALIGNMENT);
-        submitButton.addActionListener(e -> onInviaOffertaClicked());
-        contentPane.add(submitButton);
-        
     }
 
     private void onInviaOffertaClicked() {
         String descrizione = descrizioneArea.getText();
         String offertaDenaro = (moneyField != null) ? moneyField.getText() : null;
         // TODO: Implement offer creation logic using controller
+        ArrayList<Oggetto> selectedOggetti = new ArrayList<> (oggettiList.getSelectedValuesList());
+        for (Oggetto oggetto : selectedOggetti) {
+			System.out.println(oggetto);
+		}
         JOptionPane.showMessageDialog(this, "Offerta inviata!");
         dispose();
     }

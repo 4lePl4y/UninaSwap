@@ -25,6 +25,6 @@ public class Misc extends Oggetto{
 	
 	@Override
 	public String toString() {
-		return "Misc [id=" + id + ", nome=" + nome + ", proprietario=" + proprietario.getUsername() + ", marchio=" + marchio + ", categoria=" + categoria + "]";
+		return "Misc: "+ nome;
 	}
 }
