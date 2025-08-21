@@ -151,6 +151,7 @@ public class OggettoDAO implements DaoInterface<Oggetto> {
 	
 	private Oggetto creaOggettoCorretto(ResultSet rs) throws SQLException {
 		Oggetto oggetto = null;
+		Long id = rs.getLong("id");
 		String nome = rs.getString("nome");
 		String tipoOggetto = rs.getString("tipoOggetto");
 		String marchio = rs.getString("marchio");
@@ -166,19 +167,19 @@ public class OggettoDAO implements DaoInterface<Oggetto> {
 		
 		switch (tipoOggetto) {
 			case "StrumentoMusicale":
-				oggetto = new StrumentoMusicale(nome, proprietario, marchio);
+				oggetto = new StrumentoMusicale(id, nome, proprietario, marchio);
 				break;
 			case "Abbigliamento":
-				oggetto = new Abbigliamento(nome, proprietario, marchio, taglia);
+				oggetto = new Abbigliamento(id, nome, proprietario, marchio, taglia);
 				break;
 			case "Elettronica":
-				oggetto = new Elettronica(nome, proprietario, marchio, modello, annoUscita);
+				oggetto = new Elettronica(id, nome, proprietario, marchio, modello, annoUscita);
 				break;
 			case "Libro":
-				oggetto = new Libro(nome, proprietario, titolo, ISBN, annoUscita, autore, genere);
+				oggetto = new Libro(id, nome, proprietario, titolo, ISBN, annoUscita, autore, genere);
 				break;
 			case "Misc":
-				oggetto = new Misc(nome, proprietario, marchio, categoria);
+				oggetto = new Misc(id, nome, proprietario, marchio, categoria);
 				break;
 		}
 		return oggetto;

@@ -12,4 +12,7 @@ public class AnnuncioRegalo extends Annuncio {
 		super(titolo, autore, oggetto, messaggio, luogo, oraIncontro, dataPubblicazione);	
 	}	
 
+	public AnnuncioRegalo(long id, String titolo, Studente autore, Oggetto oggetto, String messaggio, Sede luogo, LocalTime oraIncontro, LocalDate dataPubblicazione) {
+		super(id, titolo, autore, oggetto, messaggio, luogo, oraIncontro, dataPubblicazione);	
+	}	
 }

@@ -18,6 +18,13 @@ public class Elettronica extends Oggetto {
 		this.annoUscita = annoUscita; 
 	}
 
+	public Elettronica(long id, String nome, Studente proprietario, String marchio, String modello, Year annoUscita) {
+		super(id, nome, proprietario);
+		this.marchio = marchio;
+		this.modello = modello;
+		this.annoUscita = annoUscita; 
+	}
+
 	// METODI
 	public String getMarchio() {
 		return marchio;

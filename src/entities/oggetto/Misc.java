@@ -14,6 +14,12 @@ public class Misc extends Oggetto{
 		this.categoria = categoria;
 	}
 
+	public Misc(long id, String nome, Studente proprietario, String marchio, String categoria) {
+		super(id, nome, proprietario);
+		this.marchio = marchio;
+		this.categoria = categoria;
+	}
+
 	//METODI
 	public String getMarchio() {
 		return marchio;

@@ -11,7 +11,7 @@ public abstract class Offerta {
 	private Studente offerente;
 	private Annuncio annuncio;
 	
-	public Offerta(Stato stato, String messaggio, Studente offerente, Annuncio annuncio) {
+	public Offerta(String messaggio, Studente offerente, Annuncio annuncio) {
 		this.stato = stato;
 		this.messaggio = messaggio;
 		this.offerente = offerente;

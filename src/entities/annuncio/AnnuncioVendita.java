@@ -14,6 +14,11 @@ public class AnnuncioVendita extends Annuncio {
 		this.prezzo = prezzo;
 	}
 	
+	public AnnuncioVendita(long id,String titolo, Studente autore, Oggetto oggetto, String descrizione, Sede luogo, LocalTime oraIncontro, LocalDate dataPubblicazione, double prezzo) {
+		super(id, titolo, autore, oggetto, descrizione, luogo, oraIncontro, dataPubblicazione);	
+		this.prezzo = prezzo;
+	}
+	
 	public double getPrezzo() {
 		return prezzo;
 	}

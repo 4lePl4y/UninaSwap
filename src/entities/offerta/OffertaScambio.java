@@ -9,8 +9,8 @@ import entities.enumerazioni.Stato;
 public class OffertaScambio extends Offerta {
 	private ArrayList<Oggetto> oggettiOfferti = new ArrayList<Oggetto>();
 	
-	public OffertaScambio(Stato stato, String messaggio, Studente offerente, Annuncio annuncio, ArrayList<Oggetto> oggettiOfferti) {
-		super(stato, messaggio, offerente, annuncio);
+	public OffertaScambio(String messaggio, Studente offerente, Annuncio annuncio, ArrayList<Oggetto> oggettiOfferti) {
+		super(messaggio, offerente, annuncio);
 		this.oggettiOfferti = oggettiOfferti;
 	}
 

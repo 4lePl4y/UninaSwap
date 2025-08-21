@@ -7,8 +7,8 @@ import entities.studente.Studente;
 public class OffertaDenaro extends Offerta {
 	private double offerta;
 	
-	public OffertaDenaro(Stato stato, String messaggio, Studente offerente, Annuncio annuncio, double offerta) {
-		super(stato, messaggio, offerente, annuncio);
+	public OffertaDenaro(String messaggio, Studente offerente, Annuncio annuncio, double offerta) {
+		super(messaggio, offerente, annuncio);
 		this.offerta = offerta;
 	}
 	

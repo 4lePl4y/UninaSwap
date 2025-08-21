@@ -12,6 +12,11 @@ public class StrumentoMusicale extends Oggetto {
 		this.marchio = marchio;
 	}
 
+	public StrumentoMusicale(long id, String nome, Studente proprietario, String marchio) {
+		super(id, nome, proprietario);
+		this.marchio = marchio;
+	}
+
 	// METODI
 	public String getMarchio() {
 		return marchio;

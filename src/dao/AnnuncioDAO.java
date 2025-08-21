@@ -113,6 +113,7 @@ public class AnnuncioDAO implements DaoInterface<Annuncio> {
 	
 	//ALTRI METODI
 	private Annuncio creaAnnuncioCorretto(ResultSet rs) throws SQLException {
+		long id = rs.getLong("id");
 		String titolo = rs.getString("titolo");
 		String descrizione = rs.getString("descrizione");
 		String luogo = rs.getString("luogo");
@@ -126,15 +127,15 @@ public class AnnuncioDAO implements DaoInterface<Annuncio> {
 		switch(tipoAnnuncio) {	
 			case "Vendita":
 				double prezzo = rs.getDouble("prezzo");
-				annuncio = new AnnuncioVendita(titolo, autore, oggetto, descrizione, Sede.valueOf(luogo), oraIncontro.toLocalTime(), dataPubblicazione.toLocalDate(), prezzo);
+				annuncio = new AnnuncioVendita(id, titolo, autore, oggetto, descrizione, Sede.valueOf(luogo), oraIncontro.toLocalTime(), dataPubblicazione.toLocalDate(), prezzo);
 				break;
 		
 			case "Regalo":
-				annuncio = new AnnuncioRegalo(titolo, autore, oggetto, descrizione, Sede.valueOf(luogo), oraIncontro.toLocalTime(), dataPubblicazione.toLocalDate());
+				annuncio = new AnnuncioRegalo(id, titolo, autore, oggetto, descrizione, Sede.valueOf(luogo), oraIncontro.toLocalTime(), dataPubblicazione.toLocalDate());
 				break;
 				
 			case "Scambio":
-				annuncio = new AnnuncioScambio(titolo, autore, oggetto, descrizione, Sede.valueOf(luogo), oraIncontro.toLocalTime(), dataPubblicazione.toLocalDate());
+				annuncio = new AnnuncioScambio(id, titolo, autore, oggetto, descrizione, Sede.valueOf(luogo), oraIncontro.toLocalTime(), dataPubblicazione.toLocalDate());
 	}
 	
 		return annuncio;

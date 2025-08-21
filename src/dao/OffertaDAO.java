@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import entities.annuncio.*;
@@ -34,7 +35,7 @@ public class OffertaDAO implements DaoInterface<Offerta> {
 			pstmt.setString(1, usernameOfferente);
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()) {
-				offerte.add(creaOffertaCorretto(rs));
+				offerte.add(creaOffertaCorretta(rs));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -50,7 +51,7 @@ public class OffertaDAO implements DaoInterface<Offerta> {
 			pstmt.setString(1, usernameRicevente);
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()) {
-				offerte.add(creaOffertaCorretto(rs));
+				offerte.add(creaOffertaCorretta(rs));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -66,13 +67,35 @@ public class OffertaDAO implements DaoInterface<Offerta> {
 		else
 			query = "INSERT INTO offerta_denaro (messaggio, offerente, \"idAnnuncio\", offerta ) VALUES (?, ?, ?, ?);";
 		
-		try(PreparedStatement pstmt = conn.prepareStatement(query)) {
+		try(PreparedStatement pstmt = conn.prepareStatement(query, Statement.RETURN_GENERATED_KEYS)) {
 			pstmt.setString(1, offerta.getMessaggio());
 			pstmt.setString(2, offerta.getOfferente().getUsername());
-			pstmt.setString(3, String.valueOf(offerta.getAnnuncio().getId()));
-			if(!(offerta instanceof OffertaScambio))
+			pstmt.setLong(3, offerta.getAnnuncio().getId());
+			if(!(offerta instanceof OffertaScambio)) {
 				pstmt.setDouble(4, ((OffertaDenaro)offerta).getOfferta());
-			pstmt.executeUpdate();
+				pstmt.executeUpdate();
+			}else {
+				pstmt.executeUpdate();
+				ResultSet rs = pstmt.getGeneratedKeys();
+				rs.next();
+				Long idOfferta = rs.getLong("id");
+				ArrayList<Oggetto> oggettiOfferti = ((OffertaScambio)offerta).getOggettiOfferti();
+				query = "INSERT INTO oggetto_per_scambio (\"idOggetto\", \"idOffertaScambio\") VALUES ";
+				for(int i=0; i<oggettiOfferti.size(); i++) {
+					query += "(?, ?),";
+				}
+				query = query.substring(0, query.length() - 1); // Rimuove l'ultima virgola
+				query += ";";
+				try(PreparedStatement pstmtOggetto = conn.prepareStatement(query)) {
+					for(int i=0, p=1, s=2; i<oggettiOfferti.size(); i++, p+=2, s+=2) {
+						pstmtOggetto.setLong(p, oggettiOfferti.get(i).getId());
+						pstmtOggetto.setLong(s, idOfferta);
+					}
+					pstmtOggetto.executeUpdate();
+				}catch (SQLException e) {
+					e.printStackTrace();
+				}
+			}
 		}
 		catch (SQLException e) {
 			e.printStackTrace();
@@ -97,8 +120,8 @@ public class OffertaDAO implements DaoInterface<Offerta> {
 		}
 	}
 	
-	public Offerta creaOffertaCorretto(ResultSet rs) throws SQLException {
-		long idOfferta = rs.getLong("id_offerta");
+	public Offerta creaOffertaCorretta(ResultSet rs) throws SQLException {
+		long id = rs.getLong("id_offerta");
 		Stato stato = Stato.valueOf(rs.getString("stato"));
 		double offerta = rs.getDouble("offerta");
 		String messaggio = rs.getString("messaggio");
@@ -110,14 +133,14 @@ public class OffertaDAO implements DaoInterface<Offerta> {
 		
 		switch (tipoAnnuncio) {
 			case Scambio:
-				ArrayList<Oggetto> oggettiScambio = oggettoDAO.retrieveOggettiScambio(idOfferta);
-				offertaCorretta = new OffertaScambio(idOfferta, stato, messaggio, offerente, annuncio, oggettiScambio);
+				ArrayList<Oggetto> oggettiScambio = oggettoDAO.retrieveOggettiScambio(id);
+				offertaCorretta = new OffertaScambio(id, stato, messaggio, offerente, annuncio, oggettiScambio);
 				break;
 			case Vendita:
-				offertaCorretta = new OffertaDenaro(idOfferta, stato, messaggio, offerente, annuncio, offerta);
+				offertaCorretta = new OffertaDenaro(id, stato, messaggio, offerente, annuncio, offerta);
 				break;
 			case Regalo:
-				offertaCorretta = new OffertaDenaro(idOfferta, stato, messaggio, offerente, annuncio, offerta);
+				offertaCorretta = new OffertaDenaro(id, stato, messaggio, offerente, annuncio, offerta);
 				break;
 		}
 		return offertaCorretta;

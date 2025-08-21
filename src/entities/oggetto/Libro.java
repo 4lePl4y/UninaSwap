@@ -23,6 +23,16 @@ public class Libro extends Oggetto {
 		
 	}
 
+	public Libro(long id, String nome, Studente proprietario, String titolo, String ISBN, Year annoUscita, String autore, String genere) {
+		super(id, nome, proprietario);
+		this.titolo = titolo;
+		this.ISBN = ISBN;
+		this.annoUscita = annoUscita;
+		this.autore = autore;
+		this.genere = genere;
+		
+	}
+
 	// METODI
 	public String getTitolo() {
 		return titolo;

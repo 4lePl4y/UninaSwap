@@ -14,6 +14,12 @@ public class Abbigliamento extends Oggetto {
 		this.taglia = taglia;
 	}
 
+	public Abbigliamento(long id, String nome, Studente proprietario, String marchio, String taglia) {
+		super(id, nome, proprietario);
+		this.marchio = marchio;
+		this.taglia = taglia;
+	}
+
 	// METODI
 	public String getMarchio() {
 		return marchio;
