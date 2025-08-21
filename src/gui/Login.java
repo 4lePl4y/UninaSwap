@@ -59,12 +59,12 @@ public class Login extends JFrame {
 		descTxtPane.setBounds(24, 48, 234, 41);
 		
 		
-		userTxtField = new JCustomTextField("Username");
+		userTxtField = new JCustomTextField("4le");
 		userTxtField.setBounds(10, 113, 262, 33);
 		userTxtField.setColumns(10);
 		
 		
-		pswTxtField = new JCustomPasswordField("Password");
+		pswTxtField = new JCustomPasswordField("1234");
 		pswTxtField.setBounds(10, 178, 262, 33);
 		pswTxtField.getShowPswLabel().setLocation(185, 10);
 		

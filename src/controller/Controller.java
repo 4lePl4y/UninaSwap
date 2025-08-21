@@ -48,8 +48,6 @@ public class Controller {
 					
 					controller.loginFrame = new Login(controller);
 					controller.loginFrame.setVisible(true);
-					controller.mainFrame = new Main(controller);
-					controller.mainFrame.setVisible(false);
 					
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -71,21 +69,22 @@ public class Controller {
 	}
 	
 	public void onLoginClicked() {
-//		loginFrame.resetWarningLabel();
-//		String username = loginFrame.getUsername();
-//		String password = loginFrame.getPassword();
-//		Studente chkStudente = studenteDAO.retrieveByPK(username);
-//		if(chkStudente == null) {
-//			loginFrame.setWarningLabel("Attenzione! Username errato");
-//			
-//			return;
-//		}else if(chkStudente != null && !chkStudente.getPassword().equals(password)) {
-//			loginFrame.setWarningLabel("Attenzione! Password errata");
-//			return; 
-//		} else {
+		loginFrame.resetWarningLabel();
+		String username = loginFrame.getUsername();
+		String password = loginFrame.getPassword();
+		Studente chkStudente = studenteDAO.retrieveByPK(username);
+		if(chkStudente == null) {
+			loginFrame.setWarningLabel("Attenzione! Username errato");
+			
+			return;
+		}else if(chkStudente != null && !chkStudente.getPassword().equals(password)) {
+			loginFrame.setWarningLabel("Attenzione! Password errata");
+			return; 
+		} else {
+			mainFrame = new Main(this, chkStudente);
 			mainFrame.setVisible(true);
 			loginFrame.setVisible(false);
-//		}
+		}
 		
 	}
 
