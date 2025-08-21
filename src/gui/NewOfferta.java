@@ -63,19 +63,6 @@ public class NewOfferta extends JFrame {
         variablePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
         contentPane.add(variablePanel);
 
-        // Submit button
-        submitButton = new JButtonWithBorder("Crea Offerta");
-        submitButton.setBounds(140, 245, 133, 28);
-        submitButton.setAlignmentX(Component.LEFT_ALIGNMENT);
-        submitButton.addActionListener(e -> onInviaOffertaClicked());
-        contentPane.add(submitButton);
-        
-    }
-
-    public void setAnnuncio(Annuncio annuncio) {
-        this.annuncio = annuncio;
-        welcomingLabel.setText("Fai un'offerta per: " + annuncio.getTitolo() + " di " + annuncio.getAutore().getUsername());
-
         if(annuncio instanceof AnnuncioScambio) {		
         	JPanel barterPanel = new JPanel();
         	barterPanel.setBounds(10, 144, 386, 91);
@@ -112,6 +99,13 @@ public class NewOfferta extends JFrame {
 
         // Submit button
         submitButton = new JButtonWithBorder("Fai Offerta");
+        submitButton.setBounds(140, 245, 133, 28);
+        submitButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+        submitButton.addActionListener(e -> onInviaOffertaClicked());
+        contentPane.add(submitButton);
+        
+        // Submit button
+        submitButton = new JButtonWithBorder("Crea Offerta");
         submitButton.setBounds(140, 245, 133, 28);
         submitButton.setAlignmentX(Component.LEFT_ALIGNMENT);
         submitButton.addActionListener(e -> onInviaOffertaClicked());

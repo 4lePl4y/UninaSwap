@@ -43,7 +43,7 @@ public class Main extends JFrame {
 		
 
 	//COSTRUTTORE
-	public Main(Controller controller, Studente studeteLoggato) {
+	public Main(Controller controller, Studente studenteLoggato) {
 		this.controller = controller;
 		this.studenteLoggato = studenteLoggato;
 		this.annunciPubblicati = controller.getAnnunci(40);
