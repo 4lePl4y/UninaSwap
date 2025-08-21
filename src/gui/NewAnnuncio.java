@@ -34,12 +34,12 @@ public class NewAnnuncio extends JFrame {
         setContentPane(contentPane);
 
         // Tipo Annuncio
-        JPanel tipoAnnuncio = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel tipoAnnuncioPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JLabel tipoAnnuncioLabel = new JLabel("Tipo Annuncio:");
         JComboBox<TipoAnnuncio> tipoAnnuncioCombo = new JComboBox<>(TipoAnnuncio.values());
-        tipoAnnuncio.add(tipoAnnuncioLabel);
-        tipoAnnuncio.add(tipoAnnuncioCombo);
-        contentPane.add(tipoAnnuncio);
+        tipoAnnuncioPanel.add(tipoAnnuncioLabel);
+        tipoAnnuncioPanel.add(tipoAnnuncioCombo);
+        contentPane.add(tipoAnnuncioPanel);
         
         // Tipo Oggetto
         JPanel tipoOggettoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));

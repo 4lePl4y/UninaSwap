@@ -26,14 +26,15 @@ public class NewOfferta extends JFrame {
 
     public NewOfferta(Controller controller, Annuncio annuncio, Studente autore) {
         this.controller = controller;
+        this.annuncio = annuncio;
+        this.autore = autore;
+        
         this.setTitle("Nuova Offerta");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setBounds(new Rectangle(0, 0, 420, 400));
         this.setFocusable(true);
         this.setResizable(false);
         this.setAlwaysOnTop(true);
-        this.annuncio = annuncio;
-        this.autore = autore;
 
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));
@@ -43,7 +44,7 @@ public class NewOfferta extends JFrame {
         // Welcoming label
         welcomingLabel = new JLabel();
         welcomingLabel.setBounds(10, 10, 386, 23);
-        welcomingLabel.setText("Fai un'offerta per: "+annuncio.getTitolo() + " di " + annuncio.getAutore().getUsername());
+        welcomingLabel.setText("Fai un'offerta per: " + annuncio.getTitolo() + " di " + annuncio.getAutore().getUsername());
         welcomingLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
         contentPane.add(welcomingLabel);
 
@@ -61,6 +62,19 @@ public class NewOfferta extends JFrame {
         variablePanel.setLayout(new BoxLayout(variablePanel, BoxLayout.Y_AXIS));
         variablePanel.setAlignmentX(Component.LEFT_ALIGNMENT);
         contentPane.add(variablePanel);
+
+        // Submit button
+        submitButton = new JButtonWithBorder("Crea Offerta");
+        submitButton.setBounds(140, 245, 133, 28);
+        submitButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+        submitButton.addActionListener(e -> onInviaOffertaClicked());
+        contentPane.add(submitButton);
+        
+    }
+
+    public void setAnnuncio(Annuncio annuncio) {
+        this.annuncio = annuncio;
+        welcomingLabel.setText("Fai un'offerta per: " + annuncio.getTitolo() + " di " + annuncio.getAutore().getUsername());
 
         if(annuncio instanceof AnnuncioScambio) {		
         	JPanel barterPanel = new JPanel();
@@ -80,7 +94,7 @@ public class NewOfferta extends JFrame {
         	JButton addObjectButton = new JButtonWithBorder("Aggiungi un nuovo oggetto +");
         	addObjectButton.setBounds(98, 60, 230, 21);
         	barterPanel.add(addObjectButton);			        
-        } else {        	
+        } else {       	
         	JPanel moneyPanel = new JPanel();
         	moneyPanel.setBounds(10, 144, 386, 28);
         	contentPane.add(moneyPanel);
