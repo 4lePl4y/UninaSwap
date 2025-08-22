@@ -74,15 +74,14 @@ public class Main extends JFrame {
         JPanel listingsPane = new JListingsPane(mieiAnnunci, controller);
 		contentPane.add(listingsPane, "LISTINGS");
 		
-		//FINE SECONDA FINESTRA
+		// Offers panel DA FARE
 		
 		// My Objects panel
 		JPanel myObjectsPane = new JMyObjectsPane(mieiOggetti, controller);
 		contentPane.add(myObjectsPane, "MYOBJECTS");
 
 		
-		//(Scelta delle finestre)
-		// Button panel
+		// Button panel per scegliere le finestre
         buttonPane = new JPanel();
         buttonPane.setBackground(new Color(255, 255, 255));
         FlowLayout fl_buttonPane = (FlowLayout) buttonPane.getLayout();

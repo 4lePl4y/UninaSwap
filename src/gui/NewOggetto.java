@@ -9,6 +9,7 @@ import gui.preset.presetJTextField.JCustomTextField;
 import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -24,11 +25,12 @@ public class NewOggetto extends JFrame {
     private JComboBox<TipoOggetto> tipoOggettoCombo;
 
     // Panels for each field
-    private JPanel marchioPanel, tagliaPanel, modelloPanel, annoUscitaPanel;
+    private JPanel nomePanel, marchioPanel, tagliaPanel, modelloPanel, annoUscitaPanel;
     private JPanel titoloPanel, isbnPanel, annoPubblicazionePanel, autorePanel, generePanel;
     private JPanel categoriaPanel;
 
     // Fields
+    private JCustomTextField nomeField = new JCustomTextField("Inserisci il nome");
     private JCustomTextField marchioField = new JCustomTextField("Inserisci il marchio");
     private JCustomTextField tagliaField = new JCustomTextField("Inserisci la taglia");
     private JCustomTextField modelloField = new JCustomTextField("Inserisci il modello");
@@ -63,6 +65,7 @@ public class NewOggetto extends JFrame {
         contentPane.add(tipoPanel);
 
         // Panels for each field
+        nomePanel = creaFieldPanel("Nome:", nomeField);
         marchioPanel = creaFieldPanel("Marchio:", marchioField);
         tagliaPanel = creaFieldPanel("Taglia:", tagliaField);
         modelloPanel = creaFieldPanel("Modello:", modelloField);
@@ -75,6 +78,7 @@ public class NewOggetto extends JFrame {
         categoriaPanel = creaFieldPanel("Categoria:", categoriaField);
 
         // Add all panels (they will be shown/hidden as needed)
+        contentPane.add(nomePanel);
         contentPane.add(marchioPanel);
         contentPane.add(tagliaPanel);
         contentPane.add(modelloPanel);
@@ -90,6 +94,15 @@ public class NewOggetto extends JFrame {
         JButtonWithBorder creaButton = new JButtonWithBorder("Crea Oggetto");
         creaButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         contentPane.add(Box.createVerticalStrut(20));
+        creaButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(java.awt.event.MouseEvent evt) {
+				TipoOggetto tipo = (TipoOggetto) tipoOggettoCombo.getSelectedItem();
+				if (tipo == null) return;
+				
+				dispose();
+			}
+		});
         contentPane.add(creaButton);
 
         tipoOggettoCombo.addActionListener(e -> aggiornaCampi());
