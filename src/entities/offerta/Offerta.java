@@ -12,7 +12,6 @@ public abstract class Offerta {
 	private Annuncio annuncio;
 	
 	public Offerta(String messaggio, Studente offerente, Annuncio annuncio) {
-		this.stato = stato;
 		this.messaggio = messaggio;
 		this.offerente = offerente;
 		this.annuncio = annuncio;

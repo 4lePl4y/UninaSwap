@@ -9,6 +9,7 @@ import entities.studente.Studente;
 import gui.preset.JButtonWithBorder;
 import gui.preset.JCustomTextArea;
 import gui.preset.presetJTextField.JCustomTextField;
+import gui.preset.presetJTextField.JDoubleTextField;
 
 import java.awt.Component;
 import java.awt.Dimension;
@@ -32,7 +33,8 @@ public class NewAnnuncio extends JFrame {
     private JComboBox<Oggetto> oggettiEsistentiCombo;
     private  JComboBox<Sede> sedeCombo;
     private JComboBox<String> orarioCombo;
-    private JCustomTextField prezzoField;
+    private JPanel prezzoPanel;
+    private JDoubleTextField prezzoField;
 
     public NewAnnuncio(Controller controller) {
         this.controller = controller;
@@ -95,7 +97,7 @@ public class NewAnnuncio extends JFrame {
         creaOggettoBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				controller.onCreaOggettoFromAnnuncioClicked();
+				controller.onApriOggettoFrameClicked();
 			}
         });
         aggiungiOggettoPanel.add(creaOggettoBtn);
@@ -118,9 +120,9 @@ public class NewAnnuncio extends JFrame {
         contentPane.add(orarioPanel);
 
         // Prezzo (solo per Vendita)
-        JPanel prezzoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        prezzoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JLabel prezzoLabel = new JLabel("Prezzo:");
-        prezzoField = new JCustomTextField("€");
+        prezzoField = new JDoubleTextField("€");
         prezzoField.setColumns(10);
         prezzoPanel.add(prezzoLabel);
         prezzoPanel.add(prezzoField);
@@ -166,10 +168,15 @@ public class NewAnnuncio extends JFrame {
 
 
 	public void onCreaAnnuncioClicked() {
+		if(!areInputsValid()) {
+			return;
+		}
+		
 		String titolo = this.titoloAnnuncioField.getText();
 		Studente autore = this.controller.getStudenteLoggato();
 		Oggetto oggettoSelezionato = (Oggetto) this.oggettiEsistentiCombo.getSelectedItem();
 		String descrizione = this.descrPane.getText();
+		descrizione = descrizione.equals("Inserisci la descrizione...") ? "" : descrizione;
 		Sede luogo = (Sede) this.sedeCombo.getSelectedItem();
 		LocalTime oraIncontro = LocalTime.parse((String) this.orarioCombo.getSelectedItem());
 		LocalDate dataPubblicazione = LocalDate.now();
@@ -192,10 +199,10 @@ public class NewAnnuncio extends JFrame {
 		}
 		if(controller.areAnnunciConStessoOggetto(annuncio)) {
 			if(annuncio instanceof AnnuncioRegalo) {
-				JOptionPane.showMessageDialog(this, "Esiste già un annuncio di scambio o vendita con lo stesso oggetto.");
+				JOptionPane.showMessageDialog(this, "Non puoi creare un annuncio di regalo per questo oggetto. \nEsiste già un suo annuncio di vendita o di scambio");
 				return; 
 			} else {
-				JOptionPane.showMessageDialog(this, "Esiste già un annuncio di regalo con lo stesso oggetto.");
+				JOptionPane.showMessageDialog(this, "Non puoi creare un annuncio di vendita o di scambio per questo oggetto. \nEsiste già un suo annuncio di regalo");
 				return; 
 			}
 		}
@@ -203,7 +210,34 @@ public class NewAnnuncio extends JFrame {
 		JOptionPane.showMessageDialog(this, "Annucio creato!");
         dispose();
 	}
-    
-    
-    //TODO check dei textfield
+
+
+	private boolean areInputsValid() {
+		if(titoloAnnuncioField.getText().isEmpty() || titoloAnnuncioField.getText().equals("Inserisci il titolo dell'annuncio")) {
+			JOptionPane.showMessageDialog(this, "Inserisci un titolo per l'annuncio!");
+			return false;
+		}
+		
+		if(oggettiEsistentiCombo.getSelectedItem() == null) {
+			JOptionPane.showMessageDialog(this, "Seleziona un oggetto esistente o crea un nuovo oggetto!");
+			return false;
+		}
+		
+		if(prezzoPanel.isVisible()) {
+			if(prezzoField.getText().isEmpty() || prezzoField.getText().equals("€")) {
+				JOptionPane.showMessageDialog(this, "Inserisci un prezzo per l'annuncio di vendita!");
+				return false;
+			}
+			
+			try {
+				Double.parseDouble(prezzoField.getText());
+			} catch (NumberFormatException e) {
+				JOptionPane.showMessageDialog(this, "Inserisci un prezzo valido in denaro!");
+				return false;
+			}
+		}
+		
+		return true;
+	}
+
 }

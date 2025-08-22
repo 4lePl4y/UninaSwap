@@ -4,13 +4,9 @@ import java.awt.EventQueue;
 import java.sql.Connection;
 
 import java.util.ArrayList;
-import java.time.LocalTime;
-import java.time.LocalDate;
-
 import dao.*;
 import db.DBConnection;
 import entities.annuncio.*;
-import entities.enumerazioni.*;
 import entities.offerta.*;
 import entities.oggetto.*;
 import entities.studente.*;
@@ -93,7 +89,7 @@ public class Controller {
 	public void onRegisterClicked() {
 		signUpFrame.resetWarningLabel();
 		if(!signUpFrame.areInputsValid()) {
-			return;
+			return; // Se i campi non sono validi, non procedere
 		}
 		
 		String newName = signUpFrame.getName();
@@ -160,11 +156,11 @@ public class Controller {
 		return false;
 	}
 	
-	public void onCreaOggettoFromAnnuncioClicked() {
+	public void onApriOggettoFrameClicked() {
 		newOggettoFrame = new NewOggetto(this);
 		newOggettoFrame.setVisible(true);
 	}
-
+	
 	
 	public ArrayList<Annuncio> getAnnunci(int numeroAnnunci) {
 		ArrayList<Annuncio> annunci = annuncioDAO.getAnnunci(numeroAnnunci); 
@@ -179,13 +175,13 @@ public class Controller {
 	
 	
 	
-	/**Prende gli oggetti dal database di un utente loggato*/
+	/**Prende gli oggetti dal database di un utente*/
 	public ArrayList<Oggetto> getMieiOggetti(String usernameUtenteLoggato) {
-		ArrayList<Oggetto> oggetti = oggettoDAO.retrieveByUsername(usernameUtenteLoggato); // 
+		ArrayList<Oggetto> oggetti = oggettoDAO.retrieveByUsername(usernameUtenteLoggato); 
 		return oggetti;
 	}
 	
-	/**Prende gli oggetti dal main frame, quindi sono già caricati in memoria*/
+	/**Prende gli oggetti dal main frame dell'utente già loggato, quindi gli oggetti sono già caricati in memoria*/
 	public ArrayList<Oggetto> getMieiOggetti(){
 		ArrayList<Oggetto> oggetti = mainFrame.getMieiOggetti();
 		return oggetti;

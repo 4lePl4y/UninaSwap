@@ -3,7 +3,6 @@ package entities.oggetto;
 import entities.studente.Studente;
 
 public class Misc extends Oggetto{
-	private static final long serialVersionUID = 1L;
 	// ATTRIBUTI
 	private String marchio;
 	private String categoria;

@@ -11,7 +11,7 @@ import entities.offerta.*;
 import entities.oggetto.*;
 import entities.studente.*;
 import gui.preset.JCustomTextArea;
-import gui.preset.presetJTextField.JCustomTextField;
+import gui.preset.presetJTextField.JDoubleTextField;
 import gui.preset.JButtonWithBorder;
 
 public class NewOfferta extends JFrame {
@@ -22,9 +22,9 @@ public class NewOfferta extends JFrame {
     private Annuncio annuncio;
     private Studente autore;
     private JLabel welcomingLabel;
-    private JCustomTextArea descrizioneArea;
+    private JCustomTextArea messaggioArea;
     private JButtonWithBorder submitButton;
-    private JCustomTextField moneyTextField;
+    private JDoubleTextField moneyTextField;
     private ArrayList<Oggetto> mieiOggetti;
     private ArrayList<JCheckBox> checkBoxes; 
 
@@ -53,12 +53,12 @@ public class NewOfferta extends JFrame {
         contentPane.add(welcomingLabel);
 
         // Description area
-        descrizioneArea = new JCustomTextArea("Aggiungi un messaggio alla tua offerta...");
-        descrizioneArea.setBounds(10, 43, 386, 75);
-        descrizioneArea.setLineWrap(true);
-        descrizioneArea.setWrapStyleWord(true);
-        descrizioneArea.setMaximumSize(new Dimension(400, 80));
-        contentPane.add(descrizioneArea);
+        messaggioArea = new JCustomTextArea("Aggiungi un messaggio alla tua offerta...");
+        messaggioArea.setBounds(10, 43, 386, 75);
+        messaggioArea.setLineWrap(true);
+        messaggioArea.setWrapStyleWord(true);
+        messaggioArea.setMaximumSize(new Dimension(400, 80));
+        contentPane.add(messaggioArea);
 
         if(annuncio instanceof AnnuncioScambio) {		
         	JPanel barterPanel = new JPanel();
@@ -90,7 +90,10 @@ public class NewOfferta extends JFrame {
         	barterPanel.add(optionLabel);
         	
         	JButton addObjectButton = new JButtonWithBorder("Aggiungi un nuovo oggetto +");
-        	addObjectButton.setBounds(210, 60, 170, 30);
+        	addObjectButton.setBounds(210, 60, 250, 30);
+        	addObjectButton.addActionListener(e -> {
+				controller.onApriOggettoFrameClicked();
+			});
         	barterPanel.add(addObjectButton);			        
         } else {       	
         	JPanel moneyPanel = new JPanel();
@@ -102,7 +105,7 @@ public class NewOfferta extends JFrame {
         	moneyLabel.setBounds(0, 0, 230, 23);
         	moneyPanel.add(moneyLabel);
         	
-        	moneyTextField = new JCustomTextField("€");
+        	moneyTextField = new JDoubleTextField("€");
         	moneyTextField.setBounds(200, 2, 96, 19);
         	moneyPanel.add(moneyTextField);
         	moneyTextField.setColumns(10);			
@@ -129,41 +132,29 @@ public class NewOfferta extends JFrame {
 				JOptionPane.showMessageDialog(this, "Devi selezionare almeno un oggetto da scambiare!");
 				return;
 			}
-			OffertaScambio offerta = new OffertaScambio(descrizioneArea.getText(), controller.getStudenteLoggato(), annuncio, oggettiScelti);
+			OffertaScambio offerta = new OffertaScambio(messaggioArea.getText(), controller.getStudenteLoggato(), annuncio, oggettiScelti);
 			controller.creaOfferta(offerta);
 		}else if (annuncio instanceof AnnuncioVendita) {
 			String moneyText = moneyTextField.getText();
-			if (moneyText.isEmpty()) {
-				JOptionPane.showMessageDialog(this, "Devi inserire un importo in denaro!");
-				return;
-			}
 			double money;
 			try {
 				money = Double.parseDouble(moneyText);
-				if (money <= 0) {
-					JOptionPane.showMessageDialog(this, "L'importo deve essere maggiore di zero!");
-					return;
-				}
 			} catch (NumberFormatException e) {
 				JOptionPane.showMessageDialog(this, "Inserisci un importo valido in denaro!");
 				return;
 			}
-			OffertaDenaro offerta = new OffertaDenaro(descrizioneArea.getText(), controller.getStudenteLoggato(), annuncio, money);
+			OffertaDenaro offerta = new OffertaDenaro(messaggioArea.getText(), controller.getStudenteLoggato(), annuncio, money);
 			controller.creaOfferta(offerta);
 		} else {
 			String moneyText = moneyTextField.getText();
 			double money;
 			try {
 				money = Double.parseDouble(moneyText);
-				if (money <= 0) {
-					JOptionPane.showMessageDialog(this, "L'importo deve essere maggiore di zero!");
-					return;
-				}
 			} catch (NumberFormatException e) {
 				JOptionPane.showMessageDialog(this, "Inserisci un importo valido in denaro!");
 				return;
 			}
-			OffertaDenaro offerta = new OffertaDenaro(descrizioneArea.getText(), controller.getStudenteLoggato(), annuncio, money);
+			OffertaDenaro offerta = new OffertaDenaro(messaggioArea.getText(), controller.getStudenteLoggato(), annuncio, money);
 			controller.creaOfferta(offerta);
 		}
 		

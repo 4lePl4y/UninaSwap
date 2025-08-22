@@ -39,6 +39,4 @@ public class JCustomTextArea extends JTextArea{
 		setForeground(Color.GRAY);
 	}
 	
-	// Additional methods can be added here if needed
-
 }
