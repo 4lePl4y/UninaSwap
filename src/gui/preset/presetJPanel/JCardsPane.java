@@ -9,7 +9,9 @@ import javax.swing.JPanel;
 
 import controller.Controller;
 import entities.annuncio.Annuncio;
+import entities.oggetto.Oggetto;
 import gui.preset.presetJPanel.presetJCard.JListingCard;
+import gui.preset.presetJPanel.presetJCard.JObjectCard;
 
 public class JCardsPane<T> extends JPanel {
 	private static final long serialVersionUID = 1L;
@@ -58,11 +60,12 @@ public class JCardsPane<T> extends JPanel {
     
     
     private JPanel createCard(T content) {
-		if (content instanceof Annuncio) {
-			return new JListingCard((Annuncio) content, controller); // Cast to Annuncio and create a card
+		switch (content) {
+			case Annuncio a -> {return new JListingCard((Annuncio) a, controller);}
+			case Oggetto o -> {return new JObjectCard((Oggetto) o, controller);}
+			
+			default -> {throw new IllegalArgumentException("Unsupported content type: " + content.getClass().getName());}
 		}
-		
-		return new JPanel(); // Return an empty panel if content is not of type Annuncio
 	}
     
 }

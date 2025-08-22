@@ -3,12 +3,13 @@ import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
 import controller.Controller;
+import entities.oggetto.Oggetto;
 
 
 public class JObjectCard extends JCard {
 	private static final long serialVersionUID = 1L;
 
-	public JObjectCard(Controller controller) {
+	public JObjectCard(Oggetto oggetto, Controller controller) {
 		super(controller);
 		this.setBounds(0, 0, 240, 450);
 		this.setLayout(null);
