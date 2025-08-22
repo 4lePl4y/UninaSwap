@@ -8,7 +8,7 @@ import gui.preset.presetJPanel.JPanelWithBorder;
 
 public class JCard extends JPanelWithBorder {
 	private static final long serialVersionUID = 1L;
-	protected int cardWidth = 240;
+	protected int cardWidth = 280;
 	protected int cardHeight = 450;
 	protected Controller controller;
 

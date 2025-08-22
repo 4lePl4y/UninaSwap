@@ -12,8 +12,6 @@ import gui.preset.JButtonWithBorder;
 //package java gui;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import java.awt.GridBagLayout;
-import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
@@ -21,15 +19,9 @@ import java.util.ArrayList;
 import javax.swing.JButton;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
-import javax.swing.JScrollPane;
 import javax.swing.border.EmptyBorder;
 import java.awt.CardLayout;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
 import java.awt.Color;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.SwingConstants;
 
 public class Main extends JFrame {
 	//ATTRIBUTI

@@ -2,9 +2,7 @@ package gui.main_components.listings_pane;
 
 import java.awt.BorderLayout;
 import java.util.ArrayList;
-
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 import controller.Controller;
 import entities.annuncio.Annuncio;
@@ -14,7 +12,7 @@ public class JListingsPane extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private JListingsUpperPanel listingsUpperPanel;
-	private JScrollPane listingsScrollPane;
+	private JCustomScrollPane<Annuncio> listingsScrollPane;
 	private Controller controller;
 	
 	public JListingsPane(ArrayList<Annuncio> mieiAnnunci, Controller controller){

@@ -10,12 +10,10 @@ import javax.swing.JPanel;
 import controller.Controller;
 import entities.annuncio.Annuncio;
 import entities.oggetto.Oggetto;
-import gui.preset.presetJPanel.presetJCard.JListingCard;
-import gui.preset.presetJPanel.presetJCard.JObjectCard;
-
+import gui.preset.presetJPanel.presetJCard.*;
 public class JCardsPane<T> extends JPanel {
 	private static final long serialVersionUID = 1L;
-	private int cardWidth = 240; // Width of each card
+	private int cardWidth = 280; // Width of each card
 	private int hGap = 30; // Horizontal gap between cards
 	private int vGap = 15; // Vertical gap between cards
 	private Controller controller; // Controller reference
@@ -61,7 +59,17 @@ public class JCardsPane<T> extends JPanel {
     
     private JPanel createCard(T content) {
 		switch (content) {
-			case Annuncio a -> {return new JListingCard((Annuncio) a, controller);}
+			case Annuncio a -> {
+				//Se l'annuncio appartiene allo studente loggato, crea una JMyListingCard
+				String usernameStudenteLoggato = controller.getStudenteLoggato().getUsername();
+				if(usernameStudenteLoggato.equals(a.getAutore().getUsername())) {
+					return new JMyListingCard((Annuncio) a, controller);
+				} else {
+					//Se l'annuncio non appartiene allo studente loggato, crea una JListingCard
+					return new JListingCard((Annuncio) a, controller);
+				}
+			}
+				
 			case Oggetto o -> {return new JObjectCard((Oggetto) o, controller);}
 			
 			default -> {throw new IllegalArgumentException("Unsupported content type: " + content.getClass().getName());}
