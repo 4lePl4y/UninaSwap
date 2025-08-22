@@ -2,7 +2,8 @@ package gui;
 
 import controller.Controller;
 import entities.enumerazioni.TipoOggetto;
-
+import entities.oggetto.*;
+import entities.studente.Studente;
 import gui.preset.JButtonWithBorder;
 import gui.preset.presetJTextField.JCustomTextField;
 
@@ -10,6 +11,8 @@ import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.time.Year;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
@@ -23,10 +26,11 @@ public class NewOggetto extends JFrame {
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
     private JComboBox<TipoOggetto> tipoOggettoCombo;
+    private Controller controller;
 
     // Panels for each field
     private JPanel nomePanel, marchioPanel, tagliaPanel, modelloPanel, annoUscitaPanel;
-    private JPanel titoloPanel, isbnPanel, annoPubblicazionePanel, autorePanel, generePanel;
+    private JPanel titoloPanel, isbnPanel, autorePanel, generePanel;
     private JPanel categoriaPanel;
 
     // Fields
@@ -37,12 +41,12 @@ public class NewOggetto extends JFrame {
     private JCustomTextField annoUscitaField = new JCustomTextField("Inserisci l'anno di uscita");
     private JCustomTextField titoloField = new JCustomTextField("Inserisci il titolo");
     private JCustomTextField isbnField = new JCustomTextField("Inserisci l'ISBN");
-    private JCustomTextField annoPubblicazioneField = new JCustomTextField("Inserisci l'anno di pubblicazione");
     private JCustomTextField autoreField = new JCustomTextField("Inserisci l'autore");
     private JCustomTextField genereField = new JCustomTextField("Inserisci il genere");
     private JCustomTextField categoriaField = new JCustomTextField("Inserisci la categoria");
 
     public NewOggetto(Controller controller) {
+    	this.controller = controller;
         this.setTitle("Nuovo Oggetto");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setBounds(100, 100, 500, 500);
@@ -72,7 +76,6 @@ public class NewOggetto extends JFrame {
         annoUscitaPanel = creaFieldPanel("Anno di uscita:", annoUscitaField);
         titoloPanel = creaFieldPanel("Titolo:", titoloField);
         isbnPanel = creaFieldPanel("ISBN:", isbnField);
-        annoPubblicazionePanel = creaFieldPanel("Anno di pubblicazione:", annoPubblicazioneField);
         autorePanel = creaFieldPanel("Autore:", autoreField);
         generePanel = creaFieldPanel("Genere:", genereField);
         categoriaPanel = creaFieldPanel("Categoria:", categoriaField);
@@ -85,22 +88,28 @@ public class NewOggetto extends JFrame {
         contentPane.add(annoUscitaPanel);
         contentPane.add(titoloPanel);
         contentPane.add(isbnPanel);
-        contentPane.add(annoPubblicazionePanel);
         contentPane.add(autorePanel);
         contentPane.add(generePanel);
         contentPane.add(categoriaPanel);
 
         // Button
         JButtonWithBorder creaButton = new JButtonWithBorder("Crea Oggetto");
+        creaButton.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent evt) {
+                TipoOggetto tipo = (TipoOggetto) tipoOggettoCombo.getSelectedItem();
+                if (tipo == null) return;
+
+                dispose();
+            }
+        });
+        
         creaButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         contentPane.add(Box.createVerticalStrut(20));
         creaButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(java.awt.event.MouseEvent evt) {
-				TipoOggetto tipo = (TipoOggetto) tipoOggettoCombo.getSelectedItem();
-				if (tipo == null) return;
-				
-				dispose();
+				onCreaOggettoClicked();
 			}
 		});
         contentPane.add(creaButton);
@@ -126,7 +135,6 @@ public class NewOggetto extends JFrame {
         annoUscitaPanel.setVisible(false);
         titoloPanel.setVisible(false);
         isbnPanel.setVisible(false);
-        annoPubblicazionePanel.setVisible(false);
         autorePanel.setVisible(false);
         generePanel.setVisible(false);
         categoriaPanel.setVisible(false);
@@ -150,7 +158,7 @@ public class NewOggetto extends JFrame {
             case Libro:
                 titoloPanel.setVisible(true);
                 isbnPanel.setVisible(true);
-                annoPubblicazionePanel.setVisible(true);
+                annoUscitaPanel.setVisible(true);
                 autorePanel.setVisible(true);
                 generePanel.setVisible(true);
                 break;
@@ -162,4 +170,42 @@ public class NewOggetto extends JFrame {
         contentPane.revalidate();
         contentPane.repaint();
     }
+    
+    public void onCreaOggettoClicked() {
+		Oggetto oggetto = null;
+		Studente proprietario = controller.getStudenteLoggato();
+	    String oNome = nomeField.getText().trim();
+	    String oMarchio = marchioField.getText().trim();
+	    String oModello = modelloField.getText().trim();
+	    Year oAnnoUscita = Year.of(Integer.valueOf(annoUscitaField.getText().trim()));
+	    String oTitolo = titoloField.getText().trim();
+	    String oISBN = isbnField.getText().trim();
+	    String oAutore = autoreField.getText().trim();
+	    String oGenere = genereField.getText().trim();
+	    String oCategoria = categoriaField.getText().trim();
+		
+	    TipoOggetto tipo = (TipoOggetto) tipoOggettoCombo.getSelectedItem();
+	    switch (tipo) {
+        case StrumentoMusicale:
+            oggetto = new StrumentoMusicale(oNome, proprietario ,oMarchio);
+            break;
+        case Abbigliamento:
+        	String oTaglia = tagliaField.getText().trim();
+            oggetto = new Abbigliamento(oNome, proprietario, oMarchio, oTaglia);
+            break;
+        case Elettronica:
+            oggetto = new Elettronica(oNome, proprietario, oMarchio, oModello, oAnnoUscita);
+            break;
+        case Libro:
+            oggetto = new Libro(oNome, proprietario, oTitolo, oISBN, oAnnoUscita, oAutore, oGenere);
+            break;
+        case Misc:
+        	oggetto = new Misc(oNome, proprietario, oMarchio, oCategoria);
+			break;   
+    }
+	   
+	    controller.creaOggetto(oggetto);
+	    
+	}
+    
 }

@@ -159,12 +159,13 @@ public class AnnuncioDAO implements DaoInterface<Annuncio> {
 	}
 	
 
-	public ArrayList<Annuncio> getAnnunci(int numeroAnnunci) {
+	public ArrayList<Annuncio> getAltriAnnunci(int numeroAnnunci, String username) {
 		ArrayList<Annuncio> annunci = new ArrayList<>();
-		String query = "SELECT * FROM annuncio LIMIT ?;";
+		String query = "SELECT * FROM annuncio WHERE autore <> ? LIMIT ?;";
 		
 		try(PreparedStatement pstmt = conn.prepareStatement(query)) {
-			pstmt.setInt(1, numeroAnnunci);
+			pstmt.setString(1, username);
+			pstmt.setInt(2, numeroAnnunci);
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()) {
 				Annuncio annuncio = creaAnnuncioCorretto(rs);

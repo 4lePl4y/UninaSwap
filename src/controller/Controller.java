@@ -143,6 +143,11 @@ public class Controller {
 		newOggettoFrame.setVisible(true);
 	}
 	
+	//**Metodo stub per inserire un oggetto nel database*/
+	public void creaOggetto(Oggetto oggetto) {
+		oggettoDAO.create(oggetto);
+	}
+	
 	//**Metodo per invocare il metodo del newAnnuncioFrame per creare un nuovo annuncio*/
 	public void onCreaAnnuncioClicked() {
 		newAnnuncioFrame.onCreaAnnuncioClicked();
@@ -176,8 +181,8 @@ public class Controller {
 	
 	
 	//**Prende un numero "numeroAnnunci" di annunci dal database*/
-	public ArrayList<Annuncio> getAnnunci(int numeroAnnunci) {
-		ArrayList<Annuncio> annunci = annuncioDAO.getAnnunci(numeroAnnunci); 
+	public ArrayList<Annuncio> getAltriAnnunci(int numeroAnnunci, String usernameStudenteLoggato) {
+		ArrayList<Annuncio> annunci = annuncioDAO.getAltriAnnunci(numeroAnnunci, usernameStudenteLoggato); 
 		return annunci; 
 	}
 	

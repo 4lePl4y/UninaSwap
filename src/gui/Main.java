@@ -39,7 +39,7 @@ public class Main extends JFrame {
 	private JPanel contentPane;
 	private JPanel buttonPane;
 	private Studente studenteLoggato;
-	private ArrayList<Annuncio> annunciPubblicati;
+	private ArrayList<Annuncio> altriAnnunci;
 	private ArrayList<Annuncio> mieiAnnunci;
 	private ArrayList<Oggetto> mieiOggetti;
 		
@@ -48,7 +48,7 @@ public class Main extends JFrame {
 	public Main(Controller controller) {
 		this.controller = controller;
 		this.studenteLoggato = controller.getStudenteLoggato();
-		this.annunciPubblicati = controller.getAnnunci(40);
+		this.altriAnnunci = controller.getAltriAnnunci(40, studenteLoggato.getUsername());
 		this.mieiAnnunci = controller.getMieiAnnunci(studenteLoggato.getUsername());
 		this.mieiOggetti = controller.getMieiOggetti(studenteLoggato.getUsername());
 		
@@ -67,7 +67,7 @@ public class Main extends JFrame {
 		
 		
 		// Browse panel
-		JBrowsePane browsePane = new JBrowsePane(annunciPubblicati, controller);
+		JBrowsePane browsePane = new JBrowsePane(altriAnnunci, controller);
 		contentPane.add(browsePane, "BROWSE");
 		
         // Listings panel
