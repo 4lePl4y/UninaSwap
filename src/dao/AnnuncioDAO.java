@@ -113,7 +113,7 @@ public class AnnuncioDAO implements DaoInterface<Annuncio> {
 
 	@Override
 	public void update(Annuncio annuncio) {
-		// TODO Auto-generated method stub	
+		// TODO: implemetazione per aggiornare un annuncio esistente
 	}
 
 	@Override

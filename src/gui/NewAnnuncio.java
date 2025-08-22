@@ -35,6 +35,9 @@ public class NewAnnuncio extends JFrame {
     private JComboBox<String> orarioCombo;
     private JPanel prezzoPanel;
     private JDoubleTextField prezzoField;
+    private JPanel aggiungiOggettoPanel;
+    private JLabel oggettiEsistentiLabel;
+    
 
     public NewAnnuncio(Controller controller) {
         this.controller = controller;
@@ -78,8 +81,8 @@ public class NewAnnuncio extends JFrame {
         contentPane.add(tipoAnnuncioPanel);
         
         // Aggiungi oggetto esistente o crea nuovo oggetto
-        JPanel aggiungiOggettoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JLabel oggettiEsistentiLabel = new JLabel("Scegli dai tuoi oggetti:");
+        aggiungiOggettoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        oggettiEsistentiLabel = new JLabel("Scegli dai tuoi oggetti:");
         ArrayList<Oggetto> mieiOggetti = controller.getMieiOggetti();
         Oggetto[] oggettiArray = new Oggetto[mieiOggetti.size() + 1];
         oggettiArray[0] = null; 
@@ -90,6 +93,7 @@ public class NewAnnuncio extends JFrame {
         aggiungiOggettoPanel.add(oggettiEsistentiLabel);
         aggiungiOggettoPanel.add(oggettiEsistentiCombo);
         
+
         JLabel optionLabel = new JLabel("Oppure");
         aggiungiOggettoPanel.add(optionLabel);
         
@@ -144,7 +148,7 @@ public class NewAnnuncio extends JFrame {
         creaBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				controller.onCreaAnnuncioClicked();
+				onCreaAnnuncioClicked();
 			}
 		});
         contentPane.add(Box.createVerticalStrut(20));
@@ -206,7 +210,8 @@ public class NewAnnuncio extends JFrame {
 				return; 
 			}
 		}
-		controller.creaAnnuncio(annuncio);
+		
+		controller.onCreaAnnuncioClicked(annuncio);
 		JOptionPane.showMessageDialog(this, "Annucio creato!");
         dispose();
 	}
@@ -239,5 +244,12 @@ public class NewAnnuncio extends JFrame {
 		
 		return true;
 	}
+	
+	//**Metodo per aggiornare il menu a tendina degli oggetti esistenti */
+	public void refreshOggettiEsistenti() {
+		int lastPositionIndex = controller.getMieiOggetti().size() - 1;
+		oggettiEsistentiCombo.addItem(controller.getMieiOggetti().get(lastPositionIndex));
+	}
+			
 
 }

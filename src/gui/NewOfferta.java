@@ -148,6 +148,8 @@ public class NewOfferta extends JFrame {
         JOptionPane.showMessageDialog(this, "Offerta inviata!");
         dispose();
         controller.creaOfferta(offerta);
+        controller.refreshBrowse();
+        //TODO: una volta implementato il pannello delle offerte, fare il refresh anche di quello
     }
 
 	private ArrayList<Oggetto> getOggettiSelezionati() {

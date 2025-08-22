@@ -215,10 +215,8 @@ public class NewOggetto extends JFrame {
         	oCategoria = categoriaField.getText().trim();
         	oggetto = new Misc(oNome, proprietario, oMarchio, oCategoria);
 			break;   
-    }
-	   
-	    controller.creaOggetto(oggetto);
-	    
+    }    
+	    controller.onCreaOggettoClicked(oggetto);
 	}
     
 }

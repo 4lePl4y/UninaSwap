@@ -42,6 +42,9 @@ public class Main extends JFrame {
 	private ArrayList<Annuncio> altriAnnunci;
 	private ArrayList<Annuncio> mieiAnnunci;
 	private ArrayList<Oggetto> mieiOggetti;
+	private JBrowsePane browsePane;
+	private JListingsPane listingsPane;
+	private JMyObjectsPane myObjectsPane;
 		
 
 	//COSTRUTTORE
@@ -69,16 +72,19 @@ public class Main extends JFrame {
 		// Browse panel
 		JBrowsePane browsePane = new JBrowsePane(altriAnnunci, controller);
 		contentPane.add(browsePane, "BROWSE");
+		this.browsePane = (JBrowsePane) browsePane;
 		
         // Listings panel
         JPanel listingsPane = new JListingsPane(mieiAnnunci, controller);
 		contentPane.add(listingsPane, "LISTINGS");
+		this.listingsPane = (JListingsPane) listingsPane;
 		
 		// Offers panel DA FARE
 		
 		// My Objects panel
 		JPanel myObjectsPane = new JMyObjectsPane(mieiOggetti, controller);
 		contentPane.add(myObjectsPane, "MYOBJECTS");
+		this.myObjectsPane = (JMyObjectsPane) myObjectsPane;
 
 		
 		// Button panel per scegliere le finestre
@@ -132,6 +138,22 @@ public class Main extends JFrame {
 	public Studente getStudenteLoggato() {
 		return this.studenteLoggato;
 	}
+	
+	public void refreshBrowse() {
+		this.altriAnnunci = controller.getAltriAnnunci(40, studenteLoggato.getUsername());
+		browsePane.refresh(altriAnnunci);
+	}
+	
+	public void refreshListings() {
+		this.mieiAnnunci = controller.getMieiAnnunci(studenteLoggato.getUsername());
+		listingsPane.refresh(mieiAnnunci);
+	}
+	
+	public void refreshMyObjects() {
+		this.mieiOggetti = controller.getMieiOggetti(studenteLoggato.getUsername());
+		myObjectsPane.refresh(mieiOggetti);
+	}
+	
 }
 
  

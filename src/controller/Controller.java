@@ -143,19 +143,33 @@ public class Controller {
 		newOggettoFrame.setVisible(true);
 	}
 	
-	//**Metodo stub per inserire un oggetto nel database*/
-	public void creaOggetto(Oggetto oggetto) {
+	//**Metodo per creare un nuovo oggetto nel database*/
+	public void onCreaOggettoClicked(Oggetto oggetto) {
 		oggettoDAO.create(oggetto);
+		mainFrame.refreshMyObjects();
+		if(newAnnuncioFrame.isVisible())
+			newAnnuncioFrame.refreshOggettiEsistenti();
 	}
 	
-	//**Metodo per invocare il metodo del newAnnuncioFrame per creare un nuovo annuncio*/
-	public void onCreaAnnuncioClicked() {
-		newAnnuncioFrame.onCreaAnnuncioClicked();
-	}
-	
-	//**Metodo stub per inserire un annuncio nel database*/
-	public void creaAnnuncio(Annuncio annuncio) {
+	//**Metodo per creare un nuovo annuncio nel database*/
+	public void onCreaAnnuncioClicked(Annuncio annuncio) {
 		annuncioDAO.create(annuncio);
+		mainFrame.refreshListings();
+	}
+	
+	//**Metodo stub per aggiornare gli annunci contentuti nel browsePane nel mainFrame*/
+	public void refreshBrowse() {
+		mainFrame.refreshBrowse();
+	}
+	
+	//**Metodo stub per aggiornare gli annunci contentuti nel listingsPane nel mainFrame*/
+	public void refreshListings() {
+		mainFrame.refreshListings();
+	}
+	
+	//**Metodo stub per aggiornare gli oggetti contentuti nel MyObjectsPane nel mainFrame*/
+	public void refreshMyObjects() {
+		mainFrame.refreshMyObjects();
 	}
 	
 	//**Controlla in fase di creazione di annuncio se esistono annunci con lo stesso oggetto incompatibili tra loro*/
@@ -226,6 +240,7 @@ public class Controller {
 	public Studente getStudenteLoggato() {
 		return studenteLoggato;
 	}
+
 
 	
 	
