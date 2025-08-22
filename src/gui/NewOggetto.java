@@ -175,31 +175,44 @@ public class NewOggetto extends JFrame {
 		Oggetto oggetto = null;
 		Studente proprietario = controller.getStudenteLoggato();
 	    String oNome = nomeField.getText().trim();
-	    String oMarchio = marchioField.getText().trim();
-	    String oModello = modelloField.getText().trim();
-	    Year oAnnoUscita = Year.of(Integer.valueOf(annoUscitaField.getText().trim()));
-	    String oTitolo = titoloField.getText().trim();
-	    String oISBN = isbnField.getText().trim();
-	    String oAutore = autoreField.getText().trim();
-	    String oGenere = genereField.getText().trim();
-	    String oCategoria = categoriaField.getText().trim();
+	    String oMarchio;
+	    String oModello;
+	    String oTaglia;
+	    Year oAnnoUscita;
+	    String oTitolo;
+	    String oISBN;
+	    String oAutore;
+	    String oGenere;	// genere del libro
+		String oCategoria;	// categoria dell'oggetto misc
 		
 	    TipoOggetto tipo = (TipoOggetto) tipoOggettoCombo.getSelectedItem();
 	    switch (tipo) {
         case StrumentoMusicale:
+        	oMarchio = marchioField.getText().trim();
             oggetto = new StrumentoMusicale(oNome, proprietario ,oMarchio);
             break;
         case Abbigliamento:
-        	String oTaglia = tagliaField.getText().trim();
+        	oMarchio = marchioField.getText().trim();
+        	oTaglia = tagliaField.getText().trim();
             oggetto = new Abbigliamento(oNome, proprietario, oMarchio, oTaglia);
             break;
         case Elettronica:
+        	oMarchio = marchioField.getText().trim();
+        	oModello = modelloField.getText().trim();
+        	oAnnoUscita = Year.of(Integer.valueOf(annoUscitaField.getText().trim()));
             oggetto = new Elettronica(oNome, proprietario, oMarchio, oModello, oAnnoUscita);
             break;
         case Libro:
+        	oTitolo = titoloField.getText().trim();
+        	oISBN = isbnField.getText().trim();
+        	oAnnoUscita = Year.of(Integer.valueOf(annoUscitaField.getText().trim()));
+        	oAutore = autoreField.getText().trim();
+        	oGenere = genereField.getText().trim();
             oggetto = new Libro(oNome, proprietario, oTitolo, oISBN, oAnnoUscita, oAutore, oGenere);
             break;
         case Misc:
+        	oMarchio = marchioField.getText().trim();
+        	oCategoria = categoriaField.getText().trim();
         	oggetto = new Misc(oNome, proprietario, oMarchio, oCategoria);
 			break;   
     }

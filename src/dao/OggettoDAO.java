@@ -76,7 +76,7 @@ public class OggettoDAO implements DaoInterface<Oggetto> {
 				pstmt.setString(3, ((Abbigliamento) oggetto).getMarchio());
 				pstmt.setString(4, ((Abbigliamento) oggetto).getTaglia());
 				pstmt.setNull(5, java.sql.Types.VARCHAR); // Modello non applicabile
-				pstmt.setNull(6, java.sql.Types.DATE); // Anno di uscita non applicabile
+				pstmt.setNull(6, java.sql.Types.INTEGER); // Anno di uscita non applicabile
 				pstmt.setNull(7, java.sql.Types.VARCHAR); // Titolo non applicabile
 				pstmt.setNull(8, java.sql.Types.VARCHAR); // ISBN non applicabile
 				pstmt.setNull(9, java.sql.Types.VARCHAR); // Autore non applicabile
@@ -109,7 +109,7 @@ public class OggettoDAO implements DaoInterface<Oggetto> {
 				pstmt.setString(3, ((StrumentoMusicale) oggetto).getMarchio());
 				pstmt.setNull(4, java.sql.Types.VARCHAR); // Taglia non applicabile
 				pstmt.setNull(5, java.sql.Types.VARCHAR); // Modello non applicabile
-				pstmt.setNull(6, java.sql.Types.DATE); // Anno di uscita non applicabile
+				pstmt.setNull(6, java.sql.Types.INTEGER); // Anno di uscita non applicabile
 				pstmt.setNull(7, java.sql.Types.VARCHAR); // Titolo non applicabile
 				pstmt.setNull(8, java.sql.Types.VARCHAR); // ISBN non applicabile
 				pstmt.setNull(9, java.sql.Types.VARCHAR); // Autore non applicabile
@@ -120,7 +120,7 @@ public class OggettoDAO implements DaoInterface<Oggetto> {
 				pstmt.setString(3, ((Misc) oggetto).getMarchio());
 				pstmt.setNull(4, java.sql.Types.VARCHAR); // Taglia non applicabile
 				pstmt.setNull(5, java.sql.Types.VARCHAR); // Modello non applicabile
-				pstmt.setNull(6, java.sql.Types.DATE); // Anno di uscita non applicabile
+				pstmt.setNull(6, java.sql.Types.INTEGER); // Anno di uscita non applicabile
 				pstmt.setNull(7, java.sql.Types.VARCHAR); // Titolo non applicabile
 				pstmt.setNull(8, java.sql.Types.VARCHAR); // ISBN non applicabile
 				pstmt.setNull(9, java.sql.Types.VARCHAR); // Autore non applicabile
