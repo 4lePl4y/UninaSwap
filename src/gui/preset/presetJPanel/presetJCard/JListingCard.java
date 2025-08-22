@@ -24,7 +24,7 @@ public class JListingCard extends JCard {
 	
 	public JListingCard(Annuncio annuncio, Controller controller) {
 		super(controller);
-		this.setBounds(new Rectangle(0, 0, 240, 450));
+		this.setBounds(new Rectangle(0, 0, 280, 450));
 		this.annuncio = annuncio;
 		this.autore = annuncio.getAutore();
 		
