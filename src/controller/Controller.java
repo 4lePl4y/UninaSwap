@@ -197,10 +197,6 @@ public class Controller {
 		return offerte;
 	}
 
-	
-
-	
-	
 	public void creaOfferta(Offerta offerta) {
 		offertaDAO.create(offerta);
 	}

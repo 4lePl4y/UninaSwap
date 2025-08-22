@@ -120,21 +120,20 @@ public class NewOfferta extends JFrame {
         
     }
 
-    private void onInviaOffertaClicked() {
+    public void onInviaOffertaClicked() {
+    	String messaggio = messaggioArea.getText().equals("Aggiungi un messaggio alla tua offerta...") ? "" : messaggioArea.getText();
+    	Studente studenteLoggato = controller.getStudenteLoggato();
+    	Offerta offerta = null;
+    	
         if(annuncio instanceof AnnuncioScambio) {
-			ArrayList<Oggetto> oggettiScelti = new ArrayList<>();
-			for (int i=0; i<this.checkBoxes.size(); i++) {
-				if(checkBoxes.get(i).isSelected())
-					oggettiScelti.add(mieiOggetti.get(i));
-			}
-			
-			if(oggettiScelti.isEmpty()) {
+			ArrayList<Oggetto> oggettiSelezionati = getOggettiSelezionati();
+			if(oggettiSelezionati.isEmpty()) {
 				JOptionPane.showMessageDialog(this, "Devi selezionare almeno un oggetto da scambiare!");
 				return;
 			}
-			OffertaScambio offerta = new OffertaScambio(messaggioArea.getText(), controller.getStudenteLoggato(), annuncio, oggettiScelti);
-			controller.creaOfferta(offerta);
-		}else if (annuncio instanceof AnnuncioVendita) {
+			offerta = new OffertaScambio(messaggio, studenteLoggato, annuncio, oggettiSelezionati);
+		
+        } else {
 			String moneyText = moneyTextField.getText();
 			double money;
 			try {
@@ -143,22 +142,21 @@ public class NewOfferta extends JFrame {
 				JOptionPane.showMessageDialog(this, "Inserisci un importo valido in denaro!");
 				return;
 			}
-			OffertaDenaro offerta = new OffertaDenaro(messaggioArea.getText(), controller.getStudenteLoggato(), annuncio, money);
-			controller.creaOfferta(offerta);
-		} else {
-			String moneyText = moneyTextField.getText();
-			double money;
-			try {
-				money = Double.parseDouble(moneyText);
-			} catch (NumberFormatException e) {
-				JOptionPane.showMessageDialog(this, "Inserisci un importo valido in denaro!");
-				return;
-			}
-			OffertaDenaro offerta = new OffertaDenaro(messaggioArea.getText(), controller.getStudenteLoggato(), annuncio, money);
-			controller.creaOfferta(offerta);
+			offerta = new OffertaDenaro(messaggio, studenteLoggato, annuncio, money);
 		}
 		
         JOptionPane.showMessageDialog(this, "Offerta inviata!");
         dispose();
+        controller.creaOfferta(offerta);
     }
+
+	private ArrayList<Oggetto> getOggettiSelezionati() {
+		ArrayList<Oggetto> oggettiSelezionati = new ArrayList<>();
+		for (int i=0; i<this.checkBoxes.size(); i++) {
+			if(checkBoxes.get(i).isSelected())
+				oggettiSelezionati.add(mieiOggetti.get(i));
+		}
+		
+		return oggettiSelezionati;
+	}
 }
