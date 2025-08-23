@@ -132,7 +132,6 @@ public class NewOfferta extends JFrame {
 				return;
 			}
 			offerta = new OffertaScambio(messaggio, studenteLoggato, annuncio, oggettiSelezionati);
-		
         } else {
 			String moneyText = moneyTextField.getText();
 			double money;
@@ -147,9 +146,7 @@ public class NewOfferta extends JFrame {
 		
         JOptionPane.showMessageDialog(this, "Offerta inviata!");
         dispose();
-        controller.creaOfferta(offerta);
-        controller.refreshBrowse();
-        //TODO: una volta implementato il pannello delle offerte, fare il refresh anche di quello
+        controller.onInviaOffertaClicked(offerta);
     }
 
 	private ArrayList<Oggetto> getOggettiSelezionati() {

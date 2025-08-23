@@ -120,7 +120,7 @@ public class AnnuncioDAO implements DaoInterface<Annuncio> {
 	public void delete(String id) {
 		String query = "DELETE FROM annuncio WHERE id = ?;";
 		try(PreparedStatement pstmt = conn.prepareStatement(query)) {
-			pstmt.setString(1, id);
+			pstmt.setLong(1, Long.valueOf(id));
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

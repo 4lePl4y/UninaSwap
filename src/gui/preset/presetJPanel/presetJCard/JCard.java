@@ -16,6 +16,7 @@ public class JCard extends JPanelWithBorder {
 		super();
 		this.controller = controller;
 		this.setPreferredSize(new Dimension(cardWidth, cardHeight));
+        this.setMaximumSize(new Dimension(cardWidth, cardHeight));
 		this.setBackground(new Color(255, 255, 255));
 		this.setLayout(null);
 	}

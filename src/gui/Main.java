@@ -4,9 +4,11 @@ import controller.Controller;
 import entities.annuncio.*;
 import entities.oggetto.*;
 import entities.studente.*;
+import entities.offerta.*;
 import gui.main_components.browse_pane.*;
-import gui.main_components.listings_pane.JListingsPane;
-import gui.main_components.my_objects_pane.JMyObjectsPane;
+import gui.main_components.listings_pane.*;
+import gui.main_components.my_objects_pane.*;
+import gui.main_components.offers_pane.*;
 import gui.preset.JButtonWithBorder;
 
 //package java gui;
@@ -34,9 +36,12 @@ public class Main extends JFrame {
 	private ArrayList<Annuncio> altriAnnunci;
 	private ArrayList<Annuncio> mieiAnnunci;
 	private ArrayList<Oggetto> mieiOggetti;
+	private ArrayList<Offerta> offerteRicevute;
+	private ArrayList<Offerta> offerteFatte;
 	private JBrowsePane browsePane;
 	private JListingsPane listingsPane;
 	private JMyObjectsPane myObjectsPane;
+	private JOffersPane offersPane;
 		
 
 	//COSTRUTTORE
@@ -46,6 +51,8 @@ public class Main extends JFrame {
 		this.altriAnnunci = controller.getAltriAnnunci(40, studenteLoggato.getUsername());
 		this.mieiAnnunci = controller.getMieiAnnunci(studenteLoggato.getUsername());
 		this.mieiOggetti = controller.getMieiOggetti(studenteLoggato.getUsername());
+		this.offerteRicevute = controller.getOfferteRicevute(studenteLoggato.getUsername());
+		this.offerteFatte = controller.getOfferteFatte(studenteLoggato.getUsername());
 		
 		setTitle("UninaSwap");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -62,22 +69,20 @@ public class Main extends JFrame {
 		
 		
 		// Browse panel
-		JBrowsePane browsePane = new JBrowsePane(altriAnnunci, controller);
+		this.browsePane = new JBrowsePane(altriAnnunci, controller);
 		contentPane.add(browsePane, "BROWSE");
-		this.browsePane = (JBrowsePane) browsePane;
 		
         // Listings panel
-        JPanel listingsPane = new JListingsPane(mieiAnnunci, controller);
+        this.listingsPane = new JListingsPane(mieiAnnunci, controller);
 		contentPane.add(listingsPane, "LISTINGS");
-		this.listingsPane = (JListingsPane) listingsPane;
 		
-		// Offers panel DA FARE
+		// Offers panel
+		this.offersPane = new JOffersPane(offerteRicevute, offerteFatte, controller);
+		contentPane.add(offersPane, "OFFERS");
 		
 		// My Objects panel
-		JPanel myObjectsPane = new JMyObjectsPane(mieiOggetti, controller);
+		this.myObjectsPane = new JMyObjectsPane(mieiOggetti, controller);
 		contentPane.add(myObjectsPane, "MYOBJECTS");
-		this.myObjectsPane = (JMyObjectsPane) myObjectsPane;
-
 		
 		// Button panel per scegliere le finestre
         buttonPane = new JPanel();
@@ -114,9 +119,18 @@ public class Main extends JFrame {
         	}
         });
         
+        JButton offersButton = new JButtonWithBorder("Offers");
+        offersButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				CardLayout cl = (CardLayout)(contentPane.getLayout());
+				cl.show(contentPane, "OFFERS");
+			}
+		});
+        
         buttonPane.add(browseButton);
         buttonPane.add(listingsButton);
-        buttonPane.add(new JButtonWithBorder("Offers"));
+        buttonPane.add(offersButton);
         buttonPane.add(myObjectsButton);
         buttonPane.add(new JButtonWithBorder("Profilo"));
         getContentPane().add(buttonPane, BorderLayout.SOUTH);
@@ -125,10 +139,6 @@ public class Main extends JFrame {
 	//METODI
 	public ArrayList<Oggetto>getMieiOggetti() {
 		return mieiOggetti;
-	}
-	
-	public Studente getStudenteLoggato() {
-		return this.studenteLoggato;
 	}
 	
 	public void refreshBrowse() {
@@ -144,6 +154,22 @@ public class Main extends JFrame {
 	public void refreshMyObjects() {
 		this.mieiOggetti = controller.getMieiOggetti(studenteLoggato.getUsername());
 		myObjectsPane.refresh(mieiOggetti);
+	}
+	
+	public void refreshAllOffers() {
+		this.offerteRicevute = controller.getOfferteRicevute(studenteLoggato.getUsername());
+		this.offerteFatte = controller.getOfferteFatte(studenteLoggato.getUsername());
+		offersPane.refresh(offerteRicevute, offerteFatte);
+	}
+	
+	public void refreshReceivedOffers() {
+		this.offerteRicevute = controller.getOfferteRicevute(studenteLoggato.getUsername());
+		offersPane.refreshOfferteRicevute(offerteRicevute);
+	}
+	
+	public void refreshMadeOffers() {
+		this.offerteFatte = controller.getOfferteFatte(studenteLoggato.getUsername());
+		offersPane.refreshOfferteFatte(offerteFatte);
 	}
 	
 }

@@ -10,6 +10,10 @@ import entities.studente.Studente;
 import gui.preset.JButtonWithBorder;
 
 import java.awt.Rectangle;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+
 import javax.swing.JButton;
 
 
@@ -46,12 +50,18 @@ public class JMyListingCard extends JCard {
 		add(timeLabel);
 		
 		
+		//TODO: implementare tutto ciò che implica la modifica di un annuncio, ciò implica probabilmente un altro frame
 		JButton modifyButton = new JButtonWithBorder("Modifica");
 		modifyButton.setBounds(30, 410, 100, 30);
 		add(modifyButton);
 		
 		JButton deleteButton = new JButtonWithBorder("Elimina");
 		deleteButton.setBounds(155, 410, 100, 30);
+		deleteButton.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				onCancellaAnnuncioClicked();
+			}
+		});
 		add(deleteButton);
 		
 		JLabel typeLabel = new JLabel("New label");
@@ -74,7 +84,7 @@ public class JMyListingCard extends JCard {
 	}
 	
 	//METODI
-	public void onFaiOffertaClicked() {
-		controller.onFaiOffertaClicked(annuncio, autore);
+	public void onCancellaAnnuncioClicked() {
+		controller.onCancellaAnnuncioClicked(annuncio);
 	}
 }

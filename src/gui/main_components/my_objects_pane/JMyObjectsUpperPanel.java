@@ -29,9 +29,9 @@ public class JMyObjectsUpperPanel extends JPanel{
 		this.setBackground(new Color(255, 255, 255));
 		this.setPreferredSize(new Dimension(800, 85));
 		GridBagLayout gbl_myObjectsUpperPanel = new GridBagLayout();
-		gbl_myObjectsUpperPanel.columnWidths = new int[]{0, 0, 0};
+		gbl_myObjectsUpperPanel.columnWidths = new int[]{532, 0, 0};
 		gbl_myObjectsUpperPanel.rowHeights = new int[]{36, 0, 0};
-		gbl_myObjectsUpperPanel.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
+		gbl_myObjectsUpperPanel.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
 		gbl_myObjectsUpperPanel.rowWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
 		this.setLayout(gbl_myObjectsUpperPanel);
 			

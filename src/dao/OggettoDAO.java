@@ -142,7 +142,7 @@ public class OggettoDAO implements DaoInterface<Oggetto> {
 	public void delete(String id) {
 		String query = "DELETE FROM oggetto WHERE id = ?;";
 		try(PreparedStatement pstmt = conn.prepareStatement(query)) {
-			pstmt.setString(1, id);
+			pstmt.setLong(1, Long.valueOf(id));
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();

@@ -6,6 +6,9 @@ import controller.Controller;
 import entities.oggetto.*;
 import gui.preset.JButtonWithBorder;
 
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 import javax.swing.JButton;
 
 
@@ -90,10 +93,21 @@ public class JObjectCard extends JCard {
 		JButton updateButton = new JButtonWithBorder("Modifica");
 		updateButton.setBounds(10, 419, 100, 30);
 		add(updateButton);
+		//TODO: fare tutto ciò che comporta la modifica di un oggetto (quindi probabilmente ci saà bisogno di un frame apposito)
 		
 		JButton deleteButton = new JButtonWithBorder("Elimina");
 		deleteButton.setBounds(145, 419, 100, 30);
+		deleteButton.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				onCancellaOggettoClicked();
+			}
+		});
 		add(deleteButton);
-		
 	}
+		
+	//TODO: ricordarsi di implementare un trigger nel DB dopo un update sulla tabella oggetto per scambio che verichi che quello scambio abbia almeno un oggetto
+	public void onCancellaOggettoClicked() {
+		controller.onCancellaOggettoClicked(oggetto);
+	}
+		
 }

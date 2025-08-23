@@ -124,6 +124,7 @@ public class Controller {
 		loginFrame.setVisible(true);
 		signUpFrame.setVisible(false);
 	}
+
 	
 	//**Apre il frame per fare una nuova offerta*/
 	public void onFaiOffertaClicked(Annuncio annuncio, Studente autore) {
@@ -143,19 +144,62 @@ public class Controller {
 		newOggettoFrame.setVisible(true);
 	}
 	
+	//--OBJECTS RELATED METHODS--//
+	
 	//**Metodo per creare un nuovo oggetto nel database*/
 	public void onCreaOggettoClicked(Oggetto oggetto) {
+		//TODO: spostare gran parte del contenuto del metodo onCreaOggettoClicked di NewOggetto nel metodo omonimo del controller
 		oggettoDAO.create(oggetto);
 		mainFrame.refreshMyObjects();
 		if(newAnnuncioFrame.isVisible())
 			newAnnuncioFrame.refreshOggettiEsistenti();
 	}
 	
+	public void onCancellaOggettoClicked(Oggetto oggetto) {
+		oggettoDAO.delete(String.valueOf(oggetto.getId()));
+		mainFrame.refreshMyObjects();
+		mainFrame.refreshAllOffers();
+		mainFrame.refreshListings();
+	}
+	
 	//**Metodo per creare un nuovo annuncio nel database*/
 	public void onCreaAnnuncioClicked(Annuncio annuncio) {
+		//TODO: spostare gran parte del contenuto del metodo onCreaAnnuncioClicked di NewAnnuncio nel metodo omonimo del controller
 		annuncioDAO.create(annuncio);
 		mainFrame.refreshListings();
 	}
+	
+	public void onCancellaAnnuncioClicked(Annuncio annuncio) {
+		annuncioDAO.delete(String.valueOf(annuncio.getId()));
+		mainFrame.refreshListings();
+		mainFrame.refreshReceivedOffers();
+	}
+	
+	//--OFFERS RELATED METHODS--//
+
+	//**Metodo per inserire un'offerta nel database*/
+	public void onInviaOffertaClicked(Offerta offerta) {
+		//TODO: spostare gran parte del contenuto del metodo onInviaOffertaClicked di NewOfferta nel metodo omonimo del controller
+		offertaDAO.create(offerta);
+		mainFrame.refreshMadeOffers();
+	}
+	
+	public void onAccettaOffertaClicked(Offerta offerta) {
+		offertaDAO.updateOffertaAccettata(offerta);
+		mainFrame.refreshReceivedOffers();
+	}
+	
+	public void onRifiutaOffertaClicked(Offerta offerta) {
+		offertaDAO.updateOffertaRifiutata(offerta);
+		mainFrame.refreshReceivedOffers();
+	}
+	
+	public void onCancellaOffertaClicked(Offerta offerta) {
+		offertaDAO.delete(offerta);
+		mainFrame.refreshMadeOffers();
+	}
+	
+	//--REFRESH METHODS--//
 	
 	//**Metodo stub per aggiornare gli annunci contentuti nel browsePane nel mainFrame*/
 	public void refreshBrowse() {
@@ -194,13 +238,13 @@ public class Controller {
 	}
 	
 	
-	//**Prende un numero "numeroAnnunci" di annunci dal database*/
+	//**Prende un numero "numeroAnnunci" di annunci diversi dagli annunci dell'utente loggato dal database*/
 	public ArrayList<Annuncio> getAltriAnnunci(int numeroAnnunci, String usernameStudenteLoggato) {
 		ArrayList<Annuncio> annunci = annuncioDAO.getAltriAnnunci(numeroAnnunci, usernameStudenteLoggato); 
 		return annunci; 
 	}
 	
-	//**Prende gli annunci fatto da un utente dal database*/
+	//**Prende gli annunci fatti da un utente dal database*/
 	public ArrayList<Annuncio> getMieiAnnunci(String usernameUtenteLoggato) {
 		ArrayList<Annuncio> annunci = annuncioDAO.retrieveByAutore(usernameUtenteLoggato); 
 		return annunci; 
@@ -220,26 +264,24 @@ public class Controller {
 	}
 
 	/**Prende le offerte fatte da un utente dal database*/
-	public ArrayList<Offerta> getMieOfferte(String usernameUtenteLoggato) {
+	public ArrayList<Offerta> getOfferteFatte(String usernameUtenteLoggato) {
 		ArrayList<Offerta> offerte = offertaDAO.retrieveByOfferente(usernameUtenteLoggato);
 		return offerte;
 	}
 	
 	/**Prende le offerte ricevute ad un utente dal database*/
-	public ArrayList<Offerta> getMieOfferteRicevute(String usernameUtenteLoggato) {
+	public ArrayList<Offerta> getOfferteRicevute(String usernameUtenteLoggato) {
 		ArrayList<Offerta> offerte = offertaDAO.retrieveByRicevente(usernameUtenteLoggato);
 		return offerte;
 	}
 	
-	//**Metodo stub per inserire un'offerta nel database*/
-	public void creaOfferta(Offerta offerta) {
-		offertaDAO.create(offerta);
-	}
 	
 	//**Metodo per recuperare lo studente loggato dal main frame*/
 	public Studente getStudenteLoggato() {
 		return studenteLoggato;
 	}
+
+	
 
 
 	

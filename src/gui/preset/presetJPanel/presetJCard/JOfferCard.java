@@ -1,0 +1,122 @@
+package gui.preset.presetJPanel.presetJCard; 
+
+import controller.Controller; 
+import entities.offerta.*; 
+import entities.oggetto.Oggetto; 
+import entities.studente.Studente; 
+import gui.preset.JButtonWithBorder; 
+import gui.preset.presetJLabel.JInteractiveLabel; 
+import javax.swing.JLabel; 
+import javax.swing.JList; 
+import javax.swing.JPanel; 
+import javax.swing.JScrollPane;
+
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
+import javax.swing.JButton; 
+
+public class JOfferCard extends JCard { 
+	private static final long serialVersionUID = 1L; 
+	private Offerta offerta; 
+	private Studente offerente; 
+	private JButton acceptButton; 
+	private JButton declineButton; 
+	private JButton deleteButton; 
+	public JOfferCard(Offerta offerta, Controller controller) { 
+		super(controller); 
+		this.offerta = offerta; 
+		this.offerente = offerta.getOfferente(); 
+		this.setBounds(0, 0, 280, 450); 
+		this.setLayout(null);
+		
+		JLabel welcomingLabel = new JLabel("Dettagli dell'offerta: "); 
+		welcomingLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15)); 
+		welcomingLabel.setBounds(10, 10, 260, 18); add(welcomingLabel); 
+		
+		JLabel listingTitleLabel = new JLabel("Annuncio: "+offerta.getAnnuncio().getTitolo()); 
+		listingTitleLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15)); 
+		listingTitleLabel.setBounds(10, 38, 260, 18); add(listingTitleLabel); 
+		
+		JLabel listingDescriptionLabel = new JLabel("<html>Descrizione annuncio: " + offerta.getAnnuncio().getDescrizione()+"<html>"); 
+		listingDescriptionLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15)); 
+		listingDescriptionLabel.setBounds(10, 66, 260, 54); 
+		
+		if(!(offerente.getUsername().equals(controller.getStudenteLoggato().getUsername()))) { 
+			JLabel authorLabel = new JInteractiveLabel("Offerente: " + offerente.getUsername()); 
+			authorLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15)); 
+			authorLabel.setBounds(10, 66, 260, 18); 
+			listingDescriptionLabel.setBounds(10, 94, 260, 54); add(authorLabel); 
+		} 
+		add(listingDescriptionLabel); 
+		
+		if(offerta instanceof OffertaScambio os) { 
+			JLabel offeredObjectsLabel = new JLabel("Oggetti offerti in scambio: "); 
+			offeredObjectsLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15)); 
+			offeredObjectsLabel.setBounds(10, 148, 260, 18); add(offeredObjectsLabel); 
+		
+			JList<Oggetto> list = new JList<>(os.getOggettiOfferti().toArray(new Oggetto[0]));
+            JScrollPane sp = new JScrollPane(list);
+            sp.setBounds(10, 166, 260, 60);
+            add(sp);
+            
+		}else{ 
+			JLabel moneyLabel = new JLabel("Denaro offerto: " + ((OffertaDenaro)offerta).getOfferta()); 
+			moneyLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15)); 
+			moneyLabel.setBounds(10, 148, 260, 18); add(moneyLabel); 
+		} 
+		
+		JLabel messageLabel = new JLabel("<html>Messaggio: " + offerta.getMessaggio()+"<html>"); 
+		messageLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15)); 
+		messageLabel.setBounds(10, 212, 260, 54); add(messageLabel); 
+		
+		JLabel statusLabel = new JLabel("Stato offerta: " + offerta.getStato()); 
+		statusLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15)); 
+		statusLabel.setBounds(10, 266, 260, 18); add(statusLabel); 
+		
+		if(!(offerente.getUsername().equals(controller.getStudenteLoggato().getUsername()))) { 
+			acceptButton = new JButtonWithBorder("Accetta"); 
+			acceptButton.setBounds(30, 410, 100, 30); 
+			add(acceptButton); 
+			acceptButton.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
+					onAccettaOffertaClicked();
+				}
+			});
+			
+			declineButton = new JButtonWithBorder("Rifiuta"); 
+			declineButton.setBounds(155, 410, 100, 30); 
+			declineButton.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
+					onRifiutaOffertaClicked();
+				}
+			});
+			add(declineButton);
+			
+		}else{ 
+			deleteButton = new JButtonWithBorder("Ritira"); 
+			deleteButton.setBounds(92, 410, 100, 30); 
+			deleteButton.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
+					onCancellaOffertaClicked();
+				}
+			});
+			add(deleteButton);
+		} 
+	}
+	
+	public void onAccettaOffertaClicked() {
+		controller.onAccettaOffertaClicked(offerta);
+	}
+	
+	public void onRifiutaOffertaClicked() {
+		controller.onRifiutaOffertaClicked(offerta);
+	}
+	
+	public void onCancellaOffertaClicked() {
+		controller.onCancellaOffertaClicked(offerta);
+	}
+	
+}

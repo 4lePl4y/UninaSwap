@@ -27,6 +27,7 @@ public class JCustomScrollPane<T> extends JScrollPane {
 				int viewportWidth = getViewport().getWidth();
 				int cardsPerRow = cardsPane.getCardsPerRow(viewportWidth);
 				cardsPane.updateCardsLayout(cardsPerRow, contents);
+				cardsPane.revalidate();
 				}
 		});
 	}

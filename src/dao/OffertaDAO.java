@@ -106,6 +106,34 @@ public class OffertaDAO implements DaoInterface<Offerta> {
 		//TODO: Implementazione per aggiornare un'offerta esistente
 	}
 	
+	public void updateOffertaRifiutata(Offerta offerta) {
+		String query = "";
+		if (offerta instanceof OffertaScambio)
+			query = "UPDATE offerta_scambio SET stato = \'Rifiutata\' WHERE id = ?;";
+		else
+			query = "UPDATE offerta_denaro SET stato = \'Rifiutata\' WHERE id = ?;";
+		try(PreparedStatement pstmt = conn.prepareStatement(query)) {
+			pstmt.setLong(1, offerta.getId());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void updateOffertaAccettata(Offerta offerta) {
+		String query = "";
+		if (offerta instanceof OffertaScambio)
+			query = "UPDATE offerta_scambio SET stato = \'Accettata\' WHERE id = ?;";
+		else
+			query = "UPDATE offerta_denaro SET stato = \'Accettata\' WHERE id = ?;";
+		try(PreparedStatement pstmt = conn.prepareStatement(query)) {
+			pstmt.setLong(1, offerta.getId());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public void delete(Offerta offerta) {
 		String query = ""; 
 		if (offerta instanceof OffertaScambio)
@@ -113,7 +141,7 @@ public class OffertaDAO implements DaoInterface<Offerta> {
 		else
 			query = "DELETE FROM offerta_denaro WHERE id = ?;";
 		try(PreparedStatement pstmt = conn.prepareStatement(query)) {
-			pstmt.setString(1, String.valueOf(offerta.getId()));
+			pstmt.setLong(1, offerta.getId());
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
