@@ -11,13 +11,10 @@ import gui.preset.presetJLabel.JInteractiveLabel;
 import javax.swing.JLabel; 
 import javax.swing.JList; 
 import javax.swing.JScrollPane;
-
+import javax.swing.JButton; 
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
-import javax.swing.JButton;
-import javax.swing.DropMode; 
 
 public class JOfferCard extends JCard { 
 	private static final long serialVersionUID = 1L; 

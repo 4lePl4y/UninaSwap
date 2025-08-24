@@ -23,6 +23,7 @@ public class Controller {
 	NewOfferta newOffertaFrame;
 	NewAnnuncio newAnnuncioFrame;
 	NewOggetto newOggettoFrame;
+	ModifyAnnuncio modifyAnnuncioFrame;
 	
 	//DAO
 	AnnuncioDAO annuncioDAO;
@@ -138,6 +139,12 @@ public class Controller {
 		newAnnuncioFrame.setVisible(true);
 	}
 	
+	//**Apre il frame per modificare un annuncio esistente*/
+	public void onModificaAnnuncioFrameClicked(Annuncio annuncio) {
+		modifyAnnuncioFrame = new ModifyAnnuncio(this, annuncio);
+		modifyAnnuncioFrame.setVisible(true);
+	}
+	
 	//**Apre il frame per creare un nuovo oggetto*/
 	public void onNuovoOggettoClicked() {
 		newOggettoFrame = new NewOggetto(this);
@@ -162,7 +169,9 @@ public class Controller {
 		mainFrame.refreshListings();
 	}
 	
-	//**Metodo per creare un nuovo annuncio nel database*/
+	
+	//--LISTINGS RELATED METHODS--//
+	
 	public void onCreaAnnuncioClicked(Annuncio annuncio) {
 		//TODO: spostare gran parte del contenuto del metodo onCreaAnnuncioClicked di NewAnnuncio nel metodo omonimo del controller
 		annuncioDAO.create(annuncio);
@@ -173,6 +182,14 @@ public class Controller {
 		annuncioDAO.delete(String.valueOf(annuncio.getId()));
 		mainFrame.refreshListings();
 		mainFrame.refreshReceivedOffers();
+	}
+	
+	//**Metodo per modificare un annuncio nel database*/
+	public void onModificaAnnuncioClicked() {
+		Annuncio annuncio = modifyAnnuncioFrame.creaAnnuncio();
+		annuncioDAO.update(annuncio);
+		mainFrame.refreshListings();
+		//forse anche refreshReceivedOffers?	
 	}
 	
 	//--OFFERS RELATED METHODS--//
@@ -280,6 +297,8 @@ public class Controller {
 	public Studente getStudenteLoggato() {
 		return studenteLoggato;
 	}
+
+	
 
 	
 
