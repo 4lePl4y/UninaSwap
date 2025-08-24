@@ -7,7 +7,7 @@ import entities.enumerazioni.TipoAnnuncio;
 import entities.oggetto.Oggetto;
 import entities.studente.Studente;
 import gui.preset.JButtonWithBorder;
-import gui.preset.JCustomTextArea;
+import gui.preset.JWritableTextArea;
 import gui.preset.presetJTextField.JCustomTextField;
 import gui.preset.presetJTextField.JDoubleTextField;
 
@@ -28,7 +28,7 @@ public class NewAnnuncio extends JFrame {
     
     private JPanel contentPane;
     private JCustomTextField titoloAnnuncioField;
-    private JCustomTextArea descrPane;
+    private JWritableTextArea descrPane;
     private JComboBox<TipoAnnuncio> tipoAnnuncioCombo;
     private JComboBox<Oggetto> oggettiEsistentiCombo;
     private  JComboBox<Sede> sedeCombo;
@@ -66,7 +66,7 @@ public class NewAnnuncio extends JFrame {
         // Descrizione
         JPanel descrPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JLabel descrLabel = new JLabel("Descrizione:");
-        descrPane = new JCustomTextArea("Inserisci la descrizione...");
+        descrPane = new JWritableTextArea("Inserisci la descrizione...");
         descrPane.setPreferredSize(new Dimension(300, 80));
         descrPanel.add(descrLabel);
         descrPanel.add(descrPane);

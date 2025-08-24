@@ -10,7 +10,7 @@ import entities.annuncio.*;
 import entities.offerta.*;
 import entities.oggetto.*;
 import entities.studente.*;
-import gui.preset.JCustomTextArea;
+import gui.preset.JWritableTextArea;
 import gui.preset.presetJTextField.JDoubleTextField;
 import gui.preset.JButtonWithBorder;
 
@@ -22,7 +22,7 @@ public class NewOfferta extends JFrame {
     private Annuncio annuncio;
     private Studente autore;
     private JLabel welcomingLabel;
-    private JCustomTextArea messaggioArea;
+    private JWritableTextArea messaggioArea;
     private JButtonWithBorder submitButton;
     private JDoubleTextField moneyTextField;
     private ArrayList<Oggetto> mieiOggetti;
@@ -53,7 +53,7 @@ public class NewOfferta extends JFrame {
         contentPane.add(welcomingLabel);
 
         // Description area
-        messaggioArea = new JCustomTextArea("Aggiungi un messaggio alla tua offerta...");
+        messaggioArea = new JWritableTextArea("Aggiungi un messaggio alla tua offerta...");
         messaggioArea.setBounds(10, 43, 386, 75);
         messaggioArea.setLineWrap(true);
         messaggioArea.setWrapStyleWord(true);

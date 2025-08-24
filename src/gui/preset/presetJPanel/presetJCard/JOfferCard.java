@@ -5,19 +5,19 @@ import entities.enumerazioni.Stato;
 import entities.offerta.*; 
 import entities.oggetto.Oggetto; 
 import entities.studente.Studente; 
-import gui.preset.JButtonWithBorder; 
+import gui.preset.JButtonWithBorder;
+import gui.preset.JDisplayTextArea;
 import gui.preset.presetJLabel.JInteractiveLabel; 
 import javax.swing.JLabel; 
 import javax.swing.JList; 
-import javax.swing.JPanel; 
 import javax.swing.JScrollPane;
 
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.JButton; 
+import javax.swing.JButton;
+import javax.swing.DropMode; 
 
 public class JOfferCard extends JCard { 
 	private static final long serialVersionUID = 1L; 
@@ -42,17 +42,18 @@ public class JOfferCard extends JCard {
 		listingTitleLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15)); 
 		listingTitleLabel.setBounds(10, 38, 260, 18); add(listingTitleLabel); 
 		
-		JLabel listingDescriptionLabel = new JLabel("<html>Descrizione annuncio: " + offerta.getAnnuncio().getDescrizione()+"<html>"); 
-		listingDescriptionLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15)); 
-		listingDescriptionLabel.setBounds(10, 66, 260, 54); 
+		JDisplayTextArea listingDescriptionTextArea = new JDisplayTextArea("Descrizione annuncio: " + offerta.getAnnuncio().getDescrizione());
+		JScrollPane listingDescriptionScrollPane = new JScrollPane(listingDescriptionTextArea);
+		listingDescriptionScrollPane.setBounds(10, 66, 260, 54);
+		listingDescriptionScrollPane.setBorder(null);
 		
 		if(!(offerente.getUsername().equals(controller.getStudenteLoggato().getUsername()))) { 
 			JLabel authorLabel = new JInteractiveLabel("Offerente: " + offerente.getUsername()); 
 			authorLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15)); 
 			authorLabel.setBounds(10, 66, 260, 18); 
-			listingDescriptionLabel.setBounds(10, 94, 260, 54); add(authorLabel); 
+			listingDescriptionTextArea.setBounds(10, 94, 260, 54); add(authorLabel); 
 		} 
-		add(listingDescriptionLabel); 
+		add(listingDescriptionTextArea); 
 		
 		if(offerta instanceof OffertaScambio os) { 
 			JLabel offeredObjectsLabel = new JLabel("Oggetti offerti in scambio: "); 
@@ -70,13 +71,17 @@ public class JOfferCard extends JCard {
 			moneyLabel.setBounds(10, 148, 260, 18); add(moneyLabel); 
 		} 
 		
-		JLabel messageLabel = new JLabel("<html>Messaggio: " + offerta.getMessaggio()+"<html>"); 
-		messageLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15)); 
-		messageLabel.setBounds(10, 212, 260, 54); add(messageLabel); 
-		
+
+		JDisplayTextArea messageTextArea = new JDisplayTextArea("Messaggio: " + offerta.getMessaggio());
+		JScrollPane messageScrollPane = new JScrollPane(messageTextArea);
+		messageScrollPane.setBounds(10, 212, 260, 80);
+		messageScrollPane.setBorder(null);
+
+		add(messageScrollPane);
+
 		JLabel statusLabel = new JLabel("Stato offerta: " + offerta.getStato()); 
 		statusLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15)); 
-		statusLabel.setBounds(10, 266, 260, 18); add(statusLabel); 
+		statusLabel.setBounds(10, 350, 260, 18); add(statusLabel); 
 		
 		if(offerta.getStato().equals(Stato.InAttesa)) {
 			if(!(offerente.getUsername().equals(controller.getStudenteLoggato().getUsername())))
@@ -84,7 +89,7 @@ public class JOfferCard extends JCard {
 			else
 				addDeleteButton();
 		}else if(offerta.getStato().equals(Stato.Accettata)) {
-			if(!(offerente.getUsername().equals(controller.getStudenteLoggato().getUsername())))
+			if((offerente.getUsername().equals(controller.getStudenteLoggato().getUsername())))
 				addReviewButton();
 		}
 			

@@ -26,8 +26,8 @@ public class JOffersPane extends JPanel{
 		madeOffersScrollPane = new JCustomScrollPane<Offerta>(offerteFatte, controller);
 		scrollPanesContainer = new JSplitPane (JSplitPane.HORIZONTAL_SPLIT, receivedOffersScrollPane, madeOffersScrollPane);
 		scrollPanesContainer.setBounds(0, 0, this.getWidth(), this.getHeight());
-		scrollPanesContainer.setEnabled(false);
-		scrollPanesContainer.setDividerSize(0);
+		scrollPanesContainer.setEnabled(true);
+		scrollPanesContainer.setDividerSize(5);
 		scrollPanesContainer.setDividerLocation(540);
 		this.setVisible(true);
 		scrollPanesContainer.setResizeWeight(0.5);

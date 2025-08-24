@@ -17,8 +17,6 @@ import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Dimension;
-import javax.swing.JTextPane;
-
 
 public class Login extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -55,7 +53,7 @@ public class Login extends JFrame {
 		titleLabel.setFont(new Font("Times New Roman", Font.BOLD, 25));
 		
 		
-		JTextPane descTxtPane = new JDisplayTextPane("Scambia, vendi o regala oggetti con altri studenti della Federico II");
+		JDisplayTextArea descTxtPane = new JDisplayTextArea("Scambia, vendi o regala oggetti con altri studenti della Federico II");
 		descTxtPane.setBounds(24, 48, 234, 41);
 		
 		

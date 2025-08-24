@@ -7,13 +7,15 @@ import java.awt.event.FocusEvent;
 
 import javax.swing.JTextArea;
 
-public class JCustomTextArea extends JTextArea{
+public class JWritableTextArea extends JTextArea{
 	private static final long serialVersionUID = 1L;
 
-	public JCustomTextArea(String placeholder) {
+	public JWritableTextArea(String placeholder) {
 		super(placeholder);
 		this.setForeground(Color.GRAY);
 		this.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		this.setLineWrap(true);
+		this.setWrapStyleWord(true);
 		
 		this.addFocusListener(new FocusAdapter() {
 			@Override
