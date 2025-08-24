@@ -5,6 +5,7 @@ import entities.oggetto.*;
 import entities.studente.Studente;
 import entities.enumerazioni.Sede;
 import entities.enumerazioni.TipoAnnuncio;
+import entities.enumerazioni.TipoOggetto;
 
 import java.util.ArrayList;
 import java.sql.Connection;
@@ -62,6 +63,7 @@ public class AnnuncioDAO implements DaoInterface<Annuncio> {
 		
 		return annunci;	
 	}
+	
 	
 	public ArrayList<Annuncio> retrieveByOggetto(long idOggetto) {
 		ArrayList<Annuncio> annunci = new ArrayList<>();
@@ -199,6 +201,73 @@ public class AnnuncioDAO implements DaoInterface<Annuncio> {
 			 
 		
 		return annunci;	
+	}
+	
+	
+	public ArrayList<Annuncio> getAltriAnnunciByRicerca(String username, String research, boolean[] filters) {
+		ArrayList<Annuncio> annunci = new ArrayList<>();
+		String query = "SELECT * FROM annuncio AS a JOIN oggetto AS o ON a.\"idOggetto\" = o.id "
+				+ " WHERE a.autore <> ? AND (a.titolo ILIKE ? OR a.descrizione ILIKE ?) ";
+		
+		int activePositions = 3;
+		for(int i = 0; i < filters.length; i++) {
+			if(filters[i]) 
+				activePositions++;
+		}
+		
+		if(activePositions > 3 && activePositions <= 7) {
+			query += "AND o.\"tipoOggetto\" IN (";			
+			for(int i = 0; i < activePositions-3; i++) {
+					query += "?, ";	
+			}
+			
+			query = query.substring(0, query.length() - 2);
+			query += ");";
+		}
+		
+		try(PreparedStatement pstmt = conn.prepareStatement(query)) {
+			pstmt.setString(1, username);
+			pstmt.setString(2, "%" + research + "%");
+			pstmt.setString(3, "%" + research + "%");
+			
+			
+			if(activePositions > 3 && activePositions <= 7) {
+				int index = 4;
+				for(int i = 0; i < filters.length; i++) {
+					if(filters[i]) {
+						switch(i) {
+							case 0:
+								pstmt.setObject(index, TipoOggetto.Abbigliamento, java.sql.Types.OTHER);
+								break;
+							case 1:
+								pstmt.setObject(index, TipoOggetto.Elettronica, java.sql.Types.OTHER);
+								break;
+							case 2:
+								pstmt.setObject(index, TipoOggetto.Libro, java.sql.Types.OTHER);
+								break;
+							case 3:
+								pstmt.setObject(index, TipoOggetto.StrumentoMusicale, java.sql.Types.OTHER);
+								break;
+							case 4:
+								pstmt.setObject(index, TipoOggetto.Misc, java.sql.Types.OTHER);
+								break;
+						}
+						index++;
+					}
+				}
+			}
+			
+			ResultSet rs = pstmt.executeQuery();
+			while(rs.next()) {
+				Annuncio annuncio = creaAnnuncioCorretto(rs);
+				annunci.add(annuncio);					
+			}
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return annunci;
 	}
 
 }

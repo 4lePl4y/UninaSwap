@@ -4,9 +4,7 @@ import java.awt.EventQueue;
 import java.sql.Connection;
 import java.time.LocalDate;
 import java.time.LocalTime;
-import java.time.Year;
 import java.util.ArrayList;
-
 import javax.swing.JOptionPane;
 
 import dao.*;
@@ -17,6 +15,7 @@ import entities.enumerazioni.TipoAnnuncio;
 import entities.offerta.*;
 import entities.oggetto.*;
 import entities.studente.*;
+import exception.InvalidListingException;
 import gui.*;
 
 public class Controller {
@@ -227,10 +226,46 @@ public class Controller {
 	
 	//--LISTINGS RELATED METHODS--//
 	
-	public void onCreaAnnuncioClicked(Annuncio annuncio) {
-		//TODO: spostare gran parte del contenuto del metodo onCreaAnnuncioClicked di NewAnnuncio nel metodo omonimo del controller
-		annuncioDAO.create(annuncio);
-		mainFrame.refreshListings();
+	private Annuncio creaAnnuncio(String titolo, Oggetto oggettoSelezionato, String descrizione, Sede luogo, LocalTime oraIncontro, LocalDate dataPubblicazione) {
+		Annuncio annuncio = null;
+		TipoAnnuncio tipo = newAnnuncioFrame.getTipoAnnuncio();
+		switch (tipo) {
+		case Vendita:
+			double prezzo = newAnnuncioFrame.getPrezzo();
+			annuncio = new AnnuncioVendita(titolo, studenteLoggato, oggettoSelezionato, descrizione, luogo, oraIncontro, dataPubblicazione, prezzo);
+			break;
+			
+		case Scambio:
+			annuncio = new AnnuncioScambio(titolo, studenteLoggato, oggettoSelezionato, descrizione, luogo, oraIncontro, dataPubblicazione);
+			break;
+			
+		case Regalo:
+			annuncio = new AnnuncioRegalo(titolo, studenteLoggato, oggettoSelezionato, descrizione, luogo, oraIncontro, dataPubblicazione);
+		}
+		
+		return annuncio;
+	}
+	
+	public void onCreaAnnuncioClicked() {
+		String titolo = newAnnuncioFrame.getTitolo();
+		Oggetto oggettoSelezionato = newAnnuncioFrame.getOggettoSelezionato();
+		String descrizione = newAnnuncioFrame.getDescrizione();
+		Sede luogo = newAnnuncioFrame.getLuogo();
+		LocalTime oraIncontro = newAnnuncioFrame.getOraIncontro();
+		LocalDate dataPubblicazione = LocalDate.now();
+		
+		Annuncio annuncio = creaAnnuncio(titolo, oggettoSelezionato, descrizione, luogo, oraIncontro, dataPubblicazione);
+
+		try {
+			if(!areAnnunciConStessoOggetto(annuncio)) {	
+				annuncioDAO.create(annuncio);
+				mainFrame.refreshListings();
+			}
+			JOptionPane.showMessageDialog(newAnnuncioFrame, "Annucio creato!");
+			newAnnuncioFrame.dispose();
+		} catch (InvalidListingException e) {
+			JOptionPane.showMessageDialog(newAnnuncioFrame, e.getMessage());
+		}
 	}
 	
 	public void onCancellaAnnuncioClicked(Annuncio annuncio) {
@@ -325,19 +360,22 @@ public class Controller {
 	}
 	
 	//**Controlla in fase di creazione di annuncio se esistono annunci con lo stesso oggetto incompatibili tra loro*/
-	public boolean areAnnunciConStessoOggetto(Annuncio annuncio) {
+	public boolean areAnnunciConStessoOggetto (Annuncio annuncio) throws InvalidListingException {
 		ArrayList<Annuncio> annunciConStessoOggetto = annuncioDAO.retrieveByOggetto(annuncio.getOggetto().getId());
+		
 		if(annuncio instanceof AnnuncioRegalo) {
 			if(!annunciConStessoOggetto.isEmpty())
-				return true;//ci sono annunci di scambio o vendita con lo stesso oggetto
+				throw new InvalidListingException("Non puoi creare un annuncio di regalo per questo oggetto. \nEsiste già un suo annuncio di vendita o di scambio");
 		}else{
 			for(Annuncio a : annunciConStessoOggetto) {
 				if(a instanceof AnnuncioRegalo) 
-					return true; //c'è un annuncio di regalo con lo stesso oggetto
+					throw new InvalidListingException("Non puoi creare un annuncio di vendita o di scambio per questo oggetto. \nEsiste già un suo annuncio di regalo");
 			}
 		}
 		return false;
+		
 	}
+		
 	
 	//**Apre il frame per creare un nuovo oggetto in un ambiente diverso dal myObjectPane*/
 	public void onApriOggettoFrameClicked() {
@@ -352,6 +390,11 @@ public class Controller {
 		return annunci; 
 	}
 	
+	public ArrayList<Annuncio> getAltriAnnunciByRicerca(String usernameStudenteLoggato, String research, boolean[] filters) {
+		ArrayList<Annuncio> annunci = annuncioDAO.getAltriAnnunciByRicerca(usernameStudenteLoggato, research, filters);
+		return annunci;
+	}
+	
 	//**Prende gli annunci fatti da un utente dal database*/
 	public ArrayList<Annuncio> getMieiAnnunci(String usernameUtenteLoggato) {
 		ArrayList<Annuncio> annunci = annuncioDAO.retrieveByAutore(usernameUtenteLoggato); 
@@ -359,6 +402,7 @@ public class Controller {
 		
 	}
 	
+
 	/**Prende gli oggetti dal database di un utente*/
 	public ArrayList<Oggetto> getMieiOggetti(String usernameUtenteLoggato) {
 		ArrayList<Oggetto> oggetti = oggettoDAO.retrieveByUsername(usernameUtenteLoggato); 
@@ -388,6 +432,5 @@ public class Controller {
 	public Studente getStudenteLoggato() {
 		return studenteLoggato;
 	}
-
 	
 }

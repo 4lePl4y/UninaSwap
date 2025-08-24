@@ -3,7 +3,7 @@ package gui.main_components.browse_pane;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-
+import controller.Controller;
 import gui.preset.presetJTextField.JCustomTextField;
 
 public class JSearchTextField extends JCustomTextField {
@@ -12,7 +12,7 @@ public class JSearchTextField extends JCustomTextField {
 	private GridBagConstraints gbc = new GridBagConstraints();
 	
 	//Costruttore
-	public JSearchTextField(String placeholder) {
+	public JSearchTextField(Controller controller, String placeholder) {
 		super(placeholder);
 		this.setPreferredSize(new Dimension(1056, 30));
 		this.setColumns(10);
@@ -24,9 +24,9 @@ public class JSearchTextField extends JCustomTextField {
 		gbc.gridy = 0;
 	}
 	
-	//Metodi
+	//METODI
 	public GridBagConstraints getGbc() {
 		return gbc;
 	}
-
+	
 }

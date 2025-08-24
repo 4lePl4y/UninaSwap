@@ -3,27 +3,72 @@ package gui.main_components.browse_pane;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagLayout;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.JPanel;
 
+import controller.Controller;
+import gui.preset.JButtonWithBorder;
+
 public class JFilterNSearchPane extends JPanel{
 	private static final long serialVersionUID = 1L;
+	private Controller controller;
 	private JSearchTextField searchTxtField;
+	private JButtonWithBorder searchButton;
 	private JFilterRadioButton filterAbbigliamento;
 	private JFilterRadioButton filterElettronica;
 	private JFilterRadioButton filterLibri;
 	private JFilterRadioButton filterStrumentiMusicali;
 	private JFilterRadioButton filterMisc;
 	
-	public JFilterNSearchPane(){
+	String text;
+	boolean[] filters = new boolean[5];
+	
+	public JFilterNSearchPane(Controller controller) {
+		this.controller = controller;
+		
 		this.setBackground(new Color(255, 255, 255));
 		this.setPreferredSize(new Dimension(800, 85));
 		GridBagLayout gbl = new GridBagLayout();
 		gbl.columnWidths = new int[] {264, 264, 264, 264, 264};
 		this.setLayout(gbl);
 	
-		searchTxtField = new JSearchTextField("Cerca il tuo prossimo articolo preferito...");
+		searchTxtField = new JSearchTextField(controller, "Cerca il tuo prossimo articolo preferito...");
+		searchTxtField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER) { 
+					text = searchTxtField.getText().trim();
+					filters[0] = filterAbbigliamento.isSelected();
+					filters[1] = filterElettronica.isSelected();
+					filters[2] = filterLibri.isSelected();
+					filters[3] = filterStrumentiMusicali.isSelected();
+					filters[4] = filterMisc.isSelected();
+					
+					cerca(text, filters);
+				}
+			}
+		});
 		this.add(searchTxtField, searchTxtField.getGbc());
+		
+		searchButton = new JButtonWithBorder("Cerca");
+		searchButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				text = searchTxtField.getText().trim();
+				filters[0] = filterAbbigliamento.isSelected();
+				filters[1] = filterElettronica.isSelected();
+				filters[2] = filterLibri.isSelected();
+				filters[3] = filterStrumentiMusicali.isSelected();
+				filters[4] = filterMisc.isSelected();
+				
+				cerca(text, filters);
+			}
+		});
+		this.add(searchButton);
 	
 		filterAbbigliamento = new JFilterRadioButton("Abbigliamento");
 		filterAbbigliamento.getGbc().gridx = 0;
@@ -52,5 +97,25 @@ public class JFilterNSearchPane extends JPanel{
 		this.add(filterMisc, filterMisc.getGbc());
 		}
 
+	//METODI
+	
+	public void cerca(String text, boolean[] filters) {
+		controller.refreshBrowse();
+	}
+	
+	public String getSearchBarText() {
+		String research = searchTxtField.getText().trim();
+		research = research.equals("Cerca il tuo prossimo articolo preferito...") ? "" : research;
+		return research;
+	}
+	
+	public boolean[] getFilters() {
+		filters[0] = filterAbbigliamento.isSelected();
+		filters[1] = filterElettronica.isSelected();
+		filters[2] = filterLibri.isSelected();
+		filters[3] = filterStrumentiMusicali.isSelected();
+		filters[4] = filterMisc.isSelected();
+		return filters;
+	}
 
 }

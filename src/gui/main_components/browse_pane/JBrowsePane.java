@@ -11,26 +11,38 @@ import gui.preset.JCustomScrollPane;
 
 public class JBrowsePane extends JPanel {
 
+	//ATTRIBUTI
 	private static final long serialVersionUID = 1L;
 	private JFilterNSearchPane filterNSearchPane;
 	private JScrollPane browseScrollPane;
 	private Controller controller;
 	
+	//COSTRUTTORE
 	public JBrowsePane(ArrayList<Annuncio> annunciPubblicati, Controller controller){
 		this.controller = controller;
 		this.setLayout(new BorderLayout(0, 0)); 
-		filterNSearchPane = new JFilterNSearchPane();
+		filterNSearchPane = new JFilterNSearchPane(controller);
 		browseScrollPane = new JCustomScrollPane<Annuncio>(annunciPubblicati, controller);
 		this.add(filterNSearchPane, BorderLayout.NORTH);
 		this.add(browseScrollPane, BorderLayout.CENTER);
 	}
 	
+	
+	//METODI
 	public void refresh(ArrayList<Annuncio> annunciPubblicati) {
 		this.remove(browseScrollPane);
 		browseScrollPane = new JCustomScrollPane<Annuncio>(annunciPubblicati, controller);
 		this.add(browseScrollPane, BorderLayout.CENTER);
 		this.revalidate();
 		this.repaint();
+	}
+	
+	public String getSearchBarText() {
+		return filterNSearchPane.getSearchBarText();
+	}
+	
+	public boolean[] getFilters() {
+		return filterNSearchPane.getFilters();
 	}
 	
 }

@@ -1,10 +1,7 @@
 package entities.offerta;
 
-import java.util.ArrayList;
-
 import entities.annuncio.Annuncio;
 import entities.enumerazioni.Stato;
-import entities.oggetto.Oggetto;
 import entities.studente.Studente;
 
 public abstract class Offerta {

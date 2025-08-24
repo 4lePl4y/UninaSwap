@@ -3,9 +3,6 @@ package gui;
 import controller.Controller;
 import entities.annuncio.*;
 import entities.enumerazioni.Sede;
-import entities.enumerazioni.TipoAnnuncio;
-import entities.oggetto.Oggetto;
-import entities.studente.Studente;
 import gui.preset.JButtonWithBorder;
 import gui.preset.JWritableTextArea;
 import gui.preset.presetJTextField.JCustomTextField;
@@ -17,7 +14,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.time.LocalDate;
 import java.time.LocalTime;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -39,8 +35,6 @@ public class ModifyAnnuncio extends JFrame {
         this.controller = controller;
         this.annuncio = annuncio;
         
-        
-    	
     	this.setTitle("Modifica Annuncio");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setBounds(100, 100, 600, 500);
@@ -120,6 +114,7 @@ public class ModifyAnnuncio extends JFrame {
     }
     
     
+    // METODI
     public void onModificaAnnuncioClicked() {
     	if(!areInputsValid())
     		return;
@@ -127,14 +122,11 @@ public class ModifyAnnuncio extends JFrame {
 	}
 
 
-	// METODI
 	private boolean areInputsValid() {
-		
 		if(titoloAnnuncioField.getText().isEmpty() || titoloAnnuncioField.getText().equals("Inserisci il titolo dell'annuncio")) {
 			JOptionPane.showMessageDialog(this, "Inserisci un titolo per l'annuncio!");
 			return false;
 		}
-		
 		
 		if(prezzoPanel.isVisible()) {
 			if(prezzoField.getText().isEmpty() || prezzoField.getText().equals("€")) {
@@ -153,7 +145,6 @@ public class ModifyAnnuncio extends JFrame {
 		return true;
 	}
 			
-	//METODI
 	public String getTitolo() {
 		return titoloAnnuncioField.getText();
 	}

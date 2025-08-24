@@ -1,11 +1,9 @@
 package gui;
 
 import controller.Controller;
-import entities.annuncio.*;
 import entities.enumerazioni.Sede;
 import entities.enumerazioni.TipoAnnuncio;
 import entities.oggetto.Oggetto;
-import entities.studente.Studente;
 import gui.preset.JButtonWithBorder;
 import gui.preset.JWritableTextArea;
 import gui.preset.presetJTextField.JCustomTextField;
@@ -16,7 +14,6 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import javax.swing.*;
@@ -157,6 +154,38 @@ public class NewAnnuncio extends JFrame {
     
     
     // METODI
+    public String getTitolo() {
+    	return titoloAnnuncioField.getText();    	
+    }
+    
+    public Oggetto getOggettoSelezionato() {
+		return (Oggetto) oggettiEsistentiCombo.getSelectedItem();
+	}
+    
+    public String getDescrizione() {
+		String descrizione = descrPane.getText();
+		descrizione = descrizione.equals("Inserisci la descrizione...") ? "" : descrizione;
+		return descrizione;
+    }
+    
+    public Sede getLuogo() {
+    	return (Sede) sedeCombo.getSelectedItem();
+    }
+    
+    public LocalTime getOraIncontro() {
+		return LocalTime.parse((String) orarioCombo.getSelectedItem());
+	}
+    
+    public TipoAnnuncio getTipoAnnuncio() {
+		return (TipoAnnuncio) tipoAnnuncioCombo.getSelectedItem();
+	}
+    
+    public double getPrezzo() {
+    	return Double.valueOf(prezzoField.getText());
+    }
+	
+    
+    
     static String[] generaOrari() {
         String[] orari = new String[45];
         int idx = 0;
@@ -176,44 +205,7 @@ public class NewAnnuncio extends JFrame {
 			return;
 		}
 		
-		String titolo = this.titoloAnnuncioField.getText();
-		Studente autore = this.controller.getStudenteLoggato();
-		Oggetto oggettoSelezionato = (Oggetto) this.oggettiEsistentiCombo.getSelectedItem();
-		String descrizione = this.descrPane.getText();
-		descrizione = descrizione.equals("Inserisci la descrizione...") ? "" : descrizione;
-		Sede luogo = (Sede) this.sedeCombo.getSelectedItem();
-		LocalTime oraIncontro = LocalTime.parse((String) this.orarioCombo.getSelectedItem());
-		LocalDate dataPubblicazione = LocalDate.now();
-		
-		TipoAnnuncio tipo = (TipoAnnuncio) this.tipoAnnuncioCombo.getSelectedItem();
-		Annuncio annuncio = null;
-		switch (tipo) {
-			case Vendita: 
-				double prezzo = Double.valueOf(prezzoField.getText());
-				annuncio = new AnnuncioVendita(titolo, autore, oggettoSelezionato, descrizione, luogo, oraIncontro, dataPubblicazione, prezzo);
-				break;
-				
-			case Scambio:
-				annuncio = new AnnuncioScambio(titolo, autore, oggettoSelezionato, descrizione, luogo, oraIncontro, dataPubblicazione);
-				break;
-				
-			case Regalo:
-				annuncio = new AnnuncioRegalo(titolo, autore, oggettoSelezionato, descrizione, luogo, oraIncontro, dataPubblicazione);
-				break;
-		}
-		if(controller.areAnnunciConStessoOggetto(annuncio)) {
-			if(annuncio instanceof AnnuncioRegalo) {
-				JOptionPane.showMessageDialog(this, "Non puoi creare un annuncio di regalo per questo oggetto. \nEsiste già un suo annuncio di vendita o di scambio");
-				return; 
-			} else {
-				JOptionPane.showMessageDialog(this, "Non puoi creare un annuncio di vendita o di scambio per questo oggetto. \nEsiste già un suo annuncio di regalo");
-				return; 
-			}
-		}
-		
-		controller.onCreaAnnuncioClicked(annuncio);
-		JOptionPane.showMessageDialog(this, "Annucio creato!");
-        dispose();
+		controller.onCreaAnnuncioClicked();
 	}
 
 
