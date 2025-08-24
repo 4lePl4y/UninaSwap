@@ -25,8 +25,16 @@ public class Abbigliamento extends Oggetto {
 		return marchio;
 	}
 	
+	public void setMarchio(String marchio) {
+		this.marchio=marchio;
+	}
+	
 	public String getTaglia() {
 		return taglia;
+	}
+	
+	public void setTaglia(String taglia) {
+		this.taglia=taglia;
 	}
 	
 	@Override

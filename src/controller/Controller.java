@@ -4,6 +4,7 @@ import java.awt.EventQueue;
 import java.sql.Connection;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.Year;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
@@ -31,12 +32,14 @@ public class Controller {
 	NewOggetto newOggettoFrame;
 	ModifyAnnuncio modifyAnnuncioFrame;
 	ModifyOfferta modifyOffertaFrame;
+	ModifyOggetto modifyOggettoFrame;
 	
 	//DAO
 	AnnuncioDAO annuncioDAO;
 	OffertaDAO offertaDAO;
 	StudenteDAO studenteDAO;
 	OggettoDAO oggettoDAO;
+
 	
 	
 	public static void main(String[] args) {
@@ -165,6 +168,11 @@ public class Controller {
 		modifyOffertaFrame.setVisible(true);
 	}
 	
+	public void onModificaOggettoFrameClicked(Oggetto oggetto) {
+		modifyOggettoFrame = new ModifyOggetto(this, oggetto);
+		modifyOggettoFrame.setVisible(true);
+	}
+	
 	//--OBJECTS RELATED METHODS--//
 	
 	//**Metodo per creare un nuovo oggetto nel database*/
@@ -183,6 +191,39 @@ public class Controller {
 		mainFrame.refreshListings();
 	}
 	
+	public void onModificaOggettoClicked(Oggetto oggetto) {
+		oggetto.setNome(modifyOggettoFrame.getNome());
+		switch (oggetto) {
+        	case StrumentoMusicale sm -> {sm.setMarchio(modifyOggettoFrame.getMarchio());}
+        	case Abbigliamento a -> {
+        		a.setMarchio(modifyOggettoFrame.getMarchio());
+        		a.setTaglia(modifyOggettoFrame.getTaglia());
+        	}
+        	case Elettronica e -> {
+        		e.setMarchio(modifyOggettoFrame.getMarchio());
+        		e.setModello(modifyOggettoFrame.getModello());
+        		e.setAnnoUscita(modifyOggettoFrame.getAnnoUscita());
+        	}
+        	case Libro l ->{
+        		l.setTitolo(modifyOggettoFrame.getTitolo());
+        		l.setISBN(modifyOggettoFrame.getISBN());
+        		l.setAnnoUscita(modifyOggettoFrame.getAnnoUscita());
+        		l.setAutore(modifyOggettoFrame.getAutore());
+        		l.setGenere(modifyOggettoFrame.getGenere());	
+        	}
+        	case Misc m -> {
+        		m.setMarchio(modifyOggettoFrame.getMarchio());
+        		m.setCategoria(modifyOggettoFrame.getCategoria());
+        	}
+        	default -> {}
+		}
+		oggettoDAO.update(oggetto);
+		JOptionPane.showMessageDialog(modifyOggettoFrame, "Oggetto modificato!");
+		modifyOggettoFrame.dispose();
+		
+		mainFrame.refreshMyObjects();
+		mainFrame.refreshMadeOffers();
+	}
 	
 	//--LISTINGS RELATED METHODS--//
 	
@@ -223,9 +264,16 @@ public class Controller {
 	//--OFFERS RELATED METHODS--//
 
 	//**Metodo per inserire un'offerta nel database*/
-	public void onInviaOffertaClicked(Offerta offerta) {
-		//TODO: spostare gran parte del contenuto del metodo onInviaOffertaClicked di NewOfferta nel metodo omonimo del controller
-		offertaDAO.create(offerta);
+	public void onInviaOffertaClicked() {
+		Offerta offerta = null;
+		Annuncio annuncioDiOfferta = newOffertaFrame.getAnnuncio();
+		if(annuncioDiOfferta instanceof AnnuncioScambio as){
+			offerta = new OffertaScambio(newOffertaFrame.getMessaggio(), studenteLoggato, as, newOffertaFrame.getOggettiOfferti());
+			offertaDAO.create(offerta);
+		}else{
+			offerta = new OffertaDenaro(newOffertaFrame.getMessaggio(), studenteLoggato, annuncioDiOfferta, newOffertaFrame.getOfferta());
+			offertaDAO.create(offerta);
+		}
 		mainFrame.refreshMadeOffers();
 	}
 	
@@ -243,7 +291,13 @@ public class Controller {
 	
 	public void onModificaOffertaClicked(Offerta offerta) {
 		offerta.setMessaggio(modifyOffertaFrame.getMessaggio());
-		offertaDAO.update(offerta);
+		if(offerta instanceof OffertaScambio of) {
+			of.setOggettiOfferti(modifyOffertaFrame.getOggettiOfferti());
+			offertaDAO.update(of);			
+		}else {
+			((OffertaDenaro)offerta).setOfferta(modifyOffertaFrame.getOfferta());
+			offertaDAO.update(((OffertaDenaro)offerta));
+		}
 		mainFrame.refreshMadeOffers();
 	}
 	
@@ -335,15 +389,5 @@ public class Controller {
 		return studenteLoggato;
 	}
 
-	
-
-	
-
-
-
-	
-
-
-	
 	
 }

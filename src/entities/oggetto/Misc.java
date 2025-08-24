@@ -27,6 +27,14 @@ public class Misc extends Oggetto{
 	public String getCategoria() {
 		return categoria;
 	}
+
+	public void setMarchio(String marchio) {
+		this.marchio = marchio;
+	}
+
+	public void setCategoria(String categoria) {
+		this.categoria = categoria;
+	}
 	
 	@Override
 	public String toString() {

@@ -54,10 +54,30 @@ public class Libro extends Oggetto {
 		return genere;
 	}
 	
+
+	public void setTitolo(String titolo) {
+		this.titolo = titolo;
+	}
+
+	public void setISBN(String ISBN) {
+		this.ISBN = ISBN;
+	}
+
+	public void setAnnoUscita(Year annoUscita) {
+		this.annoUscita = annoUscita;
+	}
+
+	public void setAutore(String autore) {
+		this.autore = autore;
+	}
+
+	public void setGenere(String genere) {
+		this.genere = genere;
+	}
+	
 	@Override
 	public String toString() {
 		return "Libro: "+ nome;
 	}
-	
 
 }

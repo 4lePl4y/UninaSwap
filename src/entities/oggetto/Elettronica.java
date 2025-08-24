@@ -30,12 +30,24 @@ public class Elettronica extends Oggetto {
 		return marchio;
 	}
 	
+	public void setMarchio(String marchio) {
+		this.marchio=marchio;
+	}
+	
 	public String getModello() {
 		return modello;
 	}
 	
+	public void setModello(String modello) {
+		this.modello=modello;
+	}
+	
 	public Year getAnnoUscita() {
 		return annoUscita;
+	}
+	
+	public void setAnnoUscita(Year annoUscita) {
+		this.annoUscita=annoUscita;
 	}
 	
 	@Override

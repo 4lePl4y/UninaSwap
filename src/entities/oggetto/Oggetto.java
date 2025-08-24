@@ -29,6 +29,10 @@ public abstract class Oggetto {
 		return nome;
 	}
 	
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+	
 	public String getUsernameProprietario() {
 		return proprietario.getUsername();
 	}

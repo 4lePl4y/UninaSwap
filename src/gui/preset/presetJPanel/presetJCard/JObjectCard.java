@@ -39,61 +39,70 @@ public class JObjectCard extends JCard {
 		
 		
 		switch(oggetto) {
-			case Abbigliamento a -> {brandLabel = new JLabel("Marchio: " + a.getMarchio());
-									 brandLabel.setBounds(10, 230, 220, 13);
-									 add(brandLabel);
-									 
-									 sizeLabel = new JLabel("Taglia: " + a.getTaglia());
-									 sizeLabel.setBounds(10, 276, 220, 13);
-									 add(sizeLabel);
-									}
-			case Elettronica e -> {brandLabel = new JLabel("Marchio: " + e.getMarchio());
-									brandLabel.setBounds(10, 230, 220, 13);
-									add(brandLabel);
+			case Abbigliamento a -> {
+				brandLabel = new JLabel("Marchio: " + a.getMarchio());
+				brandLabel.setBounds(10, 230, 220, 13);
+				add(brandLabel);
+				
+				sizeLabel = new JLabel("Taglia: " + a.getTaglia());
+				sizeLabel.setBounds(10, 276, 220, 13);
+				add(sizeLabel);
+			}
+			case Elettronica e -> {
+				brandLabel = new JLabel("Marchio: " + e.getMarchio());
+				brandLabel.setBounds(10, 230, 220, 13);
+				add(brandLabel);
+				
+				modelLabel = new JLabel("Modello: " + e.getModello());
+				modelLabel.setBounds(10, 253, 220, 13);
+				add(modelLabel);
 									
-									modelLabel = new JLabel("Modello: " + e.getModello());
-									modelLabel.setBounds(10, 253, 220, 13);
-									add(modelLabel);
-									
-									releaseDateLabel = new JLabel("Anno di Uscita: " + e.getAnnoUscita());
-									releaseDateLabel.setBounds(10, 299, 220, 13);
-									add(releaseDateLabel);
-								   }
-			case Libro l -> {titleLabel = new JLabel("Titolo: " + l.getTitolo());
-							titleLabel.setBounds(10, 322, 220, 13);
-							add(titleLabel);
+				releaseDateLabel = new JLabel("Anno di Uscita: " + e.getAnnoUscita());
+				releaseDateLabel.setBounds(10, 299, 220, 13);
+				add(releaseDateLabel);
+			}
+			case Libro l -> {
+				titleLabel = new JLabel("Titolo: " + l.getTitolo());
+				titleLabel.setBounds(10, 322, 220, 13);
+				add(titleLabel);
 							
-							ISBNLabel = new JLabel("ISBN: " + l.getISBN());
-							ISBNLabel.setBounds(10, 345, 220, 13);
-							add(ISBNLabel);
+				ISBNLabel = new JLabel("ISBN: " + l.getISBN());
+				ISBNLabel.setBounds(10, 345, 220, 13);
+				add(ISBNLabel);
 							
-							authorLabel = new JLabel("Autore: " + l.getAutore());
-							authorLabel.setBounds(10, 368, 220, 13);
-							add(authorLabel);
+				authorLabel = new JLabel("Autore: " + l.getAutore());
+				authorLabel.setBounds(10, 368, 220, 13);
+				add(authorLabel);
 							
-							genreLabel = new JLabel("Genere: " + l.getGenere());
-							genreLabel.setBounds(10, 391, 220, 13);
-							add(genreLabel);
+				genreLabel = new JLabel("Genere: " + l.getGenere());
+				genreLabel.setBounds(10, 391, 220, 13);
+				add(genreLabel);
 							
-							releaseDateLabel = new JLabel("Anno di Uscita: " + l.getAnnoUscita());
-							releaseDateLabel.setBounds(10, 299, 220, 13);
-							add(releaseDateLabel);
-						  }
-			case StrumentoMusicale sm -> {brandLabel = new JLabel("Marchio: " + sm.getMarchio());
-									   brandLabel.setBounds(10, 230, 220, 13);
-									   add(brandLabel);
-									   }
-			case Misc m -> {brandLabel = new JLabel("Marchio: " + m.getMarchio());
-							brandLabel.setBounds(10, 230, 220, 13);
-							add(brandLabel);
-							}
+				releaseDateLabel = new JLabel("Anno di Uscita: " + l.getAnnoUscita());
+				releaseDateLabel.setBounds(10, 299, 220, 13);
+				add(releaseDateLabel);
+				}
+			case StrumentoMusicale sm -> {
+				brandLabel = new JLabel("Marchio: " + sm.getMarchio());
+				brandLabel.setBounds(10, 230, 220, 13);
+				add(brandLabel);
+				}
+			case Misc m -> {
+				brandLabel = new JLabel("Marchio: " + m.getMarchio());
+				brandLabel.setBounds(10, 230, 220, 13);
+				add(brandLabel);
+				}
 			default -> {throw new IllegalArgumentException("Unsupported object type");}
 		}		
 		
 		JButton updateButton = new JButtonWithBorder("Modifica");
 		updateButton.setBounds(30, 410, 100, 30);
+		updateButton.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				onModificaOggettoFrameClicked();
+			}
+		});
 		add(updateButton);
-		//TODO: fare tutto ciò che comporta la modifica di un oggetto (quindi probabilmente ci saà bisogno di un frame apposito)
 		
 		JButton deleteButton = new JButtonWithBorder("Elimina");
 		deleteButton.setBounds(155, 410, 100, 30);
@@ -108,6 +117,10 @@ public class JObjectCard extends JCard {
 	//TODO: ricordarsi di implementare un trigger nel DB dopo un update sulla tabella oggetto per scambio che verichi che quello scambio abbia almeno un oggetto
 	public void onCancellaOggettoClicked() {
 		controller.onCancellaOggettoClicked(oggetto);
+	}
+	
+	public void onModificaOggettoFrameClicked() {
+		controller.onModificaOggettoFrameClicked(oggetto);
 	}
 		
 }

@@ -45,6 +45,7 @@ public class ModifyOfferta extends JFrame{
 	private ArrayList<JCheckBox> checkBoxes;
 	private JDoubleTextField moneyTextField;
 	private JButtonWithBorder modifyButton;
+	private ArrayList<Oggetto> oggettiSelezionati;
 	
 	public ModifyOfferta(Controller controller, Offerta offerta) {
 		this.controller = controller;
@@ -151,6 +152,8 @@ public class ModifyOfferta extends JFrame{
     	if(!areInputsValid())
     		return;
     	controller.onModificaOffertaClicked(this.offerta);
+    	JOptionPane.showMessageDialog(this, "Offerta modificata!");
+        dispose();
     }
 
 	private ArrayList<Oggetto> getOggettiSelezionati() {
@@ -165,7 +168,7 @@ public class ModifyOfferta extends JFrame{
     
 	private boolean areInputsValid() {
         if(annuncio instanceof AnnuncioScambio) {
-			ArrayList<Oggetto> oggettiSelezionati = getOggettiSelezionati();
+			oggettiSelezionati = getOggettiSelezionati();
 			if(oggettiSelezionati.isEmpty()) {
 				JOptionPane.showMessageDialog(this, "Devi selezionare almeno un oggetto da scambiare!");
 				return false;
@@ -180,11 +183,7 @@ public class ModifyOfferta extends JFrame{
 				JOptionPane.showMessageDialog(this, "Inserisci un importo valido in denaro!");
 				return false ;
 			}
-			((OffertaDenaro)this.offerta).setOfferta(money);
 		}
-		
-        JOptionPane.showMessageDialog(this, "Offerta modificata!");
-        dispose();
         return true;
 	}
 	
@@ -192,7 +191,13 @@ public class ModifyOfferta extends JFrame{
 		return messaggioArea.getText().equals("Aggiungi un messaggio alla tua offerta...") ? "" : messaggioArea.getText();
 	}
 	
+	public double getOfferta() {
+		return Double.valueOf(moneyTextField.getText());
+	}
 	
+	public ArrayList<Oggetto> getOggettiOfferti(){
+		return oggettiSelezionati;
+	}
 }
 	
 

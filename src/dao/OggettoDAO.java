@@ -69,64 +69,7 @@ public class OggettoDAO implements DaoInterface<Oggetto> {
 	public void create(Oggetto oggetto) {
 		String query = "INSERT INTO oggetto (nome, \"tipoOggetto\", marchio, taglia, modello, \"annoUscita\", titolo, \"ISBN\", autore, genere, proprietario, categoria) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 		try(PreparedStatement pstmt = conn.prepareStatement(query)) {
-			pstmt.setString(1, oggetto.getNome());
-			pstmt.setString(11, oggetto.getUsernameProprietario());
-			if (oggetto instanceof Abbigliamento) {
-				pstmt.setObject(2, TipoOggetto.Abbigliamento, java.sql.Types.OTHER);
-				pstmt.setString(3, ((Abbigliamento) oggetto).getMarchio());
-				pstmt.setString(4, ((Abbigliamento) oggetto).getTaglia());
-				pstmt.setNull(5, java.sql.Types.VARCHAR); // Modello non applicabile
-				pstmt.setNull(6, java.sql.Types.INTEGER); // Anno di uscita non applicabile
-				pstmt.setNull(7, java.sql.Types.VARCHAR); // Titolo non applicabile
-				pstmt.setNull(8, java.sql.Types.VARCHAR); // ISBN non applicabile
-				pstmt.setNull(9, java.sql.Types.VARCHAR); // Autore non applicabile
-				pstmt.setNull(10, java.sql.Types.VARCHAR); // Genere non applicabile
-				pstmt.setNull(12, java.sql.Types.VARCHAR); // Categoria non applicabile
-			}else if (oggetto instanceof Elettronica) {
-				pstmt.setObject(2, TipoOggetto.Elettronica, java.sql.Types.OTHER);
-				pstmt.setString(3, ((Elettronica) oggetto).getMarchio());
-				pstmt.setNull(4, java.sql.Types.VARCHAR); // Taglia non applicabile
-				pstmt.setString(5, ((Elettronica) oggetto).getModello());
-				pstmt.setInt(6, ((Elettronica) oggetto).getAnnoUscita().getValue());
-				pstmt.setNull(7, java.sql.Types.VARCHAR); // Titolo non applicabile
-				pstmt.setNull(8, java.sql.Types.VARCHAR); // ISBN non applicabile
-				pstmt.setNull(9, java.sql.Types.VARCHAR); // Autore non applicabile
-				pstmt.setNull(10, java.sql.Types.VARCHAR); // Genere non applicabile
-				pstmt.setNull(12, java.sql.Types.VARCHAR); // Categoria non applicabile
-			}else if (oggetto instanceof Libro) {
-				pstmt.setObject(2, TipoOggetto.Libro, java.sql.Types.OTHER);
-				pstmt.setInt(6, ((Libro) oggetto).getAnnoUscita().getValue());
-				pstmt.setString(7, ((Libro) oggetto).getTitolo());
-				pstmt.setString(8, ((Libro) oggetto).getISBN());
-				pstmt.setString(9, ((Libro) oggetto).getAutore());
-				pstmt.setString(10, ((Libro) oggetto).getGenere());
-				pstmt.setNull(3, java.sql.Types.VARCHAR); // Marchio non applicabile
-				pstmt.setNull(4, java.sql.Types.VARCHAR); // Taglia non applicabile
-				pstmt.setNull(5, java.sql.Types.VARCHAR); // Modello non applicabile
-				pstmt.setNull(12, java.sql.Types.VARCHAR); // Categoria non applicabile
-			}else if (oggetto instanceof StrumentoMusicale) {
-				pstmt.setObject(2, TipoOggetto.StrumentoMusicale, java.sql.Types.OTHER);
-				pstmt.setString(3, ((StrumentoMusicale) oggetto).getMarchio());
-				pstmt.setNull(4, java.sql.Types.VARCHAR); // Taglia non applicabile
-				pstmt.setNull(5, java.sql.Types.VARCHAR); // Modello non applicabile
-				pstmt.setNull(6, java.sql.Types.INTEGER); // Anno di uscita non applicabile
-				pstmt.setNull(7, java.sql.Types.VARCHAR); // Titolo non applicabile
-				pstmt.setNull(8, java.sql.Types.VARCHAR); // ISBN non applicabile
-				pstmt.setNull(9, java.sql.Types.VARCHAR); // Autore non applicabile
-				pstmt.setNull(10, java.sql.Types.VARCHAR); // Genere non applicabile
-				pstmt.setNull(12, java.sql.Types.VARCHAR); // Categoria non applicabile
-			} else {
-				pstmt.setObject(2, TipoOggetto.Misc, java.sql.Types.OTHER);
-				pstmt.setString(3, ((Misc) oggetto).getMarchio());
-				pstmt.setNull(4, java.sql.Types.VARCHAR); // Taglia non applicabile
-				pstmt.setNull(5, java.sql.Types.VARCHAR); // Modello non applicabile
-				pstmt.setNull(6, java.sql.Types.INTEGER); // Anno di uscita non applicabile
-				pstmt.setNull(7, java.sql.Types.VARCHAR); // Titolo non applicabile
-				pstmt.setNull(8, java.sql.Types.VARCHAR); // ISBN non applicabile
-				pstmt.setNull(9, java.sql.Types.VARCHAR); // Autore non applicabile
-				pstmt.setNull(10, java.sql.Types.VARCHAR); // Genere non applicabile
-				pstmt.setString(12, ((Misc) oggetto).getCategoria());
-			}
+			riempiCampiGiusti(oggetto, pstmt);
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -135,7 +78,14 @@ public class OggettoDAO implements DaoInterface<Oggetto> {
 
 	@Override
 	public void update(Oggetto oggetto) {
-		//TODO: Implementazione per aggiornare un oggetto esistente
+		String query = "UPDATE oggetto SET nome = ?, \"tipoOggetto\" = ?, marchio = ?, taglia = ?, modello = ?, \"annoUscita\" = ?, titolo = ?, \"ISBN\" = ?, autore = ?, genere = ?, proprietario = ?, categoria= ? WHERE id = ?;";
+		try(PreparedStatement pstmt = conn.prepareStatement(query)){
+			riempiCampiGiusti(oggetto, pstmt);
+			pstmt.setLong(13, oggetto.getId());
+			pstmt.executeUpdate();
+		}catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -184,5 +134,73 @@ public class OggettoDAO implements DaoInterface<Oggetto> {
 		}
 		return oggetto;
 	}
-
+	
+	//**Metodo per riempire tutti i campi della tupla nel DB a seconda del tipo di oggetto (l'id viene tralasciato)*/
+	private void riempiCampiGiusti(Oggetto oggetto, PreparedStatement pstmt) throws SQLException {
+		pstmt.setString(1, oggetto.getNome());
+		pstmt.setString(11, oggetto.getUsernameProprietario());
+		switch(oggetto) { 
+			case Abbigliamento a -> {
+				pstmt.setObject(2, TipoOggetto.Abbigliamento, java.sql.Types.OTHER);
+				pstmt.setString(3, a.getMarchio());
+				pstmt.setString(4, a.getTaglia());
+				pstmt.setNull(5, java.sql.Types.VARCHAR); // Modello non applicabile
+				pstmt.setNull(6, java.sql.Types.INTEGER); // Anno di uscita non applicabile
+				pstmt.setNull(7, java.sql.Types.VARCHAR); // Titolo non applicabile
+				pstmt.setNull(8, java.sql.Types.VARCHAR); // ISBN non applicabile
+				pstmt.setNull(9, java.sql.Types.VARCHAR); // Autore non applicabile
+				pstmt.setNull(10, java.sql.Types.VARCHAR); // Genere non applicabile
+				pstmt.setNull(12, java.sql.Types.VARCHAR); // Categoria non applicabile
+			}
+			case Elettronica e -> {
+				pstmt.setObject(2, TipoOggetto.Elettronica, java.sql.Types.OTHER);
+				pstmt.setString(3, e.getMarchio());
+				pstmt.setNull(4, java.sql.Types.VARCHAR); // Taglia non applicabile
+				pstmt.setString(5, e.getModello());
+				pstmt.setInt(6, e.getAnnoUscita().getValue());
+				pstmt.setNull(7, java.sql.Types.VARCHAR); // Titolo non applicabile
+				pstmt.setNull(8, java.sql.Types.VARCHAR); // ISBN non applicabile
+				pstmt.setNull(9, java.sql.Types.VARCHAR); // Autore non applicabile
+				pstmt.setNull(10, java.sql.Types.VARCHAR); // Genere non applicabile
+				pstmt.setNull(12, java.sql.Types.VARCHAR); // Categoria non applicabile
+			}
+			case Libro l -> {
+				pstmt.setObject(2, TipoOggetto.Libro, java.sql.Types.OTHER);
+				pstmt.setInt(6, l.getAnnoUscita().getValue());
+				pstmt.setString(7, l.getTitolo());
+				pstmt.setString(8, l.getISBN());
+				pstmt.setString(9, l.getAutore());
+				pstmt.setString(10, l.getGenere());
+				pstmt.setNull(3, java.sql.Types.VARCHAR); // Marchio non applicabile
+				pstmt.setNull(4, java.sql.Types.VARCHAR); // Taglia non applicabile
+				pstmt.setNull(5, java.sql.Types.VARCHAR); // Modello non applicabile
+				pstmt.setNull(12, java.sql.Types.VARCHAR); // Categoria non applicabile
+			}
+			case StrumentoMusicale sm -> {
+				pstmt.setObject(2, TipoOggetto.StrumentoMusicale, java.sql.Types.OTHER);
+				pstmt.setString(3, sm.getMarchio());
+				pstmt.setNull(4, java.sql.Types.VARCHAR); // Taglia non applicabile
+				pstmt.setNull(5, java.sql.Types.VARCHAR); // Modello non applicabile
+				pstmt.setNull(6, java.sql.Types.INTEGER); // Anno di uscita non applicabile
+				pstmt.setNull(7, java.sql.Types.VARCHAR); // Titolo non applicabile
+				pstmt.setNull(8, java.sql.Types.VARCHAR); // ISBN non applicabile
+				pstmt.setNull(9, java.sql.Types.VARCHAR); // Autore non applicabile
+				pstmt.setNull(10, java.sql.Types.VARCHAR); // Genere non applicabile
+				pstmt.setNull(12, java.sql.Types.VARCHAR); // Categoria non applicabile
+			}
+			case Misc m -> {
+				pstmt.setObject(2, TipoOggetto.Misc, java.sql.Types.OTHER);
+				pstmt.setString(3, m.getMarchio());
+				pstmt.setNull(4, java.sql.Types.VARCHAR); // Taglia non applicabile
+				pstmt.setNull(5, java.sql.Types.VARCHAR); // Modello non applicabile
+				pstmt.setNull(6, java.sql.Types.INTEGER); // Anno di uscita non applicabile
+				pstmt.setNull(7, java.sql.Types.VARCHAR); // Titolo non applicabile
+				pstmt.setNull(8, java.sql.Types.VARCHAR); // ISBN non applicabile
+				pstmt.setNull(9, java.sql.Types.VARCHAR); // Autore non applicabile
+				pstmt.setNull(10, java.sql.Types.VARCHAR); // Genere non applicabile
+				pstmt.setString(12, m.getCategoria());
+			}
+			default -> {}
+		}
+	}
 }

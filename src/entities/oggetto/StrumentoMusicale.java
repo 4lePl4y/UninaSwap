@@ -22,6 +22,10 @@ public class StrumentoMusicale extends Oggetto {
 		return marchio;
 	}
 	
+	public void setMarchio(String marchio) {
+		this.marchio = marchio;
+	}
+	
 	public String toString() {
 		return "StrumentoMusicale:"+ nome ;
 	}
