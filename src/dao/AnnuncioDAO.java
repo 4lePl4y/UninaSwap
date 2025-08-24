@@ -114,26 +114,22 @@ public class AnnuncioDAO implements DaoInterface<Annuncio> {
 	@Override
 	public void update(Annuncio annuncio) {
 		String query = "UPDATE annuncio "
-		    + "SET titolo = ?, descrizione = ?, luogo = ?, \"oraIncontro\" = ?, \"dataPubblicazione\" = ?, \"tipoAnnuncio\" = ?, prezzo = ?, autore = ?, \"idOggetto\" = ?"
-			+ " WHERE id = ?;";
+		    + "SET titolo = ?, descrizione = ?, luogo = ?, \"oraIncontro\" = ?, \"tipoAnnuncio\" = ?, prezzo = ? WHERE id = ?;";
 		try(PreparedStatement pstmt = conn.prepareStatement(query)) {
 			pstmt.setString(1, annuncio.getTitolo());
 			pstmt.setString(2, annuncio.getDescrizione());
 			pstmt.setObject(3, annuncio.getLuogo(), java.sql.Types.OTHER);
 			pstmt.setTime(4, Time.valueOf(annuncio.getOraIncontro()));
-			pstmt.setDate(5, Date.valueOf(annuncio.getDataPubblicazione()));
-			pstmt.setString(8, annuncio.getAutore().getUsername());
-			pstmt.setLong(9, annuncio.getOggetto().getId());
-			pstmt.setLong(10, annuncio.getId());
+			pstmt.setLong(7, annuncio.getId());
 			if (annuncio instanceof AnnuncioVendita) {
-				pstmt.setObject(6, TipoAnnuncio.Vendita, java.sql.Types.OTHER);
-				pstmt.setDouble(7, ((AnnuncioVendita) annuncio).getPrezzo());
+				pstmt.setObject(5, TipoAnnuncio.Vendita, java.sql.Types.OTHER);
+				pstmt.setDouble(6, ((AnnuncioVendita) annuncio).getPrezzo());
 			} else if (annuncio instanceof AnnuncioScambio) {
-				pstmt.setObject(6, TipoAnnuncio.Scambio, java.sql.Types.OTHER);
-				pstmt.setNull(7, java.sql.Types.DOUBLE);
+				pstmt.setObject(5, TipoAnnuncio.Scambio, java.sql.Types.OTHER);
+				pstmt.setNull(6, java.sql.Types.DOUBLE);
 			} else {
-				pstmt.setObject(6, TipoAnnuncio.Regalo, java.sql.Types.OTHER);
-				pstmt.setNull(7, java.sql.Types.DOUBLE);
+				pstmt.setObject(5, TipoAnnuncio.Regalo, java.sql.Types.OTHER);
+				pstmt.setNull(6, java.sql.Types.DOUBLE);
 			}
 			
 			pstmt.executeUpdate();

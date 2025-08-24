@@ -21,8 +21,13 @@ public class OffertaDenaro extends Offerta {
 		return offerta;
 	}
 	
+	public void setOfferta(double offerta) {
+		this.offerta=offerta;
+	}
+	
 	public String toString() {
 		return "OffertaDenaro [id=" + getId() + ", stato=" + getStato() + ", messaggio=" + getMessaggio() + ", offerente=" + getOfferente().getUsername() + ", annuncio=" + getAnnuncio().getTitolo() + ", offerta=" + offerta + "]";
 	}
+
 	
 }

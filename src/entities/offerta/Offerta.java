@@ -1,7 +1,10 @@
 package entities.offerta;
 
+import java.util.ArrayList;
+
 import entities.annuncio.Annuncio;
 import entities.enumerazioni.Stato;
+import entities.oggetto.Oggetto;
 import entities.studente.Studente;
 
 public abstract class Offerta {
@@ -37,6 +40,10 @@ public abstract class Offerta {
 		return messaggio;
 	}
 	
+	public void setMessaggio(String messaggio) {
+		this.messaggio=messaggio;
+	}
+
 	public Studente getOfferente() {
 		return offerente;
 	}
@@ -48,4 +55,6 @@ public abstract class Offerta {
 	public String toString() {
 		return "Offerta [id=" + id + ", stato=" + stato + ", messaggio=" + messaggio + ", offerente=" + offerente.getUsername() + ", annuncio=" + annuncio.getTitolo() + "]";
 	}
+
+
 }

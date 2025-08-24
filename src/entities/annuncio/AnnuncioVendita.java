@@ -22,4 +22,8 @@ public class AnnuncioVendita extends Annuncio {
 	public double getPrezzo() {
 		return prezzo;
 	}
+	
+	public void setPrezzo(double prezzo) {
+		this.prezzo=prezzo;
+	}
 }

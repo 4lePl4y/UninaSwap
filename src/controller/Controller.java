@@ -2,11 +2,17 @@ package controller;
 
 import java.awt.EventQueue;
 import java.sql.Connection;
-
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
+
+import javax.swing.JOptionPane;
+
 import dao.*;
 import db.DBConnection;
 import entities.annuncio.*;
+import entities.enumerazioni.Sede;
+import entities.enumerazioni.TipoAnnuncio;
 import entities.offerta.*;
 import entities.oggetto.*;
 import entities.studente.*;
@@ -24,6 +30,7 @@ public class Controller {
 	NewAnnuncio newAnnuncioFrame;
 	NewOggetto newOggettoFrame;
 	ModifyAnnuncio modifyAnnuncioFrame;
+	ModifyOfferta modifyOffertaFrame;
 	
 	//DAO
 	AnnuncioDAO annuncioDAO;
@@ -126,6 +133,7 @@ public class Controller {
 		signUpFrame.setVisible(false);
 	}
 
+	//--NAVIGABILTY RELATED METHODS--//
 	
 	//**Apre il frame per fare una nuova offerta*/
 	public void onFaiOffertaClicked(Annuncio annuncio, Studente autore) {
@@ -151,6 +159,12 @@ public class Controller {
 		newOggettoFrame.setVisible(true);
 	}
 	
+	//**Metodo per modificare i campi di un'offerta presente nel DB*/
+	public void onModificaOffertaFrameClicked(Offerta offerta) {
+		modifyOffertaFrame = new ModifyOfferta(this, offerta);
+		modifyOffertaFrame.setVisible(true);
+	}
+	
 	//--OBJECTS RELATED METHODS--//
 	
 	//**Metodo per creare un nuovo oggetto nel database*/
@@ -158,7 +172,7 @@ public class Controller {
 		//TODO: spostare gran parte del contenuto del metodo onCreaOggettoClicked di NewOggetto nel metodo omonimo del controller
 		oggettoDAO.create(oggetto);
 		mainFrame.refreshMyObjects();
-		if(newAnnuncioFrame.isVisible())
+		if((newAnnuncioFrame != null) && (newAnnuncioFrame.isVisible()))
 			newAnnuncioFrame.refreshOggettiEsistenti();
 	}
 	
@@ -185,11 +199,25 @@ public class Controller {
 	}
 	
 	//**Metodo per modificare un annuncio nel database*/
-	public void onModificaAnnuncioClicked() {
-		Annuncio annuncio = modifyAnnuncioFrame.creaAnnuncio();
-		annuncioDAO.update(annuncio);
+	public void onModificaAnnuncioClicked(Annuncio annuncio) {
+		annuncio.setTitolo(modifyAnnuncioFrame.getTitolo());
+		annuncio.setDescrizione(modifyAnnuncioFrame.getDescrizione());
+		annuncio.setSede(modifyAnnuncioFrame.getSede());
+		annuncio.setOraIncontro(modifyAnnuncioFrame.getOraIncontro());
+		
+		if(annuncio instanceof AnnuncioVendita av) {
+			av.setPrezzo(modifyAnnuncioFrame.getPrezzo());
+			annuncioDAO.update(av);
+		}else if (annuncio instanceof AnnuncioScambio as)
+			annuncioDAO.update(as);
+		else
+			annuncioDAO.update(((AnnuncioRegalo)annuncio));
+		
+		JOptionPane.showMessageDialog(modifyAnnuncioFrame, "Annucio modificato!");
+		modifyAnnuncioFrame.dispose();
+		
 		mainFrame.refreshListings();
-		//forse anche refreshReceivedOffers?	
+		mainFrame.refreshReceivedOffers();
 	}
 	
 	//--OFFERS RELATED METHODS--//
@@ -201,16 +229,25 @@ public class Controller {
 		mainFrame.refreshMadeOffers();
 	}
 	
+	//**Metodo per modificare lo stato di un'offerta presente nel DB rendendola accettata*/
 	public void onAccettaOffertaClicked(Offerta offerta) {
 		offertaDAO.updateOffertaAccettata(offerta);
 		mainFrame.refreshReceivedOffers();
 	}
 	
+	//**Metodo per modificare lo stato di un'offerta presente nel DB rendendola rifiutata*/
 	public void onRifiutaOffertaClicked(Offerta offerta) {
 		offertaDAO.updateOffertaRifiutata(offerta);
 		mainFrame.refreshReceivedOffers();
 	}
 	
+	public void onModificaOffertaClicked(Offerta offerta) {
+		offerta.setMessaggio(modifyOffertaFrame.getMessaggio());
+		offertaDAO.update(offerta);
+		mainFrame.refreshMadeOffers();
+	}
+	
+	//**Metodo per cancellare un'offerta presente nel DB*/
 	public void onCancellaOffertaClicked(Offerta offerta) {
 		offertaDAO.delete(offerta);
 		mainFrame.refreshMadeOffers();
@@ -299,6 +336,10 @@ public class Controller {
 	}
 
 	
+
+	
+
+
 
 	
 

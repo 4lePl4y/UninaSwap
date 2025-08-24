@@ -30,8 +30,6 @@ public class ModifyAnnuncio extends JFrame {
     private JPanel contentPane;
     private JCustomTextField titoloAnnuncioField;
     private JWritableTextArea descrPane;
-    private JComboBox<TipoAnnuncio> tipoAnnuncioCombo;
-    private JComboBox<Oggetto> oggettiEsistentiCombo;
     private  JComboBox<Sede> sedeCombo;
     private JComboBox<String> orarioCombo;
     private JPanel prezzoPanel;
@@ -77,23 +75,6 @@ public class ModifyAnnuncio extends JFrame {
         descrPanel.add(descrPane);
         contentPane.add(descrPanel);
 
-        // Tipo Annuncio
-        TipoAnnuncio tipo;
-        if(annuncio instanceof AnnuncioVendita) {
-        	tipo = TipoAnnuncio.Vendita;
-        } else if (annuncio instanceof AnnuncioScambio) {
-			tipo = TipoAnnuncio.Scambio;
-		} else {
-			tipo = TipoAnnuncio.Regalo;
-		}
-        JPanel tipoAnnuncioPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        JLabel tipoAnnuncioLabel = new JLabel("Tipo Annuncio:");
-        tipoAnnuncioCombo = new JComboBox<>(TipoAnnuncio.values());
-        tipoAnnuncioCombo.setSelectedItem(tipo);
-        tipoAnnuncioPanel.add(tipoAnnuncioLabel);
-        tipoAnnuncioPanel.add(tipoAnnuncioCombo);
-        contentPane.add(tipoAnnuncioPanel);
-        
         // Sede
         JPanel sedePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JLabel sedeLabel = new JLabel("Luogo d'incontro:");
@@ -121,81 +102,34 @@ public class ModifyAnnuncio extends JFrame {
         prezzoField.setColumns(10);
         prezzoPanel.add(prezzoLabel);
         prezzoPanel.add(prezzoField);
-        prezzoPanel.setVisible(tipoAnnuncioCombo.getSelectedItem() == TipoAnnuncio.Vendita);
+        prezzoPanel.setVisible(annuncio instanceof AnnuncioVendita);
         contentPane.add(prezzoPanel);
 
-        // Listeners
-        tipoAnnuncioCombo.addActionListener(e -> {
-            boolean isVendita = tipoAnnuncioCombo.getSelectedItem() == TipoAnnuncio.Vendita;
-            prezzoPanel.setVisible(isVendita);
-            contentPane.revalidate();
-            contentPane.repaint();
-        });
 
-
-        // Bottone crea annuncio
-        JButtonWithBorder creaBtn = new JButtonWithBorder("Modifica Annuncio");
-        creaBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
-        creaBtn.addMouseListener(new MouseAdapter() {
+        // Bottone modifica annuncio
+        JButtonWithBorder modificaBtn = new JButtonWithBorder("Modifica Annuncio");
+        modificaBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
+        modificaBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				controller.onModificaAnnuncioClicked();
+				onModificaAnnuncioClicked();
 			}
 		});
         contentPane.add(Box.createVerticalStrut(20));
-        contentPane.add(creaBtn);
+        contentPane.add(modificaBtn);
     }
     
     
-    // METODI
-	public Annuncio creaAnnuncio() {
-		if(!areInputsValid()) {
-			return null;
-		}
-		
-		long id = this.annuncio.getId();
-		String titolo = this.titoloAnnuncioField.getText();
-		Studente autore = this.controller.getStudenteLoggato();
-		Oggetto oggettoSelezionato = this.annuncio.getOggetto();
-		String descrizione = this.descrPane.getText();
-		descrizione = descrizione.equals("Inserisci la descrizione...") ? "" : descrizione;
-		Sede luogo = (Sede) this.sedeCombo.getSelectedItem();
-		LocalTime oraIncontro = LocalTime.parse((String) this.orarioCombo.getSelectedItem());
-		LocalDate dataPubblicazione = this.annuncio.getDataPubblicazione();
-		
-		TipoAnnuncio tipo = (TipoAnnuncio) this.tipoAnnuncioCombo.getSelectedItem();
-		Annuncio annuncio = null;
-		switch (tipo) {
-			case Vendita: 
-				double prezzo = Double.valueOf(prezzoField.getText());
-				annuncio = new AnnuncioVendita(id, titolo, autore, oggettoSelezionato, descrizione, luogo, oraIncontro, dataPubblicazione, prezzo);
-				break;
-				
-			case Scambio:
-				annuncio = new AnnuncioScambio(id, titolo, autore, oggettoSelezionato, descrizione, luogo, oraIncontro, dataPubblicazione);
-				break;
-				
-			case Regalo:
-				annuncio = new AnnuncioRegalo(id, titolo, autore, oggettoSelezionato, descrizione, luogo, oraIncontro, dataPubblicazione);
-				break;
-		}
-		if(controller.areAnnunciConStessoOggetto(annuncio)) {
-			if(annuncio instanceof AnnuncioRegalo) {
-				JOptionPane.showMessageDialog(this, "Non puoi creare un annuncio di regalo per questo oggetto. \nEsiste già un suo annuncio di vendita o di scambio");
-				return null;
-			} else {
-				JOptionPane.showMessageDialog(this, "Non puoi creare un annuncio di vendita o di scambio per questo oggetto. \nEsiste già un suo annuncio di regalo");
-				return null; 
-			}
-		}
-		
-		JOptionPane.showMessageDialog(this, "Annucio modificato!");
-        dispose();
-        return annuncio;
+    public void onModificaAnnuncioClicked() {
+    	if(!areInputsValid())
+    		return;
+		controller.onModificaAnnuncioClicked(annuncio);
 	}
 
 
+	// METODI
 	private boolean areInputsValid() {
+		
 		if(titoloAnnuncioField.getText().isEmpty() || titoloAnnuncioField.getText().equals("Inserisci il titolo dell'annuncio")) {
 			JOptionPane.showMessageDialog(this, "Inserisci un titolo per l'annuncio!");
 			return false;
@@ -218,12 +152,27 @@ public class ModifyAnnuncio extends JFrame {
 		
 		return true;
 	}
-	
-	//**Metodo per aggiornare il menu a tendina degli oggetti esistenti */
-	public void refreshOggettiEsistenti() {
-		int lastPositionIndex = controller.getMieiOggetti().size() - 1;
-		oggettiEsistentiCombo.addItem(controller.getMieiOggetti().get(lastPositionIndex));
-	}
 			
+	//METODI
+	public String getTitolo() {
+		return titoloAnnuncioField.getText();
+	}
 
+	public String getDescrizione() {
+		String descrizione = this.descrPane.getText();
+		descrizione = descrizione.equals("Inserisci la descrizione...") ? "" : descrizione;
+		return descrizione;
+	}
+	
+	public Sede getSede() {
+		return (Sede) this.sedeCombo.getSelectedItem();
+	}
+	
+	public LocalTime getOraIncontro() {
+		return LocalTime.parse((String) this.orarioCombo.getSelectedItem());
+	}
+	
+	public double getPrezzo() {
+		return Double.valueOf(prezzoField.getText());
+	}
 }

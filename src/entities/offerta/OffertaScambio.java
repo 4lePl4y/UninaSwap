@@ -23,6 +23,10 @@ public class OffertaScambio extends Offerta {
 		return oggettiOfferti;
 	}
 	
+	public void setOggettiOfferti(ArrayList<Oggetto> oggettiOfferti){
+		this.oggettiOfferti=oggettiOfferti;
+	}
+	
 	public String toString() {
 		 String output = "OffertaScambio [id=" + getId() + ", stato=" + getStato() + ", messaggio=" + getMessaggio() + ", offerente=" + getOfferente().getUsername() + ", annuncio=" + getAnnuncio().getTitolo();
 		for(Oggetto oggetto : oggettiOfferti) {

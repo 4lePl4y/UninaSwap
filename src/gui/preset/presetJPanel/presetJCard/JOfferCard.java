@@ -23,7 +23,9 @@ public class JOfferCard extends JCard {
 	private JButton acceptButton; 
 	private JButton declineButton; 
 	private JButton deleteButton;
-	private JButton reviewButton; 
+	private JButton reviewButton;
+	private JButtonWithBorder modifyButton; 
+	
 	public JOfferCard(Offerta offerta, Controller controller) { 
 		super(controller); 
 		this.offerta = offerta; 
@@ -60,6 +62,7 @@ public class JOfferCard extends JCard {
 			JList<Oggetto> list = new JList<>(os.getOggettiOfferti().toArray(new Oggetto[0]));
             JScrollPane sp = new JScrollPane(list);
             sp.setBounds(10, 166, 260, 60);
+            sp.setBorder(null);
             add(sp);
             
 		}else{ 
@@ -84,7 +87,7 @@ public class JOfferCard extends JCard {
 			if(!(offerente.getUsername().equals(controller.getStudenteLoggato().getUsername())))
 				addAcceptNDeclineButtons();
 			else
-				addDeleteButton();
+				addModifyNDeleteButton();
 		}else if(offerta.getStato().equals(Stato.Accettata)) {
 			if((offerente.getUsername().equals(controller.getStudenteLoggato().getUsername())))
 				addReviewButton();
@@ -99,6 +102,10 @@ public class JOfferCard extends JCard {
 	public void onRifiutaOffertaClicked() {
 		controller.onRifiutaOffertaClicked(offerta);
 	}
+
+	public void onModificaOffertaFrameClicked() {
+		controller.onModificaOffertaFrameClicked(offerta);
+	}
 	
 	public void onCancellaOffertaClicked() {
 		controller.onCancellaOffertaClicked(offerta);
@@ -107,6 +114,7 @@ public class JOfferCard extends JCard {
 	public void onLasciaRecensioneClicked() {
 		
 	}
+
 	
 	private void addAcceptNDeclineButtons() {
 		acceptButton = new JButtonWithBorder("Accetta"); 
@@ -128,9 +136,18 @@ public class JOfferCard extends JCard {
 		add(declineButton);
 	}
 	
-	private void addDeleteButton() {
+	private void addModifyNDeleteButton() {
+		modifyButton = new JButtonWithBorder("Modifica"); 
+		modifyButton.setBounds(30, 410, 100, 30); 
+		modifyButton.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				onModificaOffertaFrameClicked();
+			}
+		});
+		add(modifyButton);
+		
 		deleteButton = new JButtonWithBorder("Ritira"); 
-		deleteButton.setBounds(92, 410, 100, 30); 
+		deleteButton.setBounds(155, 410, 100, 30); 
 		deleteButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				onCancellaOffertaClicked();

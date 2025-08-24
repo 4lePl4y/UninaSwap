@@ -75,6 +75,23 @@ public abstract class Annuncio {
 		return "Annuncio [id=" + id + ", titolo=" + titolo + ", autore=" + autore.getUsername() + ", oggetto=" + oggetto.getNome() + 
 				", descrizione=" + descrizione + ", luogo=" + luogo + ", oraIncontro=" + oraIncontro + ", dataPubblicazione=" + dataPubblicazione + "]";
 	}
+
+	public void setTitolo(String titolo) {
+		this.titolo = titolo;
+	}
+
+	public void setDescrizione(String descrizione) {
+		this.descrizione = descrizione;
+	}
+
+	public void setSede(Sede sede) {
+		this.luogo = sede;
+	}
+
+	public void setOraIncontro(LocalTime oraIncontro) {
+		this.oraIncontro = oraIncontro;
+	}
+	
 	
 }
 

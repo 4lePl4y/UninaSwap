@@ -1,45 +1,64 @@
 package gui;
 
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.Rectangle;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 
-import javax.swing.*;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+
 import controller.Controller;
-import entities.annuncio.*;
-import entities.offerta.*;
-import entities.oggetto.*;
-import entities.studente.*;
+import entities.annuncio.Annuncio;
+import entities.annuncio.AnnuncioScambio;
+import entities.offerta.Offerta;
+import entities.offerta.OffertaDenaro;
+import entities.offerta.OffertaScambio;
+import entities.oggetto.Oggetto;
+import entities.studente.Studente;
+import gui.preset.JButtonWithBorder;
 import gui.preset.JWritableTextArea;
 import gui.preset.presetJTextField.JDoubleTextField;
-import gui.preset.JButtonWithBorder;
 
-public class NewOfferta extends JFrame {
-
-    private static final long serialVersionUID = 1L;
-    private JPanel contentPane;
-    private Controller controller;
-    private Annuncio annuncio;
-    private Studente autore;
-    private JLabel welcomingLabel;
-    private JWritableTextArea messaggioArea;
-    private JButtonWithBorder submitButton;
-    private JDoubleTextField moneyTextField;
-    private ArrayList<Oggetto> mieiOggetti;
-    private ArrayList<JCheckBox> checkBoxes; 
-
-    public NewOfferta(Controller controller, Annuncio annuncio, Studente autore) {
-        this.controller = controller;
-        this.annuncio = annuncio;
-        this.autore = autore;
+public class ModifyOfferta extends JFrame{
+	private static final long serialVersionUID = 1L;
+	private Controller controller;
+	private Offerta offerta;
+	private Annuncio annuncio;
+	private Studente autore;
+	private JPanel contentPane;
+	private JLabel welcomingLabel;
+	private JWritableTextArea messaggioArea;
+	private ArrayList<Oggetto> mieiOggetti;
+	private ArrayList<JCheckBox> checkBoxes;
+	private JDoubleTextField moneyTextField;
+	private JButtonWithBorder modifyButton;
+	
+	public ModifyOfferta(Controller controller, Offerta offerta) {
+		this.controller = controller;
+        this.offerta = offerta;
+        this.annuncio = offerta.getAnnuncio();
+        this.autore = annuncio.getAutore();
         
-        this.setTitle("Nuova Offerta");
+        this.setTitle("Modifica Offerta");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setBounds(new Rectangle(0, 0, 420, 400));
         this.setFocusable(true);
         this.setResizable(false);
         this.setAlwaysOnTop(true);
-
+        
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));
         setContentPane(contentPane);
@@ -48,12 +67,14 @@ public class NewOfferta extends JFrame {
         // Welcoming label
         welcomingLabel = new JLabel();
         welcomingLabel.setBounds(10, 10, 386, 23);
-        welcomingLabel.setText("Fai un'offerta per: " + annuncio.getTitolo() + " di " + autore.getUsername());
+        welcomingLabel.setText("Modifica la tua offerta per: " + annuncio.getTitolo() + " di " + autore.getUsername());
         welcomingLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
         contentPane.add(welcomingLabel);
 
         // Description area
-        messaggioArea = new JWritableTextArea("Aggiungi un messaggio alla tua offerta...");
+        messaggioArea = new JWritableTextArea("Inserisci un nuovo messaggio per la tua offerta...");
+        messaggioArea.setText(offerta.getMessaggio());
+        messaggioArea.setForeground(Color.BLACK);
         messaggioArea.setBounds(10, 43, 386, 75);
         messaggioArea.setLineWrap(true);
         messaggioArea.setWrapStyleWord(true);
@@ -101,30 +122,35 @@ public class NewOfferta extends JFrame {
         	contentPane.add(moneyPanel);
         	moneyPanel.setLayout(null);
         	
-        	JLabel moneyLabel = new JLabel("Aggiungi la tua offerta in denaro: ");
+        	JLabel moneyLabel = new JLabel("Modifica la tua precedente offerta: ");
         	moneyLabel.setBounds(0, 0, 230, 23);
         	moneyPanel.add(moneyLabel);
         	
         	moneyTextField = new JDoubleTextField("€");
+        	moneyTextField.setText(String.valueOf(((OffertaDenaro)offerta).getOfferta()));
+        	moneyTextField.setForeground(Color.BLACK);
         	moneyTextField.setBounds(200, 2, 96, 19);
         	moneyPanel.add(moneyTextField);
         	moneyTextField.setColumns(10);			
         }
 
         // Submit button
-        submitButton = new JButtonWithBorder("Fai Offerta");
-        submitButton.setBounds(139, 296, 133, 28);
-        submitButton.setAlignmentX(Component.LEFT_ALIGNMENT);
-        submitButton.addActionListener(e -> onInviaOffertaClicked());
-        contentPane.add(submitButton);
+        modifyButton = new JButtonWithBorder("Modifica Offerta");
+        modifyButton.setBounds(130, 296, 160, 28);
+        modifyButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+        modifyButton.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				onModificaOffertaClicked();
+			}
+		});
+        contentPane.add(modifyButton);
         
     }
 
-    public void onInviaOffertaClicked() {
-    	Offerta offerta = verificaInput();
-    	if(offerta == null)
-    		return; 
-        controller.onInviaOffertaClicked(offerta);
+    public void onModificaOffertaClicked() {
+    	if(!areInputsValid())
+    		return;
+    	controller.onModificaOffertaClicked(this.offerta);
     }
 
 	private ArrayList<Oggetto> getOggettiSelezionati() {
@@ -136,19 +162,15 @@ public class NewOfferta extends JFrame {
 		
 		return oggettiSelezionati;
 	}
-	
-	private Offerta verificaInput() {
-		String messaggio = messaggioArea.getText().equals("Aggiungi un messaggio alla tua offerta...") ? "" : messaggioArea.getText();
-    	Studente studenteLoggato = controller.getStudenteLoggato();
-    	Offerta offerta = null;
-    	
+    
+	private boolean areInputsValid() {
         if(annuncio instanceof AnnuncioScambio) {
 			ArrayList<Oggetto> oggettiSelezionati = getOggettiSelezionati();
 			if(oggettiSelezionati.isEmpty()) {
 				JOptionPane.showMessageDialog(this, "Devi selezionare almeno un oggetto da scambiare!");
-				return null;
+				return false;
 			}
-			offerta = new OffertaScambio(messaggio, studenteLoggato, annuncio, oggettiSelezionati);
+			((OffertaScambio)this.offerta).setOggettiOfferti(oggettiSelezionati);
         } else {
 			String moneyText = moneyTextField.getText();
 			double money;
@@ -156,13 +178,21 @@ public class NewOfferta extends JFrame {
 				money = Double.parseDouble(moneyText);
 			} catch (NumberFormatException e) {
 				JOptionPane.showMessageDialog(this, "Inserisci un importo valido in denaro!");
-				return null;
+				return false ;
 			}
-			offerta = new OffertaDenaro(messaggio, studenteLoggato, annuncio, money);
+			((OffertaDenaro)this.offerta).setOfferta(money);
 		}
 		
-        JOptionPane.showMessageDialog(this, "Offerta inviata!");
+        JOptionPane.showMessageDialog(this, "Offerta modificata!");
         dispose();
-        return offerta;
+        return true;
 	}
+	
+	public String getMessaggio() {
+		return messaggioArea.getText().equals("Aggiungi un messaggio alla tua offerta...") ? "" : messaggioArea.getText();
+	}
+	
+	
 }
+	
+
