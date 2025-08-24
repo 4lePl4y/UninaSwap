@@ -1,6 +1,7 @@
 package gui.preset.presetJPanel.presetJCard; 
 
-import controller.Controller; 
+import controller.Controller;
+import entities.enumerazioni.Stato;
 import entities.offerta.*; 
 import entities.oggetto.Oggetto; 
 import entities.studente.Studente; 
@@ -24,7 +25,8 @@ public class JOfferCard extends JCard {
 	private Studente offerente; 
 	private JButton acceptButton; 
 	private JButton declineButton; 
-	private JButton deleteButton; 
+	private JButton deleteButton;
+	private JButton reviewButton; 
 	public JOfferCard(Offerta offerta, Controller controller) { 
 		super(controller); 
 		this.offerta = offerta; 
@@ -76,35 +78,16 @@ public class JOfferCard extends JCard {
 		statusLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15)); 
 		statusLabel.setBounds(10, 266, 260, 18); add(statusLabel); 
 		
-		if(!(offerente.getUsername().equals(controller.getStudenteLoggato().getUsername()))) { 
-			acceptButton = new JButtonWithBorder("Accetta"); 
-			acceptButton.setBounds(30, 410, 100, 30); 
-			add(acceptButton); 
-			acceptButton.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent e) {
-					onAccettaOffertaClicked();
-				}
-			});
+		if(offerta.getStato().equals(Stato.InAttesa)) {
+			if(!(offerente.getUsername().equals(controller.getStudenteLoggato().getUsername())))
+				addAcceptNDeclineButtons();
+			else
+				addDeleteButton();
+		}else if(offerta.getStato().equals(Stato.Accettata)) {
+			if(!(offerente.getUsername().equals(controller.getStudenteLoggato().getUsername())))
+				addReviewButton();
+		}
 			
-			declineButton = new JButtonWithBorder("Rifiuta"); 
-			declineButton.setBounds(155, 410, 100, 30); 
-			declineButton.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent e) {
-					onRifiutaOffertaClicked();
-				}
-			});
-			add(declineButton);
-			
-		}else{ 
-			deleteButton = new JButtonWithBorder("Ritira"); 
-			deleteButton.setBounds(92, 410, 100, 30); 
-			deleteButton.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent e) {
-					onCancellaOffertaClicked();
-				}
-			});
-			add(deleteButton);
-		} 
 	}
 	
 	public void onAccettaOffertaClicked() {
@@ -117,6 +100,52 @@ public class JOfferCard extends JCard {
 	
 	public void onCancellaOffertaClicked() {
 		controller.onCancellaOffertaClicked(offerta);
+	}
+	
+	public void onLasciaRecensioneClicked() {
+		
+	}
+	
+	private void addAcceptNDeclineButtons() {
+		acceptButton = new JButtonWithBorder("Accetta"); 
+		acceptButton.setBounds(30, 410, 100, 30); 
+		acceptButton.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				onAccettaOffertaClicked();
+			}
+		});
+		add(acceptButton); 
+		
+		declineButton = new JButtonWithBorder("Rifiuta"); 
+		declineButton.setBounds(155, 410, 100, 30); 
+		declineButton.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				onRifiutaOffertaClicked();
+			}
+		});
+		add(declineButton);
+	}
+	
+	private void addDeleteButton() {
+		deleteButton = new JButtonWithBorder("Ritira"); 
+		deleteButton.setBounds(92, 410, 100, 30); 
+		deleteButton.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				onCancellaOffertaClicked();
+			}
+		});
+		add(deleteButton);
+	}
+	
+	private void addReviewButton() {
+		reviewButton = new JButtonWithBorder("Lascia una recensione"); 
+		reviewButton.setBounds(50, 410, 180, 30); 
+		add(reviewButton); 
+		reviewButton.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				onLasciaRecensioneClicked();
+			}
+		});		
 	}
 	
 }

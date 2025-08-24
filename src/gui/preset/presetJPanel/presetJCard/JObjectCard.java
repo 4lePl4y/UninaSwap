@@ -91,12 +91,12 @@ public class JObjectCard extends JCard {
 		}		
 		
 		JButton updateButton = new JButtonWithBorder("Modifica");
-		updateButton.setBounds(10, 419, 100, 30);
+		updateButton.setBounds(30, 410, 100, 30);
 		add(updateButton);
 		//TODO: fare tutto ciò che comporta la modifica di un oggetto (quindi probabilmente ci saà bisogno di un frame apposito)
 		
 		JButton deleteButton = new JButtonWithBorder("Elimina");
-		deleteButton.setBounds(145, 419, 100, 30);
+		deleteButton.setBounds(155, 410, 100, 30);
 		deleteButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				onCancellaOggettoClicked();
