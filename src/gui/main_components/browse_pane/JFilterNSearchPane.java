@@ -32,7 +32,7 @@ public class JFilterNSearchPane extends JPanel{
 		this.controller = controller;
 		
 		this.setBackground(new Color(255, 255, 255));
-		this.setPreferredSize(new Dimension(800, 85));
+		this.setPreferredSize(new Dimension(1106, 121));
 		GridBagLayout gbl = new GridBagLayout();
 		gbl.columnWidths = new int[] {264, 264, 264, 264, 264};
 		this.setLayout(gbl);

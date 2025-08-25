@@ -17,14 +17,14 @@ public class JSearchTextField extends JCustomTextField {
 		this.setPreferredSize(new Dimension(1056, 30));
 		this.setColumns(10);
 		
-		gbc.gridwidth = 5;
+		gbc.gridwidth = 4;
 		gbc.fill = GridBagConstraints.BOTH;
 		gbc.insets = new Insets(0, 0, 5, 5);
-		gbc.gridx = 0;
+		gbc.gridx = 1;
 		gbc.gridy = 0;
 	}
 	
-	//METODI
+	//Metodi
 	public GridBagConstraints getGbc() {
 		return gbc;
 	}

@@ -7,7 +7,6 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import controller.Controller;
 import entities.annuncio.*;
-import entities.offerta.*;
 import entities.oggetto.*;
 import entities.studente.*;
 import gui.preset.JWritableTextArea;

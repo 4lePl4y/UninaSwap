@@ -206,7 +206,7 @@ public class AnnuncioDAO implements DaoInterface<Annuncio> {
 	
 	public ArrayList<Annuncio> getAltriAnnunciByRicerca(String username, String research, boolean[] filters) {
 		ArrayList<Annuncio> annunci = new ArrayList<>();
-		String query = "SELECT * FROM annuncio AS a JOIN oggetto AS o ON a.\"idOggetto\" = o.id "
+		String query = "SELECT a.* FROM annuncio AS a JOIN oggetto AS o ON a.\"idOggetto\" = o.id "
 				+ " WHERE a.autore <> ? AND (a.titolo ILIKE ? OR a.descrizione ILIKE ?)";
 		
 		int count_activeFilter = 0;

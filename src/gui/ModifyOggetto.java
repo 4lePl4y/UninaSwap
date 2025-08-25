@@ -3,28 +3,18 @@ package gui;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.time.Year;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controller.Controller;
-import entities.enumerazioni.TipoOggetto;
-import entities.oggetto.Abbigliamento;
-import entities.oggetto.Elettronica;
-import entities.oggetto.Libro;
-import entities.oggetto.Misc;
-import entities.oggetto.Oggetto;
-import entities.oggetto.StrumentoMusicale;
-import entities.studente.Studente;
+import entities.oggetto.*;
 import gui.preset.JButtonWithBorder;
 import gui.preset.presetJTextField.JCustomTextField;
 
