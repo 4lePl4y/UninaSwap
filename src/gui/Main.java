@@ -145,8 +145,13 @@ public class Main extends JFrame {
 	
 	
 	public void refreshBrowse() {
+		this.altriAnnunci = controller.getAltriAnnunci(40, studenteLoggato.getUsername());
+		browsePane.refresh(altriAnnunci);
+	}
+	
+	public void refreshBrowseForResearch() {
 		String research = browsePane.getSearchBarText();
-		boolean[] filters = browsePane.getFilters();
+		boolean[] filters = browsePane.getFiltersForObjectType();
 		this.altriAnnunci = controller.getAltriAnnunciByRicerca(studenteLoggato.getUsername(), research, filters);
 		browsePane.refresh(altriAnnunci);
 	}

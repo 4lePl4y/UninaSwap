@@ -41,8 +41,8 @@ public class JBrowsePane extends JPanel {
 		return filterNSearchPane.getSearchBarText();
 	}
 	
-	public boolean[] getFilters() {
-		return filterNSearchPane.getFilters();
+	public boolean[] getFiltersForObjectType() {
+		return filterNSearchPane.getFiltersForObjectType();
 	}
 	
 }

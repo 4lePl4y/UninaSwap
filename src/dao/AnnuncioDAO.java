@@ -207,55 +207,55 @@ public class AnnuncioDAO implements DaoInterface<Annuncio> {
 	public ArrayList<Annuncio> getAltriAnnunciByRicerca(String username, String research, boolean[] filters) {
 		ArrayList<Annuncio> annunci = new ArrayList<>();
 		String query = "SELECT * FROM annuncio AS a JOIN oggetto AS o ON a.\"idOggetto\" = o.id "
-				+ " WHERE a.autore <> ? AND (a.titolo ILIKE ? OR a.descrizione ILIKE ?) ";
+				+ " WHERE a.autore <> ? AND (a.titolo ILIKE ? OR a.descrizione ILIKE ?)";
 		
-		int activePositions = 3;
+		int count_activeFilter = 0;
 		for(int i = 0; i < filters.length; i++) {
 			if(filters[i]) 
-				activePositions++;
+				count_activeFilter++;
 		}
 		
-		if(activePositions > 3 && activePositions <= 7) {
+		//Aggiugo tanti "?" quanti sono i filtri attivi
+		if(count_activeFilter > 0) {
 			query += "AND o.\"tipoOggetto\" IN (";			
-			for(int i = 0; i < activePositions-3; i++) {
+			for(int i = 0; i < count_activeFilter; i++) {
 					query += "?, ";	
 			}
-			
 			query = query.substring(0, query.length() - 2);
 			query += ");";
 		}
-		
+
+		//Rimpiazzo i "?" con i valori corretti
 		try(PreparedStatement pstmt = conn.prepareStatement(query)) {
 			pstmt.setString(1, username);
 			pstmt.setString(2, "%" + research + "%");
 			pstmt.setString(3, "%" + research + "%");
 			
-			
-			if(activePositions > 3 && activePositions <= 7) {
-				int index = 4;
-				for(int i = 0; i < filters.length; i++) {
-					if(filters[i]) {
-						switch(i) {
-							case 0:
-								pstmt.setObject(index, TipoOggetto.Abbigliamento, java.sql.Types.OTHER);
-								break;
-							case 1:
-								pstmt.setObject(index, TipoOggetto.Elettronica, java.sql.Types.OTHER);
-								break;
-							case 2:
-								pstmt.setObject(index, TipoOggetto.Libro, java.sql.Types.OTHER);
-								break;
-							case 3:
-								pstmt.setObject(index, TipoOggetto.StrumentoMusicale, java.sql.Types.OTHER);
-								break;
-							case 4:
-								pstmt.setObject(index, TipoOggetto.Misc, java.sql.Types.OTHER);
-								break;
-						}
-						index++;
+			int index = 4;
+			for(int i = 0; i < filters.length; i++) {
+				if(filters[i]) {
+					switch(i) {
+						case 0:
+							pstmt.setObject(index, TipoOggetto.Abbigliamento, java.sql.Types.OTHER);
+							break;
+						case 1:
+							pstmt.setObject(index, TipoOggetto.Elettronica, java.sql.Types.OTHER);
+							break;
+						case 2:
+							pstmt.setObject(index, TipoOggetto.Libro, java.sql.Types.OTHER);
+							break;
+						case 3:
+							pstmt.setObject(index, TipoOggetto.StrumentoMusicale, java.sql.Types.OTHER);
+							break;
+						case 4:
+							pstmt.setObject(index, TipoOggetto.Misc, java.sql.Types.OTHER);
+							break;
 					}
+					
+					index++;
 				}
 			}
+			
 			
 			ResultSet rs = pstmt.executeQuery();
 			while(rs.next()) {

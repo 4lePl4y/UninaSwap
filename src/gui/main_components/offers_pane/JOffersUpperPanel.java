@@ -6,12 +6,16 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import controller.Controller;
 import entities.studente.Studente;
+import gui.preset.JRefreshButton;
 
 public class JOffersUpperPanel extends JPanel{
 	private static final long serialVersionUID = 1L;
@@ -29,6 +33,16 @@ public class JOffersUpperPanel extends JPanel{
 		gbl_offersUpperPanel.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
 		gbl_offersUpperPanel.rowWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
 		this.setLayout(gbl_offersUpperPanel);
+		
+		JRefreshButton refreshButton = new JRefreshButton("↻");
+		refreshButton.setLocation(0, 0);
+		refreshButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				refresh();
+			}
+		});
+		this.add(refreshButton);
 		
 		JLabel welcomingLabel = new JLabel("Ciao "+studenteLoggato.getUsername()+"! Vedi le tue offerte fatte e le offerte ricevute da altri studenti della Federico II");
 		welcomingLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
@@ -57,6 +71,10 @@ public class JOffersUpperPanel extends JPanel{
 		gbc_madeOffersLabel.gridy = 1;
 		add(madeOffersLabel, gbc_madeOffersLabel);
 		
+	}
+	
+	public void refresh() {
+		controller.refreshReceivedOffers();
 	}
 	
 }

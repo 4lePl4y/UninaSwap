@@ -12,10 +12,13 @@ import javax.swing.JPanel;
 
 import controller.Controller;
 import gui.preset.JButtonWithBorder;
+import gui.preset.JRefreshButton;
 
 public class JFilterNSearchPane extends JPanel{
 	private static final long serialVersionUID = 1L;
 	private Controller controller;
+	private boolean[] filters = new boolean[5];
+	private JRefreshButton refreshButton;
 	private JSearchTextField searchTxtField;
 	private JButtonWithBorder searchButton;
 	private JFilterRadioButton filterAbbigliamento;
@@ -24,8 +27,6 @@ public class JFilterNSearchPane extends JPanel{
 	private JFilterRadioButton filterStrumentiMusicali;
 	private JFilterRadioButton filterMisc;
 	
-	String text;
-	boolean[] filters = new boolean[5];
 	
 	public JFilterNSearchPane(Controller controller) {
 		this.controller = controller;
@@ -36,19 +37,22 @@ public class JFilterNSearchPane extends JPanel{
 		gbl.columnWidths = new int[] {264, 264, 264, 264, 264};
 		this.setLayout(gbl);
 	
+		refreshButton = new JRefreshButton("↻");
+		refreshButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				refresh();
+			}
+		});
+		this.add(refreshButton);
+		
 		searchTxtField = new JSearchTextField(controller, "Cerca il tuo prossimo articolo preferito...");
 		searchTxtField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				if(e.getKeyCode() == KeyEvent.VK_ENTER) { 
-					text = searchTxtField.getText().trim();
-					filters[0] = filterAbbigliamento.isSelected();
-					filters[1] = filterElettronica.isSelected();
-					filters[2] = filterLibri.isSelected();
-					filters[3] = filterStrumentiMusicali.isSelected();
-					filters[4] = filterMisc.isSelected();
-					
-					cerca(text, filters);
+					setFiltersForObjectType();
+					search();
 				}
 			}
 		});
@@ -58,14 +62,8 @@ public class JFilterNSearchPane extends JPanel{
 		searchButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				text = searchTxtField.getText().trim();
-				filters[0] = filterAbbigliamento.isSelected();
-				filters[1] = filterElettronica.isSelected();
-				filters[2] = filterLibri.isSelected();
-				filters[3] = filterStrumentiMusicali.isSelected();
-				filters[4] = filterMisc.isSelected();
-				
-				cerca(text, filters);
+				setFiltersForObjectType();
+				search();
 			}
 		});
 		this.add(searchButton);
@@ -99,8 +97,13 @@ public class JFilterNSearchPane extends JPanel{
 
 	//METODI
 	
-	public void cerca(String text, boolean[] filters) {
+	public void search() {
+		controller.refreshBrowseForResearch();
+	}
+	
+	public void refresh() {
 		controller.refreshBrowse();
+		
 	}
 	
 	public String getSearchBarText() {
@@ -109,13 +112,16 @@ public class JFilterNSearchPane extends JPanel{
 		return research;
 	}
 	
-	public boolean[] getFilters() {
+	public boolean[] getFiltersForObjectType() {
+		return filters;
+	}
+	
+	public void setFiltersForObjectType() {
 		filters[0] = filterAbbigliamento.isSelected();
 		filters[1] = filterElettronica.isSelected();
 		filters[2] = filterLibri.isSelected();
 		filters[3] = filterStrumentiMusicali.isSelected();
 		filters[4] = filterMisc.isSelected();
-		return filters;
 	}
 
 }

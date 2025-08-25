@@ -349,9 +349,19 @@ public class Controller {
 		mainFrame.refreshBrowse();
 	}
 	
+	//**Metodo stub per aggiornare gli annunci contentuti nel browsePane nel mainFrame in base alla ricerca*/
+	public void refreshBrowseForResearch() {
+		mainFrame.refreshBrowseForResearch();
+	}
+	
 	//**Metodo stub per aggiornare gli annunci contentuti nel listingsPane nel mainFrame*/
 	public void refreshListings() {
 		mainFrame.refreshListings();
+	}
+	
+	//**Metodo stub per aggiornare le offerte contentute nel offersPane nel mainFrame*/
+	public void refreshReceivedOffers() {
+		mainFrame.refreshReceivedOffers();
 	}
 	
 	//**Metodo stub per aggiornare gli oggetti contentuti nel MyObjectsPane nel mainFrame*/
@@ -391,10 +401,25 @@ public class Controller {
 	}
 	
 	public ArrayList<Annuncio> getAltriAnnunciByRicerca(String usernameStudenteLoggato, String research, boolean[] filters) {
-		ArrayList<Annuncio> annunci = annuncioDAO.getAltriAnnunciByRicerca(usernameStudenteLoggato, research, filters);
-		return annunci;
+		if(research.equals("") && allEquals(filters))
+			 return getAltriAnnunci(40, usernameStudenteLoggato);
+		
+		else {
+			ArrayList<Annuncio> annunci = annuncioDAO.getAltriAnnunciByRicerca(usernameStudenteLoggato, research, filters);
+			return annunci;
+		}
 	}
 	
+	private boolean allEquals(boolean[] filters) {
+		boolean first = filters[0];
+		for (boolean val : filters) {
+			if (val != first) 
+				return false;
+		}
+	        
+		return true;
+	}
+
 	//**Prende gli annunci fatti da un utente dal database*/
 	public ArrayList<Annuncio> getMieiAnnunci(String usernameUtenteLoggato) {
 		ArrayList<Annuncio> annunci = annuncioDAO.retrieveByAutore(usernameUtenteLoggato); 
