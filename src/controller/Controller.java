@@ -88,7 +88,6 @@ public class Controller {
 		Studente chkStudente = studenteDAO.retrieveByPK(username);
 		if(chkStudente == null) {
 			loginFrame.setWarningLabel("Attenzione! Username errato");
-			
 			return;
 		}else if(chkStudente != null && !chkStudente.getPassword().equals(password)) {
 			loginFrame.setWarningLabel("Attenzione! Password errata");
@@ -441,7 +440,7 @@ public class Controller {
 	}
 
 	/**Prende le offerte fatte da un utente dal database*/
-	public ArrayList<Offerta> getOfferteFatte(String usernameUtenteLoggato) {
+	public ArrayList<Offerta> getOfferteInviate(String usernameUtenteLoggato) {
 		ArrayList<Offerta> offerte = offertaDAO.retrieveByOfferente(usernameUtenteLoggato);
 		return offerte;
 	}

@@ -5,10 +5,11 @@ import entities.annuncio.*;
 import entities.oggetto.*;
 import entities.studente.*;
 import entities.offerta.*;
-import gui.main_components.browse_pane.*;
-import gui.main_components.listings_pane.*;
-import gui.main_components.my_objects_pane.*;
-import gui.main_components.offers_pane.*;
+import gui.main_components.browse_pane.JBrowsePane;
+import gui.main_components.listings_pane.JListingsPane;
+import gui.main_components.my_objects_pane.JMyObjectsPane;
+import gui.main_components.offers_pane.JOffersPane;
+import gui.main_components.profile_pane.JProfilePane;
 import gui.preset.JButtonWithBorder;
 
 //package java gui;
@@ -37,11 +38,12 @@ public class Main extends JFrame {
 	private ArrayList<Annuncio> mieiAnnunci;
 	private ArrayList<Oggetto> mieiOggetti;
 	private ArrayList<Offerta> offerteRicevute;
-	private ArrayList<Offerta> offerteFatte;
+	private ArrayList<Offerta> offerteInviate;
 	private JBrowsePane browsePane;
 	private JListingsPane listingsPane;
 	private JMyObjectsPane myObjectsPane;
 	private JOffersPane offersPane;
+	private JProfilePane profilePane;
 		
 
 	//COSTRUTTORE
@@ -52,7 +54,7 @@ public class Main extends JFrame {
 		this.mieiAnnunci = controller.getMieiAnnunci(studenteLoggato.getUsername());
 		this.mieiOggetti = controller.getMieiOggetti(studenteLoggato.getUsername());
 		this.offerteRicevute = controller.getOfferteRicevute(studenteLoggato.getUsername());
-		this.offerteFatte = controller.getOfferteFatte(studenteLoggato.getUsername());
+		this.offerteInviate = controller.getOfferteInviate(studenteLoggato.getUsername());
 		
 		setTitle("UninaSwap");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -78,12 +80,16 @@ public class Main extends JFrame {
 		contentPane.add(listingsPane, "LISTINGS");
 		
 		// Offers panel
-		this.offersPane = new JOffersPane(offerteRicevute, offerteFatte, controller);
+		this.offersPane = new JOffersPane(offerteRicevute, offerteInviate, controller);
 		contentPane.add(offersPane, "OFFERS");
 		
 		// My Objects panel
 		this.myObjectsPane = new JMyObjectsPane(mieiOggetti, controller);
 		contentPane.add(myObjectsPane, "MYOBJECTS");
+		
+		// Profilo panel
+		this.profilePane = new JProfilePane(controller, offerteInviate);
+		contentPane.add(profilePane, "PROFILE");
 		
 		// Button panel per scegliere le finestre
         buttonPane = new JPanel();
@@ -129,11 +135,20 @@ public class Main extends JFrame {
 			}
 		});
         
+        JButton profileButton = new JButtonWithBorder("Profilo");
+        profileButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				CardLayout cl = (CardLayout)(contentPane.getLayout());
+				cl.show(contentPane, "PROFILE");
+			}
+		});
+        
         buttonPane.add(browseButton);
         buttonPane.add(listingsButton);
         buttonPane.add(offersButton);
         buttonPane.add(myObjectsButton);
-        buttonPane.add(new JButtonWithBorder("Profilo"));
+        buttonPane.add(profileButton);
         getContentPane().add(buttonPane, BorderLayout.SOUTH);
     }
 
@@ -169,8 +184,8 @@ public class Main extends JFrame {
 	
 	public void refreshAllOffers() {
 		this.offerteRicevute = controller.getOfferteRicevute(studenteLoggato.getUsername());
-		this.offerteFatte = controller.getOfferteFatte(studenteLoggato.getUsername());
-		offersPane.refresh(offerteRicevute, offerteFatte);
+		this.offerteInviate = controller.getOfferteInviate(studenteLoggato.getUsername());
+		offersPane.refresh(offerteRicevute, offerteInviate);
 	}
 	
 	public void refreshReceivedOffers() {
@@ -179,8 +194,8 @@ public class Main extends JFrame {
 	}
 	
 	public void refreshMadeOffers() {
-		this.offerteFatte = controller.getOfferteFatte(studenteLoggato.getUsername());
-		offersPane.refreshOfferteFatte(offerteFatte);
+		this.offerteInviate = controller.getOfferteInviate(studenteLoggato.getUsername());
+		offersPane.refreshOfferteInviate(offerteInviate);
 	}
 	
 }

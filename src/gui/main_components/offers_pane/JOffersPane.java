@@ -46,7 +46,7 @@ public class JOffersPane extends JPanel{
 	}
 	
 	//**Metodo per aggiornare la lista di offerte fatte*/
-	public void refreshOfferteFatte(ArrayList<Offerta> offerteFatte) {
+	public void refreshOfferteInviate(ArrayList<Offerta> offerteFatte) {
 		scrollPanesContainer.remove(madeOffersScrollPane);
 		madeOffersScrollPane = new JCustomScrollPane<Offerta>(offerteFatte, controller);
 		scrollPanesContainer.add(madeOffersScrollPane);
@@ -57,6 +57,6 @@ public class JOffersPane extends JPanel{
 	//**Metodo per aggiornare sia la lista di offerte ricevute che fatte*/
 	public void refresh(ArrayList<Offerta> offerteRicevute, ArrayList<Offerta> offerteFatte) {
 		refreshOfferteRicevute(offerteRicevute);
-		refreshOfferteFatte(offerteFatte);
+		refreshOfferteInviate(offerteFatte);
 	}
 }

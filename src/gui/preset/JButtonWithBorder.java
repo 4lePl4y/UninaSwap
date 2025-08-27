@@ -22,7 +22,6 @@ public class JButtonWithBorder extends JButton {
         this.setForeground(Color.WHITE);
         this.setFont(new Font("Times New Roman", Font.PLAIN, 16));
         
-        
         this.addMouseListener(new MouseAdapter() {
     		@Override
     		public void mouseEntered(MouseEvent e) {

@@ -35,10 +35,10 @@ public class JFilterNSearchPane extends JPanel {
         this.controller = controller;
 
         this.setBackground(Color.WHITE);
-        this.setPreferredSize(new Dimension(1106, 150)); // altezza più compatta
+        this.setPreferredSize(new Dimension(1106, 120));
         this.setLayout(new BorderLayout());
 
-        // -------------------- TOP PANEL --------------------
+        // TOP PANEL 
         JPanel topPanel = new JPanel(new GridBagLayout());
         topPanel.setBackground(Color.WHITE);
 
@@ -90,7 +90,7 @@ public class JFilterNSearchPane extends JPanel {
 
         this.add(topPanel, BorderLayout.NORTH);
 
-     // -------------------- FILTERS PANEL --------------------
+     // FILTERS PANEL 
         JPanel filtersPanel = new JPanel(new GridBagLayout());
         filtersPanel.setBackground(Color.WHITE);
 
@@ -133,7 +133,7 @@ public class JFilterNSearchPane extends JPanel {
         return checkBoxes;
     }
 
-    // -------------------- METODI --------------------
+    // METODI 
     public void refresh() {
         controller.refreshBrowse();
     }
