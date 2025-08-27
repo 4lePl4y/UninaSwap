@@ -3,7 +3,6 @@ package gui.main_components.browse_pane;
 import java.awt.BorderLayout;
 import java.util.ArrayList;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 
 import controller.Controller;
 import entities.annuncio.Annuncio;
@@ -14,7 +13,7 @@ public class JBrowsePane extends JPanel {
 	//ATTRIBUTI
 	private static final long serialVersionUID = 1L;
 	private JFilterNSearchPane filterNSearchPane;
-	private JScrollPane browseScrollPane;
+	private JCustomScrollPane<Annuncio> browseScrollPane;
 	private Controller controller;
 	
 	//COSTRUTTORE
