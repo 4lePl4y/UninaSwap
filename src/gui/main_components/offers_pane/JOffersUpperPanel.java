@@ -34,7 +34,7 @@ public class JOffersUpperPanel extends JPanel{
 		gbl_offersUpperPanel.rowWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
 		this.setLayout(gbl_offersUpperPanel);
 		
-		JRefreshButton refreshButton = new JRefreshButton("↻");
+		JRefreshButton refreshButton = new JRefreshButton();
 		refreshButton.setLocation(0, 0);
 		refreshButton.addMouseListener(new MouseAdapter() {
 			@Override

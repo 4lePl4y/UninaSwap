@@ -15,7 +15,6 @@ public class JButtonWithBorder extends JButton {
 
 	public JButtonWithBorder(String text) {
 		super(text);
-		setContentAreaFilled(false);
 		this.setBorderPainted(false);
 		this.setContentAreaFilled(false);
 		this.setFocusPainted(false);

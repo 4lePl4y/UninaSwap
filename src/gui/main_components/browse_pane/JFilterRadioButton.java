@@ -4,6 +4,7 @@ import java.awt.GridBagConstraints;
 import java.awt.Insets;
 
 import javax.swing.JRadioButton;
+import javax.swing.SwingConstants;
 
 public class JFilterRadioButton extends JRadioButton {
 
@@ -12,6 +13,7 @@ public class JFilterRadioButton extends JRadioButton {
 
 	public JFilterRadioButton(String text) {
 		super(text);
+		setHorizontalAlignment(SwingConstants.CENTER);
 		gbc.fill = GridBagConstraints.VERTICAL;
 		gbc.insets = new Insets(10, 0, 0, 0);
 	}
