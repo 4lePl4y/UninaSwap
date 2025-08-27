@@ -151,8 +151,9 @@ public class Main extends JFrame {
 	
 	public void refreshBrowseForResearch() {
 		String research = browsePane.getSearchBarText();
-		boolean[] filters = browsePane.getFiltersForObjectType();
-		this.altriAnnunci = controller.getAltriAnnunciByRicerca(studenteLoggato.getUsername(), research, filters);
+		boolean[] object_filters = browsePane.getFiltersForObjectType();
+		boolean[] listings_filters = browsePane.getFiltersForListings();
+		this.altriAnnunci = controller.getAltriAnnunciByRicerca(studenteLoggato.getUsername(), research, object_filters, listings_filters);
 		browsePane.refresh(altriAnnunci);
 	}
 	

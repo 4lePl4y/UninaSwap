@@ -400,12 +400,12 @@ public class Controller {
 		return annunci; 
 	}
 	
-	public ArrayList<Annuncio> getAltriAnnunciByRicerca(String usernameStudenteLoggato, String research, boolean[] filters) {
-		if(research.equals("") && allEquals(filters))
+	public ArrayList<Annuncio> getAltriAnnunciByRicerca(String usernameStudenteLoggato, String research, boolean[] filtersOggetto, boolean[] filtersAnnuncio) {
+		if(research.equals("") && allEquals(filtersOggetto) && allEquals(filtersAnnuncio))
 			 return getAltriAnnunci(40, usernameStudenteLoggato);
 		
 		else {
-			ArrayList<Annuncio> annunci = annuncioDAO.getAltriAnnunciByRicerca(usernameStudenteLoggato, research, filters);
+			ArrayList<Annuncio> annunci = annuncioDAO.getAltriAnnunciByRicerca(usernameStudenteLoggato, research, filtersOggetto, filtersAnnuncio);
 			return annunci;
 		}
 	}

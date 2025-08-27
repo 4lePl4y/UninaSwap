@@ -204,70 +204,123 @@ public class AnnuncioDAO implements DaoInterface<Annuncio> {
 	}
 	
 	
-	public ArrayList<Annuncio> getAltriAnnunciByRicerca(String username, String research, boolean[] filters) {
+	
+	public ArrayList<Annuncio> getAltriAnnunciByRicerca(String username, String research, boolean[] filtersOggetto, boolean[] filtersAnnuncio) {
 		ArrayList<Annuncio> annunci = new ArrayList<>();
-		String query = "SELECT a.* FROM annuncio AS a JOIN oggetto AS o ON a.\"idOggetto\" = o.id "
-				+ " WHERE a.autore <> ? AND (a.titolo ILIKE ? OR a.descrizione ILIKE ?)";
-		
-		int count_activeFilter = 0;
-		for(int i = 0; i < filters.length; i++) {
-			if(filters[i]) 
-				count_activeFilter++;
-		}
-		
-		//Aggiugo tanti "?" quanti sono i filtri attivi
-		if(count_activeFilter > 0) {
-			query += "AND o.\"tipoOggetto\" IN (";			
-			for(int i = 0; i < count_activeFilter; i++) {
-					query += "?, ";	
-			}
-			query = query.substring(0, query.length() - 2);
-			query += ");";
+
+	    // 1. Query per oggetti
+	    String queryPerOggetto = buildQueryPerOggetto(filtersOggetto);
+
+	    // 2. Query per annunci (wrappa quella per oggetti)
+	    String queryPerAnnunci = buildQueryPerAnnunci(queryPerOggetto, filtersAnnuncio);
+
+	    // 3. Query finale (wrappa quella per annunci)
+	    String queryFinale =
+	        "SELECT a.* FROM (" + queryPerAnnunci + ") AS a " +
+	        "WHERE a.autore <> ? " +
+	        "AND (a.titolo ILIKE ? OR a.descrizione ILIKE ?)";
+
+	    try (PreparedStatement pstmt = conn.prepareStatement(queryFinale)) {
+	        int index = 1;
+
+	        // Bind dei filtri oggetto
+	        index = bindFiltriOggetto(pstmt, filtersOggetto, index);
+
+	        // Bind dei filtri annuncio
+	        index = bindFiltriAnnuncio(pstmt, filtersAnnuncio, index);
+
+	        // Bind username + ricerca
+	        pstmt.setString(index++, username);
+	        pstmt.setString(index++, "%" + research + "%");
+	        pstmt.setString(index++, "%" + research + "%");
+
+		        ResultSet rs = pstmt.executeQuery();
+		        while (rs.next()) {
+		            Annuncio annuncio = creaAnnuncioCorretto(rs);
+		            annunci.add(annuncio);
+		        }
+
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+
+		    return annunci;
 		}
 
-		//Rimpiazzo i "?" con i valori corretti
-		try(PreparedStatement pstmt = conn.prepareStatement(query)) {
-			pstmt.setString(1, username);
-			pstmt.setString(2, "%" + research + "%");
-			pstmt.setString(3, "%" + research + "%");
-			
-			int index = 4;
-			for(int i = 0; i < filters.length; i++) {
-				if(filters[i]) {
-					switch(i) {
-						case 0:
-							pstmt.setObject(index, TipoOggetto.Abbigliamento, java.sql.Types.OTHER);
-							break;
-						case 1:
-							pstmt.setObject(index, TipoOggetto.Elettronica, java.sql.Types.OTHER);
-							break;
-						case 2:
-							pstmt.setObject(index, TipoOggetto.Libro, java.sql.Types.OTHER);
-							break;
-						case 3:
-							pstmt.setObject(index, TipoOggetto.StrumentoMusicale, java.sql.Types.OTHER);
-							break;
-						case 4:
-							pstmt.setObject(index, TipoOggetto.Misc, java.sql.Types.OTHER);
-							break;
-					}
-					
-					index++;
-				}
-			}
-			
-			
-			ResultSet rs = pstmt.executeQuery();
-			while(rs.next()) {
-				Annuncio annuncio = creaAnnuncioCorretto(rs);
-				annunci.add(annuncio);					
-			}
-			
-		} catch (SQLException e) {
-			e.printStackTrace();
+
+	private String buildQueryPerAnnunci(String queryPerOggetto, boolean[] filters) {
+	    StringBuilder query = new StringBuilder(
+	        "SELECT * FROM (" + queryPerOggetto + ") AS a "
+	    );
+	
+	    int count = 0;
+		for(boolean filter: filters) {
+			if(filter) count++;
 		}
 		
-		return annunci;
+	    if (count > 0) {
+	        query.append("WHERE a.\"tipoAnnuncio\" IN (");
+	        query.append("?,".repeat(count));
+	        query.setLength(query.length() - 1);
+	        query.append(") ");
+	    }
+	
+	    return query.toString();
 	}
+	
+	private String buildQueryPerOggetto(boolean[] filters) {
+		StringBuilder query = new StringBuilder(
+		    "SELECT a.* FROM annuncio AS a JOIN oggetto AS o ON a.\"idOggetto\" = o.id "
+		);
+	
+		int count = 0;
+		for(boolean filter: filters) {
+			if(filter) count++;
+		}
+		
+		if (count > 0) {
+		    query.append("WHERE o.\"tipoOggetto\" IN (");
+		    query.append("?,".repeat(count));
+		    query.setLength(query.length() - 1);
+		    query.append(") ");
+		}
+		
+		return query.toString();
+	}
+
+	private int bindFiltriOggetto(PreparedStatement pstmt, boolean[] filters, int startIndex) throws SQLException {
+	    int index = startIndex;
+	    for (int i = 0; i < filters.length; i++) {
+	        if (filters[i]) {
+	            switch (i) {
+	                case 0 -> pstmt.setObject(index, TipoOggetto.Abbigliamento, java.sql.Types.OTHER);
+	                case 1 -> pstmt.setObject(index, TipoOggetto.Elettronica, java.sql.Types.OTHER);
+	                case 2 -> pstmt.setObject(index, TipoOggetto.Libro, java.sql.Types.OTHER);
+	                case 3 -> pstmt.setObject(index, TipoOggetto.StrumentoMusicale, java.sql.Types.OTHER);
+	                case 4 -> pstmt.setObject(index, TipoOggetto.Misc, java.sql.Types.OTHER);
+	            }
+	            index++;
+	        }
+	    }
+	    return index;
+	}
+
+	private int bindFiltriAnnuncio(PreparedStatement pstmt, boolean[] filters, int startIndex) throws SQLException {
+	    int index = startIndex;
+	    for (int i = 0; i < filters.length; i++) {
+	        if (filters[i]) {
+	            switch (i) {
+	                case 0 -> pstmt.setObject(index, TipoAnnuncio.Vendita, java.sql.Types.OTHER);
+	                case 1 -> pstmt.setObject(index, TipoAnnuncio.Scambio, java.sql.Types.OTHER);
+	                case 2 -> pstmt.setObject(index, TipoAnnuncio.Regalo, java.sql.Types.OTHER);
+	            }
+	            index++;
+	        }
+	    }
+	    return index;
+	}
+
+
+
 
 }
