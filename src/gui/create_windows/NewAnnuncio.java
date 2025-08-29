@@ -1,4 +1,4 @@
-package gui;
+package gui.create_windows;
 
 import controller.Controller;
 import entities.enumerazioni.Sede;
@@ -186,7 +186,7 @@ public class NewAnnuncio extends JFrame {
 	
     
     
-    static String[] generaOrari() {
+    public static String[] generaOrari() {
         String[] orari = new String[45];
         int idx = 0;
         for (int hour = 8; hour <= 19; hour++) {

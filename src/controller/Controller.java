@@ -2,6 +2,7 @@ package controller;
 
 import java.awt.EventQueue;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -9,14 +10,23 @@ import javax.swing.JOptionPane;
 
 import dao.*;
 import db.DBConnection;
+
 import entities.annuncio.*;
 import entities.enumerazioni.Sede;
 import entities.enumerazioni.TipoAnnuncio;
 import entities.offerta.*;
 import entities.oggetto.*;
 import entities.studente.*;
+
+import gui.Login;
+import gui.SignUp;
+import gui.Main;
+import gui.create_windows.*;
+import gui.modify_windows.*;
+
+import exception.NoChangeException;
 import exception.InvalidListingException;
-import gui.*;
+import exception.UniqueSQLException;
 
 public class Controller {
 	//ATTRIBUTI
@@ -32,6 +42,9 @@ public class Controller {
 	ModifyAnnuncio modifyAnnuncioFrame;
 	ModifyOfferta modifyOffertaFrame;
 	ModifyOggetto modifyOggettoFrame;
+	ModifyEmail modifyEmailFrame;
+	ModifyUsername modifyUsernameFrame;
+	ModifyPassword modifyPasswordFrame;
 	
 	//DAO
 	AnnuncioDAO annuncioDAO;
@@ -39,7 +52,6 @@ public class Controller {
 	StudenteDAO studenteDAO;
 	OggettoDAO oggettoDAO;
 
-	
 	
 	public static void main(String[] args) {
 		Controller controller = new Controller();
@@ -160,16 +172,40 @@ public class Controller {
 		newOggettoFrame.setVisible(true);
 	}
 	
-	//**Metodo per modificare i campi di un'offerta presente nel DB*/
+	//**Apre il frame per modificare i campi di un'offerta inviata*/
 	public void onModificaOffertaFrameClicked(Offerta offerta) {
 		modifyOffertaFrame = new ModifyOfferta(this, offerta);
 		modifyOffertaFrame.setVisible(true);
 	}
 	
+	//*Apre il frame per modificare i campi di un oggetto*/
 	public void onModificaOggettoFrameClicked(Oggetto oggetto) {
 		modifyOggettoFrame = new ModifyOggetto(this, oggetto);
 		modifyOggettoFrame.setVisible(true);
 	}
+	
+	//*Apre il frame per modificare l'email*/
+	public void openModificaEmailFrame() {
+		modifyEmailFrame = new ModifyEmail(mainFrame, this);
+		modifyEmailFrame.setVisible(true);
+		
+	}
+	
+	//*Apre il frame per modificare l'username*/
+	public void openModificaUsernameFrame() {
+		modifyUsernameFrame = new ModifyUsername(mainFrame, this);
+		modifyUsernameFrame.setVisible(true);
+		
+	}
+	
+	//*Apre il frame per modificare la password*/
+	public void openModificaPasswordFrame(Studente studenteLoggato) {
+		modifyPasswordFrame = new ModifyPassword(studenteLoggato);
+		modifyPasswordFrame.setVisible(true);
+		
+	}
+	
+	
 	
 	//--OBJECTS RELATED METHODS--//
 	
@@ -341,6 +377,51 @@ public class Controller {
 		mainFrame.refreshMadeOffers();
 	}
 	
+	
+	//--PROFILO METHODS--//
+	public void onModificaEmailClicked(String newEmail) {
+		try {
+			if(getStudenteLoggato().getEmail().equals(newEmail)) 
+				throw new NoChangeException("La nuova email non può essere uguale a quella vecchia!");
+			
+			String userLoggato = this.getStudenteLoggato().getUsername();
+			studenteDAO.updateEmail(newEmail, userLoggato);
+			JOptionPane.showMessageDialog(modifyEmailFrame, "Email modificata!");
+			modifyEmailFrame.dispose();		
+		} catch(NoChangeException e) {
+			JOptionPane.showMessageDialog(modifyEmailFrame, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+		} catch(UniqueSQLException e) {
+			JOptionPane.showMessageDialog(modifyEmailFrame, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+		} catch(SQLException e) {
+			System.out.println(e.getMessage());
+			JOptionPane.showMessageDialog(modifyEmailFrame, "Errore imprevisto durante l’aggiornamento", "Errore", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
+	public void onModificaUsernameClicked(String newUsername) {
+		try {
+			if(getStudenteLoggato().getUsername().equals(newUsername)) 
+				throw new NoChangeException("Il nuovo username non può essere uguale a quello vecchio!");
+			
+			String userLoggato = this.getStudenteLoggato().getUsername();
+			studenteDAO.updateUsername(newUsername, userLoggato);
+			JOptionPane.showMessageDialog(modifyUsernameFrame, "Username modificato!");
+			modifyUsernameFrame.dispose();		
+		} catch(NoChangeException e) {
+			JOptionPane.showMessageDialog(modifyUsernameFrame, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+		} catch(UniqueSQLException e) {
+			JOptionPane.showMessageDialog(modifyUsernameFrame, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+		} catch(SQLException e) {
+			System.out.println(e.getMessage());
+			JOptionPane.showMessageDialog(modifyUsernameFrame, "Errore imprevisto durante l’aggiornamento", "Errore", JOptionPane.ERROR_MESSAGE);
+		}
+	}
+	
+	public void onModificaPasswordClicked(String newPassword, String userLoggato) {
+		//studenteDAO.updatePassword(newPassword, userLoggato);
+	}
+	
+	
 	//--REFRESH METHODS--//
 	
 	//**Metodo stub per aggiornare gli annunci contentuti nel browsePane nel mainFrame*/
@@ -456,5 +537,13 @@ public class Controller {
 	public Studente getStudenteLoggato() {
 		return studenteLoggato;
 	}
+
+	
+
+	
+
+	
+
+	
 	
 }

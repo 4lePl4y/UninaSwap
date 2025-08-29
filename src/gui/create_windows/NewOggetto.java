@@ -1,4 +1,4 @@
-package gui;
+package gui.create_windows;
 
 import controller.Controller;
 import entities.enumerazioni.TipoOggetto;

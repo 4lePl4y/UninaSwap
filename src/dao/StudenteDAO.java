@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import entities.studente.Studente;
+import exception.UniqueSQLException;
 
 public class StudenteDAO implements DaoInterface<Studente> {
 	//ATTRIBUTI
@@ -76,6 +77,51 @@ public class StudenteDAO implements DaoInterface<Studente> {
 	public void update(Studente studente) {
 		//TODO: Implementare l'aggiornamento dello studente
 	}
+	
+	public void updateEmail(String newEmail, String userLoggato) throws SQLException {
+	    String query = "UPDATE studente SET email = ? WHERE username = ?";
+	    try (PreparedStatement ps = conn.prepareStatement(query)) {
+	        ps.setString(1, newEmail);
+	        ps.setString(2, userLoggato);
+	        ps.executeUpdate();
+	    } catch (SQLException e) {
+	        // "23505" SQLstate per UNIQUE violation in PostgreSQL
+	        if ("23505".equals(e.getSQLState()) || (e.getMessage() != null && e.getMessage().toLowerCase().contains("unique"))) 
+	            throw new UniqueSQLException("Esiste già un account con questa email!");
+	        
+	        else
+	        	throw e;
+	    }
+	}
+
+
+	
+	public void updateUsername(String newUsername, String userLoggato) throws SQLException {
+		String query = "UPDATE studente SET username = ? WHERE username = ?";
+	    try (PreparedStatement ps = conn.prepareStatement(query)) {
+	        ps.setString(1, newUsername);
+	        ps.setString(2, userLoggato);
+	        ps.executeUpdate();
+	    } catch (SQLException e) {
+	        // "23505" SQLstate per UNIQUE violation in PostgreSQL
+	        if ("23505".equals(e.getSQLState()) || (e.getMessage() != null && e.getMessage().toLowerCase().contains("unique"))) 
+	            throw new UniqueSQLException("Username già esistente!");
+	        
+	        else
+	        	throw e;
+	    }
+	}
+	
+//	public void updatePassword(String newPassword, String userLoggato) {
+//		String query = "UPDATE studente SET password = ? WHERE username = ?";
+//		try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+//			pstmt.setString(1, newPassword);
+//			pstmt.setString(2, userLoggato);
+//			pstmt.executeUpdate();
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//	}
 
 	@Override
 	public void delete(String username) {

@@ -1,12 +1,14 @@
-package gui;
+package gui.modify_windows;
 
 import controller.Controller;
 import entities.annuncio.*;
 import entities.enumerazioni.Sede;
+
 import gui.preset.JButtonWithBorder;
 import gui.preset.JWritableTextArea;
 import gui.preset.presetJTextField.JCustomTextField;
 import gui.preset.presetJTextField.JDoubleTextField;
+import gui.create_windows.NewAnnuncio;	//per usare funzione generaOrari()
 
 import java.awt.Color;
 import java.awt.Component;

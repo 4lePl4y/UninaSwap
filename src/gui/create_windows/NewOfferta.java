@@ -1,4 +1,4 @@
-package gui;
+package gui.create_windows;
 
 import java.awt.*;
 import java.util.ArrayList;
