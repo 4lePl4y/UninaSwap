@@ -320,6 +320,23 @@ public class Controller {
 		return annuncio;
 	}
 	
+	//**Controlla in fase di creazione di annuncio se esistono annunci con lo stesso oggetto incompatibili tra loro*/
+	public boolean areAnnunciConStessoOggetto (Annuncio annuncio) throws InvalidListingException {
+		ArrayList<Annuncio> annunciConStessoOggetto = annuncioDAO.retrieveByOggetto(annuncio.getOggetto().getId());
+		
+		if(annuncio instanceof AnnuncioRegalo) {
+			if(!annunciConStessoOggetto.isEmpty())
+				throw new InvalidListingException("Non puoi creare un annuncio di regalo per questo oggetto. \nEsiste già un suo annuncio di vendita o di scambio");
+		}else{
+			for(Annuncio a : annunciConStessoOggetto) {
+				if(a instanceof AnnuncioRegalo) 
+					throw new InvalidListingException("Non puoi creare un annuncio di vendita o di scambio per questo oggetto. \nEsiste già un suo annuncio di regalo");
+			}
+		}
+		return false;
+		
+	}
+	
 	public void onCreaAnnuncioClicked() {
 		String titolo = newAnnuncioFrame.getTitolo();
 		Oggetto oggettoSelezionato = newAnnuncioFrame.getOggettoSelezionato();
@@ -334,6 +351,8 @@ public class Controller {
 			if(!areAnnunciConStessoOggetto(annuncio)) {	
 				annuncioDAO.create(annuncio);
 				mainFrame.refreshListings();
+				JOptionPane.showMessageDialog(newAnnuncioFrame, "Annucio creato!");
+				newAnnuncioFrame.dispose();
 			}
 		} catch (InvalidListingException e) {
 			JOptionPane.showMessageDialog(newAnnuncioFrame, e.getMessage());
@@ -485,25 +504,7 @@ public class Controller {
 	public void refreshMyObjects() {
 		mainFrame.refreshMyObjects();
 	}
-	
-	//**Controlla in fase di creazione di annuncio se esistono annunci con lo stesso oggetto incompatibili tra loro*/
-	public boolean areAnnunciConStessoOggetto (Annuncio annuncio) throws InvalidListingException {
-		ArrayList<Annuncio> annunciConStessoOggetto = annuncioDAO.retrieveByOggetto(annuncio.getOggetto().getId());
 		
-		if(annuncio instanceof AnnuncioRegalo) {
-			if(!annunciConStessoOggetto.isEmpty())
-				throw new InvalidListingException("Non puoi creare un annuncio di regalo per questo oggetto. \nEsiste già un suo annuncio di vendita o di scambio");
-		}else{
-			for(Annuncio a : annunciConStessoOggetto) {
-				if(a instanceof AnnuncioRegalo) 
-					throw new InvalidListingException("Non puoi creare un annuncio di vendita o di scambio per questo oggetto. \nEsiste già un suo annuncio di regalo");
-			}
-		}
-		return false;
-		
-	}
-		
-	
 	//**Apre il frame per creare un nuovo oggetto in un ambiente diverso dal myObjectPane*/
 	public void onApriOggettoFrameClicked() {
 		newOggettoFrame = new NewOggetto(this);

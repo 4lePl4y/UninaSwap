@@ -184,8 +184,7 @@ public class NewAnnuncio extends JFrame {
     public void onCreaAnnuncioClicked() {
 		if(areInputsValid()) { 
 			controller.onCreaAnnuncioClicked();
-			JOptionPane.showMessageDialog(this, "Annucio creato!");
-			this.dispose();
+			
 		}
 		return;	
 	}
