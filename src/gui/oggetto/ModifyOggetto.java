@@ -1,15 +1,16 @@
-package gui.modify_windows;
+package gui.oggetto;
 
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
-import java.awt.event.MouseAdapter;
 import java.time.Year;
+import java.time.format.DateTimeParseException;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -17,8 +18,10 @@ import controller.Controller;
 import entities.oggetto.*;
 import gui.preset.JButtonWithBorder;
 import gui.preset.presetJTextField.JCustomTextField;
+import gui.preset.presetJTextField.JYearTextField;
 
 public class ModifyOggetto extends JFrame{
+	// ATTRIBUTI
 	private static final long serialVersionUID = 1L;
     private JPanel contentPane;
     private Controller controller;
@@ -30,17 +33,18 @@ public class ModifyOggetto extends JFrame{
     private JPanel categoriaPanel;
 
     // Fields
-    private JCustomTextField nomeField = new JCustomTextField("Inserisci il nome");
-    private JCustomTextField marchioField = new JCustomTextField("Inserisci il marchio");
-    private JCustomTextField tagliaField = new JCustomTextField("Inserisci la taglia");
-    private JCustomTextField modelloField = new JCustomTextField("Inserisci il modello");
-    private JCustomTextField annoUscitaField = new JCustomTextField("Inserisci l'anno di uscita");
-    private JCustomTextField titoloField = new JCustomTextField("Inserisci il titolo");
-    private JCustomTextField isbnField = new JCustomTextField("Inserisci l'ISBN");
-    private JCustomTextField autoreField = new JCustomTextField("Inserisci l'autore");
-    private JCustomTextField genereField = new JCustomTextField("Inserisci il genere");
-    private JCustomTextField categoriaField = new JCustomTextField("Inserisci la categoria");
+    private JCustomTextField nomeField = new JCustomTextField("Inserisci il nome", "nome");
+    private JCustomTextField marchioField = new JCustomTextField("Inserisci il marchio", "marchio");
+    private JCustomTextField tagliaField = new JCustomTextField("Inserisci la taglia", "taglia");
+    private JCustomTextField modelloField = new JCustomTextField("Inserisci il modello", "modello");
+    private JYearTextField annoUscitaField = new JYearTextField("Inserisci l'anno di uscita", "anno d'uscita");
+    private JCustomTextField titoloField = new JCustomTextField("Inserisci il titolo", "titolo");
+    private JCustomTextField isbnField = new JCustomTextField("Inserisci l'ISBN", "ISBN");
+    private JCustomTextField autoreField = new JCustomTextField("Inserisci l'autore", "autore");
+    private JCustomTextField genereField = new JCustomTextField("Inserisci il genere", "genere");
+    private JCustomTextField categoriaField = new JCustomTextField("Inserisci la categoria", "categoria");
 
+    // COSTRUTTORE
     public ModifyOggetto(Controller controller, Oggetto oggetto) {
     	this.controller = controller;
     	this.oggetto = oggetto;
@@ -124,15 +128,9 @@ public class ModifyOggetto extends JFrame{
 
         // Button
         JButtonWithBorder creaButton = new JButtonWithBorder("Modifica Oggetto");
-        
         creaButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         contentPane.add(Box.createVerticalStrut(20));
-        creaButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(java.awt.event.MouseEvent evt) {
-				onModificaOggettoClicked();
-			}
-		});
+        creaButton.addActionListener(e -> onModificaOggettoClicked());
         contentPane.add(creaButton);
 
     }
@@ -146,6 +144,88 @@ public class ModifyOggetto extends JFrame{
         return panel;
     }
 
+    // METODI
+    // Getter
+    public String getMarchio() {
+    	return marchioField.getText();
+    }
+
+	public String getTaglia() {
+		return tagliaField.getText();
+	}
+	
+	public String getModello() {
+		return modelloField.getText();
+	}
+	
+	public Year getAnnoUscita() {
+		return annoUscitaField.getAnno();
+	}
+	
+	public String getTitolo() {
+		return titoloField.getText();
+	}
+    
+	public String getISBN() {
+		return isbnField.getText();
+	}
+	
+	public String getAutore() {
+		return autoreField.getText();
+	}
+	
+	public String getGenere() {
+		return genereField.getText();
+	}
+	
+	public String getCategoria() {
+		return categoriaField.getText();
+	}
+
+	public String getNome() {
+		return nomeField.getText();
+	}
+    
+    
+	//Altri metodi
+    public void onModificaOggettoClicked() {
+    	if(areInputsValid()) {
+    		controller.onModificaOggettoClicked(oggetto);
+    		JOptionPane.showMessageDialog(this, "Oggetto modificato!");
+    		this.dispose();
+    	}
+    	return;
+	}
+    
+    //TODO Identico al metodo di NewOggetto; Alternativa rispetto al metodo usato in newAnnuncio perché aveva molti field (chiedo parare)
+    private boolean areInputsValid() {
+    	JCustomTextField[] fields = {
+    			nomeField, marchioField, tagliaField, modelloField, annoUscitaField, titoloField, isbnField, autoreField, genereField, categoriaField
+    			};
+    	for(JCustomTextField textField: fields) {
+    		if(textField.isShowing() && textField.getText().isBlank()) {
+    			JOptionPane.showMessageDialog(this, "Inserire " + textField.getName() + "!");
+    			return false;
+    		}
+    	}
+    	
+    	if (annoUscitaField.isShowing()) {
+    		try {
+    			Year anno = getAnnoUscita();
+    			if( anno.isAfter(Year.now()) || anno.isBefore(Year.of(1900)) ){
+    				JOptionPane.showMessageDialog(this, "Inserire un anno valido");
+    				return false;
+    			}
+    		} catch(DateTimeParseException e) {
+    			JOptionPane.showMessageDialog(this, "Inserire un anno valido");
+    			return false;
+    		}
+    	}
+    	
+    	return true;
+	}
+    
+    
     private void aggiornaCampi() {
         // Hide all panels first
         marchioPanel.setVisible(false);
@@ -186,49 +266,5 @@ public class ModifyOggetto extends JFrame{
         contentPane.revalidate();
         contentPane.repaint();
     }
-    
-    public void onModificaOggettoClicked() {
-	    controller.onModificaOggettoClicked(oggetto);
-	}
-    
-    public String getMarchio() {
-    	return marchioField.getText().trim();
-    }
-
-	public String getTaglia() {
-		return tagliaField.getText().trim();
-	}
-	
-	public String getModello() {
-		return modelloField.getText().trim();
-	}
-	
-	public Year getAnnoUscita() {
-		return Year.of(Integer.valueOf(annoUscitaField.getText().trim()));
-	}
-	
-	public String getTitolo() {
-		return titoloField.getText().trim();
-	}
-    
-	public String getISBN() {
-		return isbnField.getText().trim();
-	}
-	
-	public String getAutore() {
-		return autoreField.getText().trim();
-	}
-	
-	public String getGenere() {
-		return genereField.getText().trim();
-	}
-	
-	public String getCategoria() {
-		return categoriaField.getText().trim();
-	}
-
-	public String getNome() {
-		return nomeField.getText().trim();
-	}
 	
 }

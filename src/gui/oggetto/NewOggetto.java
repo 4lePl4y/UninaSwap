@@ -1,24 +1,23 @@
-package gui.create_windows;
+package gui.oggetto;
 
 import controller.Controller;
 import entities.enumerazioni.TipoOggetto;
-import entities.oggetto.*;
-import entities.studente.Studente;
 import gui.preset.JButtonWithBorder;
 import gui.preset.presetJTextField.JCustomTextField;
+import gui.preset.presetJTextField.JYearTextField;
 
 import java.awt.Component;
 import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.time.Year;
+import java.time.format.DateTimeParseException;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -34,16 +33,16 @@ public class NewOggetto extends JFrame {
     private JPanel categoriaPanel;
 
     // Fields
-    private JCustomTextField nomeField = new JCustomTextField("Inserisci il nome");
-    private JCustomTextField marchioField = new JCustomTextField("Inserisci il marchio");
-    private JCustomTextField tagliaField = new JCustomTextField("Inserisci la taglia");
-    private JCustomTextField modelloField = new JCustomTextField("Inserisci il modello");
-    private JCustomTextField annoUscitaField = new JCustomTextField("Inserisci l'anno di uscita");
-    private JCustomTextField titoloField = new JCustomTextField("Inserisci il titolo");
-    private JCustomTextField isbnField = new JCustomTextField("Inserisci l'ISBN");
-    private JCustomTextField autoreField = new JCustomTextField("Inserisci l'autore");
-    private JCustomTextField genereField = new JCustomTextField("Inserisci il genere");
-    private JCustomTextField categoriaField = new JCustomTextField("Inserisci la categoria");
+    private JCustomTextField nomeField = new JCustomTextField("Inserisci il nome", "nome");
+    private JCustomTextField marchioField = new JCustomTextField("Inserisci il marchio", "marchio");
+    private JCustomTextField tagliaField = new JCustomTextField("Inserisci la taglia", "taglia");
+    private JCustomTextField modelloField = new JCustomTextField("Inserisci il modello", "modello");
+    private JYearTextField annoUscitaField = new JYearTextField("Inserisci l'anno di uscita", "anno d'uscita");
+    private JCustomTextField titoloField = new JCustomTextField("Inserisci il titolo", "titolo");
+    private JCustomTextField isbnField = new JCustomTextField("Inserisci l'ISBN", "ISBN");
+    private JCustomTextField autoreField = new JCustomTextField("Inserisci l'autore", "autore");
+    private JCustomTextField genereField = new JCustomTextField("Inserisci il genere", "genere");
+    private JCustomTextField categoriaField = new JCustomTextField("Inserisci la categoria", "categoria");
 
     public NewOggetto(Controller controller) {
     	this.controller = controller;
@@ -59,11 +58,12 @@ public class NewOggetto extends JFrame {
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
         setContentPane(contentPane);
 
-        // Tipo Oggetto
+        // Tipo Oggetto Panel
         JPanel tipoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JLabel tipoLabel = new JLabel("Tipo Oggetto:");
         tipoOggettoCombo = new JComboBox<>(TipoOggetto.values());
         tipoOggettoCombo.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        tipoOggettoCombo.addActionListener(e -> aggiornaCampiPerComboBox());
         tipoPanel.add(tipoLabel);
         tipoPanel.add(tipoOggettoCombo);
         contentPane.add(tipoPanel);
@@ -79,6 +79,8 @@ public class NewOggetto extends JFrame {
         autorePanel = creaFieldPanel("Autore:", autoreField);
         generePanel = creaFieldPanel("Genere:", genereField);
         categoriaPanel = creaFieldPanel("Categoria:", categoriaField);
+        
+        aggiornaCampiPerComboBox();
 
         // Add all panels (they will be shown/hidden as needed)
         contentPane.add(nomePanel);
@@ -94,31 +96,100 @@ public class NewOggetto extends JFrame {
 
         // Button
         JButtonWithBorder creaButton = new JButtonWithBorder("Crea Oggetto");
-        creaButton.addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent evt) {
-                TipoOggetto tipo = (TipoOggetto) tipoOggettoCombo.getSelectedItem();
-                if (tipo == null) return;
-
-                dispose();
-            }
-        });
-        
         creaButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         contentPane.add(Box.createVerticalStrut(20));
-        creaButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(java.awt.event.MouseEvent evt) {
-				onCreaOggettoClicked();
-			}
-		});
+        creaButton.addActionListener(e -> onCreaOggettoClicked());
         contentPane.add(creaButton);
-
-        tipoOggettoCombo.addActionListener(e -> aggiornaCampi());
-        aggiornaCampi();
+        
+        
     }
 
-    private JPanel creaFieldPanel(String label, JCustomTextField field) {
+    // METODI    
+    // Getter 
+    public TipoOggetto getTipoOggetto() {
+    	return (TipoOggetto) tipoOggettoCombo.getSelectedItem();
+    }
+    
+    public String getNome() {
+        return nomeField.getText();
+    }
+
+    public String getMarchio() {
+        return marchioField.getText();
+    }
+
+    public String getTaglia() {
+        return tagliaField.getText();
+    }
+
+    public String getModello() {
+        return modelloField.getText();
+    }
+
+    public Year getAnnoUscita() {
+        return annoUscitaField.getAnno(); 
+    }
+
+    public String getTitolo() {
+        return titoloField.getText();
+    }
+
+    public String getIsbn() {
+        return isbnField.getText();
+    }
+
+    public String getAutore() {
+        return autoreField.getText();
+    }
+
+    public String getGenere() {
+        return genereField.getText();
+    }
+
+    public String getCategoria() {
+        return categoriaField.getText();
+    }
+
+    
+    // Altri metodi
+    public void onCreaOggettoClicked() {
+    	if(areInputsValid()) {
+    		controller.onCreaOggettoClicked();
+    		JOptionPane.showMessageDialog(this, "Oggetto creato!");
+    		this.dispose();
+    	}
+    	return;
+    }
+
+    private boolean areInputsValid() {
+    	JCustomTextField[] fields = {
+    			nomeField, marchioField, tagliaField, modelloField, annoUscitaField, titoloField, isbnField, autoreField, genereField, categoriaField
+    			};
+    	for(JCustomTextField textField: fields) {
+    		if(textField.isShowing() && textField.getText().isBlank()) {
+    			JOptionPane.showMessageDialog(this, "Inserire " + textField.getName() + "!");
+    			return false;
+    		}
+    	}
+    	
+    	if (annoUscitaField.isShowing()) {
+    		try {
+    			Year anno = getAnnoUscita();
+    			if( anno.isAfter(Year.now()) || anno.isBefore(Year.of(1900)) ){
+    				JOptionPane.showMessageDialog(this, "Inserire un anno valido");
+    				return false;
+    			}
+    		} catch(DateTimeParseException e) {
+    			JOptionPane.showMessageDialog(this, "Inserire un anno valido");
+    			return false;
+    		}
+    	}
+    	
+    	return true;
+	}
+
+
+	private JPanel creaFieldPanel(String label, JCustomTextField field) {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JLabel jlabel = new JLabel(label);
         field.setColumns(20);
@@ -127,7 +198,7 @@ public class NewOggetto extends JFrame {
         return panel;
     }
 
-    private void aggiornaCampi() {
+    private void aggiornaCampiPerComboBox() {
         // Hide all panels first
         marchioPanel.setVisible(false);
         tagliaPanel.setVisible(false);
@@ -170,53 +241,5 @@ public class NewOggetto extends JFrame {
         contentPane.revalidate();
         contentPane.repaint();
     }
-    
-    public void onCreaOggettoClicked() {
-		Oggetto oggetto = null;
-		Studente proprietario = controller.getStudenteLoggato();
-	    String oNome = nomeField.getText().trim();
-	    String oMarchio;
-	    String oModello;
-	    String oTaglia;
-	    Year oAnnoUscita;
-	    String oTitolo;
-	    String oISBN;
-	    String oAutore;
-	    String oGenere;	// genere del libro
-		String oCategoria;	// categoria dell'oggetto misc
-		
-	    TipoOggetto tipo = (TipoOggetto) tipoOggettoCombo.getSelectedItem();
-	    switch (tipo) {
-        case StrumentoMusicale:
-        	oMarchio = marchioField.getText().trim();
-            oggetto = new StrumentoMusicale(oNome, proprietario ,oMarchio);
-            break;
-        case Abbigliamento:
-        	oMarchio = marchioField.getText().trim();
-        	oTaglia = tagliaField.getText().trim();
-            oggetto = new Abbigliamento(oNome, proprietario, oMarchio, oTaglia);
-            break;
-        case Elettronica:
-        	oMarchio = marchioField.getText().trim();
-        	oModello = modelloField.getText().trim();
-        	oAnnoUscita = Year.of(Integer.valueOf(annoUscitaField.getText().trim()));
-            oggetto = new Elettronica(oNome, proprietario, oMarchio, oModello, oAnnoUscita);
-            break;
-        case Libro:
-        	oTitolo = titoloField.getText().trim();
-        	oISBN = isbnField.getText().trim();
-        	oAnnoUscita = Year.of(Integer.valueOf(annoUscitaField.getText().trim()));
-        	oAutore = autoreField.getText().trim();
-        	oGenere = genereField.getText().trim();
-            oggetto = new Libro(oNome, proprietario, oTitolo, oISBN, oAnnoUscita, oAutore, oGenere);
-            break;
-        case Misc:
-        	oMarchio = marchioField.getText().trim();
-        	oCategoria = categoriaField.getText().trim();
-        	oggetto = new Misc(oNome, proprietario, oMarchio, oCategoria);
-			break;   
-    }    
-	    controller.onCreaOggettoClicked(oggetto);
-	}
     
 }

@@ -31,7 +31,7 @@ public class JObjectCard extends JCard {
 		this.setBounds(0, 0, 280, 450);
 		this.setLayout(null);
 		
-		JLabel nameLabel = new JLabel(oggetto.getNome());
+		nameLabel = new JLabel(oggetto.getNome());
 		nameLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		nameLabel.setVerticalAlignment(SwingConstants.CENTER);
 		nameLabel.setBounds(0, 0, 280, 20);

@@ -75,14 +75,14 @@ public class StudenteDAO implements DaoInterface<Studente> {
 
 	@Override
 	public void update(Studente studente) {
-		//TODO: Implementare l'aggiornamento dello studente
+		//TODO: Quasi sicuramente non serve fare un update di studente in quanto modifico solo alcuni suoi campi
 	}
 	
-	public void updateEmail(String newEmail, String userLoggato) throws SQLException {
+	public void updateEmail(Studente studente, String newEmail) throws SQLException {
 	    String query = "UPDATE studente SET email = ? WHERE username = ?";
 	    try (PreparedStatement ps = conn.prepareStatement(query)) {
 	        ps.setString(1, newEmail);
-	        ps.setString(2, userLoggato);
+	        ps.setString(2, studente.getUsername());
 	        ps.executeUpdate();
 	    } catch (SQLException e) {
 	        // "23505" SQLstate per UNIQUE violation in PostgreSQL
@@ -94,13 +94,12 @@ public class StudenteDAO implements DaoInterface<Studente> {
 	    }
 	}
 
-
 	
-	public void updateUsername(String newUsername, String userLoggato) throws SQLException {
+	public void updateUsername(Studente studente, String newUsername) throws SQLException {
 		String query = "UPDATE studente SET username = ? WHERE username = ?";
 	    try (PreparedStatement ps = conn.prepareStatement(query)) {
 	        ps.setString(1, newUsername);
-	        ps.setString(2, userLoggato);
+	        ps.setString(2, studente.getUsername());
 	        ps.executeUpdate();
 	    } catch (SQLException e) {
 	        // "23505" SQLstate per UNIQUE violation in PostgreSQL

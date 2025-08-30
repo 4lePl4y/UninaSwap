@@ -1,4 +1,4 @@
-package gui.create_windows;
+package gui.offerta;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -10,7 +10,7 @@ import entities.annuncio.*;
 import entities.oggetto.*;
 import entities.studente.*;
 import gui.preset.JWritableTextArea;
-import gui.preset.presetJTextField.JDoubleTextField;
+import gui.preset.presetJTextField.JPriceTextField;
 import gui.preset.JButtonWithBorder;
 
 public class NewOfferta extends JFrame {
@@ -19,11 +19,10 @@ public class NewOfferta extends JFrame {
     private JPanel contentPane;
     private Controller controller;
     private Annuncio annuncio;
-    private Studente autore;
     private JLabel welcomingLabel;
     private JWritableTextArea messaggioArea;
     private JButtonWithBorder submitButton;
-    private JDoubleTextField moneyTextField;
+    private JPriceTextField moneyTextField;
     private ArrayList<Oggetto> mieiOggetti;
     private ArrayList<JCheckBox> checkBoxes;
 	private ArrayList<Oggetto> oggettiSelezionati; 
@@ -31,8 +30,6 @@ public class NewOfferta extends JFrame {
     public NewOfferta(Controller controller, Annuncio annuncio, Studente autore) {
         this.controller = controller;
         this.annuncio = annuncio;
-        this.autore = autore;
-        
         this.setTitle("Nuova Offerta");
         this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setBounds(new Rectangle(0, 0, 420, 400));
@@ -105,7 +102,7 @@ public class NewOfferta extends JFrame {
         	moneyLabel.setBounds(0, 0, 230, 23);
         	moneyPanel.add(moneyLabel);
         	
-        	moneyTextField = new JDoubleTextField("€");
+        	moneyTextField = new JPriceTextField("€");
         	moneyTextField.setBounds(200, 2, 96, 19);
         	moneyPanel.add(moneyTextField);
         	moneyTextField.setColumns(10);			
@@ -121,11 +118,12 @@ public class NewOfferta extends JFrame {
     }
 
     public void onInviaOffertaClicked() {
-    	if(!areInputsValid())
-    		return; 
-        controller.onInviaOffertaClicked();
-        JOptionPane.showMessageDialog(this, "Offerta inviata!");
-        dispose();
+    	if(areInputsValid()) { 
+    		controller.onInviaOffertaClicked();
+    		JOptionPane.showMessageDialog(this, "Offerta inviata!");
+    		this.dispose();
+    	}
+    	return;
     }
 
 	private ArrayList<Oggetto> getOggettiSelezionati() {
@@ -138,7 +136,7 @@ public class NewOfferta extends JFrame {
 		return oggettiSelezionati;
 	}
 	
-	private boolean areInputsValid() {
+	  boolean areInputsValid() {
         if(annuncio instanceof AnnuncioScambio) {
 			oggettiSelezionati = getOggettiSelezionati();
 			if(oggettiSelezionati.isEmpty()) {
@@ -147,9 +145,9 @@ public class NewOfferta extends JFrame {
 			}
         } else {
 			String moneyText = moneyTextField.getText();
-			double money;
 			try {
-				money = Double.parseDouble(moneyText);
+				//TODO: Verificare se l'offerta proposta è <= del prezzo dell'annuncio
+				Double.parseDouble(moneyText);
 			} catch (NumberFormatException e) {
 				JOptionPane.showMessageDialog(this, "Inserisci un importo valido in denaro!");
 				return false;
@@ -159,7 +157,7 @@ public class NewOfferta extends JFrame {
 	}
 	
 	public String getMessaggio() {
-		return messaggioArea.getText().equals("Aggiungi un messaggio alla tua offerta...") ? "" : messaggioArea.getText();
+		return messaggioArea.getText();
 	}
 	
 	public Annuncio getAnnuncio() {

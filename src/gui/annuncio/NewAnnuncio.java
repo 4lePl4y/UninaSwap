@@ -1,4 +1,4 @@
-package gui.create_windows;
+package gui.annuncio;
 
 import controller.Controller;
 import entities.enumerazioni.Sede;
@@ -7,7 +7,7 @@ import entities.oggetto.Oggetto;
 import gui.preset.JButtonWithBorder;
 import gui.preset.JWritableTextArea;
 import gui.preset.presetJTextField.JCustomTextField;
-import gui.preset.presetJTextField.JDoubleTextField;
+import gui.preset.presetJTextField.JPriceTextField;
 
 import java.awt.Component;
 import java.awt.Dimension;
@@ -25,13 +25,13 @@ public class NewAnnuncio extends JFrame {
     
     private JPanel contentPane;
     private JCustomTextField titoloAnnuncioField;
-    private JWritableTextArea descrPane;
+    private JWritableTextArea descrTextArea;
     private JComboBox<TipoAnnuncio> tipoAnnuncioCombo;
     private JComboBox<Oggetto> oggettiEsistentiCombo;
-    private  JComboBox<Sede> sedeCombo;
+    private JComboBox<Sede> sedeCombo;
     private JComboBox<String> orarioCombo;
     private JPanel prezzoPanel;
-    private JDoubleTextField prezzoField;
+    private JPriceTextField prezzoField;
     private JPanel aggiungiOggettoPanel;
     private JLabel oggettiEsistentiLabel;
     
@@ -63,10 +63,10 @@ public class NewAnnuncio extends JFrame {
         // Descrizione
         JPanel descrPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JLabel descrLabel = new JLabel("Descrizione:");
-        descrPane = new JWritableTextArea("Inserisci la descrizione...");
-        descrPane.setPreferredSize(new Dimension(300, 80));
+        descrTextArea = new JWritableTextArea("Inserisci la descrizione...");
+        descrTextArea.setPreferredSize(new Dimension(300, 80));
         descrPanel.add(descrLabel);
-        descrPanel.add(descrPane);
+        descrPanel.add(descrTextArea);
         contentPane.add(descrPanel);
 
         // Tipo Annuncio
@@ -123,7 +123,7 @@ public class NewAnnuncio extends JFrame {
         // Prezzo (solo per Vendita)
         prezzoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JLabel prezzoLabel = new JLabel("Prezzo:");
-        prezzoField = new JDoubleTextField("€");
+        prezzoField = new JPriceTextField("€");
         prezzoField.setColumns(10);
         prezzoPanel.add(prezzoLabel);
         prezzoPanel.add(prezzoField);
@@ -140,20 +140,17 @@ public class NewAnnuncio extends JFrame {
 
 
         // Bottone crea annuncio
-        JButtonWithBorder creaBtn = new JButtonWithBorder("Crea Annuncio");
-        creaBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
-        creaBtn.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				onCreaAnnuncioClicked();
-			}
-		});
+        JButtonWithBorder creaButton = new JButtonWithBorder("Crea Annuncio");
+        creaButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        creaButton.addActionListener(e -> onCreaAnnuncioClicked());
         contentPane.add(Box.createVerticalStrut(20));
-        contentPane.add(creaBtn);
+        contentPane.add(creaButton);
     }
     
     
     // METODI
+
+    // Getter
     public String getTitolo() {
     	return titoloAnnuncioField.getText();    	
     }
@@ -163,9 +160,7 @@ public class NewAnnuncio extends JFrame {
 	}
     
     public String getDescrizione() {
-		String descrizione = descrPane.getText();
-		descrizione = descrizione.equals("Inserisci la descrizione...") ? "" : descrizione;
-		return descrizione;
+		return descrTextArea.getText();
     }
     
     public Sede getLuogo() {
@@ -181,36 +176,22 @@ public class NewAnnuncio extends JFrame {
 	}
     
     public double getPrezzo() {
-    	return Double.valueOf(prezzoField.getText());
+    	return prezzoField.getPrezzo();
     }
 	
     
-    
-    public static String[] generaOrari() {
-        String[] orari = new String[45];
-        int idx = 0;
-        for (int hour = 8; hour <= 19; hour++) {
-            for (int min = 0; min < 60; min += 15) {
-                if (hour == 19 && min > 0) break;
-                String orario = String.format("%02d:%02d", hour, min);
-                orari[idx++] = orario;
-            }
-        }
-        return orari;
-    }
-
-
-	public void onCreaAnnuncioClicked() {
-		if(!areInputsValid()) {
-			return;
+    // Altri metodi
+    public void onCreaAnnuncioClicked() {
+		if(areInputsValid()) { 
+			controller.onCreaAnnuncioClicked();
+			JOptionPane.showMessageDialog(this, "Annucio creato!");
+			this.dispose();
 		}
-		
-		controller.onCreaAnnuncioClicked();
+		return;	
 	}
-
-
+    
 	private boolean areInputsValid() {
-		if(titoloAnnuncioField.getText().isEmpty() || titoloAnnuncioField.getText().equals("Inserisci il titolo dell'annuncio")) {
+		if(titoloAnnuncioField.getText().isBlank()) {
 			JOptionPane.showMessageDialog(this, "Inserisci un titolo per l'annuncio!");
 			return false;
 		}
@@ -221,7 +202,7 @@ public class NewAnnuncio extends JFrame {
 		}
 		
 		if(prezzoPanel.isVisible()) {
-			if(prezzoField.getText().isEmpty() || prezzoField.getText().equals("€")) {
+			if(prezzoField.getText().isBlank()) {
 				JOptionPane.showMessageDialog(this, "Inserisci un prezzo per l'annuncio di vendita!");
 				return false;
 			}
@@ -237,8 +218,27 @@ public class NewAnnuncio extends JFrame {
 		return true;
 	}
 	
+	
+	public static String[] generaOrari() {
+        String[] orari = new String[45];
+        int idx = 0;
+        for (int hour = 8; hour <= 19; hour++) {
+            for (int min = 0; min < 60; min += 15) {
+                if (hour == 19 && min > 0) break;
+                String orario = String.format("%02d:%02d", hour, min);
+                orari[idx++] = orario;
+            }
+        }
+        return orari;
+    }
+	
 	//**Metodo per aggiornare il menu a tendina degli oggetti esistenti */
 	public void refreshOggettiEsistenti() {
+		/*
+		 * FIXME: L'ultimo oggetto dell'arraylist non è detto che sia l'ultimo oggetto creato, quindi il menu a tendina si aggiorna male. 
+		 * Infatti se si prova a creare oggetti dal frame per creare gli annunci, non sempre l'aggiunta va a buon fine
+		 * Possibile soluzione è usare una Lista 
+		*/
 		int lastPositionIndex = controller.getMieiOggetti().size() - 1;
 		oggettiEsistentiCombo.addItem(controller.getMieiOggetti().get(lastPositionIndex));
 	}

@@ -57,7 +57,7 @@ public class Login extends JFrame {
 		descTxtPane.setBounds(24, 48, 234, 41);
 		
 		
-		userTxtField = new JCustomTextField("4le");
+		userTxtField = new JCustomTextField("4le ");
 		userTxtField.setBounds(10, 113, 262, 33);
 		userTxtField.setColumns(10);
 		

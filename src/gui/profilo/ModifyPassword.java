@@ -1,4 +1,4 @@
-package gui.modify_windows;
+package gui.profilo;
 
 import javax.swing.JFrame;
 

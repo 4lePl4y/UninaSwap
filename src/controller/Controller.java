@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.Year;
 import java.util.ArrayList;
 import javax.swing.JOptionPane;
 
@@ -13,20 +14,19 @@ import db.DBConnection;
 
 import entities.annuncio.*;
 import entities.enumerazioni.Sede;
-import entities.enumerazioni.TipoAnnuncio;
+import entities.enumerazioni.*;
 import entities.offerta.*;
 import entities.oggetto.*;
 import entities.studente.*;
 
+import gui.Main;
 import gui.Login;
 import gui.SignUp;
-import gui.Main;
-import gui.create_windows.*;
-import gui.modify_windows.*;
-
-import exception.NoChangeException;
-import exception.InvalidListingException;
-import exception.UniqueSQLException;
+import gui.annuncio.*;
+import gui.offerta.*;
+import gui.oggetto.*;
+import gui.profilo.*;
+import exception.*;
 
 public class Controller {
 	//ATTRIBUTI
@@ -117,7 +117,7 @@ public class Controller {
 	public void onRegisterClicked() {
 		signUpFrame.resetWarningLabel();
 		if(!signUpFrame.areInputsValid()) {
-			return; // Se i campi non sono validi, non procedere
+			return;
 		}
 		
 		String newName = signUpFrame.getName();
@@ -202,17 +202,58 @@ public class Controller {
 	public void openModificaPasswordFrame(Studente studenteLoggato) {
 		modifyPasswordFrame = new ModifyPassword(studenteLoggato);
 		modifyPasswordFrame.setVisible(true);
-		
 	}
 	
 	
-	
 	//--OBJECTS RELATED METHODS--//
+	private Oggetto creaOggetto(String nome) {
+		Oggetto oggetto = null;
+		String marchio;
+		Year annoUscita;
+		TipoOggetto tipo = newOggettoFrame.getTipoOggetto();
+		switch(tipo) {
+		case Abbigliamento:
+			marchio = newOggettoFrame.getMarchio();
+			String taglia = newOggettoFrame.getTaglia();
+			oggetto = new Abbigliamento(nome, studenteLoggato, marchio, taglia);
+			break;
+			
+		case Elettronica:
+			marchio = newOggettoFrame.getMarchio();
+			String modello = newOggettoFrame.getModello();
+			annoUscita = newOggettoFrame.getAnnoUscita();
+			oggetto = new Elettronica(nome, studenteLoggato, marchio, modello, annoUscita);
+			break;
+			
+		case StrumentoMusicale:
+			marchio = newOggettoFrame.getMarchio();
+			oggetto = new StrumentoMusicale(nome, studenteLoggato, marchio);
+			break;
+			
+		case Libro:
+			annoUscita = newOggettoFrame.getAnnoUscita();
+			String titolo = newOggettoFrame.getTitolo();
+			String isbn = newOggettoFrame.getIsbn();
+			String autore = newOggettoFrame.getAutore();
+			String genere = newOggettoFrame.getGenere();
+			oggetto = new Libro(nome, studenteLoggato, titolo, isbn, annoUscita, autore, genere);
+			break;
+			
+		case Misc:
+			marchio = newOggettoFrame.getMarchio();
+			String categoria = newOggettoFrame.getCategoria();
+			oggetto = new Misc(nome, studenteLoggato, marchio, categoria);
+		}
+		
+		return oggetto;
+	}
 	
 	//**Metodo per creare un nuovo oggetto nel database*/
-	public void onCreaOggettoClicked(Oggetto oggetto) {
-		//TODO: spostare gran parte del contenuto del metodo onCreaOggettoClicked di NewOggetto nel metodo omonimo del controller
+	public void onCreaOggettoClicked() {
+		String nome = newOggettoFrame.getNome();
+		Oggetto oggetto = creaOggetto(nome);
 		oggettoDAO.create(oggetto);
+		
 		mainFrame.refreshMyObjects();
 		if((newAnnuncioFrame != null) && (newAnnuncioFrame.isVisible()))
 			newAnnuncioFrame.refreshOggettiEsistenti();
@@ -252,8 +293,6 @@ public class Controller {
         	default -> {}
 		}
 		oggettoDAO.update(oggetto);
-		JOptionPane.showMessageDialog(modifyOggettoFrame, "Oggetto modificato!");
-		modifyOggettoFrame.dispose();
 		
 		mainFrame.refreshMyObjects();
 		mainFrame.refreshMadeOffers();
@@ -296,13 +335,12 @@ public class Controller {
 				annuncioDAO.create(annuncio);
 				mainFrame.refreshListings();
 			}
-			JOptionPane.showMessageDialog(newAnnuncioFrame, "Annucio creato!");
-			newAnnuncioFrame.dispose();
 		} catch (InvalidListingException e) {
 			JOptionPane.showMessageDialog(newAnnuncioFrame, e.getMessage());
 		}
 	}
 	
+	//**Metodo per cancellare un annuncio nel database*/
 	public void onCancellaAnnuncioClicked(Annuncio annuncio) {
 		annuncioDAO.delete(String.valueOf(annuncio.getId()));
 		mainFrame.refreshListings();
@@ -324,9 +362,6 @@ public class Controller {
 		else
 			annuncioDAO.update(((AnnuncioRegalo)annuncio));
 		
-		JOptionPane.showMessageDialog(modifyAnnuncioFrame, "Annucio modificato!");
-		modifyAnnuncioFrame.dispose();
-		
 		mainFrame.refreshListings();
 		mainFrame.refreshReceivedOffers();
 	}
@@ -337,13 +372,12 @@ public class Controller {
 	public void onInviaOffertaClicked() {
 		Offerta offerta = null;
 		Annuncio annuncioDiOfferta = newOffertaFrame.getAnnuncio();
-		if(annuncioDiOfferta instanceof AnnuncioScambio as){
+		if(annuncioDiOfferta instanceof AnnuncioScambio as)
 			offerta = new OffertaScambio(newOffertaFrame.getMessaggio(), studenteLoggato, as, newOffertaFrame.getOggettiOfferti());
-			offertaDAO.create(offerta);
-		}else{
+		else
 			offerta = new OffertaDenaro(newOffertaFrame.getMessaggio(), studenteLoggato, annuncioDiOfferta, newOffertaFrame.getOfferta());
-			offertaDAO.create(offerta);
-		}
+		
+		offertaDAO.create(offerta);
 		mainFrame.refreshMadeOffers();
 	}
 	
@@ -361,12 +395,13 @@ public class Controller {
 	
 	public void onModificaOffertaClicked(Offerta offerta) {
 		offerta.setMessaggio(modifyOffertaFrame.getMessaggio());
-		if(offerta instanceof OffertaScambio of) {
-			of.setOggettiOfferti(modifyOffertaFrame.getOggettiOfferti());
-			offertaDAO.update(of);			
+		if(offerta instanceof OffertaScambio offertaScambio) {
+			offertaScambio.setOggettiOfferti(modifyOffertaFrame.getOggettiOfferti());
+			offertaDAO.update(offertaScambio);			
 		}else {
-			((OffertaDenaro)offerta).setOfferta(modifyOffertaFrame.getOfferta());
-			offertaDAO.update(((OffertaDenaro)offerta));
+			OffertaDenaro offertaDenaro = (OffertaDenaro) offerta;
+			offertaDenaro.setOfferta(modifyOffertaFrame.getOfferta());
+			offertaDAO.update(offertaDenaro);
 		}
 		mainFrame.refreshMadeOffers();
 	}

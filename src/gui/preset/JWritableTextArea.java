@@ -9,9 +9,12 @@ import javax.swing.JTextArea;
 
 public class JWritableTextArea extends JTextArea{
 	private static final long serialVersionUID = 1L;
+	private String placeholder;
 
+	// COSTRUTTORE
 	public JWritableTextArea(String placeholder) {
 		super(placeholder);
+		this.placeholder = placeholder;
 		this.setForeground(Color.GRAY);
 		this.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 		this.setLineWrap(true);
@@ -20,7 +23,7 @@ public class JWritableTextArea extends JTextArea{
 		this.addFocusListener(new FocusAdapter() {
 			@Override
 			public void focusGained(FocusEvent e) {
-				if (getText().equals(placeholder)) {
+				if (getSuperText().equals(placeholder)) {
 					setText("");
 					setForeground(Color.BLACK);
 				}
@@ -28,12 +31,27 @@ public class JWritableTextArea extends JTextArea{
 			
 			@Override
 			public void focusLost(FocusEvent e) {
-				if (getText().isEmpty()) {
+				if (getSuperText().isEmpty()) {
 					setText(placeholder);
 					setForeground(Color.GRAY);
 				}
 			}
 		});
+	}
+	
+	
+	// METODI
+	@Override
+	public String getText() {
+		String text = super.getText().trim();
+		if(text.equals(placeholder))
+			text = "";
+		
+		return text;
+	}
+	
+	public String getSuperText(){
+		return super.getText();
 	}
 	
 	public void resetHint(String hint) {

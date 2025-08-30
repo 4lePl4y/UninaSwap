@@ -1,5 +1,17 @@
-//my package
 package gui;
+
+import java.util.ArrayList;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JButton;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.BorderLayout;
+import java.awt.FlowLayout;
+import javax.swing.border.EmptyBorder;
+import java.awt.CardLayout;
+import java.awt.Color;
+
 import controller.Controller;
 import entities.annuncio.*;
 import entities.oggetto.*;
@@ -11,20 +23,6 @@ import gui.main_components.my_objects_pane.JMyObjectsPane;
 import gui.main_components.offers_pane.JOffersPane;
 import gui.main_components.profile_pane.JProfilePane;
 import gui.preset.JButtonWithBorder;
-
-//package java gui;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-
-import javax.swing.JButton;
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-import javax.swing.border.EmptyBorder;
-import java.awt.CardLayout;
-import java.awt.Color;
 
 public class Main extends JFrame {
 	//ATTRIBUTI

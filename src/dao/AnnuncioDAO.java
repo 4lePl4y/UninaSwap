@@ -21,15 +21,14 @@ public class AnnuncioDAO implements DaoInterface<Annuncio> {
 	private StudenteDAO studenteDAO;
 	private OggettoDAO oggettoDAO;
 	
-	//COSTRUTTORE
+	// COSTRUTTORE
 	public AnnuncioDAO(Connection conn) {
 		this.conn = conn;
 		this.studenteDAO = new StudenteDAO(conn);
 		this.oggettoDAO = new OggettoDAO(conn);
-		
 	}
 	
-	//METODI CRUD
+	// METODI CRUD
 	@Override
 	public Annuncio retrieveByPK(String id) {
 		Annuncio annuncio = null;

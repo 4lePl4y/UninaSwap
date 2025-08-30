@@ -1,21 +1,17 @@
-package gui.modify_windows;
+package gui.annuncio;
 
 import controller.Controller;
 import entities.annuncio.*;
 import entities.enumerazioni.Sede;
-
 import gui.preset.JButtonWithBorder;
 import gui.preset.JWritableTextArea;
 import gui.preset.presetJTextField.JCustomTextField;
-import gui.preset.presetJTextField.JDoubleTextField;
-import gui.create_windows.NewAnnuncio;	//per usare funzione generaOrari()
+import gui.preset.presetJTextField.JPriceTextField;
 
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.time.LocalTime;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -27,11 +23,11 @@ public class ModifyAnnuncio extends JFrame {
     
     private JPanel contentPane;
     private JCustomTextField titoloAnnuncioField;
-    private JWritableTextArea descrPane;
+    private JWritableTextArea descrTextArea;
     private  JComboBox<Sede> sedeCombo;
     private JComboBox<String> orarioCombo;
     private JPanel prezzoPanel;
-    private JDoubleTextField prezzoField;
+    private JPriceTextField prezzoField;
 
     public ModifyAnnuncio(Controller controller, Annuncio annuncio) {
         this.controller = controller;
@@ -63,12 +59,14 @@ public class ModifyAnnuncio extends JFrame {
         // Descrizione
         JPanel descrPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JLabel descrLabel = new JLabel("Descrizione:");
-        descrPane = new JWritableTextArea("Inserisci la descrizione...");
-        descrPane.setText(annuncio.getDescrizione());
-        descrPane.setForeground(Color.BLACK);
-        descrPane.setPreferredSize(new Dimension(300, 80));
+        descrTextArea = new JWritableTextArea("Inserisci la descrizione...");
+        descrTextArea.setPreferredSize(new Dimension(300, 80));
+        if(!annuncio.getDescrizione().isBlank()) {
+        	descrTextArea.setText(annuncio.getDescrizione());
+            descrTextArea.setForeground(Color.BLACK);
+        }
         descrPanel.add(descrLabel);
-        descrPanel.add(descrPane);
+        descrPanel.add(descrTextArea);
         contentPane.add(descrPanel);
 
         // Sede
@@ -92,7 +90,7 @@ public class ModifyAnnuncio extends JFrame {
         // Prezzo (solo per Vendita)
         prezzoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JLabel prezzoLabel = new JLabel("Prezzo:");
-        prezzoField = new JDoubleTextField("€");
+        prezzoField = new JPriceTextField("€");
         prezzoField.setText(annuncio instanceof AnnuncioVendita ? String.valueOf(((AnnuncioVendita) annuncio).getPrezzo()) : "€");
         prezzoField.setForeground(Color.BLACK);
         prezzoField.setColumns(10);
@@ -103,35 +101,33 @@ public class ModifyAnnuncio extends JFrame {
 
 
         // Bottone modifica annuncio
-        JButtonWithBorder modificaBtn = new JButtonWithBorder("Modifica Annuncio");
-        modificaBtn.setAlignmentX(Component.CENTER_ALIGNMENT);
-        modificaBtn.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				onModificaAnnuncioClicked();
-			}
-		});
+        JButtonWithBorder modificaButton = new JButtonWithBorder("Modifica Annuncio");
+        modificaButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+        modificaButton.addActionListener(e -> onModificaAnnuncioClicked());
         contentPane.add(Box.createVerticalStrut(20));
-        contentPane.add(modificaBtn);
+        contentPane.add(modificaButton);
     }
     
     
     // METODI
     public void onModificaAnnuncioClicked() {
-    	if(!areInputsValid())
-    		return;
-		controller.onModificaAnnuncioClicked(annuncio);
+    	if(areInputsValid()) {
+    		controller.onModificaAnnuncioClicked(annuncio);
+    		JOptionPane.showMessageDialog(this, "Annucio modificato!");
+    		this.dispose();
+    	}
+		return;
 	}
 
 
 	private boolean areInputsValid() {
-		if(titoloAnnuncioField.getText().isEmpty() || titoloAnnuncioField.getText().equals("Inserisci il titolo dell'annuncio")) {
+		if(titoloAnnuncioField.getText().isBlank()) {
 			JOptionPane.showMessageDialog(this, "Inserisci un titolo per l'annuncio!");
 			return false;
 		}
 		
 		if(prezzoPanel.isVisible()) {
-			if(prezzoField.getText().isEmpty() || prezzoField.getText().equals("€")) {
+			if(prezzoField.getText().isBlank()) {
 				JOptionPane.showMessageDialog(this, "Inserisci un prezzo per l'annuncio di vendita!");
 				return false;
 			}
@@ -152,9 +148,7 @@ public class ModifyAnnuncio extends JFrame {
 	}
 
 	public String getDescrizione() {
-		String descrizione = this.descrPane.getText();
-		descrizione = descrizione.equals("Inserisci la descrizione...") ? "" : descrizione;
-		return descrizione;
+		return descrTextArea.getText();
 	}
 	
 	public Sede getSede() {
