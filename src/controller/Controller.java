@@ -414,13 +414,14 @@ public class Controller {
 	
 	
 	//--PROFILO METHODS--//
-	public void onModificaEmailClicked(String newEmail) {
+	public void onModificaEmailClicked(Studente studenteLoggato) {
 		try {
-			if(getStudenteLoggato().getEmail().equals(newEmail)) 
+			String newEmail = modifyEmailFrame.getEmail();
+			if(studenteLoggato.getEmail().equals(newEmail)) 
 				throw new NoChangeException("La nuova email non può essere uguale a quella vecchia!");
 			
-			String userLoggato = this.getStudenteLoggato().getUsername();
-			studenteDAO.updateEmail(newEmail, userLoggato);
+			studenteDAO.updateEmail(studenteLoggato, newEmail);
+			studenteLoggato.setEmail(newEmail);
 			JOptionPane.showMessageDialog(modifyEmailFrame, "Email modificata!");
 			modifyEmailFrame.dispose();		
 		} catch(NoChangeException e) {
@@ -433,13 +434,14 @@ public class Controller {
 		}
 	}
 	
-	public void onModificaUsernameClicked(String newUsername) {
+	public void onModificaUsernameClicked(Studente studenteLoggato) {
 		try {
-			if(getStudenteLoggato().getUsername().equals(newUsername)) 
+			String newUsername = modifyUsernameFrame.getUsername();
+			if(studenteLoggato.getUsername().equals(newUsername)) 
 				throw new NoChangeException("Il nuovo username non può essere uguale a quello vecchio!");
 			
-			String userLoggato = this.getStudenteLoggato().getUsername();
-			studenteDAO.updateUsername(newUsername, userLoggato);
+			studenteDAO.updateUsername(studenteLoggato, newUsername);
+			studenteLoggato.setUsername(newUsername);
 			JOptionPane.showMessageDialog(modifyUsernameFrame, "Username modificato!");
 			modifyUsernameFrame.dispose();		
 		} catch(NoChangeException e) {

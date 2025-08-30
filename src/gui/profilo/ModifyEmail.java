@@ -1,4 +1,4 @@
-package gui.modify_windows;
+package gui.profilo;
 
 import javax.swing.BoxLayout;
 import javax.swing.JDialog;
@@ -7,22 +7,21 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import java.awt.Font;
 
 import controller.Controller;
 import gui.preset.JButtonWithBorder;
 import gui.preset.presetJTextField.JMailTextField;
-import java.awt.Font;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 public class ModifyEmail extends JDialog {
-	
+	// ATTRIBUTI
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JLabel emailLabel;
     private JMailTextField cambiaEmailField;
     private JButtonWithBorder confermaButton;
 	
+    // COSTRUTTORE
 	public ModifyEmail(JFrame mainFrame, Controller controller){
 		super(mainFrame, "Modifica Email", true);
         this.setSize(500, 300);
@@ -49,18 +48,21 @@ public class ModifyEmail extends JDialog {
         
         confermaButton = new JButtonWithBorder("Conferma");
         confermaButton.setBounds(150, 169, 160, 30);
-        confermaButton.addMouseListener(new MouseAdapter() {
-        	public void mouseClicked(MouseEvent e) {
-        		if(cambiaEmailField.isValidInput()) {
-        			String newEmail = cambiaEmailField.getText().trim();
-        			controller.onModificaEmailClicked(newEmail);
-        		} else {
-        			JOptionPane.showMessageDialog(contentPane, "Inserisci un'email valida!");
-        		}
-        	}
+        confermaButton.addActionListener(e -> {
+        	if(cambiaEmailField.isValidInput()) {
+    			controller.onModificaEmailClicked(controller.getStudenteLoggato());
+    		} else {
+    			JOptionPane.showMessageDialog(contentPane, "Inserisci un'email valida!");
+    		}
         });
         
         cambiaEmailPanel.add(confermaButton);
         contentPane.add(cambiaEmailPanel);
+	}
+	
+	// METODI
+	// Getter
+	public String getEmail() {
+		return cambiaEmailField.getText();
 	}
 }

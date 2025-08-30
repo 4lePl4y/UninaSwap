@@ -1,4 +1,4 @@
-package gui.modify_windows;
+package gui.profilo;
 
 import javax.swing.BoxLayout;
 import javax.swing.JDialog;
@@ -11,17 +11,17 @@ import controller.Controller;
 import gui.preset.JButtonWithBorder;
 import gui.preset.presetJTextField.JCustomTextField;
 import java.awt.Font;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+
 
 public class ModifyUsername extends JDialog {
-	
+	//ATTRIBUTI
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JLabel usernameLabel;
     private JCustomTextField cambiaUsernameField;
     private JButtonWithBorder confermaButton;
 	
+    // COSTRUTTORE
 	public ModifyUsername(JFrame mainFrame, Controller controller){
 		super(mainFrame, "Modifica Username", true);
         this.setSize(500, 300);
@@ -48,14 +48,18 @@ public class ModifyUsername extends JDialog {
         
         confermaButton = new JButtonWithBorder("Conferma");
         confermaButton.setBounds(150, 169, 200, 30);
-        confermaButton.addMouseListener(new MouseAdapter() {
-        	public void mouseClicked(MouseEvent e) {
-        			String newUsername = cambiaUsernameField.getText().trim();;
-        			controller.onModificaUsernameClicked(newUsername);
-        	}
+        confermaButton.addActionListener(e -> {
+        	controller.onModificaUsernameClicked(controller.getStudenteLoggato());
         });
         
         cambiaUsernamePanel.add(confermaButton);
         contentPane.add(cambiaUsernamePanel);
+	}
+	
+	// METODI
+	
+	// Getter
+	public String getUsername() {
+		return cambiaUsernameField.getText();
 	}
 }
