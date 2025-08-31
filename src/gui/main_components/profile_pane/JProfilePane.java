@@ -21,7 +21,7 @@ public class JProfilePane extends JPanel {
     private static final long serialVersionUID = 1L;
 
     // COSTRUTTORE
-    public JProfilePane(Controller controller, ArrayList<Offerta> offerteInviate) {
+    public JProfilePane(ArrayList<Offerta> offerteInviate, Controller controller) {
         setLayout(new BorderLayout(0, 0));
 
         // Titolo
