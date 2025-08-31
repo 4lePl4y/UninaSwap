@@ -94,6 +94,8 @@ public class Controller {
 	
 	//**Metodo per l'autenticazione dell'utente*/
 	public void onLoginClicked() {
+		long startTime = System.nanoTime();  // start timer
+		
 		loginFrame.resetWarningLabel();
 		String username = loginFrame.getUsername();
 		String password = loginFrame.getPassword();
@@ -111,6 +113,8 @@ public class Controller {
 			loginFrame.setVisible(false);
 		}
 		
+		long endTime = System.nanoTime();  // stop timer
+	    System.out.println("Tempo esecuzione: " + (endTime - startTime)/1_000_000 + " ms");
 	}
 
 	//**Metodo per la registrazione di un nuovo utente*/
@@ -338,6 +342,7 @@ public class Controller {
 	}
 	
 	public void onCreaAnnuncioClicked() {
+		//FIXME: posso creare 2 annunci dello stesso tipo con lo stesso oggetto
 		String titolo = newAnnuncioFrame.getTitolo();
 		Oggetto oggettoSelezionato = newAnnuncioFrame.getOggettoSelezionato();
 		String descrizione = newAnnuncioFrame.getDescrizione();
