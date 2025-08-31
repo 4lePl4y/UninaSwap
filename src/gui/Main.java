@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JButton;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import javax.swing.border.EmptyBorder;
@@ -23,6 +21,7 @@ import gui.main_components.my_objects_pane.JMyObjectsPane;
 import gui.main_components.offers_pane.JOffersPane;
 import gui.main_components.profile_pane.JProfilePane;
 import gui.preset.JButtonWithBorder;
+import gui.preset.JButtonClickManager;
 
 public class Main extends JFrame {
 	//ATTRIBUTI
@@ -49,10 +48,10 @@ public class Main extends JFrame {
 		this.controller = controller;
 		this.studenteLoggato = controller.getStudenteLoggato();
 		this.altriAnnunci = controller.getAltriAnnunci(40, studenteLoggato.getUsername());
-		this.mieiAnnunci = controller.getMieiAnnunci(studenteLoggato.getUsername());
-		this.mieiOggetti = controller.getMieiOggetti(studenteLoggato.getUsername());
-		this.offerteRicevute = controller.getOfferteRicevute(studenteLoggato.getUsername());
-		this.offerteInviate = controller.getOfferteInviate(studenteLoggato.getUsername());
+		this.mieiOggetti = controller.getMieiOggetti(this.studenteLoggato.getUsername()); 
+		this.mieiAnnunci = new ArrayList<Annuncio>();
+		this.offerteRicevute = new ArrayList<Offerta>();
+		this.offerteInviate = new ArrayList<Offerta>();
 		
 		setTitle("UninaSwap");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -68,25 +67,19 @@ public class Main extends JFrame {
 		contentPane.setFocusable(true);
 		getContentPane().add(contentPane, BorderLayout.CENTER);
 		
-		
-		// Browse panel
-		this.browsePane = new JBrowsePane(altriAnnunci, controller);
+		this.browsePane = new JBrowsePane(this.altriAnnunci, controller);
 		contentPane.add(browsePane, "BROWSE");
 		
-        // Listings panel
-        this.listingsPane = new JListingsPane(mieiAnnunci, controller);
+        this.listingsPane = new JListingsPane(this.mieiAnnunci, controller);
 		contentPane.add(listingsPane, "LISTINGS");
 		
-		// Offers panel
-		this.offersPane = new JOffersPane(offerteRicevute, offerteInviate, controller);
+		this.offersPane = new JOffersPane(this.offerteRicevute, this.offerteInviate, controller);
 		contentPane.add(offersPane, "OFFERS");
 		
-		// My Objects panel
-		this.myObjectsPane = new JMyObjectsPane(mieiOggetti, controller);
+		this.myObjectsPane = new JMyObjectsPane(this.mieiOggetti, controller);
 		contentPane.add(myObjectsPane, "MYOBJECTS");
 		
-		// Profilo panel
-		this.profilePane = new JProfilePane(controller, offerteInviate);
+		this.profilePane = new JProfilePane(this.offerteInviate, controller);
 		contentPane.add(profilePane, "PROFILE");
 		
 		// Button panel per scegliere le finestre
@@ -97,49 +90,41 @@ public class Main extends JFrame {
         fl_buttonPane.setHgap(50);
         
         JButton browseButton = new JButtonWithBorder("Browse");
-        browseButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				CardLayout cl = (CardLayout)(contentPane.getLayout());
-				cl.show(contentPane, "BROWSE");
-			}
+        browseButton.addActionListener( e -> {
+        	CardLayout cl = (CardLayout)(contentPane.getLayout());
+			cl.show(contentPane, "BROWSE");
 		});
 
-        JButton listingsButton = new JButtonWithBorder("Listings");
-        listingsButton.addMouseListener(new MouseAdapter() {
-        	@Override
-        	public void mouseClicked(MouseEvent e) {
-        		CardLayout cl = (CardLayout)(contentPane.getLayout());
-        		cl.show(contentPane, "LISTINGS");
-        	}
+        JButtonClickManager listingsButton = new JButtonClickManager("My Listings");
+        listingsButton.addActionListener(e -> {
+        	if(listingsButton.isFirstClick())
+    			refreshListings();
+        	
+    		CardLayout cl = (CardLayout)(contentPane.getLayout());
+    		cl.show(contentPane, "LISTINGS");
         });
         
         
-        JButton myObjectsButton = new JButtonWithBorder("My Objects");
-        myObjectsButton.addMouseListener(new MouseAdapter() {
-        	@Override
-        	public void mouseClicked(MouseEvent e) {
-        		CardLayout cl = (CardLayout)(contentPane.getLayout());
-        		cl.show(contentPane, "MYOBJECTS");
-        	}
+        JButtonWithBorder myObjectsButton = new JButtonWithBorder("My Objects");
+        myObjectsButton.addActionListener(e -> {
+    		CardLayout cl = (CardLayout)(contentPane.getLayout());
+    		cl.show(contentPane, "MYOBJECTS");
         });
         
-        JButton offersButton = new JButtonWithBorder("Offers");
-        offersButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				CardLayout cl = (CardLayout)(contentPane.getLayout());
-				cl.show(contentPane, "OFFERS");
-			}
+        JButtonClickManager offersButton = new JButtonClickManager("Offers");
+        offersButton.addActionListener(e -> {
+        	if(offersButton.isFirstClick()) 
+        		refreshAllOffers();
+        	
+        	CardLayout cl = (CardLayout)(contentPane.getLayout());
+			cl.show(contentPane, "OFFERS");
 		});
         
         JButton profileButton = new JButtonWithBorder("Profilo");
-        profileButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				CardLayout cl = (CardLayout)(contentPane.getLayout());
-				cl.show(contentPane, "PROFILE");
-			}
+        profileButton.addActionListener(e -> {
+        	//TODO: refreshStats(); 
+			CardLayout cl = (CardLayout)(contentPane.getLayout());
+			cl.show(contentPane, "PROFILE");
 		});
         
         buttonPane.add(browseButton);
@@ -152,10 +137,11 @@ public class Main extends JFrame {
 
 	//METODI
 	public ArrayList<Oggetto>getMieiOggetti() {
+		if (mieiOggetti == null) {
+			mieiOggetti = controller.getMieiOggetti(studenteLoggato.getUsername());
+		}
 		return mieiOggetti;
 	}
-	
-	
 	
 	public void refreshBrowse() {
 		this.altriAnnunci = controller.getAltriAnnunci(40, studenteLoggato.getUsername());
@@ -171,7 +157,7 @@ public class Main extends JFrame {
 	}
 	
 	public void refreshListings() {
-		this.mieiAnnunci = controller.getMieiAnnunci(studenteLoggato.getUsername());
+		this.mieiAnnunci = controller.getMieiAnnunci(studenteLoggato.getUsername());		
 		listingsPane.refresh(mieiAnnunci);
 	}
 	
@@ -196,6 +182,5 @@ public class Main extends JFrame {
 		offersPane.refreshOfferteInviate(offerteInviate);
 	}
 	
+	
 }
-
- 
