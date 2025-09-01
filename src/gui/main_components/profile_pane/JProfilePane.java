@@ -3,7 +3,8 @@ package gui.main_components.profile_pane;
 import controller.Controller;
 
 import gui.preset.JButtonWithBorder;
-import entities.offerta.Offerta;
+import entities.annuncio.*;
+import entities.offerta.*;
 import java.util.ArrayList;
 import javax.swing.*;
 import java.awt.*;
@@ -19,10 +20,13 @@ import org.jfree.data.category.DefaultCategoryDataset;
 public class JProfilePane extends JPanel {
 
     private static final long serialVersionUID = 1L;
+	private ArrayList<Offerta> offerteInviate;
+
 
     // COSTRUTTORE
     public JProfilePane(ArrayList<Offerta> offerteInviate, Controller controller) {
-        setLayout(new BorderLayout(0, 0));
+        this.offerteInviate = offerteInviate;
+		setLayout(new BorderLayout(0, 0));
 
         // Titolo
         JLabel title = new JLabel("📊 Report Offerte", SwingConstants.CENTER);
@@ -45,14 +49,14 @@ public class JProfilePane extends JPanel {
 
         // Creazione grafici con JFreeChart
         JFreeChart barChart = ChartFactory.createBarChart(
-                "Distribuzione offerte inviate e accettate",
+                "Offerte inviate",
                 "Tipologia",
                 "Numero",
                 createDataSet(),
                 PlotOrientation.VERTICAL,
                 true, false, false);
 
-        JFreeChart barChart2 = ChartFactory.createBarChart(
+        JFreeChart barChartOfferteAccettate = ChartFactory.createBarChart(
                 "Distribuzione offerte ricevute e accettate",
                 "Tipologia",
                 "Numero",
@@ -66,9 +70,9 @@ public class JProfilePane extends JPanel {
         statsPanel.add(chartPanel);
 
         // Chart 2
-        ChartPanel chartPanel2 = new ChartPanel(barChart2);
-        chartPanel2.setPreferredSize(new Dimension(700, 500));
-        statsPanel.add(chartPanel2);
+        ChartPanel chartPanelOfferteAccettate = new ChartPanel(barChartOfferteAccettate);
+        chartPanelOfferteAccettate.setPreferredSize(new Dimension(700, 500));
+        statsPanel.add(chartPanelOfferteAccettate);
 
         // Settings Panel (sempre sotto ai grafici)
         JPanel settingsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 40, 20));
@@ -125,18 +129,22 @@ public class JProfilePane extends JPanel {
     // METODI
     private CategoryDataset createDataSet() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
-        String offerteInviate = "Offerte Inviate";
-        String offerteAccettate = "Offerte Accettate";
-        String vendita = "Vendita";
-        String scambio = "Scambio";
-        String regalo = "Regalo";
-
-        dataset.addValue(10.0, offerteInviate, vendita);
-        dataset.addValue(3.0, offerteAccettate, vendita);
-        dataset.addValue(8.0, offerteInviate, scambio);
-        dataset.addValue(7.0, offerteAccettate, scambio);
-        dataset.addValue(2.0, offerteInviate, regalo);
-        dataset.addValue(0.0, offerteAccettate, regalo);
+        int numVendite = 0; 
+        int numScambio = 0; 
+        int numRegalo = 0; 
+        
+        for(Offerta o : offerteInviate) {
+            Annuncio annuncio = o.getAnnuncio();
+            switch(annuncio){
+                case AnnuncioVendita av -> {numVendite++;}
+                case AnnuncioScambio as -> {numScambio++;}
+                case AnnuncioRegalo ar -> {numRegalo++;}
+                default -> {}
+            }
+        }
+        dataset.addValue(numVendite, "Offerte inviate", "Vendita");
+        dataset.addValue(numScambio, "Offerte inviate", "Scambio");
+        dataset.addValue(numRegalo, "Offerte inviate", "Regalo");
 
         return dataset;
     }

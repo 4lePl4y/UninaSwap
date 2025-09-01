@@ -79,6 +79,7 @@ public class Main extends JFrame {
 		this.myObjectsPane = new JMyObjectsPane(this.mieiOggetti, controller);
 		contentPane.add(myObjectsPane, "MYOBJECTS");
 		
+		refreshAllOffers();
 		this.profilePane = new JProfilePane(this.offerteInviate, controller);
 		contentPane.add(profilePane, "PROFILE");
 		
