@@ -28,10 +28,6 @@ public class DBConnection {
 			 System.out.println("Errore di connessione al database: " + e.getMessage());
 			 throw e; 
 		 }
-
-		 if(conn == null || conn.isClosed()) {
-			 conn = DriverManager.getConnection("jdbc:postgresql://aws-0-eu-central-2.pooler.supabase.com:5432/postgres", "postgres.ukdoakobkjfbrymxtulr", "UninaSwap");
-		 }
 		 
 		 return conn;
 	 }
