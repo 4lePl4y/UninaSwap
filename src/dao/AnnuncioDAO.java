@@ -207,13 +207,8 @@ public class AnnuncioDAO implements DaoInterface<Annuncio> {
 	public ArrayList<Annuncio> getAltriAnnunciByRicerca(String username, String research, boolean[] filtersOggetto, boolean[] filtersAnnuncio) {
 		ArrayList<Annuncio> annunci = new ArrayList<>();
 
-	    // 1. Query per oggetti
-	    String queryPerOggetto = buildQueryPerOggetto(filtersOggetto);
-
-	    // 2. Query per annunci (wrappa quella per oggetti)
+		String queryPerOggetto = buildQueryPerOggetto(filtersOggetto);
 	    String queryPerAnnunci = buildQueryPerAnnunci(queryPerOggetto, filtersAnnuncio);
-
-	    // 3. Query finale (wrappa quella per annunci)
 	    String queryFinale =
 	        "SELECT a.* FROM (" + queryPerAnnunci + ") AS a " +
 	        "WHERE a.autore <> ? " +
@@ -221,30 +216,25 @@ public class AnnuncioDAO implements DaoInterface<Annuncio> {
 
 	    try (PreparedStatement pstmt = conn.prepareStatement(queryFinale)) {
 	        int index = 1;
-
-	        // Bind dei filtri oggetto
 	        index = bindFiltriOggetto(pstmt, filtersOggetto, index);
-
-	        // Bind dei filtri annuncio
 	        index = bindFiltriAnnuncio(pstmt, filtersAnnuncio, index);
-
+	        
 	        // Bind username + ricerca
 	        pstmt.setString(index++, username);
 	        pstmt.setString(index++, "%" + research + "%");
 	        pstmt.setString(index++, "%" + research + "%");
 
-		        ResultSet rs = pstmt.executeQuery();
-		        while (rs.next()) {
-		            Annuncio annuncio = creaAnnuncioCorretto(rs);
-		            annunci.add(annuncio);
-		        }
+	        ResultSet rs = pstmt.executeQuery();
+	        while (rs.next()) {
+	        	Annuncio annuncio = creaAnnuncioCorretto(rs);
+	        	annunci.add(annuncio);
+	        }
+	    } catch (SQLException e) {
+	    	e.printStackTrace();
+	    }
 
-		    } catch (SQLException e) {
-		        e.printStackTrace();
-		    }
-
-		    return annunci;
-		}
+	    return annunci;
+	}
 
 
 	private String buildQueryPerAnnunci(String queryPerOggetto, boolean[] filters) {
