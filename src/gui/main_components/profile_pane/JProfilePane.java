@@ -11,16 +11,29 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Ellipse2D;
+
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.NumberAxis;
+import org.jfree.chart.labels.StandardPieSectionLabelGenerator;
 import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PiePlot;
 import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.plot.XYPlot;
+import org.jfree.chart.renderer.xy.XYLineAndShapeRenderer;
 import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
+import org.jfree.data.general.SeriesException;
+import org.jfree.data.time.Second;
+import org.jfree.data.time.TimeSeries;
+import org.jfree.data.time.TimeSeriesCollection;
+import org.jfree.data.xy.XYDataset;
+import org.jfree.data.xy.XYSeries;
+import org.jfree.data.xy.XYSeriesCollection;
 
 public class JProfilePane extends JPanel {
 
@@ -30,8 +43,8 @@ public class JProfilePane extends JPanel {
 
 
     // COSTRUTTORE
-    public JProfilePane(ArrayList<Offerta> offerteInviate, ArrayList<Offerta> offerteRicevute,  Controller controller) {
-        this.offerteInviate = offerteInviate;
+	public JProfilePane(ArrayList<Offerta> offerteInviate, ArrayList<Offerta> offerteRicevute,  Controller controller) {
+		this.offerteInviate = offerteInviate;
         this.offerteRicevute = offerteRicevute;
 		setLayout(new BorderLayout(0, 0));
 
@@ -57,8 +70,8 @@ public class JProfilePane extends JPanel {
                 PlotOrientation.VERTICAL,
                 true, false, false);
                 
-		CategoryPlot plot = (CategoryPlot) sentOffersBarChart.getPlot();
-		NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
+		CategoryPlot sentOffersBarChartPlot = (CategoryPlot) sentOffersBarChart.getPlot();
+		NumberAxis rangeAxis = (NumberAxis) sentOffersBarChartPlot.getRangeAxis();
 		rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
 
 		
@@ -70,31 +83,78 @@ public class JProfilePane extends JPanel {
                 PlotOrientation.VERTICAL,
                 true, false, false);
                
-        JFreeChart offersNumberPieChart = ChartFactory.createPieChart("Totale delle offerte", offersNumber(), true, false, false);
+        JFreeChart offersNumberPieChart = ChartFactory.createPieChart("Totale delle offerte", offersNumber(), true, true, false);
+        PiePlot offersNumberPieChartPlot = (PiePlot) offersNumberPieChart.getPlot();
+     
+        // {0} = nome categoria, {1} = valore, {2} = percentuale
+        offersNumberPieChartPlot.setLabelGenerator(new StandardPieSectionLabelGenerator(
+        		"{0}: {1}\n {2}"
+        		));
+     
+        JFreeChart earningsTimeChart = ChartFactory.createXYLineChart(
+        		"Guadagni",
+        		"",
+        		"offerta in denaro",
+        		earningsDataset(),
+        		PlotOrientation.VERTICAL,
+        		true,
+        		true,
+        		true);
         
-       
+        XYPlot plot = earningsTimeChart.getXYPlot();
+	    XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
+	    plot.setSeriesRenderingOrder(org.jfree.chart.plot.SeriesRenderingOrder.FORWARD);
 
+	    // Serie 0 = "allOffers" → SOLO punti
+	    renderer.setSeriesPaint(0, Color.BLACK);
+	    renderer.setSeriesLinesVisible(0, false);   // niente linea
+	    renderer.setSeriesShapesVisible(0, true);   // solo punti
+	
+	    // Serie 1 = "media" → linea + punti (puoi personalizzare come vuoi)
+	    renderer.setSeriesPaint(1, Color.GREEN);
+	    renderer.setSeriesLinesVisible(1, true);
+	    renderer.setSeriesShapesVisible(1, true);
+	  
+	    renderer.setSeriesShape(2, new Ellipse2D.Double(-5, -5, 10, 10));
+	    renderer.setSeriesShapesVisible(2, true);
+	    renderer.setSeriesLinesVisible(2, false);
+	    renderer.setSeriesPaint(2, Color.BLUE);
 
+	    // Massimo (serie 3)
+	    renderer.setSeriesShape(3, new Ellipse2D.Double(-5, -5, 10, 10));
+	    renderer.setSeriesShapesVisible(3, true);
+	    renderer.setSeriesLinesVisible(3, false);
+	    renderer.setSeriesPaint(3, Color.RED);
+
+	    
+	    plot.setRenderer(renderer);
+	        
+        
         // Chart 1
         ChartPanel sentOffersChartPanel = new ChartPanel(sentOffersBarChart);
-        sentOffersChartPanel.setPreferredSize(new Dimension(400, 400));
+        sentOffersChartPanel.setPreferredSize(new Dimension(400, 200));
         statsPanel.add(sentOffersChartPanel);
         
         
         // Chart 2
         ChartPanel acceptedOffersChartPanel = new ChartPanel(acceptedOffersBarChart);
-        acceptedOffersChartPanel.setPreferredSize(new Dimension(400, 400));
+        acceptedOffersChartPanel.setPreferredSize(new Dimension(400, 200));
         statsPanel.add(acceptedOffersChartPanel);
         
         // Chart 3
         ChartPanel offersNumberChartPanel = new ChartPanel(offersNumberPieChart);
-        offersNumberChartPanel.setPreferredSize(new Dimension(400, 400));
+        offersNumberChartPanel.setPreferredSize(new Dimension(400, 200));
         statsPanel.add(offersNumberChartPanel);
         
+        // Chart 4
+        ChartPanel earningsTimeChartPanel = new ChartPanel(earningsTimeChart);
+        earningsTimeChartPanel.setPreferredSize(new Dimension(400, 200));
+        statsPanel.add(earningsTimeChartPanel);
         
         statsPanel.add(sentOffersChartPanel);
         statsPanel.add(acceptedOffersChartPanel);
         statsPanel.add(offersNumberChartPanel);
+        statsPanel.add(earningsTimeChartPanel);
 
 		 // --- SEZIONE GESTIONE  CREDENZIALE ---
         JPanel settingsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 40, 20));
@@ -180,8 +240,8 @@ public class JProfilePane extends JPanel {
     	int numScambioInv = 0; 
     	int numRegaloInv = 0; 
 		
-		String inviate = "Offerte inviate accettate";
-		String ricevute = "Offerte ricevute accettate";
+		String inviate = "Offerte inviate";
+		String ricevute = "Offerte ricevute";
 	    
 	    for(Offerta o : offerteRicevute) {
 	    	if(o.getStato().equals(Stato.Accettata)) {
@@ -227,6 +287,53 @@ public class JProfilePane extends JPanel {
     	return dataset;
     }
     
+    private XYDataset earningsDataset() {
+    	XYSeriesCollection dataset = new XYSeriesCollection( );
+    	XYSeries allOffers = new XYSeries( "Tutte le offerte" );   
+    	XYSeries media = new XYSeries( "Media delle offerte" );                        
+    	XYSeries minimo = new XYSeries( "l'offerta più bassa" );                        
+    	XYSeries massimo = new XYSeries( "l'offerta più alta" );                        
+        Offerta offerta = null;
+        double min=9999.99, max=0;
+        double minX=0, minY=0, maxX=0, maxY=0, pos=1;
+        int totale = 0; 
+    	
+        for (int i = 0; i < offerteRicevute.size(); i++) {
+        	offerta = offerteRicevute.get(i);
+            if(offerta instanceof OffertaDenaro o && o.getStato().equals(Stato.Accettata)) {
+            	if(o.getOfferta()<min) {
+            		min=o.getOfferta();
+            		minX=pos;
+            		minY=o.getOfferta();
+            	}
+            	if(o.getOfferta()>max) {
+            		max=o.getOfferta();
+            		maxX=pos;
+            		maxY=o.getOfferta();
+            	}
+            	allOffers.add(i, o.getOfferta());
+            	pos++;
+            }
+        }    	
+        
+        minimo.add(minX, minY);
+        massimo.add(maxX, maxY);
+            	
+		for(int i = 0; i < offerteRicevute.size(); i++){
+            offerta = offerteRicevute.get(i);
+            if(offerta instanceof OffertaDenaro o){
+            	totale += o.getOfferta();
+            	media.add(i, totale / i);
+            }
+        }		
+		
+		dataset.addSeries(allOffers);
+		dataset.addSeries(media);
+		dataset.addSeries(minimo);
+		dataset.addSeries(massimo);
+
+        return dataset;
+    }
     
 }
 
