@@ -80,7 +80,7 @@ public class Main extends JFrame {
 		contentPane.add(myObjectsPane, "MYOBJECTS");
 		
 		refreshAllOffers();
-		this.profilePane = new JProfilePane(this.offerteInviate, controller);
+		this.profilePane = new JProfilePane(this.offerteInviate, this.offerteRicevute, controller);
 		contentPane.add(profilePane, "PROFILE");
 		
 		// Button panel per scegliere le finestre
