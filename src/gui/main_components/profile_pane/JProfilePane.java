@@ -70,7 +70,7 @@ public class JProfilePane extends JPanel {
                 PlotOrientation.VERTICAL,
                 true, false, false);
                
-        JFreeChart offersNumberPieChart = ChartFactory.createPieChart("Totale delle offerte", offersNumber(), true, true, false);
+        JFreeChart offersNumberPieChart = ChartFactory.createPieChart("Totale delle offerte", offersNumber(), true, false, false);
         
        
 
@@ -87,10 +87,14 @@ public class JProfilePane extends JPanel {
         statsPanel.add(acceptedOffersChartPanel);
         
         // Chart 3
+        ChartPanel offersNumberChartPanel = new ChartPanel(offersNumberPieChart);
+        offersNumberChartPanel.setPreferredSize(new Dimension(400, 400));
+        statsPanel.add(offersNumberChartPanel);
         
         
         statsPanel.add(sentOffersChartPanel);
         statsPanel.add(acceptedOffersChartPanel);
+        statsPanel.add(offersNumberChartPanel);
 
 		 // --- SEZIONE GESTIONE  CREDENZIALE ---
         JPanel settingsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 40, 20));
@@ -212,8 +216,13 @@ public class JProfilePane extends JPanel {
     	return dataset;
     }
     
-    private PieDataset<Integer> offersNumber() {
-    	DefaultPieDataset<Integer>  dataset = new DefaultPieDataset<Integer> ();
+    private PieDataset<String> offersNumber() {
+    	DefaultPieDataset<String> dataset = new DefaultPieDataset<String> ();
+    	int numOfferteInviate = offerteInviate.size();
+    	int numOfferteRicevute = offerteRicevute.size();
+    	
+    	dataset.setValue("Inviate", numOfferteInviate);
+    	dataset.setValue("Ricevute", numOfferteRicevute);
 
     	return dataset;
     }
