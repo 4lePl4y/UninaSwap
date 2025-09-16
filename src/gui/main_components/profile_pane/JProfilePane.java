@@ -288,16 +288,17 @@ public class JProfilePane extends JPanel {
     }
     
     private XYDataset earningsDataset() {
-    	XYSeriesCollection dataset = new XYSeriesCollection( );
+    	XYSeriesCollection dataset = new XYSeriesCollection();
     	XYSeries allOffers = new XYSeries( "Tutte le offerte" );   
     	XYSeries media = new XYSeries( "Media delle offerte" );                        
     	XYSeries minimo = new XYSeries( "l'offerta più bassa" );                        
     	XYSeries massimo = new XYSeries( "l'offerta più alta" );                        
         Offerta offerta = null;
         double min=9999.99, max=0;
-        double minX=0, minY=0, maxX=0, maxY=0, pos=1;
+        double minX=0, minY=0, maxX=0, maxY=0, pos=0;
         int totale = 0; 
     	
+        // Min e max
         for (int i = 0; i < offerteRicevute.size(); i++) {
         	offerta = offerteRicevute.get(i);
             if(offerta instanceof OffertaDenaro o && o.getStato().equals(Stato.Accettata)) {
@@ -318,12 +319,14 @@ public class JProfilePane extends JPanel {
         
         minimo.add(minX, minY);
         massimo.add(maxX, maxY);
-            	
+        
+        
+        // Media 
 		for(int i = 0; i < offerteRicevute.size(); i++){
             offerta = offerteRicevute.get(i);
             if(offerta instanceof OffertaDenaro o){
             	totale += o.getOfferta();
-            	media.add(i, totale / i);
+            	media.add(i, totale / (i+1));
             }
         }		
 		
