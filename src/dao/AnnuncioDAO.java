@@ -102,7 +102,7 @@ public class AnnuncioDAO implements DaoInterface<Annuncio> {
 				pstmt.setNull(7, java.sql.Types.DOUBLE);
 			} else {
 				pstmt.setObject(6, TipoAnnuncio.Regalo, java.sql.Types.OTHER);
-				pstmt.setNull(7, java.sql.Types.DOUBLE);
+				pstmt.setDouble(7, 0.0);
 			}
 			
 			pstmt.executeUpdate();
@@ -130,7 +130,7 @@ public class AnnuncioDAO implements DaoInterface<Annuncio> {
 				pstmt.setNull(6, java.sql.Types.DOUBLE);
 			} else {
 				pstmt.setObject(5, TipoAnnuncio.Regalo, java.sql.Types.OTHER);
-				pstmt.setNull(6, java.sql.Types.DOUBLE);
+				pstmt.setDouble(6, 0.0);
 			}
 			
 			pstmt.executeUpdate();
