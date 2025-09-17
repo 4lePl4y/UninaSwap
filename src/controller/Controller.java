@@ -342,7 +342,6 @@ public class Controller {
 	}
 	
 	public void onCreaAnnuncioClicked() {
-		//FIXME: posso creare 2 annunci dello stesso tipo con lo stesso oggetto
 		String titolo = newAnnuncioFrame.getTitolo();
 		Oggetto oggettoSelezionato = newAnnuncioFrame.getOggettoSelezionato();
 		String descrizione = newAnnuncioFrame.getDescrizione();
