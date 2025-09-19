@@ -74,7 +74,7 @@ public class JOffersUpperPanel extends JPanel{
 	}
 	
 	public void refresh() {
-		controller.refreshReceivedOffers();
+		controller.refreshAllOffers();
 	}
 	
 }
