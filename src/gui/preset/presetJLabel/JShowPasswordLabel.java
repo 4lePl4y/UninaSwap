@@ -10,7 +10,7 @@ public class JShowPasswordLabel extends JInteractiveLabel {
 
 	public JShowPasswordLabel(JCustomPasswordField passwordField) {
 		super("Mostra");
-		this.setSize(70, 10);
+		this.setSize(70, 15);
 		this.setHorizontalAlignment(RIGHT);
 		this.addMouseListener(new MouseAdapter() {
 			@Override

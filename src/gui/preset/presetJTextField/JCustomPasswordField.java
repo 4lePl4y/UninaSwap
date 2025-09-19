@@ -15,7 +15,8 @@ public class JCustomPasswordField extends JPasswordField {
 	
 	//COSTRUTTORE
 	public JCustomPasswordField(String placeholder) {
-		super(placeholder);	
+		super(placeholder);
+		this.setLayout(null);
 		this.setForeground(Color.GRAY);
 		this.setEchoChar((char)0); 
 		this.setFont(new Font("Times New Roman", Font.PLAIN, 15));
@@ -56,5 +57,15 @@ public class JCustomPasswordField extends JPasswordField {
 	public JInteractiveLabel getShowPswLabel() {
 		return showPsw;
 	}
+	
+	@Override
+	public void setBounds(int x, int y, int width, int height) {
+	    super.setBounds(x, y, width, height);
+	    showPsw.setLocation(width - 80, 8);
+	    this.add(showPsw);
+	    showPsw.setVisible(true);
+	    this.repaint();
+	}
+
 
 }

@@ -74,7 +74,7 @@ public class SignUp extends JFrame {
            
                 
 		// Surname text field
-        surnameTxtField = new JLettersTextField("Cognome");
+        surnameTxtField = new JLettersTextField("Cognome"); 
         surnameTxtField.setBounds(10, 131, 354, 33);
         surnameTxtField.setColumns(10);
        
@@ -92,13 +92,11 @@ public class SignUp extends JFrame {
         // Password text field
         pswTxtField = new JCustomPasswordField("Password");
         pswTxtField.setBounds(10, 281, 354, 33);
-        pswTxtField.getShowPswLabel().setLocation(280, 10);
         
 
         // Check Password text field
         checkPswTxtField = new JCustomPasswordField("Conferma Password");
         checkPswTxtField.setBounds(10, 331, 354, 33);
-        checkPswTxtField.getShowPswLabel().setLocation(280, 10);
         
 
         // Registrati Button
@@ -140,9 +138,7 @@ public class SignUp extends JFrame {
         panel.add(userTxtField);
         panel.add(emailTxtField);
         panel.add(pswTxtField);
-        pswTxtField.add(pswTxtField.getShowPswLabel());
         panel.add(checkPswTxtField);
-        checkPswTxtField.add(checkPswTxtField.getShowPswLabel());
         panel.add(registerButton);
         panel.add(lblNewLabel_2);
         panel.add(loginLabel);
