@@ -27,10 +27,6 @@ import org.jfree.data.category.CategoryDataset;
 import org.jfree.data.category.DefaultCategoryDataset;
 import org.jfree.data.general.DefaultPieDataset;
 import org.jfree.data.general.PieDataset;
-import org.jfree.data.general.SeriesException;
-import org.jfree.data.time.Second;
-import org.jfree.data.time.TimeSeries;
-import org.jfree.data.time.TimeSeriesCollection;
 import org.jfree.data.xy.XYDataset;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
@@ -182,7 +178,7 @@ public class JProfilePane extends JPanel {
         JButtonWithBorder changePasswordButton = new JButtonWithBorder("Cambia password");
         changePasswordButton.addMouseListener(new MouseAdapter() {
         	public void mouseClicked(MouseEvent e) {
-        		controller.openModificaPasswordFrame(controller.getStudenteLoggato());
+        		controller.openModificaPasswordFrame();
         	}
         });
 

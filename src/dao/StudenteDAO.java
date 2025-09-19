@@ -111,16 +111,16 @@ public class StudenteDAO implements DaoInterface<Studente> {
 	    }
 	}
 	
-//	public void updatePassword(String newPassword, String userLoggato) {
-//		String query = "UPDATE studente SET password = ? WHERE username = ?";
-//		try (PreparedStatement pstmt = conn.prepareStatement(query)) {
-//			pstmt.setString(1, newPassword);
-//			pstmt.setString(2, userLoggato);
-//			pstmt.executeUpdate();
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//	}
+	public void updatePassword(Studente studente, String newPassword) throws SQLException {
+		String query = "UPDATE studente SET password = ? WHERE username = ?";
+		try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+			pstmt.setString(1, newPassword);
+			pstmt.setString(2, studente.getUsername());
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
 	@Override
 	public void delete(String username) {

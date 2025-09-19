@@ -203,8 +203,8 @@ public class Controller {
 	}
 	
 	//*Apre il frame per modificare la password*/
-	public void openModificaPasswordFrame(Studente studenteLoggato) {
-		modifyPasswordFrame = new ModifyPassword(studenteLoggato);
+	public void openModificaPasswordFrame() {
+		modifyPasswordFrame = new ModifyPassword(mainFrame, this);
 		modifyPasswordFrame.setVisible(true);
 	}
 	
@@ -477,8 +477,26 @@ public class Controller {
 		}
 	}
 	
-	public void onModificaPasswordClicked(String newPassword, String userLoggato) {
-		//studenteDAO.updatePassword(newPassword, userLoggato);
+	public void onModificaPasswordClicked(Studente studenteLoggato) {
+		try {
+			String oldPassword = modifyPasswordFrame.getOldPassword();
+			if(!studenteLoggato.getPassword().equals(oldPassword))
+				throw new NoChangeException("La vecchia password non è corretta!");
+			
+			String newPassword = modifyPasswordFrame.getNewPassword();
+			if (studenteLoggato.getPassword().equals(newPassword)) 
+				throw new NoChangeException("La nuova password non può essere uguale a quella vecchia!");
+			
+			studenteDAO.updatePassword(studenteLoggato, newPassword);
+			studenteLoggato.setPassword(newPassword);
+			JOptionPane.showMessageDialog(modifyPasswordFrame, "Password modificata!");
+			modifyPasswordFrame.dispose();
+		} catch (NoChangeException e) {
+		JOptionPane.showMessageDialog(modifyPasswordFrame, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			JOptionPane.showMessageDialog(modifyPasswordFrame, "Errore imprevisto durante l’aggiornamento", "Errore", JOptionPane.ERROR_MESSAGE);
+		}
 	}
 	
 	
