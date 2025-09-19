@@ -517,10 +517,16 @@ public class Controller {
 		mainFrame.refreshListings();
 	}
 	
-	//**Metodo stub per aggiornare le offerte contentute nel offersPane nel mainFrame*/
+	//**Metodo stub per aggiornare tutte le offerte fatte e ricevute contentute nel offersPane nel mainFrame*/
+	public void refreshAllOffers() {
+		mainFrame.refreshAllOffers();
+	}
+
+	//**Metodo stub per aggiornare tutte le offerte ricevute contentute nel offersPane nel mainFrame*/
 	public void refreshReceivedOffers() {
 		mainFrame.refreshReceivedOffers();
 	}
+
 	
 	//**Metodo stub per aggiornare gli oggetti contentuti nel MyObjectsPane nel mainFrame*/
 	public void refreshMyObjects() {
@@ -597,6 +603,41 @@ public class Controller {
 	public Studente getStudenteLoggato() {
 		return studenteLoggato;
 	}
+
+	//**Metodo per fare il logout e tornare al login frame*/
+	public void onLogoutClicked() {
+		int scelta = JOptionPane.showConfirmDialog(mainFrame,
+                "Sei sicuro di voler effettuare il logout?",
+                "Conferma Logout",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.PLAIN_MESSAGE);
+		if(scelta == JOptionPane.YES_OPTION) {			
+			studenteLoggato = null;
+			loginFrame.setVisible(true);
+			mainFrame.dispose();
+			mainFrame = null;
+		}else {
+			return;
+		}
+	}
+
+	public void onEliminaAccountClicked() {
+		int scelta = JOptionPane.showConfirmDialog(mainFrame,
+				"Sei sicuro di voler eliminare il tuo account? \nL'operazione è irreversibile",
+				"Conferma Eliminazione Account",
+				JOptionPane.YES_NO_OPTION,
+				JOptionPane.PLAIN_MESSAGE);
+		if(scelta == JOptionPane.YES_OPTION) {			
+			studenteDAO.delete(studenteLoggato.getUsername());
+			studenteLoggato = null;
+			loginFrame.setVisible(true);
+			mainFrame.dispose();
+			mainFrame = null;
+		}else {
+			return;
+		}
+	}
+
 
 	
 

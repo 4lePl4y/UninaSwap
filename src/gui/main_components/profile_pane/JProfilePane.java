@@ -32,7 +32,7 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
 public class JProfilePane extends JPanel {
-
+	private Controller controller;
     private static final long serialVersionUID = 1L;
 	private ArrayList<Offerta> offerteInviate;
 	private ArrayList<Offerta> offerteRicevute;
@@ -40,6 +40,7 @@ public class JProfilePane extends JPanel {
 
     // COSTRUTTORE
 	public JProfilePane(ArrayList<Offerta> offerteInviate, ArrayList<Offerta> offerteRicevute,  Controller controller) {
+		this.controller = controller;
 		this.offerteInviate = offerteInviate;
         this.offerteRicevute = offerteRicevute;
 		setLayout(new BorderLayout(0, 0));
@@ -164,21 +165,21 @@ public class JProfilePane extends JPanel {
         JButtonWithBorder changeEmailButton = new JButtonWithBorder("Cambia email");
         changeEmailButton.addMouseListener(new MouseAdapter() {
         	public void mouseClicked(MouseEvent e) {
-        		controller.openModificaEmailFrame();
+        		openModificaEmailFrame();
         	}
         });
         
         JButtonWithBorder changeUsernameButton = new JButtonWithBorder("Cambia username");
         changeUsernameButton.addMouseListener(new MouseAdapter() {
         	public void mouseClicked(MouseEvent e) {
-        		controller.openModificaUsernameFrame();
+        		openModificaUsernameFrame();
         	}
         });
         
         JButtonWithBorder changePasswordButton = new JButtonWithBorder("Cambia password");
         changePasswordButton.addMouseListener(new MouseAdapter() {
         	public void mouseClicked(MouseEvent e) {
-        		controller.openModificaPasswordFrame();
+        		openModificaPasswordFrame();
         	}
         });
 
@@ -193,7 +194,18 @@ public class JProfilePane extends JPanel {
         actionsPanel.setBorder(BorderFactory.createTitledBorder("Azioni importanti"));
 
         JButtonWithBorder logoutButton = new JButtonWithBorder("Logout");
+        logoutButton.addMouseListener(new MouseAdapter() {
+        	public void mouseClicked(MouseEvent e) {
+        		onLogoutClicked();
+        	}
+        });
+        
         JButtonWithBorder deleteButton = new JButtonWithBorder("Elimina account");
+        deleteButton.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent e) {
+				onEliminaAccountClicked();
+			}
+		});
 
         actionsPanel.add(logoutButton);
         actionsPanel.add(Box.createVerticalStrut(10));
@@ -205,6 +217,27 @@ public class JProfilePane extends JPanel {
     }
 
     // METODI
+	public void openModificaEmailFrame() {
+		controller.openModificaEmailFrame();
+	}
+	
+	public void openModificaUsernameFrame() {
+		controller.openModificaUsernameFrame();
+	}
+	
+	public void openModificaPasswordFrame() {
+		controller.openModificaPasswordFrame();
+	}
+	
+	public void onLogoutClicked() {
+		controller.onLogoutClicked();
+	}
+	
+	public void onEliminaAccountClicked() {
+		controller.onEliminaAccountClicked();
+	}
+	
+	
     private CategoryDataset sentOffers() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
         int numVendite = 0; 
