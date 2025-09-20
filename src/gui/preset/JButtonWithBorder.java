@@ -20,7 +20,7 @@ public class JButtonWithBorder extends JButton {
 		this.setFocusPainted(false);
 		this.setBackground(new Color(0, 51, 102));
         this.setForeground(Color.WHITE);
-        this.setFont(new Font("Times New Roman", Font.PLAIN, 16));
+        this.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 16));
         
         this.addMouseListener(new MouseAdapter() {
     		@Override
