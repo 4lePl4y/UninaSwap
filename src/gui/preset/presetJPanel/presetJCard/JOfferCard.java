@@ -23,7 +23,6 @@ public class JOfferCard extends JCard {
 	private JButton acceptButton; 
 	private JButton declineButton; 
 	private JButton deleteButton;
-	private JButton reviewButton;
 	private JButtonWithBorder modifyButton; 
 	
 	public JOfferCard(Offerta offerta, Controller controller) { 
