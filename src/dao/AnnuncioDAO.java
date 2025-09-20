@@ -3,6 +3,7 @@ package dao;
 import entities.annuncio.*;
 import entities.oggetto.*;
 import entities.studente.Studente;
+import exception.CustomSQLException;
 import entities.enumerazioni.Sede;
 import entities.enumerazioni.TipoAnnuncio;
 import entities.enumerazioni.TipoOggetto;
@@ -83,7 +84,7 @@ public class AnnuncioDAO implements DaoInterface<Annuncio> {
 	
 
 	@Override
-	public void create(Annuncio annuncio) {
+	public void create(Annuncio annuncio) throws CustomSQLException {
 		String query = "INSERT INTO annuncio (titolo, descrizione, luogo, \"oraIncontro\", \"dataPubblicazione\", \"tipoAnnuncio\", prezzo, autore, \"idOggetto\") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
 		try(PreparedStatement pstmt = conn.prepareStatement(query)) {
 			pstmt.setString(1, annuncio.getTitolo());
@@ -107,7 +108,10 @@ public class AnnuncioDAO implements DaoInterface<Annuncio> {
 			
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			if(e.getMessage().contains("verificaAnnunciCompatibili") || e.getMessage().contains("noAnnunciDuplicati"))
+				throw new CustomSQLException(e.getMessage());
+			else				
+				e.printStackTrace();
 		}
 		
 	}

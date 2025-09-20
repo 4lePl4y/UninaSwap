@@ -9,6 +9,7 @@ import controller.Controller;
 import entities.annuncio.*;
 import entities.oggetto.*;
 import entities.studente.*;
+import exception.CustomSQLException;
 import gui.preset.JWritableTextArea;
 import gui.preset.presetJTextField.JPriceTextField;
 import gui.preset.JButtonWithBorder;
@@ -118,10 +119,16 @@ public class NewOfferta extends JDialog {
 
     public void onInviaOffertaClicked() {
     	if(areInputsValid()) { 
-    		controller.onInviaOffertaClicked();
-    		JOptionPane.showMessageDialog(this, "Offerta inviata!");
-    		this.dispose();
+    		try {
+    			controller.onInviaOffertaClicked();
+	    	} catch (CustomSQLException e) {
+			JOptionPane.showMessageDialog(this, e.getMessage());
+			return;
+	    	}
+    	this.dispose();
+    	JOptionPane.showMessageDialog(this, "Offerta inviata!");
     	}
+    	
     	return;
     }
 

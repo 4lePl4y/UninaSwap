@@ -341,7 +341,7 @@ public class Controller {
 		
 	}
 	
-	public void onCreaAnnuncioClicked() {
+	public void onCreaAnnuncioClicked() throws CustomSQLException {
 		String titolo = newAnnuncioFrame.getTitolo();
 		Oggetto oggettoSelezionato = newAnnuncioFrame.getOggettoSelezionato();
 		String descrizione = newAnnuncioFrame.getDescrizione();
@@ -352,15 +352,12 @@ public class Controller {
 		Annuncio annuncio = creaAnnuncio(titolo, oggettoSelezionato, descrizione, luogo, oraIncontro, dataPubblicazione);
 
 		try {
-			if(!areAnnunciConStessoOggetto(annuncio)) {	
-				annuncioDAO.create(annuncio);
-				mainFrame.refreshListings();
-				JOptionPane.showMessageDialog(newAnnuncioFrame, "Annucio creato!");
-				newAnnuncioFrame.dispose();
-			}
-		} catch (InvalidListingException e) {
-			JOptionPane.showMessageDialog(newAnnuncioFrame, e.getMessage());
+			annuncioDAO.create(annuncio);	
+		} catch (CustomSQLException e) {
+			throw e;
 		}
+		mainFrame.refreshListings();
+		return;
 	}
 	
 	//**Metodo per cancellare un annuncio nel database*/
@@ -392,7 +389,7 @@ public class Controller {
 	//--OFFERS RELATED METHODS--//
 
 	//**Metodo per inserire un'offerta nel database*/
-	public void onInviaOffertaClicked() {
+	public void onInviaOffertaClicked() throws CustomSQLException {
 		Offerta offerta = null;
 		Annuncio annuncioDiOfferta = newOffertaFrame.getAnnuncio();
 		if(annuncioDiOfferta instanceof AnnuncioScambio as)
@@ -400,8 +397,13 @@ public class Controller {
 		else
 			offerta = new OffertaDenaro(newOffertaFrame.getMessaggio(), studenteLoggato, annuncioDiOfferta, newOffertaFrame.getOfferta());
 		
-		offertaDAO.create(offerta);
+		try {
+			offertaDAO.create(offerta);
+		} catch (CustomSQLException e) {
+			throw e;
+		}
 		mainFrame.refreshMadeOffers();
+		return;
 	}
 	
 	//**Metodo per modificare lo stato di un'offerta presente nel DB rendendola accettata*/

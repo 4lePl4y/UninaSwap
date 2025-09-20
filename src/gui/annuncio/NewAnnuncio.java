@@ -4,6 +4,7 @@ import controller.Controller;
 import entities.enumerazioni.Sede;
 import entities.enumerazioni.TipoAnnuncio;
 import entities.oggetto.Oggetto;
+import exception.CustomSQLException;
 import gui.preset.JButtonWithBorder;
 import gui.preset.JWritableTextArea;
 import gui.preset.presetJTextField.JCustomTextField;
@@ -181,8 +182,15 @@ public class NewAnnuncio extends JDialog {
     // Altri metodi
     public void onCreaAnnuncioClicked() {
 		if(areInputsValid()) { 
+			try {
 			controller.onCreaAnnuncioClicked();
+			} catch (CustomSQLException e) {
+				JOptionPane.showMessageDialog(this, e.getMessage());
+				return;
+			}
 			
+			JOptionPane.showMessageDialog(this, "Annucio creato!");
+			this.dispose();
 		}
 		return;	
 	}

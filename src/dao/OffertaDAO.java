@@ -12,6 +12,7 @@ import entities.enumerazioni.*;
 import entities.offerta.*;
 import entities.oggetto.Oggetto;
 import entities.studente.Studente;
+import exception.CustomSQLException;
 
 public class OffertaDAO implements DaoInterface<Offerta> {
 	//ATTRIBUTI
@@ -60,7 +61,7 @@ public class OffertaDAO implements DaoInterface<Offerta> {
 		return offerte;
 	}
 	
-	public void create(Offerta offerta) {
+	public void create(Offerta offerta) throws CustomSQLException {
 		String query = "";
 		if(offerta instanceof OffertaScambio)
 			query = "INSERT INTO offerta_scambio (messaggio, offerente, \"idAnnuncio\") VALUES (?, ?, ?);";			
@@ -92,14 +93,18 @@ public class OffertaDAO implements DaoInterface<Offerta> {
 						pstmtOggetto.setLong(s, idOfferta);
 					}
 					pstmtOggetto.executeUpdate();
-				}catch (SQLException e) {
-					e.printStackTrace();
-				}
+				} 
 			}
 		}
+		
 		catch (SQLException e) {
-			e.printStackTrace();
+			if (e.getMessage().contains("noSpamOfferte") || e.getMessage().contains("validOffertaPerVendita")) {
+				throw new CustomSQLException(e.getMessage());
+			}
+			else
+				e.printStackTrace();
 		}
+		
 	}
 	
 	public void update(Offerta offerta) {
