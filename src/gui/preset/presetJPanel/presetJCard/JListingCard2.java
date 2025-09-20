@@ -46,8 +46,8 @@ public class JListingCard2 extends JCard {
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
 		
-		//TOP PANEL: contiene immagine e titolo
 		this.add(Box.createVerticalStrut(20));
+		//TOP PANEL: contiene immagine e titolo
 		JPanel topPanel = new JPanel();
 		topPanel.setBackground(new Color(255, 255, 255));
 		topPanel.setPreferredSize(new Dimension(280, 70));
@@ -61,16 +61,15 @@ public class JListingCard2 extends JCard {
 		imageLabel.setBorder(new EmptyBorder(0, 10, 0, 0));
 		topPanel.add(imageLabel, BorderLayout.WEST);
 		
-		JLabel titleLabel = new JLabel(annuncio.getTitolo());
+		JLabel titleLabel = new JLabel("<html>" + getTipoAnnuncio() + "<br>" + annuncio.getTitolo() + "</html>");
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setFont(new Font("Tahoma", Font.BOLD, 16));  //TODO: cambiare font
-		titleLabel.setBorder(new EmptyBorder(0, 0, 0, 10));
 		topPanel.add(titleLabel, BorderLayout.CENTER);
 		
 		
 		
-		//MIDDLE PANEL: contiene descrizione e info oggetto
 		this.add(Box.createVerticalStrut(20));
+		//MIDDLE PANEL: contiene descrizione e info oggetto
 		JPanel middlePanel = new JPanel(); 
 		middlePanel.setBorder(new EmptyBorder(10, 10, 10, 10));
 		middlePanel.setBackground(new Color(255, 255, 255));
@@ -91,7 +90,7 @@ public class JListingCard2 extends JCard {
 		controller.onFaiOffertaClicked(annuncio, autore);
 	}
 	
-	private String tipoAnnuncio() {
+	private String getTipoAnnuncio() {
 		String tipoAnnuncio = ""; 
 		if (annuncio instanceof AnnuncioVendita) 
 			tipoAnnuncio = "VENDITA";
@@ -99,7 +98,6 @@ public class JListingCard2 extends JCard {
 			tipoAnnuncio = "SCAMBIO";
 		else 
 			tipoAnnuncio = "REGALO";
-		
 		
 		return tipoAnnuncio;
 	}
