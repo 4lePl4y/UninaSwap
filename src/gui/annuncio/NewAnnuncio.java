@@ -239,11 +239,6 @@ public class NewAnnuncio extends JDialog {
 	
 	//**Metodo per aggiornare il menu a tendina degli oggetti esistenti */
 	public void refreshOggettiEsistenti() {
-		/*
-		 * FIXME: L'ultimo oggetto dell'arraylist non è detto che sia l'ultimo oggetto creato, quindi il menu a tendina si aggiorna male. 
-		 * Infatti se si prova a creare oggetti dal frame per creare gli annunci, non sempre l'aggiunta va a buon fine
-		 * Possibile soluzione è usare una Lista 
-		*/
 		int lastPositionIndex = controller.getMieiOggetti().size() - 1;
 		oggettiEsistentiCombo.addItem(controller.getMieiOggetti().get(lastPositionIndex));
 	}
