@@ -40,4 +40,9 @@ public class Misc extends Oggetto{
 	public String toString() {
 		return "Misc: "+ nome;
 	}
+
+	@Override
+	public String getBasicInfo() {		
+		return "Categoria: " + categoria + "\nMarchio: " + marchio;
+	}
 }

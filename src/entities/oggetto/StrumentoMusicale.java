@@ -30,4 +30,9 @@ public class StrumentoMusicale extends Oggetto {
 		return "StrumentoMusicale:"+ nome ;
 	}
 
+	@Override
+	public String getBasicInfo() {
+		return "Marchio: " + marchio;
+	}
+
 }

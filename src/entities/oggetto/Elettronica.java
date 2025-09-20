@@ -55,4 +55,9 @@ public class Elettronica extends Oggetto {
 		return "Elettronica: "+ nome;
 	}
 
+	@Override
+	public String getBasicInfo() {
+		return "Marchio: " + marchio + "\nModello: " + modello + "\nAnno di uscita: " + annoUscita;
+	}
+
 }

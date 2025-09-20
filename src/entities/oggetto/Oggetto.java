@@ -37,8 +37,8 @@ public abstract class Oggetto {
 		return proprietario.getUsername();
 	}
 	
-	public String toString() {
-		return "Oggetto: " + nome;
-	}
+	public abstract String toString();
+
+	public abstract String getBasicInfo();
 	
 }

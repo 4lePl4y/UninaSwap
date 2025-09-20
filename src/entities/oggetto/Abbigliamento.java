@@ -41,5 +41,10 @@ public class Abbigliamento extends Oggetto {
 	public String toString() {
 		return "Abbigliamento: "+ nome;
 	}
+
+	@Override
+	public String getBasicInfo() {
+		return "Marchio: " + marchio + "\nTaglia: " + taglia;
+	}
 	
 }

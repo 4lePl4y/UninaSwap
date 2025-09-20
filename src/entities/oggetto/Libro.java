@@ -80,4 +80,10 @@ public class Libro extends Oggetto {
 		return "Libro: "+ nome;
 	}
 
+	@Override
+	public String getBasicInfo() {
+		return "Titolo: " + titolo + "\nAutore: " + autore + "\nAnno di uscita: " + annoUscita + 
+				"\nGenere: " + genere + "\nISBN: " + ISBN;
+	}
+
 }
