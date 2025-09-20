@@ -69,34 +69,30 @@ public class SignUp extends JFrame {
         
         // Name text field
         nameTxtField = new JLettersTextField("Nome");
-        nameTxtField.setBounds(10, 81, 354, 33);
-        nameTxtField.setColumns(10);
+        nameTxtField.setBounds(22, 81, 354, 33);
            
-                
+        
 		// Surname text field
         surnameTxtField = new JLettersTextField("Cognome"); 
-        surnameTxtField.setBounds(10, 131, 354, 33);
-        surnameTxtField.setColumns(10);
+        surnameTxtField.setBounds(22, 131, 354, 33);
        
 
 		// Username text field
         userTxtField = new JCustomTextField("Username");
-        userTxtField.setBounds(10, 181, 354, 33);
-        userTxtField.setColumns(10);
+        userTxtField.setBounds(22, 181, 354, 33);
         
         // Email text field
         emailTxtField = new JMailTextField("Email");
-        emailTxtField.setBounds(10, 231, 354, 33);
-        emailTxtField.setColumns(10);
+        emailTxtField.setBounds(22, 231, 354, 33);
         
         // Password text field
         pswTxtField = new JCustomPasswordField("Password");
-        pswTxtField.setBounds(10, 281, 354, 33);
+        pswTxtField.setBounds(22, 281, 354, 33);
         
 
         // Check Password text field
         checkPswTxtField = new JCustomPasswordField("Conferma Password");
-        checkPswTxtField.setBounds(10, 331, 354, 33);
+        checkPswTxtField.setBounds(22, 331, 354, 33);
         
 
         // Registrati Button
