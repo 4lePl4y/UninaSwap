@@ -79,7 +79,7 @@ public class JCardsPane<T> extends JPanel {
 					return new JMyListingCard((Annuncio) a, controller);
 				} else {
 					//Se l'annuncio non appartiene allo studente loggato, crea una JListingCard
-					return new JListingCard((Annuncio) a, controller);
+					return new JListingCard2((Annuncio) a, controller);
 				}
 			}
 				
