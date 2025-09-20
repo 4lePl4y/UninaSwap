@@ -90,13 +90,13 @@ public class Main extends JFrame {
         fl_buttonPane.setVgap(10);
         fl_buttonPane.setHgap(50);
         
-        JButton browseButton = new JButtonWithBorder("Browse");
+        JButton browseButton = new JButtonWithBorder("🔍 Cerca");
         browseButton.addActionListener( e -> {
         	CardLayout cl = (CardLayout)(contentPane.getLayout());
 			cl.show(contentPane, "BROWSE");
 		});
 
-        JButtonClickManager listingsButton = new JButtonClickManager("My Listings");
+        JButtonClickManager listingsButton = new JButtonClickManager("📋 Miei Annunci");
         listingsButton.addActionListener(e -> {
         	if(listingsButton.isFirstClick())
     			refreshListings();
@@ -106,13 +106,13 @@ public class Main extends JFrame {
         });
         
         
-        JButtonWithBorder myObjectsButton = new JButtonWithBorder("My Objects");
+        JButtonWithBorder myObjectsButton = new JButtonWithBorder("📦 Miei Objects");
         myObjectsButton.addActionListener(e -> {
     		CardLayout cl = (CardLayout)(contentPane.getLayout());
     		cl.show(contentPane, "MYOBJECTS");
         });
         
-        JButtonClickManager offersButton = new JButtonClickManager("Offers");
+        JButtonClickManager offersButton = new JButtonClickManager("🏷 Offerte");
         offersButton.addActionListener(e -> {
         	if(offersButton.isFirstClick()) 
         		refreshAllOffers();
@@ -121,7 +121,7 @@ public class Main extends JFrame {
 			cl.show(contentPane, "OFFERS");
 		});
         
-        JButton profileButton = new JButtonWithBorder("Profilo");
+        JButton profileButton = new JButtonWithBorder("👤 Profilo");
         profileButton.addActionListener(e -> {
         	//TODO: refreshStats(); 
 			CardLayout cl = (CardLayout)(contentPane.getLayout());
