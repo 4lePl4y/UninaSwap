@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -29,7 +30,7 @@ import gui.preset.JButtonWithBorder;
 import gui.preset.JWritableTextArea;
 import gui.preset.presetJTextField.JPriceTextField;
 
-public class ModifyOfferta extends JFrame{
+public class ModifyOfferta extends JDialog{
 	private static final long serialVersionUID = 1L;
 	private Controller controller;
 	private Offerta offerta;
@@ -45,19 +46,17 @@ public class ModifyOfferta extends JFrame{
 	private ArrayList<JCheckBox> checkBoxes = new ArrayList<JCheckBox>();
 	private JButtonWithBorder modifyButton;
 	
-	public ModifyOfferta(Controller controller, Offerta offerta) {
+	public ModifyOfferta(Controller controller, Offerta offerta) {	
+		super(controller.getMainFrame(), "Modifica Offerta", true);
 		this.controller = controller;
         this.offerta = offerta;
         this.annuncio = offerta.getAnnuncio();
         this.autore = annuncio.getAutore();
         this.mieiOggetti = controller.getMieiOggetti();
         
-        this.setTitle("Modifica Offerta");
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        this.setBounds(new Rectangle(0, 0, 420, 400));
+        this.setBounds(100, 100, 500, 500);
         this.setFocusable(true);
         this.setResizable(false);
-        this.setAlwaysOnTop(true);
         
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));

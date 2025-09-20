@@ -16,7 +16,7 @@ import java.time.LocalTime;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-public class ModifyAnnuncio extends JFrame {
+public class ModifyAnnuncio extends JDialog {
     private static final long serialVersionUID = 1L;
     private Controller controller;
     private Annuncio annuncio;
@@ -30,15 +30,13 @@ public class ModifyAnnuncio extends JFrame {
     private JPriceTextField prezzoField;
 
     public ModifyAnnuncio(Controller controller, Annuncio annuncio) {
-        this.controller = controller;
+    	super(controller.getMainFrame(), "Modifica Annuncio", true);
+    	this.controller = controller;
         this.annuncio = annuncio;
-        
-    	this.setTitle("Modifica Annuncio");
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
         this.setBounds(100, 100, 600, 500);
         this.setResizable(false);
         this.setFocusable(true);
-        this.setAlwaysOnTop(true);
 
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));

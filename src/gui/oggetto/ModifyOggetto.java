@@ -8,7 +8,7 @@ import java.time.format.DateTimeParseException;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -20,7 +20,7 @@ import gui.preset.JButtonWithBorder;
 import gui.preset.presetJTextField.JCustomTextField;
 import gui.preset.presetJTextField.JYearTextField;
 
-public class ModifyOggetto extends JFrame{
+public class ModifyOggetto extends JDialog{
 	// ATTRIBUTI
 	private static final long serialVersionUID = 1L;
     private JPanel contentPane;
@@ -46,15 +46,12 @@ public class ModifyOggetto extends JFrame{
 
     // COSTRUTTORE
     public ModifyOggetto(Controller controller, Oggetto oggetto) {
+    	super(controller.getMainFrame(), "Modifica oggetto", true);
     	this.controller = controller;
     	this.oggetto = oggetto;
-
-    	this.setTitle("Modifica Oggetto");
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setBounds(100, 100, 500, 500);
         this.setResizable(false);
         this.setFocusable(true);
-        this.setAlwaysOnTop(true);
 
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));

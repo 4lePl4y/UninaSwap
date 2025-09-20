@@ -13,7 +13,7 @@ import gui.preset.JWritableTextArea;
 import gui.preset.presetJTextField.JPriceTextField;
 import gui.preset.JButtonWithBorder;
 
-public class NewOfferta extends JFrame {
+public class NewOfferta extends JDialog {
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
@@ -28,14 +28,13 @@ public class NewOfferta extends JFrame {
 	private ArrayList<Oggetto> oggettiSelezionati; 
 
     public NewOfferta(Controller controller, Annuncio annuncio, Studente autore) {
+    	super(controller.getMainFrame(), "Nuova Offerta", true);
         this.controller = controller;
         this.annuncio = annuncio;
-        this.setTitle("Nuova Offerta");
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
         this.setBounds(new Rectangle(0, 0, 420, 400));
         this.setFocusable(true);
         this.setResizable(false);
-        this.setAlwaysOnTop(true);
 
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));

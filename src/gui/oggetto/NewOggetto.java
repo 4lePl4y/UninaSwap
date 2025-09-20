@@ -15,13 +15,13 @@ import java.time.format.DateTimeParseException;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComboBox;
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-public class NewOggetto extends JFrame {
+public class NewOggetto extends JDialog {
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
     private JComboBox<TipoOggetto> tipoOggettoCombo;
@@ -45,13 +45,12 @@ public class NewOggetto extends JFrame {
     private JCustomTextField categoriaField = new JCustomTextField("Inserisci la categoria", "categoria");
 
     public NewOggetto(Controller controller) {
+    	super(controller.getMainFrame(), "Nuovo Oggetto", true);
     	this.controller = controller;
-        this.setTitle("Nuovo Oggetto");
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+    	
         this.setBounds(100, 100, 500, 500);
         this.setResizable(false);
         this.setFocusable(true);
-        this.setAlwaysOnTop(true);
 
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));

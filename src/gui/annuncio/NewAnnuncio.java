@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 
-public class NewAnnuncio extends JFrame {
+public class NewAnnuncio extends JDialog {
     private static final long serialVersionUID = 1L;
     private Controller controller;
     
@@ -37,14 +37,12 @@ public class NewAnnuncio extends JFrame {
     
 
     public NewAnnuncio(Controller controller) {
-        this.controller = controller;
+    	super(controller.getMainFrame(), "Nuovo Annuncio", true);
+    	this.controller = controller;
     	
-    	this.setTitle("Nuovo Annuncio");
-        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         this.setBounds(100, 100, 600, 500);
         this.setResizable(false);
         this.setFocusable(true);
-        this.setAlwaysOnTop(true);
 
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));

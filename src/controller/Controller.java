@@ -638,13 +638,11 @@ public class Controller {
 		}
 	}
 
-
-	
-
-	
-
-	
-
-	
+	public Main getMainFrame() {
+		if(mainFrame != null)
+			return mainFrame;
+		else
+			return null;
+	}
 	
 }
