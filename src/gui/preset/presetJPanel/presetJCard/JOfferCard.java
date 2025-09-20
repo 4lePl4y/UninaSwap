@@ -57,7 +57,8 @@ public class JOfferCard extends JCard {
 		if(offerta instanceof OffertaScambio os) { 
 			JLabel offeredObjectsLabel = new JLabel("Oggetti offerti in scambio: "); 
 			offeredObjectsLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15)); 
-			offeredObjectsLabel.setBounds(10, 148, 260, 18); add(offeredObjectsLabel); 
+			offeredObjectsLabel.setBounds(10, 148, 260, 18); 
+			add(offeredObjectsLabel); 
 		
 			JList<Oggetto> list = new JList<>(os.getOggettiOfferti().toArray(new Oggetto[0]));
             JScrollPane sp = new JScrollPane(list);
@@ -88,9 +89,6 @@ public class JOfferCard extends JCard {
 				addAcceptNDeclineButtons();
 			else
 				addModifyNDeleteButton();
-		}else if(offerta.getStato().equals(Stato.Accettata)) {
-			if((offerente.getUsername().equals(controller.getStudenteLoggato().getUsername())))
-				addReviewButton();
 		}
 			
 	}
@@ -111,10 +109,6 @@ public class JOfferCard extends JCard {
 		controller.onCancellaOffertaClicked(offerta);
 	}
 	
-	public void onLasciaRecensioneClicked() {
-		
-	}
-
 	
 	private void addAcceptNDeclineButtons() {
 		acceptButton = new JButtonWithBorder("Accetta"); 
@@ -155,16 +149,5 @@ public class JOfferCard extends JCard {
 		});
 		add(deleteButton);
 	}
-	
-	private void addReviewButton() {
-		reviewButton = new JButtonWithBorder("Lascia una recensione"); 
-		reviewButton.setBounds(50, 410, 180, 30); 
-		add(reviewButton); 
-		reviewButton.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				onLasciaRecensioneClicked();
-			}
-		});		
-	}
-	
+		
 }
