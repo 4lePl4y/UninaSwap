@@ -16,11 +16,9 @@ import controller.Controller;
 public class JCustomScrollPane<T> extends JScrollPane {
 	private static final long serialVersionUID = 1L;
 	private JCardsPane<T> cardsPane;
-	private Controller controller;
 	private static final Image BACKGROUND_IMAGE =new ImageIcon("src/img/scrollPaneBackground.png").getImage();
 	
 	public JCustomScrollPane(ArrayList<T> contents, Controller controller) {
-		this.controller = controller;
 		this.getVerticalScrollBar().setUnitIncrement(15);
 		this.setHorizontalScrollBarPolicy(HORIZONTAL_SCROLLBAR_NEVER);
 		cardsPane = new JCardsPane<T>(controller);
