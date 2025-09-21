@@ -31,7 +31,7 @@ public class JPanelWithGradient extends JPanel {
         int height = getHeight();
 
         // crea il gradient paint: dall'alto in basso
-        GradientPaint gp = new GradientPaint(0, height , colorStart, 0, width, colorEnd);
+        GradientPaint gp = new GradientPaint(0, width , colorStart, 0, height, colorEnd);
 
         g2d.setPaint(gp);
         g2d.fillRect(0, 0, width, height);
