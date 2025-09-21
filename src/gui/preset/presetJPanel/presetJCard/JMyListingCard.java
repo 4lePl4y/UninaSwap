@@ -6,7 +6,6 @@ import javax.swing.SwingConstants;
 import controller.Controller;
 import entities.annuncio.*;
 import entities.annuncio.AnnuncioVendita;
-import entities.studente.Studente;
 import gui.preset.JButtonWithBorder;
 
 import java.awt.Rectangle;
@@ -19,13 +18,11 @@ import javax.swing.JButton;
 public class JMyListingCard extends JCard {
 	private static final long serialVersionUID = 1L;
 	private Annuncio annuncio;
-	private Studente autore; 
 	
 	public JMyListingCard(Annuncio annuncio, Controller controller) {
 		super(controller);
 		this.setBounds(new Rectangle(0, 0, 240, 450));
 		this.annuncio = annuncio;
-		this.autore = annuncio.getAutore();
 		
 		JLabel titleLabel = new JLabel(annuncio.getTitolo());
 		titleLabel.setHorizontalTextPosition(SwingConstants.CENTER);

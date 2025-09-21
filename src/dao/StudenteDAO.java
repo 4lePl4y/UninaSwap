@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import entities.studente.Studente;
-import exception.UniqueSQLException;
+import exception.CustomSQLException;
 
 public class StudenteDAO implements DaoInterface<Studente> {
 	//ATTRIBUTI
@@ -78,34 +78,30 @@ public class StudenteDAO implements DaoInterface<Studente> {
 		//TODO: Quasi sicuramente non serve fare un update di studente in quanto modifico solo alcuni suoi campi
 	}
 	
-	public void updateEmail(Studente studente, String newEmail) throws SQLException {
+	public void updateEmail(Studente studente, String newEmail) throws SQLException, CustomSQLException {
 	    String query = "UPDATE studente SET email = ? WHERE username = ?";
 	    try (PreparedStatement ps = conn.prepareStatement(query)) {
 	        ps.setString(1, newEmail);
 	        ps.setString(2, studente.getUsername());
 	        ps.executeUpdate();
 	    } catch (SQLException e) {
-	        // "23505" SQLstate per UNIQUE violation in PostgreSQL
-	        if ("23505".equals(e.getSQLState()) || (e.getMessage() != null && e.getMessage().toLowerCase().contains("unique"))) 
-	            throw new UniqueSQLException("Esiste già un account con questa email!");
-	        
+	        if (e.getMessage().contains("unique")) 
+	        	throw new CustomSQLException(e.getMessage());
 	        else
 	        	throw e;
 	    }
 	}
 
 	
-	public void updateUsername(Studente studente, String newUsername) throws SQLException {
+	public void updateUsername(Studente studente, String newUsername) throws SQLException, CustomSQLException {
 		String query = "UPDATE studente SET username = ? WHERE username = ?";
 	    try (PreparedStatement ps = conn.prepareStatement(query)) {
 	        ps.setString(1, newUsername);
 	        ps.setString(2, studente.getUsername());
 	        ps.executeUpdate();
 	    } catch (SQLException e) {
-	        // "23505" SQLstate per UNIQUE violation in PostgreSQL
-	        if ("23505".equals(e.getSQLState()) || (e.getMessage() != null && e.getMessage().toLowerCase().contains("unique"))) 
-	            throw new UniqueSQLException("Username già esistente!");
-	        
+	        if (e.getMessage().toLowerCase().contains("username"))
+	        	throw new CustomSQLException(e.getMessage());
 	        else
 	        	throw e;
 	    }
@@ -118,7 +114,7 @@ public class StudenteDAO implements DaoInterface<Studente> {
 			pstmt.setString(2, studente.getUsername());
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw e;
 		}
 	}
 

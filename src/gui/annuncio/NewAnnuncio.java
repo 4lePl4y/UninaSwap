@@ -15,6 +15,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.sql.SQLException;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import javax.swing.*;
@@ -187,6 +188,8 @@ public class NewAnnuncio extends JDialog {
 			} catch (CustomSQLException e) {
 				JOptionPane.showMessageDialog(this, e.getMessage());
 				return;
+			} catch (SQLException e) {
+				JOptionPane.showMessageDialog(this, "Errore imprevisto nella creazione dell'annuncio. Riprova!");
 			}
 			
 			JOptionPane.showMessageDialog(this, "Annucio creato!");

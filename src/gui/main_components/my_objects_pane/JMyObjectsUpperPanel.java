@@ -20,11 +20,9 @@ import gui.preset.JButtonWithBorder;
 
 public class JMyObjectsUpperPanel extends JPanel{
 	private static final long serialVersionUID = 1L;
-	private Controller controller;
 	private Studente studenteLoggato;
 	
 	public JMyObjectsUpperPanel(Controller controller) {
-		this.controller = controller;
 		this.studenteLoggato = controller.getStudenteLoggato();
 		this.setBackground(new Color(255, 255, 255));
 		this.setPreferredSize(new Dimension(800, 85));

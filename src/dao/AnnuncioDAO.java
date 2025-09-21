@@ -84,7 +84,7 @@ public class AnnuncioDAO implements DaoInterface<Annuncio> {
 	
 
 	@Override
-	public void create(Annuncio annuncio) throws CustomSQLException {
+	public void create(Annuncio annuncio) throws SQLException, CustomSQLException {
 		String query = "INSERT INTO annuncio (titolo, descrizione, luogo, \"oraIncontro\", \"dataPubblicazione\", \"tipoAnnuncio\", prezzo, autore, \"idOggetto\") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
 		try(PreparedStatement pstmt = conn.prepareStatement(query)) {
 			pstmt.setString(1, annuncio.getTitolo());
@@ -111,7 +111,7 @@ public class AnnuncioDAO implements DaoInterface<Annuncio> {
 			if(e.getMessage().contains("verificaAnnunciCompatibili") || e.getMessage().contains("noAnnunciDuplicati"))
 				throw new CustomSQLException(e.getMessage());
 			else				
-				e.printStackTrace();
+				throw e;
 		}
 		
 	}

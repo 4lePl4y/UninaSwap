@@ -61,7 +61,7 @@ public class OffertaDAO implements DaoInterface<Offerta> {
 		return offerte;
 	}
 	
-	public void create(Offerta offerta) throws CustomSQLException {
+	public void create(Offerta offerta) throws SQLException {
 		String query = "";
 		if(offerta instanceof OffertaScambio)
 			query = "INSERT INTO offerta_scambio (messaggio, offerente, \"idAnnuncio\") VALUES (?, ?, ?);";			

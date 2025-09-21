@@ -2,31 +2,21 @@ package gui.preset.presetJPanel.presetJCard;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
-import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
-import javax.swing.plaf.basic.BasicScrollBarUI;
 
 import controller.Controller;
 import entities.annuncio.*;
 import entities.annuncio.AnnuncioVendita;
 import entities.studente.Studente;
-import gui.preset.JButtonWithBorder;
 import gui.preset.JDisplayTextArea;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.awt.Rectangle;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
 import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import java.awt.FlowLayout;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;

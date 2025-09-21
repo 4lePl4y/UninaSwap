@@ -1,6 +1,6 @@
 package dao;
 
-import exception.CustomSQLException;
+import java.sql.SQLException;
 
 public interface DaoInterface<T> {
 	//ATTRIBUTI 
@@ -10,7 +10,7 @@ public interface DaoInterface<T> {
 		throw new UnsupportedOperationException("Method not implemented");
 	}
 	
-	public void create(T object) throws CustomSQLException;
+	public void create(T object) throws SQLException;
 	public void update(T object);
 	default public void delete(String id) {
 		throw new UnsupportedOperationException("Method not implemented");

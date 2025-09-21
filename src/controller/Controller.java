@@ -324,24 +324,8 @@ public class Controller {
 		return annuncio;
 	}
 	
-	//**Controlla in fase di creazione di annuncio se esistono annunci con lo stesso oggetto incompatibili tra loro*/
-	public boolean areAnnunciConStessoOggetto (Annuncio annuncio) throws InvalidListingException {
-		ArrayList<Annuncio> annunciConStessoOggetto = annuncioDAO.retrieveByOggetto(annuncio.getOggetto().getId());
-		
-		if(annuncio instanceof AnnuncioRegalo) {
-			if(!annunciConStessoOggetto.isEmpty())
-				throw new InvalidListingException("Non puoi creare un annuncio di regalo per questo oggetto. \nEsiste già un suo annuncio di vendita o di scambio");
-		}else{
-			for(Annuncio a : annunciConStessoOggetto) {
-				if(a instanceof AnnuncioRegalo) 
-					throw new InvalidListingException("Non puoi creare un annuncio di vendita o di scambio per questo oggetto. \nEsiste già un suo annuncio di regalo");
-			}
-		}
-		return false;
-		
-	}
-	
-	public void onCreaAnnuncioClicked() throws CustomSQLException {
+	//**Metodo per creare un nuovo annuncio nel database*/
+	public void onCreaAnnuncioClicked() throws SQLException {
 		String titolo = newAnnuncioFrame.getTitolo();
 		Oggetto oggettoSelezionato = newAnnuncioFrame.getOggettoSelezionato();
 		String descrizione = newAnnuncioFrame.getDescrizione();
@@ -354,6 +338,8 @@ public class Controller {
 		try {
 			annuncioDAO.create(annuncio);	
 		} catch (CustomSQLException e) {
+			throw e;
+		} catch (SQLException e) {
 			throw e;
 		}
 		mainFrame.refreshListings();
@@ -389,7 +375,7 @@ public class Controller {
 	//--OFFERS RELATED METHODS--//
 
 	//**Metodo per inserire un'offerta nel database*/
-	public void onInviaOffertaClicked() throws CustomSQLException {
+	public void onInviaOffertaClicked() throws SQLException {
 		Offerta offerta = null;
 		Annuncio annuncioDiOfferta = newOffertaFrame.getAnnuncio();
 		if(annuncioDiOfferta instanceof AnnuncioScambio as)
@@ -400,6 +386,8 @@ public class Controller {
 		try {
 			offertaDAO.create(offerta);
 		} catch (CustomSQLException e) {
+			throw e;
+		} catch (SQLException e) {
 			throw e;
 		}
 		mainFrame.refreshMadeOffers();
@@ -451,7 +439,7 @@ public class Controller {
 			modifyEmailFrame.dispose();		
 		} catch(NoChangeException e) {
 			JOptionPane.showMessageDialog(modifyEmailFrame, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
-		} catch(UniqueSQLException e) {
+		} catch(CustomSQLException e) {
 			JOptionPane.showMessageDialog(modifyEmailFrame, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
 		} catch(SQLException e) {
 			System.out.println(e.getMessage());
@@ -471,7 +459,7 @@ public class Controller {
 			modifyUsernameFrame.dispose();		
 		} catch(NoChangeException e) {
 			JOptionPane.showMessageDialog(modifyUsernameFrame, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
-		} catch(UniqueSQLException e) {
+		} catch(CustomSQLException e) {
 			JOptionPane.showMessageDialog(modifyUsernameFrame, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
 		} catch(SQLException e) {
 			System.out.println(e.getMessage());

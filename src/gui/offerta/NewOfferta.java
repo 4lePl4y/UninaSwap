@@ -1,6 +1,7 @@
 package gui.offerta;
 
 import java.awt.*;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.*;
@@ -122,8 +123,11 @@ public class NewOfferta extends JDialog {
     		try {
     			controller.onInviaOffertaClicked();
 	    	} catch (CustomSQLException e) {
-			JOptionPane.showMessageDialog(this, e.getMessage());
-			return;
+	    		JOptionPane.showMessageDialog(this, e.getMessage());
+	    		return;
+	    	} catch (SQLException e) {
+	    		JOptionPane.showMessageDialog(this, "Errore durante l'invio dell'offerta. Riprova!");
+	    		return;
 	    	}
     	this.dispose();
     	JOptionPane.showMessageDialog(this, "Offerta inviata!");
