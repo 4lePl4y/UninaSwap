@@ -1,4 +1,4 @@
-package gui.preset;
+package gui.preset.presetJButton;
 
 import java.awt.Color;
 import java.awt.Dimension;

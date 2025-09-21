@@ -6,7 +6,7 @@ import javax.swing.SwingConstants;
 import controller.Controller;
 import entities.annuncio.*;
 import entities.annuncio.AnnuncioVendita;
-import gui.preset.JButtonWithBorder;
+import gui.preset.presetJButton.JButtonWithBorder;
 
 import java.awt.Rectangle;
 import java.awt.event.MouseAdapter;

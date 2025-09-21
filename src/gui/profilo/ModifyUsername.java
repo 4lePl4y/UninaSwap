@@ -8,7 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import controller.Controller;
-import gui.preset.JButtonWithBorder;
+import gui.preset.presetJButton.JButtonWithBorder;
 import gui.preset.presetJTextField.JCustomTextField;
 import java.awt.Font;
 

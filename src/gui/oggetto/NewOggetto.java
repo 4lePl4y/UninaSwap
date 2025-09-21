@@ -2,7 +2,7 @@ package gui.oggetto;
 
 import controller.Controller;
 import entities.enumerazioni.TipoOggetto;
-import gui.preset.JButtonWithBorder;
+import gui.preset.presetJButton.JButtonWithBorder;
 import gui.preset.presetJTextField.JCustomTextField;
 import gui.preset.presetJTextField.JYearTextField;
 

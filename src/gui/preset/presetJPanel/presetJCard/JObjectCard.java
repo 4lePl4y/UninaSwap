@@ -4,7 +4,7 @@ import javax.swing.SwingConstants;
 
 import controller.Controller;
 import entities.oggetto.*;
-import gui.preset.JButtonWithBorder;
+import gui.preset.presetJButton.JButtonWithBorder;
 
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;

@@ -17,7 +17,7 @@ import javax.swing.SwingConstants;
 
 import controller.Controller;
 import entities.studente.Studente;
-import gui.preset.JButtonWithBorder;
+import gui.preset.presetJButton.JButtonWithBorder;
 
 public class JListingsUpperPanel extends JPanel {
 	private static final long serialVersionUID = 1L;

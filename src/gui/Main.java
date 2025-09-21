@@ -20,8 +20,8 @@ import gui.main_components.listings_pane.JListingsPane;
 import gui.main_components.my_objects_pane.JMyObjectsPane;
 import gui.main_components.offers_pane.JOffersPane;
 import gui.main_components.profile_pane.JProfilePane;
-import gui.preset.JButtonWithBorder;
-import gui.preset.JButtonClickManager;
+import gui.preset.presetJButton.JButtonClickManager;
+import gui.preset.presetJButton.JButtonWithBorder;
 
 public class Main extends JFrame {
 	//ATTRIBUTI

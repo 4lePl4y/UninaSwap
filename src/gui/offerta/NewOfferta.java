@@ -12,8 +12,8 @@ import entities.oggetto.*;
 import entities.studente.*;
 import exception.CustomSQLException;
 import gui.preset.JWritableTextArea;
+import gui.preset.presetJButton.JButtonWithBorder;
 import gui.preset.presetJTextField.JPriceTextField;
-import gui.preset.JButtonWithBorder;
 
 public class NewOfferta extends JDialog {
 

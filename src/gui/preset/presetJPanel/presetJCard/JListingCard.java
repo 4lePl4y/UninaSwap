@@ -11,8 +11,8 @@ import controller.Controller;
 import entities.annuncio.*;
 import entities.annuncio.AnnuncioVendita;
 import entities.studente.Studente;
-import gui.preset.JButtonWithBorder;
 import gui.preset.JDisplayTextArea;
+import gui.preset.presetJButton.JButtonWithBorder;
 
 import java.awt.Color;
 import java.awt.Dimension;

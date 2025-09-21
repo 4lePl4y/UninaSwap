@@ -15,7 +15,7 @@ import javax.swing.SwingConstants;
 
 import controller.Controller;
 import entities.studente.Studente;
-import gui.preset.JRefreshButton;
+import gui.preset.presetJButton.JRefreshButton;
 
 public class JOffersUpperPanel extends JPanel{
 	private static final long serialVersionUID = 1L;

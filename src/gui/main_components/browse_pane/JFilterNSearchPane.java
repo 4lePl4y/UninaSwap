@@ -16,8 +16,8 @@ import javax.swing.JCheckBox;
 import javax.swing.JPanel;
 
 import controller.Controller;
-import gui.preset.JButtonWithBorder;
-import gui.preset.JRefreshButton;
+import gui.preset.presetJButton.JButtonWithBorder;
+import gui.preset.presetJButton.JRefreshButton;
 
 public class JFilterNSearchPane extends JPanel {
     private static final long serialVersionUID = 1L;

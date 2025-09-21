@@ -16,7 +16,7 @@ import javax.swing.border.EmptyBorder;
 
 import controller.Controller;
 import entities.oggetto.*;
-import gui.preset.JButtonWithBorder;
+import gui.preset.presetJButton.JButtonWithBorder;
 import gui.preset.presetJTextField.JCustomTextField;
 import gui.preset.presetJTextField.JYearTextField;
 

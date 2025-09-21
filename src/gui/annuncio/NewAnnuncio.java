@@ -5,8 +5,8 @@ import entities.enumerazioni.Sede;
 import entities.enumerazioni.TipoAnnuncio;
 import entities.oggetto.Oggetto;
 import exception.CustomSQLException;
-import gui.preset.JButtonWithBorder;
 import gui.preset.JWritableTextArea;
+import gui.preset.presetJButton.JButtonWithBorder;
 import gui.preset.presetJTextField.JCustomTextField;
 import gui.preset.presetJTextField.JPriceTextField;
 

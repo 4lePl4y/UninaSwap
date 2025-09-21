@@ -10,7 +10,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.Font;
 
 import controller.Controller;
-import gui.preset.JButtonWithBorder;
+import gui.preset.presetJButton.JButtonWithBorder;
 import gui.preset.presetJTextField.JMailTextField;
 
 public class ModifyEmail extends JDialog {

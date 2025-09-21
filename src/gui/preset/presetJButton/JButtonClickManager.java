@@ -1,4 +1,4 @@
-package gui.preset;
+package gui.preset.presetJButton;
 
 public class JButtonClickManager extends JButtonWithBorder {
 	private static final long serialVersionUID = 1L;

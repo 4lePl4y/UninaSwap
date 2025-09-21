@@ -2,6 +2,7 @@ package gui;
 
 import controller.Controller;
 import gui.preset.*;
+import gui.preset.presetJButton.JButtonWithBorder;
 import gui.preset.presetJLabel.*;
 import gui.preset.presetJPanel.JPanelWithBackground;
 import gui.preset.presetJPanel.JPanelWithBorder;

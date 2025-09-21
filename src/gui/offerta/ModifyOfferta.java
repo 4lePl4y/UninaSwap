@@ -24,8 +24,8 @@ import entities.offerta.Offerta;
 import entities.offerta.OffertaDenaro;
 import entities.oggetto.Oggetto;
 import entities.studente.Studente;
-import gui.preset.JButtonWithBorder;
 import gui.preset.JWritableTextArea;
+import gui.preset.presetJButton.JButtonWithBorder;
 import gui.preset.presetJTextField.JPriceTextField;
 
 public class ModifyOfferta extends JDialog{

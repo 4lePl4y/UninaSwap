@@ -3,8 +3,8 @@ package gui.annuncio;
 import controller.Controller;
 import entities.annuncio.*;
 import entities.enumerazioni.Sede;
-import gui.preset.JButtonWithBorder;
 import gui.preset.JWritableTextArea;
+import gui.preset.presetJButton.JButtonWithBorder;
 import gui.preset.presetJTextField.JCustomTextField;
 import gui.preset.presetJTextField.JPriceTextField;
 
