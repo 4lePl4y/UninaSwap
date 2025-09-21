@@ -92,6 +92,8 @@ public abstract class Annuncio {
 		this.oraIncontro = oraIncontro;
 	}
 	
+	abstract public String getTipoAnnuncio();
+	
 	
 }
 

@@ -1,93 +1,71 @@
 package gui.preset.presetJPanel.presetJCard;
 
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
-
+import javax.swing.JPanel;
 import controller.Controller;
 import entities.annuncio.*;
-import entities.annuncio.AnnuncioVendita;
 import gui.preset.presetJButton.JButtonWithBorder;
 
-import java.awt.Rectangle;
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
 import javax.swing.JButton;
+import javax.swing.Box;
+import java.awt.FlowLayout;
 
 
-
-public class JMyListingCard extends JCard {
+public class JMyListingCard extends AbstractListingCard {
 	private static final long serialVersionUID = 1L;
-	private Annuncio annuncio;
+	private Annuncio annuncio; 
 	
 	public JMyListingCard(Annuncio annuncio, Controller controller) {
-		super(controller);
-		this.setBounds(new Rectangle(0, 0, 240, 450));
+		super(annuncio, controller);
 		this.annuncio = annuncio;
 		
-		JLabel titleLabel = new JLabel(annuncio.getTitolo());
-		titleLabel.setHorizontalTextPosition(SwingConstants.CENTER);
-		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		titleLabel.setBounds(10, 10, 220, 13);
-		add(titleLabel);
-		
-		JLabel descriptionLabel = new JLabel(annuncio.getDescrizione());
-		descriptionLabel.setVerticalAlignment(SwingConstants.TOP);
-		descriptionLabel.setHorizontalTextPosition(SwingConstants.LEADING);
-		descriptionLabel.setBounds(10, 146, 220, 134);
-		add(descriptionLabel);
-		
-		JLabel sedeLabel = new JLabel("Sede dell'incontro: "+ annuncio.getLuogo());
-		sedeLabel.setBounds(10, 320, 220, 13);
-		add(sedeLabel);
-
-		JLabel timeLabel = new JLabel("Ora dell'incontro: "+ annuncio.getOraIncontro());
-		timeLabel.setBounds(10, 341, 220, 13);
-		add(timeLabel);
+		//BOTTOM PANEL: contiene i bottoni per modificare o eliminare l'annuncio
+		JPanel bottomPanel = new JPanel();
+		bottomPanel.setBackground(new Color(255, 255, 255));
+		this.add(bottomPanel);
+		bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		JButton modifyButton = new JButtonWithBorder("Modifica");
-		modifyButton.setBounds(30, 410, 100, 30);
+		modifyButton.setPreferredSize(new Dimension(100, 30));
+		modifyButton.setMaximumSize(new Dimension(100, 30));
+		
 		modifyButton.addMouseListener(new MouseAdapter() {
+			@Override
 			public void mouseClicked(MouseEvent e) {
 				onModificaAnnuncioClicked();
 			}
 		});
-		add(modifyButton);
+		bottomPanel.add(modifyButton);
+
+		bottomPanel.add(Box.createHorizontalStrut(15));
 		
 		JButton deleteButton = new JButtonWithBorder("Elimina");
-		deleteButton.setBounds(155, 410, 100, 30);
+		deleteButton.setPreferredSize(new Dimension(100, 30));
+		deleteButton.setMaximumSize(new Dimension(100, 30));
 		deleteButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				onCancellaAnnuncioClicked();
 			}
 		});
-		add(deleteButton);
+		bottomPanel.add(deleteButton);
 		
-		JLabel typeLabel = new JLabel("New label");
-		typeLabel.setBounds(10, 364, 70, 13);
-		add(typeLabel);
-		
-		
-		if (annuncio instanceof AnnuncioVendita) {
-			JLabel priceLabel = new JLabel("Prezzo: " + String.valueOf(((AnnuncioVendita)annuncio).getPrezzo()) + "€");
-			priceLabel.setBounds(10, 297, 220, 13);
-			add(priceLabel);
-			priceLabel.setVisible(true);
-			typeLabel.setText("Vendita");
-		}else if (annuncio instanceof AnnuncioScambio) {
-			typeLabel.setText("Scambio");
-		}else {
-			typeLabel.setText("Regalo");
-		}
-		
+		this.add(Box.createVerticalStrut(30));
+	}	
+
+	
+
+	//METODI
+	private void onModificaAnnuncioClicked() {
+		controller.onModificaAnnuncioFrameClicked(annuncio);	
 	}
 	
-	//METODI
 	public void onCancellaAnnuncioClicked() {
 		controller.onCancellaAnnuncioClicked(annuncio);
 	}
 	
-	private void onModificaAnnuncioClicked() {
-		controller.onModificaAnnuncioFrameClicked(annuncio);
-		
-	}
+	
 }

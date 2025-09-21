@@ -15,4 +15,9 @@ public class AnnuncioScambio extends Annuncio{
 	public AnnuncioScambio(long id, String titolo, Studente autore, Oggetto oggetto, String descrizione, Sede luogo, LocalTime oraIncontro, LocalDate dataPubblicazione) {
 		super(id, titolo, autore, oggetto, descrizione, luogo, oraIncontro, dataPubblicazione);	
 	}
+
+	@Override
+	public String getTipoAnnuncio() {
+		return "SCAMBIO";
+	}
 }

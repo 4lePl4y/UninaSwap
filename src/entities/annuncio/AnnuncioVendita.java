@@ -26,4 +26,9 @@ public class AnnuncioVendita extends Annuncio {
 	public void setPrezzo(double prezzo) {
 		this.prezzo=prezzo;
 	}
+
+	@Override
+	public String getTipoAnnuncio() {
+		return "VENDITA";
+	}
 }
