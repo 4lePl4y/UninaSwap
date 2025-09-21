@@ -18,8 +18,9 @@ import javax.swing.JPanel;
 import controller.Controller;
 import gui.preset.presetJButton.JButtonWithBorder;
 import gui.preset.presetJButton.JRefreshButton;
+import gui.preset.presetJPanel.JPanelWithGradient;
 
-public class JFilterNSearchPane extends JPanel {
+public class JFilterNSearchPane extends JPanelWithGradient {
     private static final long serialVersionUID = 1L;
     private Controller controller;
     private boolean[] filtersObjectType = new boolean[5]; // Filtri per oggetto
@@ -34,13 +35,12 @@ public class JFilterNSearchPane extends JPanel {
     public JFilterNSearchPane(Controller controller) {
         this.controller = controller;
 
-        this.setBackground(Color.WHITE);
         this.setPreferredSize(new Dimension(1106, 120));
         this.setLayout(new BorderLayout());
 
         // TOP PANEL 
         JPanel topPanel = new JPanel(new GridBagLayout());
-        topPanel.setBackground(Color.WHITE);
+        topPanel.setOpaque(false);
 
         GridBagConstraints gbc_top = new GridBagConstraints();
         gbc_top.insets = new Insets(5, 10, 5, 10);
@@ -92,7 +92,7 @@ public class JFilterNSearchPane extends JPanel {
 
      // FILTERS PANEL 
         JPanel filtersPanel = new JPanel(new GridBagLayout());
-        filtersPanel.setBackground(Color.WHITE);
+        filtersPanel.setOpaque(false);
 
         GridBagConstraints gbc_filters = new GridBagConstraints();
         gbc_filters.insets = new Insets(0, 0, 0, 0); // margine esterno sinistro/destra
@@ -119,7 +119,7 @@ public class JFilterNSearchPane extends JPanel {
     private JCheckBox[] createCheckBoxPanel(JPanel parent, String title, String[] items) {
         JPanel panel = new JPanel();
         panel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 5)); // compatto, orizzontale
-        panel.setBackground(Color.WHITE);
+        panel.setOpaque(false);
         panel.setBorder(javax.swing.BorderFactory.createTitledBorder(title));
 
         JCheckBox[] checkBoxes = new JCheckBox[items.length];
