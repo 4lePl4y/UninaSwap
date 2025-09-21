@@ -11,7 +11,6 @@ import gui.preset.presetJTextField.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -20,12 +19,10 @@ import java.awt.Insets;
 
 import javax.swing.JButton;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Dimension;
-import javax.swing.BoxLayout;
 
 public class Login extends JFrame {
 	private static final long serialVersionUID = 1L;

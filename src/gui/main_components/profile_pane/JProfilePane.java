@@ -81,7 +81,7 @@ public class JProfilePane extends JPanel {
                 true, false, false);
                
         JFreeChart offersNumberPieChart = ChartFactory.createPieChart("Totale delle offerte", offersNumber(), true, true, false);
-        PiePlot offersNumberPieChartPlot = (PiePlot) offersNumberPieChart.getPlot();
+        PiePlot<?> offersNumberPieChartPlot = (PiePlot<?>) offersNumberPieChart.getPlot();
      
         // {0} = nome categoria, {1} = valore, {2} = percentuale
         offersNumberPieChartPlot.setLabelGenerator(new StandardPieSectionLabelGenerator(

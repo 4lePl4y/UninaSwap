@@ -114,7 +114,7 @@ public class JObjectCard extends JCard {
 		add(deleteButton);
 	}
 		
-	//TODO: ricordarsi di implementare un trigger nel DB dopo un update sulla tabella oggetto per scambio che verichi che quello scambio abbia almeno un oggetto
+	//METODI
 	public void onCancellaOggettoClicked() {
 		controller.onCancellaOggettoClicked(oggetto);
 	}

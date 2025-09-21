@@ -6,25 +6,23 @@ import entities.offerta.Offerta;
 import entities.oggetto.Oggetto;
 
 public class Studente {
+	//ATTRIBUTI
 	private String username;
 	private String password;
 	private String nome;
 	private String cognome;
 	private String eMail;
-	private ArrayList<Oggetto> oggetti;
-	private ArrayList<Annuncio> annunci;
-	private ArrayList<Offerta> offerte;
 	
-	
+	//COSTRUTTORE
 	public Studente(String nome, String cognome, String username, String eMail, String password) {
 		this.nome = nome;
 		this.cognome = cognome;
 		this.username = username;
 		this.eMail = eMail;
 		this.password = password;
-		this.oggetti = new ArrayList<Oggetto>();
-		this.annunci = new ArrayList<Annuncio>();
-		this.offerte = new ArrayList<Offerta>();
+		new ArrayList<Oggetto>();
+		new ArrayList<Annuncio>();
+		new ArrayList<Offerta>();
 	}
 	
 	public String getNome() {

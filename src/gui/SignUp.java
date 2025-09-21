@@ -1,7 +1,6 @@
 package gui;
 
 import controller.Controller;
-import gui.preset.*;
 import gui.preset.presetJButton.JButtonWithBorder;
 import gui.preset.presetJLabel.*;
 import gui.preset.presetJPanel.JPanelWithBackground;
@@ -9,7 +8,6 @@ import gui.preset.presetJPanel.JPanelWithBorder;
 import gui.preset.presetJTextField.*;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
