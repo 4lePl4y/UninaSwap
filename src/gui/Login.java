@@ -11,13 +11,21 @@ import gui.preset.presetJTextField.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
+
 import javax.swing.JButton;
+
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Dimension;
+import javax.swing.BoxLayout;
 
 public class Login extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -33,19 +41,25 @@ public class Login extends JFrame {
 	
 		setTitle("Unina Swap");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setResizable(false);
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setBounds(100, 100, 1080, 650);
 
 		contentPane = new JPanelWithBackground("src/img/LoginBackground.png");
 		contentPane.setForeground(new Color(0, 0, 0));
 		contentPane.setBackground(new Color(255, 255, 255));
-		contentPane.setLayout(null);	
 		setContentPane(contentPane);
+		GridBagLayout gbl_contentPane = new GridBagLayout();
+		gbl_contentPane.columnWidths = new int[]{200, 100, 300, 0};
+		gbl_contentPane.rowHeights = new int[]{275, 350, 0};
+		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
+		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
+		contentPane.setLayout(gbl_contentPane);
 		
 		
 		JPanel panel = new JPanelWithBorder();
 		panel.setBackground(new Color(255, 255, 255));
-		panel.setBounds(158, 133, 284, 350);
-		panel.setPreferredSize(new Dimension(500, 350));
+		panel.setPreferredSize(new Dimension(282, 350));
 		
         
 		JLabel titleLabel = new JLabel("Accedi a UninaSwap");
@@ -57,7 +71,7 @@ public class Login extends JFrame {
 		JDisplayTextArea descTxtPane = new JDisplayTextArea("Scambia, vendi o regala oggetti con altri studenti della Federico II");
 		descTxtPane.setBounds(24, 48, 234, 41);
 		
-		
+										
 		userTxtField = new JCustomTextField("4le ");
 		userTxtField.setBounds(10, 113, 262, 33);
 		userTxtField.setColumns(10);
@@ -66,23 +80,23 @@ public class Login extends JFrame {
 		pswTxtField = new JCustomPasswordField("1234");
 		pswTxtField.setBounds(10, 178, 262, 33);
 		
-		
+										
 		JButton lgnButton = new JButtonWithBorder("Login");
 		lgnButton.setBounds(51, 251, 183, 33);
 		
-		
+										
 		lgnButton.addMouseListener(new MouseAdapter() {			
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				onLoginClicked();
 			}
 		});
-			
+		
 		JLabel questionLabel = new JLabel("Non hai un account?");
 		questionLabel.setBounds(24, 307, 130, 33);
 		questionLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
 		questionLabel.setForeground(Color.DARK_GRAY);
-			
+		
 		JLabel signUpLabel = new JInteractiveLabel("Registrati");
 		signUpLabel.setBounds(151, 315, 70, 17);
 		
@@ -92,11 +106,15 @@ public class Login extends JFrame {
 				onGoToSignUpClicked();
 			}
 		});
-			
+		
 		warningLabel = new JWarningLabel("");
 		warningLabel.setBounds(51, 294, 183, 17);
-
-		contentPane.add(panel);
+		
+		GridBagConstraints gbc_panel = new GridBagConstraints();
+		gbc_panel.insets = new Insets(0, 0, 0, 5);
+		gbc_panel.gridx = 1;
+		gbc_panel.gridy = 1;
+		contentPane.add(panel, gbc_panel);
 		panel.setLayout(null);
 		panel.add(titleLabel);
 		panel.add(descTxtPane);
@@ -106,7 +124,6 @@ public class Login extends JFrame {
 		panel.add(questionLabel);
 		panel.add(signUpLabel);		
 		panel.add(warningLabel);
-				
 				
 	}
 	

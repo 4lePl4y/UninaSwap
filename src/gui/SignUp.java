@@ -40,7 +40,9 @@ public class SignUp extends JFrame {
         
         setTitle("Unina Swap");
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 1080, 650);
+        setResizable(false);
+        setExtendedState(JFrame.MAXIMIZED_BOTH);
+        setBounds(0, 0, 1080, 650);
     
         
         contentPane = new JPanelWithBackground("src/img/SignUpBackground.png");
@@ -52,8 +54,7 @@ public class SignUp extends JFrame {
         // Create the panel for input fields
         JPanel panel = new JPanelWithBorder();
         panel.setBackground(new Color(255, 255, 255));
-        panel.setBounds(330, 70, 398, 504);
-        panel.setPreferredSize(new Dimension(500, 750));
+        panel.setBounds(560, 150, 400, 500);
         panel.setLayout(null);
           
         
@@ -61,44 +62,44 @@ public class SignUp extends JFrame {
         JLabel lblNewLabel = new JLabel("Registrati a UninaSwap");
         lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 20));
         lblNewLabel.setForeground(new Color(0, 51, 102));
-        lblNewLabel.setBounds(88, 7, 202, 21);
+        lblNewLabel.setBounds((panel.getWidth()-202)/2, 7, 202, 21);
         
         JLabel lblNewLabel_1 = new JLabel("Riempi i campi sottostanti");
         lblNewLabel_1.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-        lblNewLabel_1.setBounds(113, 38, 161, 23);
+        lblNewLabel_1.setBounds((panel.getWidth()-161)/2, 38, 161, 23);
         
         
         // Name text field
         nameTxtField = new JLettersTextField("Nome");
-        nameTxtField.setBounds(22, 81, 354, 33);
+        nameTxtField.setBounds(24, 81, 354, 33);
            
         
 		// Surname text field
         surnameTxtField = new JLettersTextField("Cognome"); 
-        surnameTxtField.setBounds(22, 131, 354, 33);
+        surnameTxtField.setBounds(24, 131, 354, 33);
        
 
 		// Username text field
         userTxtField = new JCustomTextField("Username");
-        userTxtField.setBounds(22, 181, 354, 33);
+        userTxtField.setBounds(24, 181, 354, 33);
         
         // Email text field
         emailTxtField = new JMailTextField("Email");
-        emailTxtField.setBounds(22, 231, 354, 33);
+        emailTxtField.setBounds(24, 231, 354, 33);
         
         // Password text field
         pswTxtField = new JCustomPasswordField("Password");
-        pswTxtField.setBounds(22, 281, 354, 33);
+        pswTxtField.setBounds(24, 281, 354, 33);
         
 
         // Check Password text field
         checkPswTxtField = new JCustomPasswordField("Conferma Password");
-        checkPswTxtField.setBounds(22, 331, 354, 33);
+        checkPswTxtField.setBounds(24, 331, 354, 33);
         
 
         // Registrati Button
         JButton registerButton = new JButtonWithBorder("Registrati");
-        registerButton.setBounds(88, 397, 216, 33);
+        registerButton.setBounds((panel.getWidth()-216)/2, 397, 216, 33);
         registerButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -109,12 +110,12 @@ public class SignUp extends JFrame {
         
         JLabel lblNewLabel_2 = new JLabel("Hai già un account?");
         lblNewLabel_2.setFont(new Font("Times New Roman", Font.PLAIN, 14));
-        lblNewLabel_2.setBounds(88, 461, 114, 22);
+        lblNewLabel_2.setBounds(112, 461, 114, 22);
         
         
         loginLabel = new JInteractiveLabel("Accedi");
         loginLabel.setFont(new Font("Times New Roman", Font.BOLD, 14));
-        loginLabel.setBounds(212, 466, 45, 13);
+        loginLabel.setBounds(236, 466, 45, 13);
         loginLabel.addMouseListener(new MouseAdapter() {
         	@Override
         	public void mouseClicked(MouseEvent e) {
