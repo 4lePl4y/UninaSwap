@@ -44,7 +44,11 @@ public class Abbigliamento extends Oggetto {
 
 	@Override
 	public String getBasicInfo() {
-		return "Marchio: " + marchio + "\nTaglia: " + taglia;
+		return "Marchio: \t\t" + marchio + "\nTaglia: \t\t" + taglia;
+	}
+	
+	public String getSourceImage() {
+		return "src/img/abbigliamento.png";
 	}
 	
 }

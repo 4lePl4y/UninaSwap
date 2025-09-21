@@ -40,5 +40,7 @@ public abstract class Oggetto {
 	public abstract String toString();
 
 	public abstract String getBasicInfo();
+
+	public abstract String getSourceImage();
 	
 }

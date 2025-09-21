@@ -82,8 +82,12 @@ public class Libro extends Oggetto {
 
 	@Override
 	public String getBasicInfo() {
-		return "Titolo: " + titolo + "\nAutore: " + autore + "\nAnno di uscita: " + annoUscita + 
-				"\nGenere: " + genere + "\nISBN: " + ISBN;
+		return "Titolo: " + titolo + "\nAutore: " + autore + "\nAnno di uscita: \t" + annoUscita + 
+				"\nGenere: \t\t" + genere + "\nISBN: \t\t" + ISBN;
+	}
+	
+	public String getSourceImage() {
+		return "src/img/libro.jpg";
 	}
 
 }

@@ -32,7 +32,11 @@ public class StrumentoMusicale extends Oggetto {
 
 	@Override
 	public String getBasicInfo() {
-		return "Marchio: " + marchio;
+		return "Marchio: \t\t" + marchio;
+	}
+	
+	public String getSourceImage() {
+		return "src/img/strumento_musicale.png";
 	}
 
 }

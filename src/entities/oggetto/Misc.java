@@ -43,6 +43,10 @@ public class Misc extends Oggetto{
 
 	@Override
 	public String getBasicInfo() {		
-		return "Categoria: " + categoria + "\nMarchio: " + marchio;
+		return "Categoria: \t\t" + categoria + "\nMarchio: \t\t" + marchio;
+	}
+	
+	public String getSourceImage() {
+		return "src/img/misc.png";
 	}
 }

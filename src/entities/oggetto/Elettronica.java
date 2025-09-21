@@ -57,7 +57,11 @@ public class Elettronica extends Oggetto {
 
 	@Override
 	public String getBasicInfo() {
-		return "Marchio: " + marchio + "\nModello: " + modello + "\nAnno di uscita: " + annoUscita;
+		return "Marchio: \t\t" + marchio + "\nModello: \t\t" + modello + "\nAnno di uscita: \t" + annoUscita;
+	}
+	
+	public String getSourceImage() {
+		return "src/img/elettronica.png";
 	}
 
 }
