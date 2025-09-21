@@ -124,7 +124,7 @@ public class JFilterNSearchPane extends JPanel {
 
         JCheckBox[] checkBoxes = new JCheckBox[items.length];
         for (int i = 0; i < items.length; i++) {
-            JCheckBox cb = new JCheckBox(items[i]);
+            JCheckBox cb = new JCustomCheckBox(items[i]);
             checkBoxes[i] = cb;
             panel.add(cb);
         }
