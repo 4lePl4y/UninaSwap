@@ -106,7 +106,7 @@ public class Main extends JFrame {
         });
         
         
-        JButtonWithBorder myObjectsButton = new JButtonWithBorder("📦 Miei Objects");
+        JButtonWithBorder myObjectsButton = new JButtonWithBorder("📦 Miei Oggetti");
         myObjectsButton.addActionListener(e -> {
     		CardLayout cl = (CardLayout)(contentPane.getLayout());
     		cl.show(contentPane, "MYOBJECTS");
