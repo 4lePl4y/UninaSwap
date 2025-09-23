@@ -71,7 +71,6 @@ public abstract class JAbstractOfferCard extends JAbstractCard {
 		middleSXPanel.setLayout(new BorderLayout(0, 0));
 		middleSXPanel.setPreferredSize(new Dimension(250, 130));
 		middleSXPanel.setMaximumSize(new Dimension(250, 130));
-		middleSXPanel.setAlignmentX(SwingConstants.CENTER);
 		middlePanel.add(middleSXPanel, BorderLayout.WEST);
 		
 		JLabel titleLabel = new JLabel("<html>"+ rightTitleLabel() + "</html>");
