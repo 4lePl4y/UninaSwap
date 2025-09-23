@@ -28,6 +28,9 @@ public class OffertaDenaro extends Offerta {
 	public String toString() {
 		return "OffertaDenaro [id=" + getId() + ", stato=" + getStato() + ", messaggio=" + getMessaggio() + ", offerente=" + getOfferente().getUsername() + ", annuncio=" + getAnnuncio().getTitolo() + ", offerta=" + offerta + "]";
 	}
-
+	
+	public String getSourceImage() {
+		return "src/img/offerta_denaro.png";
+	}
 	
 }

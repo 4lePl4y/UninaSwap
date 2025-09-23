@@ -19,12 +19,12 @@ import entities.annuncio.Annuncio;
 import entities.annuncio.AnnuncioVendita;
 import gui.preset.JDisplayTextArea;
 
-public abstract class AbstractListingCard extends JCard {
+public abstract class JAbstractListingCard extends JAbstractCard {
 	private static final long serialVersionUID = 1L;
 	protected JPanel middlePanel;
 	
 	//COSTRUTTORE
-	public AbstractListingCard(Annuncio annuncio, Controller controller) {
+	public JAbstractListingCard(Annuncio annuncio, Controller controller) {
 		super(controller);
 		this.setSize(280, 450);
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

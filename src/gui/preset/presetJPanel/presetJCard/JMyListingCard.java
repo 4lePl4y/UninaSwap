@@ -15,7 +15,7 @@ import javax.swing.Box;
 import java.awt.FlowLayout;
 
 
-public class JMyListingCard extends AbstractListingCard {
+public class JMyListingCard extends JAbstractListingCard {
 	private static final long serialVersionUID = 1L;
 	private Annuncio annuncio; 
 	

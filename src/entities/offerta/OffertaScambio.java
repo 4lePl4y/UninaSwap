@@ -34,4 +34,8 @@ public class OffertaScambio extends Offerta {
 		}
 		return output + "]";
 	}
+	
+	public String getSourceImage() {
+		return "src/img/offerta_scambio.png";
+	}
 }

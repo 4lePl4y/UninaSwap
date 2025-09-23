@@ -21,7 +21,7 @@ import java.awt.FlowLayout;
 import java.awt.Component;
 
 
-public class JListingCard extends AbstractListingCard {
+public class JListingCard extends JAbstractListingCard {
 	private static final long serialVersionUID = 1L;
 	private Annuncio annuncio;
 	private Studente autore; 

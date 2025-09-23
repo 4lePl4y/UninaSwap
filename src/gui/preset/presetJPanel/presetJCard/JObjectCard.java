@@ -24,23 +24,25 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 
-public class JObjectCard extends JCard {
+public class JObjectCard extends JAbstractCard {
 	private static final long serialVersionUID = 1L;
+	public static final int cardWidth = 280;
+	public static final int cardHeight= 280;
 	private Oggetto oggetto;
 
 	public JObjectCard(Oggetto oggetto, Controller controller) {
 		super(controller);
 //		this.setSize(280, 200);
-		this.setPreferredSize(new Dimension(280, 280));
-        this.setMaximumSize(new Dimension(280, 280));
+		this.setPreferredSize(new Dimension(cardWidth, cardHeight));
+        this.setMaximumSize(new Dimension(cardWidth, cardHeight));
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
 		//TOP PANEL: contiene immagine e nome dell'oggetto
 		this.add(Box.createVerticalStrut(20));
 		JPanel topPanel = new JPanel();
 		topPanel.setBackground(new Color(255, 255, 255));
-		topPanel.setPreferredSize(new Dimension(280, 70));
-		topPanel.setMaximumSize(new Dimension(280, 70));
+		topPanel.setPreferredSize(new Dimension(cardWidth, 70));
+		topPanel.setMaximumSize(new Dimension(cardWidth, 70));
 		topPanel.setLayout(new BorderLayout());
 		this.add(topPanel);
 		
@@ -50,10 +52,10 @@ public class JObjectCard extends JCard {
 		imageLabel.setBorder(new EmptyBorder(0, 10, 0, 0));
 		topPanel.add(imageLabel, BorderLayout.WEST);
 		
-		JLabel titleLabel = new JLabel("<html>" + oggetto.getNome() + "</html>");
-		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		titleLabel.setFont(new Font("Tahoma", Font.BOLD, 16));  //TODO: cambiare font
-		topPanel.add(titleLabel, BorderLayout.CENTER);
+		JLabel nameLabel = new JLabel("<html>" + oggetto.getNome() + "</html>");
+		nameLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		nameLabel.setFont(new Font("Tahoma", Font.BOLD, 16));  //TODO: cambiare font
+		topPanel.add(nameLabel, BorderLayout.CENTER);
 		
 		//MIDDLE PANEL: contiene le info dell'oggetto
 		this.add(Box.createVerticalStrut(20));
@@ -69,12 +71,12 @@ public class JObjectCard extends JCard {
 		infoPanel.setLayout(new BoxLayout(infoPanel, BoxLayout.Y_AXIS));
 		middlePanel.add(infoPanel, BorderLayout.CENTER);
 		
-		JDisplayTextArea descriptionTextArea = new JDisplayTextArea(oggetto.getBasicInfo());
-		descriptionTextArea.setFont(new Font("Tahoma", Font.PLAIN, 14));  //TODO: cambiare font
-		descriptionTextArea.setPreferredSize(new Dimension(260, 150));
-		descriptionTextArea.setMaximumSize(new Dimension(260, 150));
-		descriptionTextArea.setAlignmentX(Component.LEFT_ALIGNMENT);
-		infoPanel.add(descriptionTextArea);
+		JDisplayTextArea infoTextArea = new JDisplayTextArea(oggetto.getBasicInfo());
+		infoTextArea.setFont(new Font("Tahoma", Font.PLAIN, 14));  //TODO: cambiare font
+		infoTextArea.setPreferredSize(new Dimension(260, 150));
+		infoTextArea.setMaximumSize(new Dimension(260, 150));
+		infoTextArea.setAlignmentX(Component.LEFT_ALIGNMENT);
+		infoPanel.add(infoTextArea);
 		
 		//BOTTOM PANEL: contiene i bottoni per modificare o eliminare l'oggetto
 		JPanel bottomPanel = new JPanel();
@@ -82,14 +84,14 @@ public class JObjectCard extends JCard {
 		this.add(bottomPanel);
 		bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JButton updateButton = new JButtonWithBorder("Modifica");
-		updateButton.setBounds(30, 410, 100, 30);
-		updateButton.addMouseListener(new MouseAdapter() {
+		JButton modifyButton = new JButtonWithBorder("Modifica");
+		modifyButton.setBounds(30, 410, 100, 30);
+		modifyButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				onModificaOggettoFrameClicked();
 			}
 		});
-		bottomPanel.add(updateButton);
+		bottomPanel.add(modifyButton);
 
 		bottomPanel.add(Box.createHorizontalStrut(15));
 		

@@ -52,6 +52,7 @@ public abstract class Offerta {
 	public String toString() {
 		return "Offerta [id=" + id + ", stato=" + stato + ", messaggio=" + messaggio + ", offerente=" + offerente.getUsername() + ", annuncio=" + annuncio.getTitolo() + "]";
 	}
-
+	
+	public abstract String getSourceImage();
 
 }

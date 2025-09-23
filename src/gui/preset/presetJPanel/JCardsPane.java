@@ -17,8 +17,8 @@ import entities.oggetto.Oggetto;
 import gui.preset.presetJPanel.presetJCard.*;
 public class JCardsPane<T> extends JPanel {
 	private static final long serialVersionUID = 1L;
-	private int cardWidth = 280; // Width of each card
-	private int cardHeight = 450; 
+	private int cardWidth = JAbstractCard.cardWidth; // Width of each card
+	private int cardHeight = JAbstractCard.cardHeight; 
 	private int hGap = 30; // Horizontal gap between cards
 	private int vGap = 15; // Vertical gap between cards
 	private Controller controller; // Controller reference
@@ -28,9 +28,23 @@ public class JCardsPane<T> extends JPanel {
 		this.controller = controller; // Initialize the controller
 		setLayout(new GridBagLayout()); // Use GridBagLayout for flexible layout
 		setOpaque(false); // Make the panel transparent
-		
+
 	}
 	
+	public void setCorrectSizes(T type) {
+		switch(type) {
+		case Oggetto o->{
+			cardWidth = JObjectCard.cardWidth;
+			cardHeight = JObjectCard.cardHeight;
+			}
+		case Offerta of->{
+			cardWidth = JAbstractOfferCard.cardWidth;
+			cardHeight = JAbstractOfferCard.cardHeight;
+			}
+		default -> {}
+		}
+	}
+
 	public int getCardsPerRow(int viewportWidth) {
 		int maxCards = Math.max(1, (viewportWidth + hGap) / (cardWidth + hGap));
         return maxCards;
@@ -40,6 +54,7 @@ public class JCardsPane<T> extends JPanel {
     public void updateCardsLayout(int cardsPerRow, ArrayList<T> contents) {
         removeAll();
         for (int i = 0; i < contents.size(); i++) {
+        	setCorrectSizes(contents.get(i));
             JPanel card = createCard(contents.get(i));
             
             GridBagConstraints gbc = new GridBagConstraints();
@@ -84,7 +99,12 @@ public class JCardsPane<T> extends JPanel {
 				
 			case Oggetto o -> {return new JObjectCard((Oggetto) o, controller);}
 			
-			case Offerta of ->{return new JOfferCard ((Offerta) of, controller);}
+			case Offerta of ->{
+				if (of.getOfferente().getUsername().equals(controller.getStudenteLoggato().getUsername()))
+					return new JMadeOfferCard ((Offerta) of, controller);
+				else
+					return new JReceivedOfferCard ((Offerta) of, controller);
+			}
 			
 			default -> {throw new IllegalArgumentException("Unsupported content type: " + content.getClass().getName());}
 		}
