@@ -23,14 +23,16 @@ public class JCardsPane<T> extends JPanel {
 	private int vGap = 15; // Vertical gap between cards
 	private Controller controller; // Controller reference
 	
+	//COSTRUTTORE
 	public JCardsPane(Controller controller) {
 		super();
 		this.controller = controller; // Initialize the controller
 		setLayout(new GridBagLayout()); // Use GridBagLayout for flexible layout
 		setOpaque(false); // Make the panel transparent
-
 	}
 	
+	
+	//METODI 
 	public void setCorrectSizes(T type) {
 		switch(type) {
 		case Oggetto o->{

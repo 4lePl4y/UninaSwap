@@ -3,22 +3,16 @@ package gui.preset.presetJPanel.presetJCard;
 import controller.Controller;
 import entities.enumerazioni.Stato;
 import entities.offerta.*; 
-import entities.oggetto.Oggetto; 
-import entities.studente.Studente;
-import gui.preset.JDisplayTextArea;
 import gui.preset.presetJButton.JButtonWithBorder;
-import gui.preset.presetJLabel.JInteractiveLabel; 
-import javax.swing.JLabel; 
-import javax.swing.JList;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
+import javax.swing.border.LineBorder;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -27,15 +21,16 @@ public class JReceivedOfferCard extends JAbstractOfferCard {
 	
 	public JReceivedOfferCard(Offerta offerta, Controller controller) { 
 		super(offerta, controller); 
-		this.setSize(280, 450);
-		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
 		//BOTTOM PANEL
 		this.add(Box.createVerticalStrut(20));
 		JPanel bottomPanel = new JPanel();
+		bottomPanel.setPreferredSize(new Dimension(450, 100));
+		bottomPanel.setMaximumSize(new Dimension(450, 100));
+		bottomPanel.setBorder(new LineBorder(Color.BLACK, 1));
 		bottomPanel.setBackground(new Color(255, 255, 255));
 		this.add(bottomPanel);
-		bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
 		
 		if(offerta.getStato() == Stato.Accettata) {
 			JButton acceptButton = new JButtonWithBorder("Accetta"); 

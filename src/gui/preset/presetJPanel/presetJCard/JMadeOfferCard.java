@@ -1,13 +1,11 @@
 package gui.preset.presetJPanel.presetJCard;
 
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import javax.swing.Box;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JPanel;
 
@@ -22,8 +20,6 @@ public class JMadeOfferCard extends JAbstractOfferCard {
 
 	public JMadeOfferCard(Offerta offerta, Controller controller) {
 		super(offerta, controller);
-		this.setSize(280, 450);
-		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		
 		//BOTTOM PANEL
 		this.add(Box.createVerticalStrut(20));

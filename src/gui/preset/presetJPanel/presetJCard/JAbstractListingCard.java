@@ -38,11 +38,15 @@ public abstract class JAbstractListingCard extends JAbstractCard {
 		topPanel.setLayout(new BorderLayout());
 		this.add(topPanel);
 		
-		ImageIcon icon = new ImageIcon(annuncio.getOggetto().getSourceImage()); 
-		icon = new ImageIcon(icon.getImage().getScaledInstance(80, 80,  java.awt.Image.SCALE_SMOOTH));
-		JLabel imageLabel = new JLabel(icon);
+//		ImageIcon icon = new ImageIcon(annuncio.getOggetto().getSourceImage()); 
+//		JLabel imageLabel = new JLabel(icon);
+		
+		JLabel imageLabel = new JLabel("👕");
+		imageLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 60));
+		imageLabel.setForeground(new Color(34, 155, 196));
 		imageLabel.setBorder(new EmptyBorder(0, 10, 0, 0));
 		topPanel.add(imageLabel, BorderLayout.WEST);
+
 		
 		JLabel titleLabel = new JLabel("<html>" + annuncio.getTipoAnnuncio() + "<br>" + annuncio.getTitolo() + "</html>");
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);

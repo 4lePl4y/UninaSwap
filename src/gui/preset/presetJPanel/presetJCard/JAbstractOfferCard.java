@@ -26,8 +26,8 @@ import gui.preset.JDisplayTextArea;
 
 public abstract class JAbstractOfferCard extends JAbstractCard {
 	private static final long serialVersionUID = 1L;
-	public static final int cardWidth = 450;
-	public static final int cardHeight = 280;
+	public static final int cardWidth = 700;
+	public static final int cardHeight = 150;
 	protected Offerta offerta;
 	private JPanel infoPanel;
 	private JPanel middlePanel;
@@ -37,7 +37,7 @@ public abstract class JAbstractOfferCard extends JAbstractCard {
 		this.offerta = offerta;
 		this.setPreferredSize(new Dimension(cardWidth, cardHeight));
 		this.setMaximumSize(new Dimension(cardWidth, cardHeight));
-		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+		this.setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		
 		//TOP PANEL: contiene immagine e titolo
 		this.add(Box.createVerticalStrut(20));
@@ -51,13 +51,7 @@ public abstract class JAbstractOfferCard extends JAbstractCard {
 		ImageIcon icon = new ImageIcon(offerta.getSourceImage()); 
 		icon = new ImageIcon(icon.getImage().getScaledInstance(80, 80,  java.awt.Image.SCALE_SMOOTH));
 		JLabel imageLabel = new JLabel(icon);
-		imageLabel.setBorder(new EmptyBorder(0, 10, 0, 0));
 		topPanel.add(imageLabel, BorderLayout.WEST);
-		
-		JLabel titleLabel = new JLabel("<html>"+ rightTitleLabel() + "</html>");
-		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		titleLabel.setFont(new Font("Tahoma", Font.BOLD, 16));  //TODO: cambiare font
-		topPanel.add(titleLabel, BorderLayout.CENTER);
 		
 		
 		//MIDDLE PANEL: contiene descrizione e info oggetto
@@ -68,6 +62,10 @@ public abstract class JAbstractOfferCard extends JAbstractCard {
 		middlePanel.setLayout(new BorderLayout(0, 0));
 		this.add(middlePanel);
 		
+		JLabel titleLabel = new JLabel("<html>"+ rightTitleLabel() + "</html>");
+		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+		titleLabel.setFont(new Font("Tahoma", Font.BOLD, 16));  //TODO: cambiare font
+		middlePanel.add(titleLabel, BorderLayout.CENTER);
 		
 		infoPanel = new JPanel();
 		infoPanel.setBackground(new Color(255, 255, 255));
@@ -102,6 +100,7 @@ public abstract class JAbstractOfferCard extends JAbstractCard {
 		
 			JList<Oggetto> list = new JList<>(((OffertaScambio)offerta).getOggettiOfferti().toArray(new Oggetto[0]));
 			list.setSelectionModel(new DefaultListSelectionModel() {
+				private static final long serialVersionUID = 1L;
 				@Override
 				public void setSelectionInterval(int index0, int index1) {
 					// Non fa niente -> impedisce la selezione
