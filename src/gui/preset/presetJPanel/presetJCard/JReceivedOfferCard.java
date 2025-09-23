@@ -28,7 +28,6 @@ public class JReceivedOfferCard extends JAbstractOfferCard {
 		rightPanel.setLayout(new BorderLayout(0, 0));
 		rightPanel.setPreferredSize(new Dimension(100, 130));
 		rightPanel.setMaximumSize(new Dimension(100, 130));
-		rightPanel.setBorder(new LineBorder(Color.BLACK, 1));
 		rightPanel.setOpaque(false);
 		this.add(rightPanel, BorderLayout.EAST);
 		
