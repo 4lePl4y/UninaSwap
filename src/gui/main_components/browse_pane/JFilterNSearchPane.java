@@ -18,9 +18,8 @@ import javax.swing.JPanel;
 import controller.Controller;
 import gui.preset.presetJButton.JButtonWithBorder;
 import gui.preset.presetJButton.JRefreshButton;
-import gui.preset.presetJPanel.JPanelWithGradient;
 
-public class JFilterNSearchPane extends JPanelWithGradient {
+public class JFilterNSearchPane extends JPanel {
     private static final long serialVersionUID = 1L;
     private Controller controller;
     private boolean[] filtersObjectType = new boolean[5]; // Filtri per oggetto
@@ -37,6 +36,7 @@ public class JFilterNSearchPane extends JPanelWithGradient {
 
         this.setPreferredSize(new Dimension(1106, 120));
         this.setLayout(new BorderLayout());
+        this.setBackground(new Color(161,195,192));
 
         // TOP PANEL 
         JPanel topPanel = new JPanel(new GridBagLayout());
@@ -104,6 +104,7 @@ public class JFilterNSearchPane extends JPanelWithGradient {
         gbc_filters.weightx = 0;
         objectTypeCheckBoxes = createCheckBoxPanel(filtersPanel, "Filtra per oggetto:",
                 new String[]{"Abbigliamento", "Elettronica", "Libro", "Strumenti Musicali", "Varie"});
+        
 
         // Filtra per annuncio
         gbc_filters.gridx = 1;
