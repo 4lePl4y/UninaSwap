@@ -33,6 +33,7 @@ public class JObjectCard extends JAbstractCard {
 	public JObjectCard(Oggetto oggetto, Controller controller) {
 		super(controller);
 //		this.setSize(280, 200);
+		this.oggetto = oggetto;
 		this.setPreferredSize(new Dimension(cardWidth, cardHeight));
         this.setMaximumSize(new Dimension(cardWidth, cardHeight));
 		this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
