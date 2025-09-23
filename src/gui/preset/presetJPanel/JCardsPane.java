@@ -40,8 +40,7 @@ public class JCardsPane<T> extends JPanel {
     public void updateCardsLayout(int cardsPerRow, ArrayList<T> contents) {
         removeAll();
         for (int i = 0; i < contents.size(); i++) {
-            JPanel card = createCard(contents.get(i)); // Create a new card for each announcement
-            card.setPreferredSize(new Dimension(cardWidth, cardHeight));
+            JPanel card = createCard(contents.get(i));
             
             GridBagConstraints gbc = new GridBagConstraints();
             gbc.gridx = i % cardsPerRow;  //Imposta la colonna della card
