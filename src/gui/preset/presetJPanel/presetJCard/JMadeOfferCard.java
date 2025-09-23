@@ -1,5 +1,6 @@
 package gui.preset.presetJPanel.presetJCard;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.event.MouseAdapter;
@@ -22,11 +23,12 @@ public class JMadeOfferCard extends JAbstractOfferCard {
 		super(offerta, controller);
 		
 		//BOTTOM PANEL
-		this.add(Box.createVerticalStrut(20));
-		JPanel bottomPanel = new JPanel();
-		bottomPanel.setBackground(new Color(255, 255, 255));
-		this.add(bottomPanel);
-		bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		JPanel rightPanel = new JPanel();
+		rightPanel.setOpaque(false);
+		rightPanel.setLayout(new BorderLayout(0, 0));
+		rightPanel.setPreferredSize(new java.awt.Dimension(100, 130));
+		rightPanel.setMaximumSize(new java.awt.Dimension(100, 130));
+		this.add(rightPanel, BorderLayout.EAST);
 		
 		if(offerta.getStato() == Stato.InAttesa) {
 			JButton modifyButton = new JButtonWithBorder("Modifica"); 
@@ -36,10 +38,8 @@ public class JMadeOfferCard extends JAbstractOfferCard {
 					onModificaOffertaFrameClicked();
 				}
 			});
-			bottomPanel.add(modifyButton);
-			
-			bottomPanel.add(Box.createHorizontalStrut(15));
-			
+			rightPanel.add(modifyButton, BorderLayout.NORTH);
+						
 			JButton deleteButton = new JButtonWithBorder("Ritira"); 
 			deleteButton.setBounds(155, 410, 100, 30); 
 			deleteButton.addMouseListener(new MouseAdapter() {
@@ -47,7 +47,7 @@ public class JMadeOfferCard extends JAbstractOfferCard {
 					onCancellaOffertaClicked();
 				}
 			});
-			bottomPanel.add(deleteButton);
+			rightPanel.add(deleteButton, BorderLayout.SOUTH);
 		}
 	}
 	

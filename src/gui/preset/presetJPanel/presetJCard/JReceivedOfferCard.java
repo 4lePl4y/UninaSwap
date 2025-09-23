@@ -10,6 +10,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -23,14 +24,13 @@ public class JReceivedOfferCard extends JAbstractOfferCard {
 		super(offerta, controller); 
 		
 		//BOTTOM PANEL
-		this.add(Box.createVerticalStrut(20));
-		JPanel bottomPanel = new JPanel();
-		bottomPanel.setPreferredSize(new Dimension(450, 100));
-		bottomPanel.setMaximumSize(new Dimension(450, 100));
-		bottomPanel.setBorder(new LineBorder(Color.BLACK, 1));
-		bottomPanel.setBackground(new Color(255, 255, 255));
-		this.add(bottomPanel);
-		bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.Y_AXIS));
+		JPanel rightPanel = new JPanel();
+		rightPanel.setLayout(new BorderLayout(0, 0));
+		rightPanel.setPreferredSize(new Dimension(100, 130));
+		rightPanel.setMaximumSize(new Dimension(100, 130));
+		rightPanel.setBorder(new LineBorder(Color.BLACK, 1));
+		rightPanel.setOpaque(false);
+		this.add(rightPanel, BorderLayout.EAST);
 		
 		if(offerta.getStato() == Stato.Accettata) {
 			JButton acceptButton = new JButtonWithBorder("Accetta"); 
@@ -40,9 +40,7 @@ public class JReceivedOfferCard extends JAbstractOfferCard {
 					onAccettaOffertaClicked();
 				}
 			});
-			bottomPanel.add(acceptButton); 
-			
-			bottomPanel.add(Box.createHorizontalStrut(15));
+			rightPanel.add(acceptButton, BorderLayout.NORTH); 
 			
 			JButton declineButton = new JButtonWithBorder("Rifiuta"); 
 			declineButton.setBounds(155, 410, 100, 30); 
@@ -51,7 +49,7 @@ public class JReceivedOfferCard extends JAbstractOfferCard {
 					onRifiutaOffertaClicked();
 				}
 			});
-			bottomPanel.add(declineButton);
+			rightPanel.add(declineButton, BorderLayout.SOUTH);
 			
 		}
 			
