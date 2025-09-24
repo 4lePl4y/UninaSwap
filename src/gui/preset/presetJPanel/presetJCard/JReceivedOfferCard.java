@@ -31,9 +31,11 @@ public class JReceivedOfferCard extends JAbstractOfferCard {
 		rightPanel.setOpaque(false);
 		this.add(rightPanel, BorderLayout.EAST);
 		
+		
 		if(offerta.getStato() == Stato.Accettata) {
 			JButton acceptButton = new JButtonWithBorder("Accetta"); 
-			acceptButton.setBounds(30, 410, 100, 30); 
+			acceptButton.setPreferredSize(new Dimension(100, 30));
+			acceptButton.setMaximumSize(new Dimension(100, 30));
 			acceptButton.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
 					onAccettaOffertaClicked();
@@ -42,7 +44,8 @@ public class JReceivedOfferCard extends JAbstractOfferCard {
 			rightPanel.add(acceptButton, BorderLayout.NORTH); 
 			
 			JButton declineButton = new JButtonWithBorder("Rifiuta"); 
-			declineButton.setBounds(155, 410, 100, 30); 
+			declineButton.setPreferredSize(new Dimension(100, 30));
+			declineButton.setMaximumSize(new Dimension(100, 30));
 			declineButton.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
 					onRifiutaOffertaClicked();

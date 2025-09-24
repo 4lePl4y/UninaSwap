@@ -8,9 +8,11 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import controller.Controller;
 import entities.annuncio.*;
+import entities.offerta.OffertaScambio;
 import entities.oggetto.*;
 import entities.studente.*;
 import exception.CustomSQLException;
+import gui.preset.JCustomList;
 import gui.preset.JWritableTextArea;
 import gui.preset.presetJButton.JButtonWithBorder;
 import gui.preset.presetJTextField.JPriceTextField;
@@ -25,9 +27,8 @@ public class NewOfferta extends JDialog {
     private JWritableTextArea messaggioArea;
     private JButtonWithBorder submitButton;
     private JPriceTextField moneyTextField;
-    private ArrayList<Oggetto> mieiOggetti;
-    private ArrayList<JCheckBox> checkBoxes;
-	private ArrayList<Oggetto> oggettiSelezionati; 
+	private JCustomList<Oggetto> objectsListPanel;
+	private ArrayList<Oggetto> oggettiSelezionati;
 
     public NewOfferta(Controller controller, Annuncio annuncio, Studente autore) {
     	super(controller.getMainFrame(), "Nuova Offerta", true);
@@ -68,19 +69,9 @@ public class NewOfferta extends JDialog {
         	chooseObjectLabel.setBounds(0, 0, 200, 21);
         	barterPanel.add(chooseObjectLabel);
         	
-        	mieiOggetti = controller.getMieiOggetti();
-        	JPanel checkBoxPanel = new JPanel();
-        	checkBoxPanel.setLayout(new BoxLayout(checkBoxPanel, BoxLayout.Y_AXIS));
-        	this.checkBoxes = new ArrayList<>();
-        	for (Oggetto oggetto : mieiOggetti) {
-        	    JCheckBox checkBox = new JCheckBox(oggetto.toString());
-        	    checkBoxPanel.add(checkBox);
-        	    checkBoxes.add(checkBox);
-        	}
-        	
-        	JScrollPane scrollPane = new JScrollPane(checkBoxPanel);
-        	scrollPane.setBounds(0, 20, 200, 100);
-        	barterPanel.add(scrollPane);
+        	objectsListPanel = new JCustomList<Oggetto>(controller.getMieiOggetti(), JCustomList.Mode.MULTIPLE_SELECTION, 205, 80);
+        	objectsListPanel.setBounds(0, 20, 205, 80);
+        	barterPanel.add(objectsListPanel);        	
         	
         	JLabel optionLabel = new JLabel("oppure");
         	optionLabel.setHorizontalAlignment(SwingConstants.CENTER);
@@ -92,7 +83,8 @@ public class NewOfferta extends JDialog {
         	addObjectButton.addActionListener(e -> {
 				controller.onApriOggettoFrameClicked();
 			});
-        	barterPanel.add(addObjectButton);			        
+        	barterPanel.add(addObjectButton);			  
+        	
         } else {       	
         	JPanel moneyPanel = new JPanel();
         	moneyPanel.setBounds(10, 144, 386, 28);
@@ -137,18 +129,12 @@ public class NewOfferta extends JDialog {
     }
 
 	private ArrayList<Oggetto> getOggettiSelezionati() {
-		ArrayList<Oggetto> oggettiSelezionati = new ArrayList<>();
-		for (int i=0; i<this.checkBoxes.size(); i++) {
-			if(checkBoxes.get(i).isSelected())
-				oggettiSelezionati.add(mieiOggetti.get(i));
-		}
-		
-		return oggettiSelezionati;
+		return objectsListPanel.getSelectedValues();
 	}
 	
 	  boolean areInputsValid() {
         if(annuncio instanceof AnnuncioScambio) {
-			oggettiSelezionati = getOggettiSelezionati();
+        	oggettiSelezionati = getOggettiSelezionati();
 			if(oggettiSelezionati.isEmpty()) {
 				JOptionPane.showMessageDialog(this, "Devi selezionare almeno un oggetto da scambiare!");
 				return false;

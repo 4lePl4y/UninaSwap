@@ -1,7 +1,9 @@
 package gui.preset;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.util.Vector;
@@ -11,6 +13,7 @@ import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.ListSelectionModel;
+import javax.swing.UIManager;
 
 public class JCustomList<T> extends JPanel {
     private static final long serialVersionUID = 1L;
@@ -24,7 +27,9 @@ public class JCustomList<T> extends JPanel {
     }
 
     public JCustomList(List<T> elements, Mode mode, int width, int height) {
-        setLayout(new BorderLayout());
+    	UIManager.put("ScrollBar.width", 8);                  
+
+    	setLayout(new BorderLayout());
     	this.setPreferredSize(new Dimension(width, height));
     	this.setMaximumSize(new Dimension(width, height));
     	
@@ -49,7 +54,16 @@ public class JCustomList<T> extends JPanel {
                 jList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
                 break;
             case MULTIPLE_SELECTION:
-                jList.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
+            	jList.setSelectionModel(new DefaultListSelectionModel() {
+					private static final long serialVersionUID = 1L;
+					
+					public void setSelectionInterval(int index0, int index1) {
+						if (isSelectedIndex(index0))
+							super.removeSelectionInterval(index0, index1);
+						else
+							super.addSelectionInterval(index0, index1);
+                    }
+                });
                 break;
         }
 
@@ -57,7 +71,10 @@ public class JCustomList<T> extends JPanel {
         scrollPane.setPreferredSize(new Dimension(width, height));
         scrollPane.setMaximumSize(new Dimension(width, height));
         add(scrollPane, BorderLayout.CENTER);
+       
+        
     }
+
 
     // Getter per la JList interna
     public JList<T> getList() {
@@ -65,8 +82,8 @@ public class JCustomList<T> extends JPanel {
     }
 
     // Recupera elementi selezionati
-    public List<T> getSelectedValues() {
-        return jList.getSelectedValuesList();
+    public ArrayList<T> getSelectedValues() {
+        return new ArrayList<T>(jList.getSelectedValuesList());
     }
 }
 

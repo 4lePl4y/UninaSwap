@@ -2,6 +2,7 @@ package gui.preset.presetJPanel.presetJCard;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -32,7 +33,8 @@ public class JMadeOfferCard extends JAbstractOfferCard {
 		
 		if(offerta.getStato() == Stato.InAttesa) {
 			JButton modifyButton = new JButtonWithBorder("Modifica"); 
-			modifyButton.setBounds(30, 410, 100, 30); 
+			modifyButton.setPreferredSize(new Dimension(100, 30));
+			modifyButton.setMaximumSize(new Dimension(100, 30));
 			modifyButton.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
 					onModificaOffertaFrameClicked();
@@ -41,7 +43,8 @@ public class JMadeOfferCard extends JAbstractOfferCard {
 			rightPanel.add(modifyButton, BorderLayout.NORTH);
 						
 			JButton deleteButton = new JButtonWithBorder("Ritira"); 
-			deleteButton.setBounds(155, 410, 100, 30); 
+			deleteButton.setPreferredSize(new Dimension(100, 30));
+			deleteButton.setMaximumSize(new Dimension(100, 30)); 
 			deleteButton.addMouseListener(new MouseAdapter() {
 				public void mouseClicked(MouseEvent e) {
 					onCancellaOffertaClicked();
