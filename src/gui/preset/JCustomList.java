@@ -2,6 +2,7 @@ package gui.preset;
 
 import java.util.List;
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.util.Vector;
 
@@ -22,9 +23,11 @@ public class JCustomList<T> extends JPanel {
         MULTIPLE_SELECTION // selezione multipla
     }
 
-    public JCustomList(List<T> elements, Mode mode) {
+    public JCustomList(List<T> elements, Mode mode, int width, int height) {
         setLayout(new BorderLayout());
-
+    	this.setPreferredSize(new Dimension(width, height));
+    	this.setMaximumSize(new Dimension(width, height));
+    	
         // Usa Vector per evitare cast e problemi di tipo
         jList = new JList<>(new Vector<>(elements));
         jList.setVisibleRowCount(5); // default: 5 righe visibili
@@ -34,7 +37,9 @@ public class JCustomList<T> extends JPanel {
         switch (mode) {
             case DISPLAY_ONLY:
                 jList.setSelectionModel(new DefaultListSelectionModel() {
-                    @Override
+					private static final long serialVersionUID = 1L;
+
+					@Override
                     public void setSelectionInterval(int index0, int index1) {
                         // disabilita selezione
                     }
@@ -49,6 +54,8 @@ public class JCustomList<T> extends JPanel {
         }
 
         JScrollPane scrollPane = new JScrollPane(jList);
+        scrollPane.setPreferredSize(new Dimension(width, height));
+        scrollPane.setMaximumSize(new Dimension(width, height));
         add(scrollPane, BorderLayout.CENTER);
     }
 

@@ -114,9 +114,9 @@ public abstract class JAbstractOfferCard extends JAbstractCard {
 			offeredObjectsLabel.setHorizontalAlignment(SwingConstants.CENTER);;
 			middleDXPanel.add(offeredObjectsLabel, BorderLayout.NORTH); 
 			
-			JPanel objectsListPanel = new JCustomList<Oggetto>(((OffertaScambio)offerta).getOggettiOfferti(), JCustomList.Mode.DISPLAY_ONLY);
+			JPanel objectsListPanel = new JCustomList<Oggetto>(((OffertaScambio)offerta).getOggettiOfferti(), JCustomList.Mode.SINGLE_SELECTION, 205, 80);
 			
-            middleDXPanel.add(objectsListPanel, BorderLayout.CENTER);
+            middleDXPanel.add(objectsListPanel, BorderLayout.EAST);
 		}
 	}
 	
