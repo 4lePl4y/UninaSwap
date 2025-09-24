@@ -23,6 +23,7 @@ import entities.offerta.Offerta;
 import entities.offerta.OffertaDenaro;
 import entities.offerta.OffertaScambio;
 import entities.oggetto.Oggetto;
+import gui.preset.JCustomList;
 import gui.preset.JDisplayTextArea;
 import java.awt.Rectangle;
 
@@ -109,25 +110,13 @@ public abstract class JAbstractOfferCard extends JAbstractCard {
 			middleDXPanel.add(moneyLabel, BorderLayout.CENTER); 
 		} else {
 			JLabel offeredObjectsLabel = new JLabel("Oggetti offerti in scambio: "); 
-			offeredObjectsLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15)); 
+			offeredObjectsLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15)); //TODO: cambiare font
 			offeredObjectsLabel.setHorizontalAlignment(SwingConstants.CENTER);;
 			middleDXPanel.add(offeredObjectsLabel, BorderLayout.NORTH); 
-		
-			JList<Oggetto> list = new JList<>(((OffertaScambio)offerta).getOggettiOfferti().toArray(new Oggetto[0]));
-			list.setSelectionModel(new DefaultListSelectionModel() {
-				private static final long serialVersionUID = 1L;
-				@Override
-				public void setSelectionInterval(int index0, int index1) {
-					// Non fa niente -> impedisce la selezione
-				}
-			});
 			
-            JScrollPane sp = new JScrollPane(list);
-            sp.setPreferredSize(new Dimension(250, 130));
-    		sp.setMaximumSize(new Dimension(250, 130));
-            sp.setBorder(null);
-            sp.setAlignmentX(Component.CENTER_ALIGNMENT);
-            middleDXPanel.add(sp, BorderLayout.CENTER);
+			JPanel objectsListPanel = new JCustomList<Oggetto>(((OffertaScambio)offerta).getOggettiOfferti(), JCustomList.Mode.DISPLAY_ONLY);
+			
+            middleDXPanel.add(objectsListPanel, BorderLayout.CENTER);
 		}
 	}
 	
