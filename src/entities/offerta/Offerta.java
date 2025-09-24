@@ -34,7 +34,10 @@ public abstract class Offerta {
 	}
 	
 	public String getMessaggio() {
-		return messaggio;
+		if(messaggio==null || messaggio.isEmpty())
+			return "Nessun messaggio";
+		else
+			return messaggio;
 	}
 	
 	public void setMessaggio(String messaggio) {
