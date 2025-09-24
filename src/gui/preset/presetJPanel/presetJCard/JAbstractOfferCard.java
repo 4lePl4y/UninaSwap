@@ -32,6 +32,7 @@ public abstract class JAbstractOfferCard extends JAbstractCard {
 	public static final int cardWidth = 700;
 	public static final int cardHeight = 150;
 	protected Offerta offerta;
+	private JPanel middleSXPanel;
 	private JPanel middleDXPanel;
 	private JPanel middlePanel;
 
@@ -42,7 +43,7 @@ public abstract class JAbstractOfferCard extends JAbstractCard {
 		this.setMaximumSize(new Dimension(cardWidth, cardHeight));
 		this.setLayout(new BorderLayout(0, 0));
 		
-		//TOP PANEL: contiene immagine e titolo
+		//LEFT PANEL: contiene immagine
 		JPanel leftPanel = new JPanel();
 		leftPanel.setBackground(new Color(255, 255, 255));
 		leftPanel.setPreferredSize(new Dimension(100, 130));
@@ -67,7 +68,7 @@ public abstract class JAbstractOfferCard extends JAbstractCard {
 		middlePanel.setMaximumSize(new Dimension(500, 130));
 		this.add(middlePanel, BorderLayout.CENTER);
 		
-		JPanel middleSXPanel = new JPanel();
+		middleSXPanel = new JPanel();
 		middleSXPanel.setBackground(new Color(255, 255, 255));
 		middleSXPanel.setLayout(new BorderLayout(0, 0));
 		middleSXPanel.setPreferredSize(new Dimension(250, 130));
@@ -80,20 +81,24 @@ public abstract class JAbstractOfferCard extends JAbstractCard {
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		titleLabel.setFont(new Font("Tahoma", Font.BOLD, 16));  //TODO: cambiare font
 		middleSXPanel.add(titleLabel, BorderLayout.NORTH);
-
-		JDisplayTextArea messageTextArea = new JDisplayTextArea(offerta.getMessaggio());
-		messageTextArea.setFont(new Font("Tahoma", Font.PLAIN, 14));  //TODO: cambiare font
-		messageTextArea.setPreferredSize(new Dimension(250, 65));
-		messageTextArea.setMaximumSize(new Dimension(250, 65));
-		messageTextArea.setAlignmentX(Component.CENTER_ALIGNMENT);
-		middleSXPanel.add(messageTextArea, BorderLayout.SOUTH);
 		
 		middleDXPanel = new JPanel();
-		middleDXPanel.setBackground(new Color(255, 255, 255));
-		middleDXPanel.setPreferredSize(new Dimension(250, 130));
-		middleDXPanel.setMaximumSize(new Dimension(250, 130));
+		middleDXPanel.setPreferredSize(new Dimension(220, 130));
+		middleDXPanel.setMaximumSize(new Dimension(220, 130));
 		middleDXPanel.setLayout(new BorderLayout(0, 0));
 		middlePanel.add(middleDXPanel, BorderLayout.EAST);
+		
+		JLabel messageLabel = new JLabel("MESSAGGIO:");
+		messageLabel.setPreferredSize(new Dimension(220, 20));
+		messageLabel.setMaximumSize(new Dimension(220, 20));
+		middleDXPanel.add(messageLabel, BorderLayout.NORTH);
+		
+		JDisplayTextArea messageTextArea = new JDisplayTextArea(offerta.getMessaggio());
+		messageTextArea.setOpaque(true);
+		messageTextArea.setPreferredSize(new Dimension(220, 100));
+		messageTextArea.setMaximumSize(new Dimension(220, 100));
+		messageTextArea.setAlignmentX(Component.CENTER_ALIGNMENT);
+		middleDXPanel.add(messageTextArea, BorderLayout.SOUTH);
 		
 		addOffering();
 		
@@ -104,19 +109,21 @@ public abstract class JAbstractOfferCard extends JAbstractCard {
 	private void addOffering() {
 		if(offerta instanceof OffertaDenaro od) {
 			middlePanel.add(Box.createHorizontalStrut(15));
-			JLabel moneyLabel = new JLabel("Denaro offerto: " + od.getOfferta()); 
+			JLabel moneyLabel = new JLabel("<html>Denaro offerto: " +  "<b>" + od.getOfferta() + "€</b> </html>"); 
 			moneyLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15)); 
 			moneyLabel.setHorizontalAlignment(SwingConstants.CENTER);;
-			middleDXPanel.add(moneyLabel, BorderLayout.CENTER); 
+			middleSXPanel.add(moneyLabel, BorderLayout.CENTER); 
 		} else {
+			JPanel offeredObjectsPanel = new JPanel();
+			offeredObjectsPanel.setLayout(new BorderLayout(0, 0));
+			middleSXPanel.add(offeredObjectsPanel, BorderLayout.CENTER);
+			
 			JLabel offeredObjectsLabel = new JLabel("Oggetti offerti in scambio: "); 
 			offeredObjectsLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15)); //TODO: cambiare font
-			offeredObjectsLabel.setHorizontalAlignment(SwingConstants.CENTER);;
-			middleDXPanel.add(offeredObjectsLabel, BorderLayout.NORTH); 
+			offeredObjectsPanel.add(offeredObjectsLabel, BorderLayout.NORTH); 
 			
-			JPanel objectsListPanel = new JCustomList<Oggetto>(((OffertaScambio)offerta).getOggettiOfferti(), JCustomList.Mode.DISPLAY_ONLY, 205, 80);
-			
-            middleDXPanel.add(objectsListPanel, BorderLayout.EAST);
+			JPanel objectsListPanel = new JCustomList<Oggetto>(((OffertaScambio)offerta).getOggettiOfferti(), JCustomList.Mode.DISPLAY_ONLY, 205, 200);
+			offeredObjectsPanel.add(objectsListPanel, BorderLayout.CENTER);
 		}
 	}
 	
