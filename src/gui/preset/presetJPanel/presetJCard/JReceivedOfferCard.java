@@ -1,74 +1,69 @@
-package gui.preset.presetJPanel.presetJCard; 
+package gui.preset.presetJPanel.presetJCard;
 
-import controller.Controller;
-import entities.enumerazioni.Stato;
-import entities.offerta.*; 
-import gui.preset.presetJButton.JButtonWithBorder;
-import javax.swing.JPanel;
-import javax.swing.border.LineBorder;
-import javax.swing.Box;
-import javax.swing.BoxLayout;
-import javax.swing.JButton;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-public class JReceivedOfferCard extends JAbstractOfferCard { 
-	private static final long serialVersionUID = 1L; 
-	
-	public JReceivedOfferCard(Offerta offerta, Controller controller) { 
-		super(offerta, controller); 
-		
-		//BOTTOM PANEL
-		JPanel rightPanel = new JPanel();
-		rightPanel.setLayout(new BorderLayout(0, 0));
-		rightPanel.setPreferredSize(new Dimension(100, 130));
-		rightPanel.setMaximumSize(new Dimension(100, 130));
-		rightPanel.setOpaque(false);
-		this.add(rightPanel, BorderLayout.EAST);
-		
-		
-		if(offerta.getStato() == Stato.Accettata) {
-			JButton acceptButton = new JButtonWithBorder("Accetta"); 
-			acceptButton.setPreferredSize(new Dimension(100, 30));
-			acceptButton.setMaximumSize(new Dimension(100, 30));
-			acceptButton.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent e) {
-					onAccettaOffertaClicked();
-				}
-			});
-			rightPanel.add(acceptButton, BorderLayout.NORTH); 
-			
-			JButton declineButton = new JButtonWithBorder("Rifiuta"); 
-			declineButton.setPreferredSize(new Dimension(100, 30));
-			declineButton.setMaximumSize(new Dimension(100, 30));
-			declineButton.addMouseListener(new MouseAdapter() {
-				public void mouseClicked(MouseEvent e) {
-					onRifiutaOffertaClicked();
-				}
-			});
-			rightPanel.add(declineButton, BorderLayout.SOUTH);
-			
-		}
-			
-	}
-	
-	@Override
-	String rightTitleLabel() {
-		return "Per: " + offerta.getAnnuncio().getTitolo() + "<br> di: " + offerta.getOfferente().getUsername();
-	}
+import javax.swing.JPanel;
+import javax.swing.JButton;
 
-	public void onAccettaOffertaClicked() {
-		controller.onAccettaOffertaClicked(offerta);
-	}
-	
-	public void onRifiutaOffertaClicked() {
-		controller.onRifiutaOffertaClicked(offerta);
-	}
+import controller.Controller;
+import entities.enumerazioni.Stato;
+import entities.offerta.Offerta;
+import gui.preset.presetJButton.JButtonWithBorder;
 
-	
+public class JReceivedOfferCard extends JAbstractOfferCard {
+    private static final long serialVersionUID = 1L;
+
+    public JReceivedOfferCard(Offerta offerta, Controller controller) {
+        super(offerta, controller);
+
+        // FOOTER personalizzato
+        if (offerta.getStato() == Stato.InAttesa) {
+            JPanel footer = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
+            footer.setOpaque(false);
+
+            JButton acceptButton = new JButtonWithBorder("Accetta");
+            JButton declineButton = new JButtonWithBorder("Rifiuta");
+
+            acceptButton.setBackground(new Color(0, 150, 0));   // TODO: bottone accetta verde
+            declineButton.setBackground(new Color(200, 0, 0)); // TODO: bottone rifiuta rosso
+
+            acceptButton.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    onAccettaOffertaClicked();
+                }
+            });
+
+            declineButton.addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseClicked(MouseEvent e) {
+                    onRifiutaOffertaClicked();
+                }
+            });
+
+            footer.add(acceptButton);
+            footer.add(declineButton);
+
+            add(footer, BorderLayout.SOUTH);
+        }
+    }
+
+    @Override
+    protected String rightTitleLabel() {
+        return "<html>Per l'annuncio: <b>" + offerta.getAnnuncio().getTitolo() + "</b> <br>" 
+             + "Inviato da: <b>" + offerta.getOfferente().getUsername() + "</b> </html>";
+    }
+
+    public void onAccettaOffertaClicked() {
+        controller.onAccettaOffertaClicked(offerta);
+    }
+
+    public void onRifiutaOffertaClicked() {
+        controller.onRifiutaOffertaClicked(offerta);
+    }
 }
