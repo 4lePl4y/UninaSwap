@@ -3,7 +3,6 @@ package gui.preset;
 import java.util.ArrayList;
 import java.util.List;
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.util.Vector;
@@ -69,7 +68,6 @@ public class JCustomList<T> extends JPanel {
 
         JScrollPane scrollPane = new JScrollPane(jList);
         scrollPane.setPreferredSize(new Dimension(width, height));
-        scrollPane.setMaximumSize(new Dimension(width, height));
         add(scrollPane, BorderLayout.CENTER);
        
         
