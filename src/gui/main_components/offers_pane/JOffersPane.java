@@ -11,6 +11,7 @@ import entities.offerta.Offerta;
 import gui.preset.JCustomScrollPane;
 
 public class JOffersPane extends JPanel{
+	// ATTRIBUTI
 	private static final long serialVersionUID = 1L;
 	private Controller controller;
 	private JOffersUpperPanel offersUpperPanel;
@@ -18,9 +19,12 @@ public class JOffersPane extends JPanel{
 	private JCustomScrollPane<Offerta> receivedOffersScrollPane;
 	private JCustomScrollPane<Offerta> madeOffersScrollPane;
 	
+	// COSTRUTTORE
 	public JOffersPane(ArrayList<Offerta> offerteRicevute, ArrayList<Offerta> offerteFatte, Controller controller) {
 		this.controller = controller;
 		this.setLayout(new BorderLayout(0, 0)); 
+		this.setVisible(true);
+		
 		offersUpperPanel = new JOffersUpperPanel(controller);
 		receivedOffersScrollPane = new JCustomScrollPane<Offerta>(offerteRicevute, controller);
 		madeOffersScrollPane = new JCustomScrollPane<Offerta>(offerteFatte, controller);
@@ -29,12 +33,14 @@ public class JOffersPane extends JPanel{
 		scrollPanesContainer.setEnabled(true);
 		scrollPanesContainer.setDividerSize(5);
 		scrollPanesContainer.setDividerLocation(540);
-		this.setVisible(true);
 		scrollPanesContainer.setResizeWeight(0.5);
 		
 		this.add(offersUpperPanel, BorderLayout.NORTH);
 		this.add(scrollPanesContainer, BorderLayout.CENTER);
 	}
+	
+	
+	// METODI
 	
 	//**Metodo per aggiornare la lista di offerte ricevute*/
 	public void refreshOfferteRicevute(ArrayList<Offerta> offerteRicevute) {
