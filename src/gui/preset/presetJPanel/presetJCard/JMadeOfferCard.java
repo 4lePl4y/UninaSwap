@@ -42,7 +42,7 @@ public class JMadeOfferCard extends JAbstractOfferCard {
 
             footer.add(modifyButton);
             footer.add(deleteButton);
-
+            footer.setBorder(BorderFactory.createEmptyBorder(15, 0, 0, 0)); 
             add(footer, BorderLayout.SOUTH);
         }
     }
