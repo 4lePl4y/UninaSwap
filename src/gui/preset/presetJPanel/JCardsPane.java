@@ -59,11 +59,13 @@ public class JCardsPane<T> extends JPanel {
         	setCorrectSizes(contents.get(i));
             JPanel card = createCard(contents.get(i));
             
-            GridBagConstraints gbc = new GridBagConstraints();
-            gbc.gridx = i % cardsPerRow;  //Imposta la colonna della card
-            gbc.gridy = i / cardsPerRow;  //Imposta la riga della card
-            gbc.insets = new Insets(vGap / 2, hGap / 2, vGap / 2, hGap / 2);  // Margini tra le card
-            add(card, gbc);
+            if(card != null) {
+	            GridBagConstraints gbc = new GridBagConstraints();
+	            gbc.gridx = i % cardsPerRow;  //Imposta la colonna della card
+	            gbc.gridy = i / cardsPerRow;  //Imposta la riga della card
+	            gbc.insets = new Insets(vGap / 2, hGap / 2, vGap / 2, hGap / 2);  // Margini tra le card
+	            add(card, gbc);
+            }
         }
         revalidate();
         repaint(); 
@@ -87,10 +89,10 @@ public class JCardsPane<T> extends JPanel {
     }
     
     private JPanel createCard(T content) {
+    	String usernameStudenteLoggato = controller.getStudenteLoggato().getUsername();
 		switch (content) {
 			case Annuncio a -> {
 				//Se l'annuncio appartiene allo studente loggato, crea una JMyListingCard
-				String usernameStudenteLoggato = controller.getStudenteLoggato().getUsername();
 				if(usernameStudenteLoggato.equals(a.getAutore().getUsername())) {
 					return new JMyListingCard((Annuncio) a, controller);
 				} else {
@@ -102,10 +104,14 @@ public class JCardsPane<T> extends JPanel {
 			case Oggetto o -> {return new JObjectCard((Oggetto) o, controller);}
 			
 			case Offerta of ->{
-				if (of.getOfferente().getUsername().equals(controller.getStudenteLoggato().getUsername()))
-					return new JMadeOfferCard ((Offerta) of, controller);
-				else
-					return new JReceivedOfferCard ((Offerta) of, controller);
+				if (of.getOfferente().getUsername().equals(usernameStudenteLoggato))
+					return new JMadeOfferCard (of, controller);
+				else {
+					if(of.getStato().toString().equals("InAttesa"))
+						return new JReceivedOfferCard (of, controller);
+					else
+						return null; // Non mostrare offerte già accettate o rifiutate
+				}
 			}
 			
 			default -> {throw new IllegalArgumentException("Unsupported content type: " + content.getClass().getName());}
