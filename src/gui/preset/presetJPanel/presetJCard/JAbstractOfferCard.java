@@ -8,21 +8,20 @@ import controller.Controller;
 import entities.offerta.Offerta;
 import entities.offerta.OffertaScambio;
 import entities.offerta.OffertaDenaro;
-import entities.oggetto.Oggetto;
 import gui.preset.JCustomList;
 import gui.preset.JDisplayTextArea;
 
 public abstract class JAbstractOfferCard extends JAbstractCard {
     private static final long serialVersionUID = 1L;
-    public static final int cardWidth = 530;
-    public static final int cardHeight = 250;
+    public static final int cardWidth = 580;
+    public static final int cardHeight = 330;
 
     protected Offerta offerta;
     protected Controller controller;
 
     // COSTRUTTORE
     public JAbstractOfferCard(Offerta offerta, Controller controller) {
-    	super(controller);
+        super(controller);
         this.offerta = offerta;
         this.controller = controller;
 
@@ -63,11 +62,34 @@ public abstract class JAbstractOfferCard extends JAbstractCard {
         JDisplayTextArea msgArea = new JDisplayTextArea(offerta.getMessaggio());
         msgArea.setOpaque(false);
         msgArea.setFont(new Font("SansSerif", Font.PLAIN, 14));
-        msgArea.setBorder(null);
-        msgArea.setAlignmentX(Component.LEFT_ALIGNMENT);
-        centerPanel.add(msgArea);
 
-        // Oggetti offerti
+        // Scroll con propagazione
+        JScrollPane msgScroll = new JScrollPane(msgArea);
+        msgScroll.setPreferredSize(new Dimension(600, 130));
+        msgScroll.setMaximumSize(new Dimension(600, 130));
+        msgScroll.setWheelScrollingEnabled(true);
+        msgScroll.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+        msgScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        msgScroll.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        // Propaga lo scroll al parent se siamo a inizio/fine o la barra non c'è
+        msgArea.addMouseWheelListener(e -> {
+            JScrollBar vBar = msgScroll.getVerticalScrollBar();
+
+            boolean atTop = vBar.getValue() == 0;
+            boolean atBottom = vBar.getValue() >= vBar.getMaximum() - vBar.getVisibleAmount();
+
+            if (!vBar.isVisible() || (e.getWheelRotation() < 0 && atTop) || (e.getWheelRotation() > 0 && atBottom)) {
+                msgScroll.getParent().dispatchEvent(
+                        SwingUtilities.convertMouseEvent(msgArea, e, msgScroll.getParent())
+                );
+            } else
+            	msgScroll.dispatchEvent(SwingUtilities.convertMouseEvent(msgArea, e, msgScroll));
+        });
+
+        centerPanel.add(msgScroll);
+
+        // Denaro/Oggetti offerti
         if (offerta instanceof OffertaDenaro od) {
             JLabel money = new JLabel("Denaro offerto: " + od.getOfferta() + "€");
             money.setFont(new Font("SansSerif", Font.PLAIN, 14));
@@ -81,21 +103,20 @@ public abstract class JAbstractOfferCard extends JAbstractCard {
             objLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
             centerPanel.add(objLabel);
 
-            JPanel objListPanel = new JCustomList<Oggetto>(
+            JPanel objListPanel = new JCustomList<>(
                     os.getOggettiOfferti(),
                     JCustomList.Mode.DISPLAY_ONLY,
                     600,
                     200
             );
             objListPanel.setOpaque(false);
+            objListPanel.setAlignmentX(Component.LEFT_ALIGNMENT);
             centerPanel.add(objListPanel);
         }
 
         add(centerPanel, BorderLayout.CENTER);
     }
 
-    
     // METODI
     protected abstract String rightTitleLabel();
-    
 }
