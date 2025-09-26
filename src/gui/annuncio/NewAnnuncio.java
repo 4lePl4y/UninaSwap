@@ -5,16 +5,14 @@ import entities.enumerazioni.Sede;
 import entities.enumerazioni.TipoAnnuncio;
 import entities.oggetto.Oggetto;
 import exception.CustomSQLException;
+import gui.preset.JCustomList;
+import gui.preset.JCustomList.Mode;
 import gui.preset.JWritableTextArea;
 import gui.preset.presetJButton.JButtonWithBorder;
 import gui.preset.presetJTextField.JCustomTextField;
 import gui.preset.presetJTextField.JPriceTextField;
 
-import java.awt.Component;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.*;
 import java.sql.SQLException;
 import java.time.LocalTime;
 import java.util.ArrayList;
@@ -23,8 +21,8 @@ import javax.swing.border.EmptyBorder;
 
 public class NewAnnuncio extends JDialog {
     private static final long serialVersionUID = 1L;
-    private Controller controller;
-    
+    private final Controller controller;
+
     private JPanel contentPane;
     private JCustomTextField titoloAnnuncioField;
     private JWritableTextArea descrTextArea;
@@ -36,215 +34,260 @@ public class NewAnnuncio extends JDialog {
     private JPriceTextField prezzoField;
     private JPanel aggiungiOggettoPanel;
     private JLabel oggettiEsistentiLabel;
-    
 
     public NewAnnuncio(Controller controller) {
-    	super(controller.getMainFrame(), "Nuovo Annuncio", true);
-    	this.controller = controller;
-    	
-        this.setBounds(100, 100, 600, 500);
+        super(controller.getMainFrame(), "Nuovo Annuncio", true);
+        this.controller = controller;
+        this.setSize(550, 550);
+        super.setLocationRelativeTo(null);	//	Centra la finestra
         this.setResizable(false);
         this.setFocusable(true);
 
-        contentPane = new JPanel();
+        contentPane = new JPanel(new BorderLayout(15, 15));
+        contentPane.setBackground(new Color(255, 255, 255));
         contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));
-        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
         setContentPane(contentPane);
-        
-        // Titolo Annuncio
-        JPanel titoloAnnuncioPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+
+        // ---------- NORTH: Titolo + Descrizione ----------
+        JPanel northPanel = new JPanel(new BorderLayout(10, 10));
+        northPanel.setOpaque(false);
+
+        // Titolo
+        JPanel titoloPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        titoloPanel.setOpaque(false);
         JLabel titoloAnnuncioLabel = new JLabel("Titolo:");
         titoloAnnuncioField = new JCustomTextField("Inserisci il titolo dell'annuncio");
-        titoloAnnuncioField.setColumns(20);
-        titoloAnnuncioPanel.add(titoloAnnuncioLabel);
-        titoloAnnuncioPanel.add(titoloAnnuncioField);
-        contentPane.add(titoloAnnuncioPanel);
+        titoloAnnuncioField.setColumns(25);
+        titoloPanel.add(titoloAnnuncioLabel);
+        titoloPanel.add(titoloAnnuncioField);
+        northPanel.add(titoloPanel, BorderLayout.NORTH);
 
         // Descrizione
-        JPanel descrPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        JPanel descrPanel = new JPanel();
+        descrPanel.setOpaque(false);
+        FlowLayout fl_descrPanel = new FlowLayout(FlowLayout.LEFT, 10, 10);
+        fl_descrPanel.setAlignOnBaseline(true);
+        descrPanel.setLayout(fl_descrPanel);
+       
         JLabel descrLabel = new JLabel("Descrizione:");
         descrTextArea = new JWritableTextArea("Inserisci la descrizione...");
-        descrTextArea.setPreferredSize(new Dimension(300, 80));
+        JScrollPane scrollDescr = new JScrollPane(descrTextArea);
+        scrollDescr.setBorder(null);
+        scrollDescr.getViewport().setBackground(new Color(255, 255, 255));
+        scrollDescr.setBackground(new Color(255, 255, 255));
+        scrollDescr.setBackground(new Color(255, 255, 255));
+        scrollDescr.setAlignmentX(Component.LEFT_ALIGNMENT);
+        scrollDescr.setPreferredSize(new Dimension(250, 70));
+        scrollDescr.setMaximumSize(new Dimension(250, 70));
         descrPanel.add(descrLabel);
-        descrPanel.add(descrTextArea);
-        contentPane.add(descrPanel);
+        descrPanel.add(scrollDescr);
+        northPanel.add(descrPanel, BorderLayout.CENTER);
+
+        contentPane.add(northPanel, BorderLayout.NORTH);
+
+        // ---------- CENTER: Tipo annuncio + Oggetti + Sede + Orario ----------
+        JPanel centerPanel = new JPanel();
+        centerPanel.setOpaque(false);
+        centerPanel.setLayout(new BoxLayout(centerPanel, BoxLayout.Y_AXIS));
 
         // Tipo Annuncio
         JPanel tipoAnnuncioPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        tipoAnnuncioPanel.setOpaque(false);
         JLabel tipoAnnuncioLabel = new JLabel("Tipo Annuncio:");
         tipoAnnuncioCombo = new JComboBox<>(TipoAnnuncio.values());
         tipoAnnuncioPanel.add(tipoAnnuncioLabel);
         tipoAnnuncioPanel.add(tipoAnnuncioCombo);
-        contentPane.add(tipoAnnuncioPanel);
-        
-        // Aggiungi oggetto esistente o crea nuovo oggetto
-        aggiungiOggettoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        oggettiEsistentiLabel = new JLabel("Scegli dai tuoi oggetti:");
-        ArrayList<Oggetto> mieiOggetti = controller.getMieiOggetti();
-        Oggetto[] oggettiArray = new Oggetto[mieiOggetti.size() + 1];
-        oggettiArray[0] = null; 
-        for(int i = 0; i < mieiOggetti.size(); i++) {
-			oggettiArray[i + 1] = mieiOggetti.get(i);
-		}
-        oggettiEsistentiCombo = new JComboBox<>(oggettiArray);
-        aggiungiOggettoPanel.add(oggettiEsistentiLabel);
-        aggiungiOggettoPanel.add(oggettiEsistentiCombo);
-        
+        centerPanel.add(tipoAnnuncioPanel);
 
-        JLabel optionLabel = new JLabel("Oppure");
-        aggiungiOggettoPanel.add(optionLabel);
+        // Oggetti
+        aggiungiOggettoPanel = new JPanel();
+        aggiungiOggettoPanel.setOpaque(false);
+        aggiungiOggettoPanel.setLayout(new BoxLayout(aggiungiOggettoPanel, BoxLayout.Y_AXIS));
         
+        // Oggetti esistenti
+        JPanel oggettoEsistentePanel = new JPanel();
+        oggettoEsistentePanel.setOpaque(false);
+        oggettoEsistentePanel.setLayout(new BorderLayout(0, 0));
+        oggettiEsistentiLabel = new JLabel("Scegli dai tuoi oggetti:");
+        JCustomList<Oggetto> list = new JCustomList<Oggetto>(controller.getMieiOggetti(), Mode.SINGLE_SELECTION,  500, 60);
+        list.setAlignmentX(Component.LEFT_ALIGNMENT);
+        oggettoEsistentePanel.add(oggettiEsistentiLabel, BorderLayout.NORTH);
+        oggettoEsistentePanel.add(list, BorderLayout.CENTER);
+        
+        // Crea nuovo oggetto
+        JPanel creaOggettoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        creaOggettoPanel.setOpaque(false);
+        creaOggettoPanel.add(new JLabel("Oppure"));
         JButtonWithBorder creaOggettoBtn = new JButtonWithBorder("Crea Nuovo Oggetto", Controller.APP_BLUE);
-        creaOggettoBtn.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				controller.onApriOggettoFrameClicked();
-			}
-        });
-        aggiungiOggettoPanel.add(creaOggettoBtn);
-        contentPane.add(aggiungiOggettoPanel);
+        creaOggettoBtn.addActionListener(e -> controller.onApriOggettoFrameClicked());
+        creaOggettoPanel.add(creaOggettoBtn);
+        
+        aggiungiOggettoPanel.add(oggettoEsistentePanel);
+        aggiungiOggettoPanel.add(creaOggettoPanel);
+        centerPanel.add(aggiungiOggettoPanel);
+        
+        
 
         // Sede
         JPanel sedePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        sedePanel.setOpaque(false);
         JLabel sedeLabel = new JLabel("Luogo d'incontro:");
         sedeCombo = new JComboBox<>(Sede.values());
         sedePanel.add(sedeLabel);
         sedePanel.add(sedeCombo);
-        contentPane.add(sedePanel);
+        centerPanel.add(sedePanel);
 
         // Orario
         JPanel orarioPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        orarioPanel.setOpaque(false);
         JLabel orarioLabel = new JLabel("Orario:");
         orarioCombo = new JComboBox<>(generaOrari());
         orarioPanel.add(orarioLabel);
         orarioPanel.add(orarioCombo);
-        contentPane.add(orarioPanel);
+        centerPanel.add(orarioPanel);
 
-        // Prezzo (solo per Vendita)
+        // Prezzo
         prezzoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        prezzoPanel.setOpaque(false);
         JLabel prezzoLabel = new JLabel("Prezzo:");
         prezzoField = new JPriceTextField("€");
         prezzoField.setColumns(10);
         prezzoPanel.add(prezzoLabel);
         prezzoPanel.add(prezzoField);
         prezzoPanel.setVisible(tipoAnnuncioCombo.getSelectedItem() == TipoAnnuncio.Vendita);
-        contentPane.add(prezzoPanel);
+        centerPanel.add(prezzoPanel);
 
-        // Listeners
+        contentPane.add(centerPanel, BorderLayout.CENTER);
+
+        // ---------- SOUTH: Bottone ----------
+        JPanel southPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        southPanel.setOpaque(false);
+        JButtonWithBorder creaButton = new JButtonWithBorder("Crea Annuncio", Controller.APP_BLUE);
+        creaButton.addActionListener(e -> onCreaAnnuncioClicked());
+        southPanel.add(creaButton);
+
+        contentPane.add(southPanel, BorderLayout.SOUTH);
+
+        // Listener per tipo annuncio
         tipoAnnuncioCombo.addActionListener(e -> {
             boolean isVendita = tipoAnnuncioCombo.getSelectedItem() == TipoAnnuncio.Vendita;
             prezzoPanel.setVisible(isVendita);
             contentPane.revalidate();
             contentPane.repaint();
         });
-
-
-        // Bottone crea annuncio
-        JButtonWithBorder creaButton = new JButtonWithBorder("Crea Annuncio", Controller.APP_BLUE);
-        creaButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        creaButton.addActionListener(e -> onCreaAnnuncioClicked());
-        contentPane.add(Box.createVerticalStrut(20));
-        contentPane.add(creaButton);
     }
-    
-    
-    // METODI
 
-    // Getter
+
+    // METODI GETTER (restano come prima)
     public String getTitolo() {
-    	return titoloAnnuncioField.getText();    	
+        return titoloAnnuncioField.getText();
     }
-    
+
     public Oggetto getOggettoSelezionato() {
-		return (Oggetto) oggettiEsistentiCombo.getSelectedItem();
-	}
-    
+        return (Oggetto) oggettiEsistentiCombo.getSelectedItem();
+    }
+
     public String getDescrizione() {
-		return descrTextArea.getText();
+        return descrTextArea.getText();
     }
-    
+
     public Sede getLuogo() {
-    	return (Sede) sedeCombo.getSelectedItem();
+        return (Sede) sedeCombo.getSelectedItem();
     }
-    
+
     public LocalTime getOraIncontro() {
-		return LocalTime.parse((String) orarioCombo.getSelectedItem());
-	}
-    
-    public TipoAnnuncio getTipoAnnuncio() {
-		return (TipoAnnuncio) tipoAnnuncioCombo.getSelectedItem();
-	}
-    
-    public double getPrezzo() {
-    	return prezzoField.getPrezzo();
+        return LocalTime.parse((String) orarioCombo.getSelectedItem());
     }
-	
-    
-    // Altri metodi
+
+    public TipoAnnuncio getTipoAnnuncio() {
+        return (TipoAnnuncio) tipoAnnuncioCombo.getSelectedItem();
+    }
+
+    public double getPrezzo() {
+        // Assumiamo che JPriceTextField esponga getPrezzo() come prima,
+        // altrimenti fallback a parsing
+        try {
+            return prezzoField.getPrezzo();
+        } catch (Exception e) {
+            try {
+                return Double.parseDouble(prezzoField.getText());
+            } catch (Exception ex) {
+                return 0.0;
+            }
+        }
+    }
+
+    // AZIONI
     public void onCreaAnnuncioClicked() {
-		if(areInputsValid()) { 
-			try {
-			controller.onCreaAnnuncioClicked();
-			} catch (CustomSQLException e) {
-				JOptionPane.showMessageDialog(this, e.getMessage());
-				return;
-			} catch (SQLException e) {
-				JOptionPane.showMessageDialog(this, "Errore imprevisto nella creazione dell'annuncio. Riprova!");
-			}
-			
-			JOptionPane.showMessageDialog(this, "Annucio creato!");
-			this.dispose();
-		}
-		return;	
-	}
-    
-	private boolean areInputsValid() {
-		if(titoloAnnuncioField.getText().isBlank()) {
-			JOptionPane.showMessageDialog(this, "Inserisci un titolo per l'annuncio!");
-			return false;
-		}
-		
-		if(oggettiEsistentiCombo.getSelectedItem() == null) {
-			JOptionPane.showMessageDialog(this, "Seleziona un oggetto esistente o crea un nuovo oggetto!");
-			return false;
-		}
-		
-		if(prezzoPanel.isVisible()) {
-			if(prezzoField.getText().isBlank()) {
-				JOptionPane.showMessageDialog(this, "Inserisci un prezzo per l'annuncio di vendita!");
-				return false;
-			}
-			
-			try {
-				Double.parseDouble(prezzoField.getText());
-			} catch (NumberFormatException e) {
-				JOptionPane.showMessageDialog(this, "Inserisci un prezzo valido in denaro!");
-				return false;
-			}
-		}
-		
-		return true;
-	}
-	
-	
-	public static String[] generaOrari() {
-        String[] orari = new String[45];
-        int idx = 0;
+        if (areInputsValid()) {
+            try {
+                controller.onCreaAnnuncioClicked();
+            } catch (CustomSQLException e) {
+                JOptionPane.showMessageDialog(this, e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+                return;
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(this, "Errore imprevisto nella creazione dell'annuncio. Riprova!", "Errore", JOptionPane.ERROR_MESSAGE);
+                return;
+            } catch (RuntimeException e) {
+                JOptionPane.showMessageDialog(this, "Errore: " + e.getMessage(), "Errore", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+            JOptionPane.showMessageDialog(this, "Annuncio creato!", "Successo", JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
+        }
+    }
+
+    private boolean areInputsValid() {
+        if (titoloAnnuncioField.getText() == null || titoloAnnuncioField.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "Inserisci un titolo per l'annuncio!");
+            titoloAnnuncioField.requestFocus();
+            return false;
+        }
+
+        // Se vuoi permettere creazione "senza scegliere oggetto" rimuovi questa verifica.
+        if (oggettiEsistentiCombo.getSelectedItem() == null) {
+            JOptionPane.showMessageDialog(this, "Seleziona un oggetto esistente o crea un nuovo oggetto!");
+            oggettiEsistentiCombo.requestFocus();
+            return false;
+        }
+
+        if (prezzoPanel.isVisible()) {
+            String prezzoTxt = prezzoField.getText();
+            if (prezzoTxt == null || prezzoTxt.isBlank()) {
+                JOptionPane.showMessageDialog(this, "Inserisci un prezzo per l'annuncio di vendita!");
+                prezzoField.requestFocus();
+                return false;
+            }
+            try {
+                // prova a convertire in double
+                Double.parseDouble(prezzoTxt.replace(',', '.'));
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "Inserisci un prezzo valido in denaro!");
+                prezzoField.requestFocus();
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public static String[] generaOrari() {
+        // 8:00 .. 19:00 con step 15' (19:00 incluso)
+        java.util.List<String> orari = new ArrayList<>();
         for (int hour = 8; hour <= 19; hour++) {
             for (int min = 0; min < 60; min += 15) {
                 if (hour == 19 && min > 0) break;
-                String orario = String.format("%02d:%02d", hour, min);
-                orari[idx++] = orario;
+                orari.add(String.format("%02d:%02d", hour, min));
             }
         }
-        return orari;
+        return orari.toArray(new String[0]);
     }
-	
-	//**Metodo per aggiornare il menu a tendina degli oggetti esistenti */
-	public void refreshOggettiEsistenti() {
-		int lastPositionIndex = controller.getMieiOggetti().size() - 1;
-		oggettiEsistentiCombo.addItem(controller.getMieiOggetti().get(lastPositionIndex));
-	}
-			
 
+    /**
+     * Metodo pubblico per forzare manualmente il refresh della lista oggetti (se serve).
+     * Puoi chiamarlo dal controller dopo aver creato un oggetto.
+     */
+    public void refreshOggettiEsistenti() {
+    	//	TODO: refreshOggettiEsistenti
+    }
 }
