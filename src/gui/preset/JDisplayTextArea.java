@@ -8,11 +8,11 @@ public class JDisplayTextArea extends JTextArea {
 
 	 public JDisplayTextArea(String text) {
 		this.setText(text);
-		this.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		this.setFont(new Font("Times New Roman", Font.PLAIN, 15));	//TODO: cambiare font
 		this.setLineWrap(true);
 		this.setWrapStyleWord(true);
 		this.setFocusable(false);
-		this.setEditable(false);	
+		this.setEditable(false);
 	}
-
+	 
 }

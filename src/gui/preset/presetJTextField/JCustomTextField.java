@@ -22,8 +22,8 @@ public class JCustomTextField extends JTextField {
 		this.placeholder = placeholder;
 		this.setForeground(Color.GRAY);
 		this.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		setOpaque(false); 
-		setBorder(new EmptyBorder(5, 10, 5, 10)); // Padding
+		this.setOpaque(false); 
+		this.setBorder(new EmptyBorder(5, 10, 5, 10)); // Padding
 		
 		this.addFocusListener(new FocusAdapter() {
 			@Override
