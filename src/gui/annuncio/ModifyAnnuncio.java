@@ -34,17 +34,20 @@ public class ModifyAnnuncio extends JDialog {
     	this.controller = controller;
         this.annuncio = annuncio;
 
-        this.setBounds(100, 100, 600, 500);
+        this.setSize(550, 550);
+        super.setLocationRelativeTo(null);	//	Centra la finestra
         this.setResizable(false);
         this.setFocusable(true);
 
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));
+        contentPane.setBackground(new Color(255, 255, 255));
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
         setContentPane(contentPane);
         
         // Titolo Annuncio
         JPanel titoloAnnuncioPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        titoloAnnuncioPanel.setOpaque(false);
         JLabel titoloAnnuncioLabel = new JLabel("Titolo:");
         titoloAnnuncioField = new JCustomTextField("Inserisci il titolo dell'annuncio");
         titoloAnnuncioField.setText(annuncio.getTitolo());
@@ -55,7 +58,10 @@ public class ModifyAnnuncio extends JDialog {
         contentPane.add(titoloAnnuncioPanel);
 
         // Descrizione
-        JPanel descrPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        FlowLayout fl_descrPanel = new FlowLayout(FlowLayout.LEFT);
+        fl_descrPanel.setAlignOnBaseline(true);
+        JPanel descrPanel = new JPanel(fl_descrPanel);
+        descrPanel.setOpaque(false);
         JLabel descrLabel = new JLabel("Descrizione:");
         descrTextArea = new JWritableTextArea("Inserisci la descrizione...");
         descrTextArea.setPreferredSize(new Dimension(300, 80));
@@ -69,6 +75,7 @@ public class ModifyAnnuncio extends JDialog {
 
         // Sede
         JPanel sedePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        sedePanel.setOpaque(false);
         JLabel sedeLabel = new JLabel("Luogo d'incontro:");
         sedeCombo = new JComboBox<>(Sede.values());
         sedeCombo.setSelectedItem(annuncio.getLuogo());
@@ -78,6 +85,7 @@ public class ModifyAnnuncio extends JDialog {
 
         // Orario
         JPanel orarioPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        orarioPanel.setOpaque(false);
         JLabel orarioLabel = new JLabel("Orario:");
         orarioCombo = new JComboBox<>(NewAnnuncio.generaOrari());
         orarioCombo.setSelectedItem(annuncio.getOraIncontro().toString());
@@ -87,6 +95,7 @@ public class ModifyAnnuncio extends JDialog {
 
         // Prezzo (solo per Vendita)
         prezzoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        prezzoPanel.setOpaque(false);
         JLabel prezzoLabel = new JLabel("Prezzo:");
         prezzoField = new JPriceTextField("€");
         prezzoField.setText(annuncio instanceof AnnuncioVendita ? String.valueOf(((AnnuncioVendita) annuncio).getPrezzo()) : "€");
