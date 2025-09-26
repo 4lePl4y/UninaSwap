@@ -99,7 +99,7 @@ public class ModifyAnnuncio extends JDialog {
 
 
         // Bottone modifica annuncio
-        JButtonWithBorder modificaButton = new JButtonWithBorder("Modifica Annuncio");
+        JButtonWithBorder modificaButton = new JButtonWithBorder("Modifica Annuncio", Controller.APP_BLUE);
         modificaButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         modificaButton.addActionListener(e -> onModificaAnnuncioClicked());
         contentPane.add(Box.createVerticalStrut(20));

@@ -12,9 +12,11 @@ import javax.swing.JViewport;
 
 import controller.Controller;
 import entities.annuncio.Annuncio;
+import entities.enumerazioni.Stato;
 import entities.offerta.Offerta;
 import entities.oggetto.Oggetto;
 import gui.preset.presetJPanel.presetJCard.*;
+
 public class JCardsPane<T> extends JPanel {
 	private static final long serialVersionUID = 1L;
 	private int cardWidth = JAbstractCard.cardWidth; // Width of each card
@@ -107,7 +109,7 @@ public class JCardsPane<T> extends JPanel {
 				if (of.getOfferente().getUsername().equals(usernameStudenteLoggato))
 					return new JMadeOfferCard (of, controller);
 				else {
-					if(of.getStato().toString().equals("InAttesa"))
+					if(of.getStato().equals(Stato.InAttesa))
 						return new JReceivedOfferCard (of, controller);
 					else
 						return null; // Non mostrare offerte già accettate o rifiutate

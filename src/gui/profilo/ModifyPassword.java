@@ -59,7 +59,7 @@ public class ModifyPassword extends JDialog {
         newPasswordField.setBounds(28, 129, 400, 30);
         cambiaPasswordPanel.add(newPasswordField);
         
-        confermaButton = new JButtonWithBorder("Conferma");
+        confermaButton = new JButtonWithBorder("Conferma", Controller.APP_BLUE);
         confermaButton.setBounds(131, 193, 200, 30);
         confermaButton.addActionListener(e -> {
         	onModificaPasswordClicked();

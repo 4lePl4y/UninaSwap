@@ -162,21 +162,21 @@ public class JProfilePane extends JPanel {
         JPanel credentialsPanel = new JPanel();
         credentialsPanel.setBorder(BorderFactory.createTitledBorder("Gestione credenziali"));
 
-        JButtonWithBorder changeEmailButton = new JButtonWithBorder("Cambia email");
+        JButtonWithBorder changeEmailButton = new JButtonWithBorder("Cambia email", Controller.APP_BLUE);
         changeEmailButton.addMouseListener(new MouseAdapter() {
         	public void mouseClicked(MouseEvent e) {
         		openModificaEmailFrame();
         	}
         });
         
-        JButtonWithBorder changeUsernameButton = new JButtonWithBorder("Cambia username");
+        JButtonWithBorder changeUsernameButton = new JButtonWithBorder("Cambia username", Controller.APP_BLUE);
         changeUsernameButton.addMouseListener(new MouseAdapter() {
         	public void mouseClicked(MouseEvent e) {
         		openModificaUsernameFrame();
         	}
         });
         
-        JButtonWithBorder changePasswordButton = new JButtonWithBorder("Cambia password");
+        JButtonWithBorder changePasswordButton = new JButtonWithBorder("Cambia password", Controller.APP_BLUE);
         changePasswordButton.addMouseListener(new MouseAdapter() {
         	public void mouseClicked(MouseEvent e) {
         		openModificaPasswordFrame();
@@ -193,14 +193,14 @@ public class JProfilePane extends JPanel {
         actionsPanel.setLayout(new BoxLayout(actionsPanel, BoxLayout.Y_AXIS));
         actionsPanel.setBorder(BorderFactory.createTitledBorder("Azioni importanti"));
 
-        JButtonWithBorder logoutButton = new JButtonWithBorder("Logout");
+        JButtonWithBorder logoutButton = new JButtonWithBorder("Logout", Controller.APP_BLUE);
         logoutButton.addMouseListener(new MouseAdapter() {
         	public void mouseClicked(MouseEvent e) {
         		onLogoutClicked();
         	}
         });
         
-        JButtonWithBorder deleteButton = new JButtonWithBorder("Elimina account");
+        JButtonWithBorder deleteButton = new JButtonWithBorder("Elimina account", Controller.APP_RED);
         deleteButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
 				onEliminaAccountClicked();

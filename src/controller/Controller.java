@@ -1,5 +1,6 @@
 package controller;
 
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.sql.Connection;
 import java.sql.SQLException;
@@ -31,6 +32,9 @@ import exception.*;
 public class Controller {
 	//ATTRIBUTI
 	Studente studenteLoggato;
+	public static final Color APP_BLUE  = new Color(0, 51, 102);
+	public static final Color APP_RED  = new Color(200, 0, 0);
+	public static final Color APP_GREEN  = new Color(0, 150, 0);
 	
 	//FRAME
 	Login loginFrame; 

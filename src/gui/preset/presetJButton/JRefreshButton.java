@@ -10,9 +10,9 @@ public class JRefreshButton extends JButtonWithBorder {
     private static final long serialVersionUID = 1L;
     
     public JRefreshButton() {
-        super("⟳");
+        super("⟳", Color.WHITE);
         this.setFont(new Font("Segoe UI Symbol", Font.BOLD, 25));
-        this.setPreferredSize(new Dimension(70, 50));
+        this.setPreferredSize(new Dimension(30, 30));
         this.setBackground(Color.WHITE);
         this.setForeground(Color.GRAY);
 //        ImageIcon icon = new ImageIcon("src/img/Refresh.png");

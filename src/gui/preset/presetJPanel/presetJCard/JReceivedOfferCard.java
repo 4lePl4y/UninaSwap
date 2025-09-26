@@ -2,10 +2,8 @@ package gui.preset.presetJPanel.presetJCard;
 
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.FlowLayout;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
 import javax.swing.JPanel;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -13,8 +11,7 @@ import javax.swing.JButton;
 import controller.Controller;
 import entities.enumerazioni.Stato;
 import entities.offerta.Offerta;
-import gui.preset.presetJButton.JAcceptButton;
-import gui.preset.presetJButton.JDeclineButton;
+import gui.preset.presetJButton.JButtonWithBorder;
 
 public class JReceivedOfferCard extends JAbstractOfferCard {
     private static final long serialVersionUID = 1L;
@@ -27,22 +24,12 @@ public class JReceivedOfferCard extends JAbstractOfferCard {
             JPanel footer = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
             footer.setOpaque(false);
 
-            JButton acceptButton = new JAcceptButton();
-            JButton declineButton = new JDeclineButton();
+            JButton acceptButton = new JButtonWithBorder("Accetta", new Color(0, 150, 0));
+            JButton declineButton = new JButtonWithBorder("Rifiuta", new Color(200, 0, 0));
 
-            acceptButton.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    onAccettaOffertaClicked();
-                }
-            });
+            acceptButton.addActionListener(e -> onAccettaOffertaClicked());
 
-            declineButton.addMouseListener(new MouseAdapter() {
-                @Override
-                public void mouseClicked(MouseEvent e) {
-                    onRifiutaOffertaClicked();
-                }
-            });
+            declineButton.addActionListener(e -> onRifiutaOffertaClicked());
 
             footer.add(acceptButton);
             footer.add(declineButton);

@@ -29,7 +29,7 @@ public class JMyListingCard extends JAbstractListingCard {
 		this.add(bottomPanel);
 		bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JButton modifyButton = new JButtonWithBorder("Modifica");
+		JButton modifyButton = new JButtonWithBorder("Modifica", Controller.APP_BLUE);
 		modifyButton.setPreferredSize(new Dimension(100, 30));
 		modifyButton.setMaximumSize(new Dimension(100, 30));
 		
@@ -43,7 +43,7 @@ public class JMyListingCard extends JAbstractListingCard {
 
 		bottomPanel.add(Box.createHorizontalStrut(15));
 		
-		JButton deleteButton = new JButtonWithBorder("Elimina");
+		JButton deleteButton = new JButtonWithBorder("Elimina", Controller.APP_RED);
 		deleteButton.setPreferredSize(new Dimension(100, 30));
 		deleteButton.setMaximumSize(new Dimension(100, 30));
 		deleteButton.addMouseListener(new MouseAdapter() {

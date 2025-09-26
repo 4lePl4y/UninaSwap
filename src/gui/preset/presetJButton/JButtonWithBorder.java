@@ -13,25 +13,25 @@ import javax.swing.JButton;
 public class JButtonWithBorder extends JButton {
 	private static final long serialVersionUID = 1L;
 
-	public JButtonWithBorder(String text) {
+	public JButtonWithBorder(String text, Color color) {
 		super(text);
 		this.setBorderPainted(false);
 		this.setContentAreaFilled(false);
 		this.setFocusPainted(false);
-		this.setBackground(new Color(0, 51, 102));
+		this.setBackground(color);
         this.setForeground(Color.WHITE);
-        this.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 16));
+        this.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 16));	//TODO: Cambiare font
         
         this.addMouseListener(new MouseAdapter() {
     		@Override
     		public void mouseEntered(MouseEvent e) {
-    		setBackground(new Color(0, 102, 204));
+    		setBackground(color.brighter());
     		setCursor(new Cursor(Cursor.HAND_CURSOR));
     		}
     		
     		@Override
     		public void mouseExited(MouseEvent e) {
-    		setBackground(new Color(0, 51, 102));
+    		setBackground(color);
     		setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
     		}
     		

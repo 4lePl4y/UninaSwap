@@ -94,7 +94,7 @@ public class NewAnnuncio extends JDialog {
         JLabel optionLabel = new JLabel("Oppure");
         aggiungiOggettoPanel.add(optionLabel);
         
-        JButtonWithBorder creaOggettoBtn = new JButtonWithBorder("Crea Nuovo Oggetto");
+        JButtonWithBorder creaOggettoBtn = new JButtonWithBorder("Crea Nuovo Oggetto", Controller.APP_BLUE);
         creaOggettoBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -140,7 +140,7 @@ public class NewAnnuncio extends JDialog {
 
 
         // Bottone crea annuncio
-        JButtonWithBorder creaButton = new JButtonWithBorder("Crea Annuncio");
+        JButtonWithBorder creaButton = new JButtonWithBorder("Crea Annuncio", Controller.APP_BLUE);
         creaButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         creaButton.addActionListener(e -> onCreaAnnuncioClicked());
         contentPane.add(Box.createVerticalStrut(20));

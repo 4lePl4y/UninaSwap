@@ -22,8 +22,8 @@ public class JMadeOfferCard extends JAbstractOfferCard {
             JPanel footer = new JPanel(new FlowLayout(FlowLayout.RIGHT, 10, 0));
             footer.setOpaque(false);
 
-            JButton modifyButton = new JButtonWithBorder("Modifica");
-            JButton deleteButton = new JButtonWithBorder("Ritira");
+            JButton modifyButton = new JButtonWithBorder("Modifica", Controller.APP_BLUE);
+            JButton deleteButton = new JButtonWithBorder("Ritira", Controller.APP_RED);
 
 
             modifyButton.addMouseListener(new MouseAdapter() {

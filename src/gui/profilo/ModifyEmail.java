@@ -46,7 +46,7 @@ public class ModifyEmail extends JDialog {
         cambiaEmailField.setBounds(30, 104, 400, 30);
         cambiaEmailPanel.add(cambiaEmailField);
         
-        confermaButton = new JButtonWithBorder("Conferma");
+        confermaButton = new JButtonWithBorder("Conferma", Controller.APP_BLUE);
         confermaButton.setBounds(150, 169, 160, 30);
         confermaButton.addActionListener(e -> {
         	if(cambiaEmailField.isValidInput()) {

@@ -85,7 +85,7 @@ public class JObjectCard extends JAbstractCard {
 		this.add(bottomPanel);
 		bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JButton modifyButton = new JButtonWithBorder("Modifica");
+		JButton modifyButton = new JButtonWithBorder("Modifica", Controller.APP_BLUE);
 		modifyButton.setBounds(30, 410, 100, 30);
 		modifyButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {
@@ -96,7 +96,7 @@ public class JObjectCard extends JAbstractCard {
 
 		bottomPanel.add(Box.createHorizontalStrut(15));
 		
-		JButton deleteButton = new JButtonWithBorder("Elimina");
+		JButton deleteButton = new JButtonWithBorder("Elimina", Controller.APP_RED);
 		deleteButton.setBounds(155, 410, 100, 30);
 		deleteButton.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent e) {

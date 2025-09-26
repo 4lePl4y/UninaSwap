@@ -46,7 +46,7 @@ public class ModifyUsername extends JDialog {
         cambiaUsernameField.setBounds(30, 104, 400, 30);
         cambiaUsernamePanel.add(cambiaUsernameField);
         
-        confermaButton = new JButtonWithBorder("Conferma");
+        confermaButton = new JButtonWithBorder("Conferma", Controller.APP_BLUE);
         confermaButton.setBounds(150, 169, 200, 30);
         confermaButton.addActionListener(e -> {
         	controller.onModificaUsernameClicked(controller.getStudenteLoggato());

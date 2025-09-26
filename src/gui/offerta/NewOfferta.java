@@ -8,7 +8,6 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import controller.Controller;
 import entities.annuncio.*;
-import entities.offerta.OffertaScambio;
 import entities.oggetto.*;
 import entities.studente.*;
 import exception.CustomSQLException;
@@ -78,7 +77,7 @@ public class NewOfferta extends JDialog {
         	optionLabel.setBounds(260, 30, 58, 21);
         	barterPanel.add(optionLabel);
         	
-        	JButton addObjectButton = new JButtonWithBorder("Aggiungi un nuovo oggetto +");
+        	JButton addObjectButton = new JButtonWithBorder("Aggiungi un nuovo oggetto +", Controller.APP_BLUE);
         	addObjectButton.setBounds(210, 60, 250, 30);
         	addObjectButton.addActionListener(e -> {
 				controller.onApriOggettoFrameClicked();
@@ -102,7 +101,7 @@ public class NewOfferta extends JDialog {
         }
 
         // Submit button
-        submitButton = new JButtonWithBorder("Fai Offerta");
+        submitButton = new JButtonWithBorder("Fai Offerta", Controller.APP_BLUE);
         submitButton.setBounds(139, 296, 133, 28);
         submitButton.setAlignmentX(Component.LEFT_ALIGNMENT);
         submitButton.addActionListener(e -> onInviaOffertaClicked());

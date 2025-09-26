@@ -33,7 +33,7 @@ public abstract class JAbstractOfferCard extends JAbstractCard {
         setBorder(new EmptyBorder(15, 20, 15, 20));
 
         // ===== HEADER =====
-        JPanel header = new JPanel(new FlowLayout(FlowLayout.LEFT, 10, 0));
+        JPanel header = new JPanel(new BorderLayout(0, 0));
         header.setOpaque(false);
 
         ImageIcon originalIcon = new ImageIcon(offerta.getSourceImage());
@@ -41,9 +41,12 @@ public abstract class JAbstractOfferCard extends JAbstractCard {
         JLabel icon = new JLabel(new ImageIcon(scaledImage));
         JLabel title = new JLabel(rightTitleLabel());
         title.setFont(new Font("SansSerif", Font.PLAIN, 18));
+        JLabel status = new JLabel("<html><h3> Stato: " + offerta.getStato().toString() + " </h3></html>");
+        
 
-        header.add(icon);
-        header.add(title);
+        header.add(icon, BorderLayout.WEST);
+        header.add(title, BorderLayout.CENTER);
+        header.add(status, BorderLayout.EAST);
 
         add(header, BorderLayout.NORTH);
 

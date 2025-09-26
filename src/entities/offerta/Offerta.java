@@ -30,7 +30,7 @@ public abstract class Offerta {
 	}
 	
 	public Stato getStato() {
-		return stato;
+		return stato; 
 	}
 	
 	public String getMessaggio() {

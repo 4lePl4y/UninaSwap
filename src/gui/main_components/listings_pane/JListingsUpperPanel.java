@@ -43,7 +43,7 @@ public class JListingsUpperPanel extends JPanel {
 		gbc_welcomingLabel.gridy = 0;
 		this.add(welcomingLabel, gbc_welcomingLabel);
 		
-		JButton newListingButton = new JButtonWithBorder("Crea un nuovo annuncio +");
+		JButton newListingButton = new JButtonWithBorder("Crea un nuovo annuncio +", Controller.APP_BLUE);
 		GridBagConstraints gbc_newListingButton = new GridBagConstraints();
 		gbc_newListingButton.insets = new Insets(0, 0, 5, 0);
 		gbc_newListingButton.gridx = 1;

@@ -94,7 +94,7 @@ public class NewOggetto extends JDialog {
         contentPane.add(categoriaPanel);
 
         // Button
-        JButtonWithBorder creaButton = new JButtonWithBorder("Crea Oggetto");
+        JButtonWithBorder creaButton = new JButtonWithBorder("Crea Oggetto", Controller.APP_BLUE);
         creaButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         contentPane.add(Box.createVerticalStrut(20));
         creaButton.addActionListener(e -> onCreaOggettoClicked());

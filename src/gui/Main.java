@@ -27,7 +27,7 @@ public class Main extends JFrame {
 	//ATTRIBUTI
 	private Controller controller;
 	
-	private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;	
 	private JPanel contentPane;
 	private JPanel buttonPane;
 	private Studente studenteLoggato;
@@ -90,13 +90,13 @@ public class Main extends JFrame {
         fl_buttonPane.setVgap(10);
         fl_buttonPane.setHgap(50);
         
-        JButton browseButton = new JButtonWithBorder("🔍 Cerca");
+        JButton browseButton = new JButtonWithBorder("🔍 Cerca", Controller.APP_BLUE);
         browseButton.addActionListener( e -> {
         	CardLayout cl = (CardLayout)(contentPane.getLayout());
 			cl.show(contentPane, "BROWSE");
 		});
 
-        JButtonClickManager listingsButton = new JButtonClickManager("📋 Miei Annunci");
+        JButtonClickManager listingsButton = new JButtonClickManager("📋 Miei Annunci", Controller.APP_BLUE);
         listingsButton.addActionListener(e -> {
         	if(listingsButton.isFirstClick())
     			refreshListings();
@@ -106,13 +106,13 @@ public class Main extends JFrame {
         });
         
         
-        JButtonWithBorder myObjectsButton = new JButtonWithBorder("📦 Miei Oggetti");
+        JButtonWithBorder myObjectsButton = new JButtonWithBorder("📦 Miei Oggetti", Controller.APP_BLUE);
         myObjectsButton.addActionListener(e -> {
     		CardLayout cl = (CardLayout)(contentPane.getLayout());
     		cl.show(contentPane, "MYOBJECTS");
         });
         
-        JButtonClickManager offersButton = new JButtonClickManager("🏷 Offerte");
+        JButtonClickManager offersButton = new JButtonClickManager("🏷 Offerte", Controller.APP_BLUE);
         offersButton.addActionListener(e -> {
         	if(offersButton.isFirstClick()) 
         		refreshAllOffers();
@@ -121,7 +121,7 @@ public class Main extends JFrame {
 			cl.show(contentPane, "OFFERS");
 		});
         
-        JButton profileButton = new JButtonWithBorder("👤 Profilo");
+        JButton profileButton = new JButtonWithBorder("👤 Profilo", Controller.APP_BLUE);
         profileButton.addActionListener(e -> {
         	//TODO: refreshStats(); 
 			CardLayout cl = (CardLayout)(contentPane.getLayout());

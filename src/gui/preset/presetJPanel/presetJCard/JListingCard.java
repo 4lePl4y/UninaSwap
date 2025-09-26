@@ -47,7 +47,7 @@ public class JListingCard extends JAbstractListingCard {
 		this.add(bottomPanel);
 		bottomPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
-		JButton placeOfferButton = new JButtonWithBorder("Fai un'offerta");
+		JButton placeOfferButton = new JButtonWithBorder("Fai un'offerta", Controller.APP_BLUE);
 		placeOfferButton.setPreferredSize(new Dimension(140, 30));
 		placeOfferButton.setMaximumSize(new Dimension(140, 30));
 		bottomPanel.add(placeOfferButton);

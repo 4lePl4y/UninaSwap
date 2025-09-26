@@ -41,7 +41,7 @@ public class JMyObjectsUpperPanel extends JPanel{
 		gbc_welcomingLabel_2.gridy = 0;
 		this.add(welcomingLabel_2, gbc_welcomingLabel_2);
 			
-		JButton newObjectButton = new JButtonWithBorder("Crea un nuovo oggetto +");
+		JButton newObjectButton = new JButtonWithBorder("Crea un nuovo oggetto +", Controller.APP_BLUE);
 		GridBagConstraints gbc_newObjectButton = new GridBagConstraints();
 		gbc_newObjectButton.insets = new Insets(0, 0, 5, 0);
 		gbc_newObjectButton.gridx = 1;

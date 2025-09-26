@@ -78,7 +78,7 @@ public class Login extends JFrame {
 		pswTxtField.setBounds(10, 178, 262, 33);
 		
 										
-		JButton lgnButton = new JButtonWithBorder("Login");
+		JButton lgnButton = new JButtonWithBorder("Login", Controller.APP_BLUE);
 		lgnButton.setBounds(51, 251, 183, 33);
 		
 										

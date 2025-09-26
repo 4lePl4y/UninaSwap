@@ -75,7 +75,7 @@ public class JFilterNSearchPane extends JPanel {
         topPanel.add(searchTxtField, gbc_top);
 
         // Search button
-        searchButton = new JButtonWithBorder("Cerca");
+        searchButton = new JButtonWithBorder("Cerca", Controller.APP_BLUE);
         gbc_top.gridx = 2;
         gbc_top.weightx = 0;
         searchButton.setPreferredSize(new Dimension(100, 30));

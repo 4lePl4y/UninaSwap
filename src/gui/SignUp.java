@@ -96,7 +96,7 @@ public class SignUp extends JFrame {
         
 
         // Registrati Button
-        JButton registerButton = new JButtonWithBorder("Registrati");
+        JButton registerButton = new JButtonWithBorder("Registrati", Controller.APP_BLUE);
         registerButton.setBounds((panel.getWidth()-216)/2, 397, 216, 33);
         registerButton.addMouseListener(new MouseAdapter() {
 			@Override

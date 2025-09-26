@@ -6,14 +6,11 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.util.ArrayList;
 
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
@@ -99,7 +96,7 @@ public class ModifyOfferta extends JDialog{
         	optionLabel.setBounds(260, 30, 58, 21);
         	barterPanel.add(optionLabel);
         	
-        	JButton addObjectButton = new JButtonWithBorder("Aggiungi un nuovo oggetto +");
+        	JButton addObjectButton = new JButtonWithBorder("Aggiungi un nuovo oggetto +", Controller.APP_BLUE);
         	addObjectButton.setBounds(210, 60, 250, 30);
         	addObjectButton.addActionListener(e -> {
 				controller.onApriOggettoFrameClicked();
@@ -124,7 +121,7 @@ public class ModifyOfferta extends JDialog{
         }
 
         // Submit button
-        modifyButton = new JButtonWithBorder("Modifica Offerta");
+        modifyButton = new JButtonWithBorder("Modifica Offerta", Controller.APP_BLUE);
         modifyButton.setBounds(130, 296, 160, 28);
         modifyButton.setAlignmentX(Component.LEFT_ALIGNMENT);
         modifyButton.addActionListener(e -> onModificaOffertaClicked());
