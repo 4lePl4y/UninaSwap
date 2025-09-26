@@ -8,18 +8,20 @@ import java.awt.event.MouseEvent;
 
 import javax.swing.JLabel;
 
+import controller.Controller;
+
 public class JInteractiveLabel extends JLabel {
 	private static final long serialVersionUID = 1L;
 
 	public JInteractiveLabel(String text) {
 		super(text);
 		this.setForeground(Color.DARK_GRAY);
-		this.setFont(new Font("Times New Roman", Font.BOLD, 15));
+		this.setFont(new Font("Noto Color Emoji", Font.BOLD, 15));	//TODO: cambiare font
 		
 		this.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseEntered(MouseEvent e) {
-				setForeground(Color.BLUE);
+				setForeground(Controller.APP_BLUE);
 				setCursor(new Cursor(Cursor.HAND_CURSOR));
 			}
 			@Override

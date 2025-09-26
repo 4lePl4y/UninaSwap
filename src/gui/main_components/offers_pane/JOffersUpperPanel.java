@@ -15,7 +15,7 @@ import javax.swing.SwingConstants;
 
 import controller.Controller;
 import entities.studente.Studente;
-import gui.preset.presetJButton.JRefreshButton;
+import gui.preset.presetJLabel.JInteractiveLabel;
 
 public class JOffersUpperPanel extends JPanel{
 	private static final long serialVersionUID = 1L;
@@ -34,7 +34,8 @@ public class JOffersUpperPanel extends JPanel{
 		gbl_offersUpperPanel.rowWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
 		this.setLayout(gbl_offersUpperPanel);
 		
-		JRefreshButton refreshButton = new JRefreshButton();
+		JInteractiveLabel refreshButton = new JInteractiveLabel("⟳");
+		refreshButton.setFont(refreshButton.getFont().deriveFont(30.0f));
 		refreshButton.setLocation(0, 0);
 		refreshButton.addMouseListener(new MouseAdapter() {
 			@Override

@@ -17,7 +17,7 @@ import javax.swing.JPanel;
 
 import controller.Controller;
 import gui.preset.presetJButton.JButtonWithBorder;
-import gui.preset.presetJButton.JRefreshButton;
+import gui.preset.presetJLabel.JInteractiveLabel;
 
 public class JFilterNSearchPane extends JPanel {
     private static final long serialVersionUID = 1L;
@@ -25,7 +25,7 @@ public class JFilterNSearchPane extends JPanel {
     private boolean[] filtersObjectType = new boolean[5]; // Filtri per oggetto
     private boolean[] filtersAnnuncio = new boolean[3]; // Filtri per annuncio
     
-    private JRefreshButton refreshButton;
+    private JInteractiveLabel refreshButton;
     private JSearchTextField searchTxtField;
     private JButtonWithBorder searchButton;
     private JCheckBox[] objectTypeCheckBoxes;
@@ -36,7 +36,7 @@ public class JFilterNSearchPane extends JPanel {
 
         this.setPreferredSize(new Dimension(1106, 120));
         this.setLayout(new BorderLayout());
-        this.setBackground(new Color(161,195,192));
+        this.setBackground(new Color(255, 255, 255));
 
         // TOP PANEL 
         JPanel topPanel = new JPanel(new GridBagLayout());
@@ -48,7 +48,8 @@ public class JFilterNSearchPane extends JPanel {
         gbc_top.fill = GridBagConstraints.HORIZONTAL;
 
         // Refresh button
-        refreshButton = new JRefreshButton();
+        refreshButton = new JInteractiveLabel("⟳");
+        refreshButton.setFont(refreshButton.getFont().deriveFont(30.0f));
         gbc_top.gridx = 0;
         gbc_top.weightx = 0;
         refreshButton.addMouseListener(new MouseAdapter() {
