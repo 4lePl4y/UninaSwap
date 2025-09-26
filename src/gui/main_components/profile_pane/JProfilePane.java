@@ -4,13 +4,12 @@ import controller.Controller;
 import entities.annuncio.*;
 import entities.enumerazioni.Stato;
 import entities.offerta.*;
-import gui.preset.presetJButton.JButtonWithBorder;
+import gui.preset.presetJPanel.JPanelWithBackground;
+import gui.preset.presetJPanel.JPanelWithBorder;
 
 import java.util.ArrayList;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.geom.Ellipse2D;
 
 import org.jfree.chart.ChartFactory;
@@ -32,7 +31,6 @@ import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
 public class JProfilePane extends JPanel {
-	private Controller controller;
     private static final long serialVersionUID = 1L;
 	private ArrayList<Offerta> offerteInviate;
 	private ArrayList<Offerta> offerteRicevute;
@@ -40,27 +38,22 @@ public class JProfilePane extends JPanel {
 
     // COSTRUTTORE
 	public JProfilePane(ArrayList<Offerta> offerteInviate, ArrayList<Offerta> offerteRicevute,  Controller controller) {
-		this.controller = controller;
 		this.offerteInviate = offerteInviate;
         this.offerteRicevute = offerteRicevute;
-		setLayout(new BorderLayout(0, 0));
-
-        // Titolo
-        JLabel title = new JLabel("📊 Report Offerte", SwingConstants.CENTER);
-        title.setFont(new Font("SansSerif", Font.BOLD, 18));
-        add(title, BorderLayout.NORTH);
-
-        // Contenitore principale dentro la scrollPane
-        JPanel contentPanel = new JPanel(new BorderLayout());
-        add(contentPanel);
-
-        // Stats Panel con FlowLayout che va a capo automaticamente
-        JPanel statsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 20, 20));
-        contentPanel.add(statsPanel, BorderLayout.CENTER);
+        setLayout(new BorderLayout(0, 0));
+        
+        JPanel upperPanel = new JProfilePaneUpperPanel(controller);
+        add(upperPanel, BorderLayout.NORTH);
+		
+		JPanel lowerPanel = new JPanelWithBackground("src/img/scrollPanebackground.png");
+		lowerPanel.setLayout(new FlowLayout(FlowLayout.CENTER, 20, 20));
+		lowerPanel.setPreferredSize(new Dimension(1100, 500));
+		lowerPanel.setMaximumSize(new Dimension(1100, 500));
+		add(lowerPanel, BorderLayout.CENTER);
 
         // Creazione grafici con JFreeChart
         JFreeChart sentOffersBarChart = ChartFactory.createBarChart(
-                "Offerte inviate",
+        		"Offerte inviate",
                 "Tipologia",
                 "Numero",
                 sentOffers(),
@@ -126,117 +119,69 @@ public class JProfilePane extends JPanel {
 	    
 	    plot.setRenderer(renderer);
 	        
-        
         // Chart 1
-        ChartPanel sentOffersChartPanel = new ChartPanel(sentOffersBarChart);
-        sentOffersChartPanel.setPreferredSize(new Dimension(400, 200));
-        statsPanel.add(sentOffersChartPanel);
+	    JPanel chartPanel1 = new JPanelWithBorder();
+	    chartPanel1.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+	    chartPanel1.setPreferredSize(new Dimension(485, 295));
+	    chartPanel1.setMaximumSize(new Dimension(485, 295));
+	    chartPanel1.setBackground(new Color(255, 255, 255));
+	    
+	    ChartPanel sentOffersChartPanel = new ChartPanel(sentOffersBarChart);
+	    sentOffersChartPanel.setPreferredSize(new Dimension(470, 290));
+	    sentOffersChartPanel.setMaximumSize(new Dimension(470, 290));
+        sentOffersChartPanel.setOpaque(false);
         
+        chartPanel1.add(sentOffersChartPanel);
+        lowerPanel.add(chartPanel1);
         
-        // Chart 2
-        ChartPanel acceptedOffersChartPanel = new ChartPanel(acceptedOffersBarChart);
-        acceptedOffersChartPanel.setPreferredSize(new Dimension(400, 200));
-        statsPanel.add(acceptedOffersChartPanel);
-        
+
         // Chart 3
-        ChartPanel offersNumberChartPanel = new ChartPanel(offersNumberPieChart);
-        offersNumberChartPanel.setPreferredSize(new Dimension(400, 200));
-        statsPanel.add(offersNumberChartPanel);
+        JPanel chartPanel3 = new JPanelWithBorder();
+        chartPanel3.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        chartPanel3.setPreferredSize(new Dimension(485, 295));
+        chartPanel3.setMaximumSize(new Dimension(485, 295));
+        chartPanel3.setBackground(new Color(255, 255, 255));
+        
+        ChartPanel offersNumberChartPanel = new ChartPanel(offersNumberPieChart);        
+        offersNumberChartPanel.setPreferredSize(new Dimension(470, 290));
+        offersNumberChartPanel.setMaximumSize(new Dimension(470, 290));
+        offersNumberChartPanel.setOpaque(false);
+        
+        chartPanel3.add(offersNumberChartPanel);
+        lowerPanel.add(chartPanel3);
+
+        // Chart 2
+        JPanel chartPanel2 = new JPanelWithBorder();
+        chartPanel2.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        chartPanel2.setPreferredSize(new Dimension(485, 295));
+        chartPanel2.setMaximumSize(new Dimension(485, 295));
+        chartPanel2.setBackground(new Color(255, 255, 255));
+
+        ChartPanel acceptedOffersChartPanel = new ChartPanel(acceptedOffersBarChart);
+        acceptedOffersChartPanel.setPreferredSize(new Dimension(470, 290));
+        acceptedOffersChartPanel.setMaximumSize(new Dimension(470, 290));
+        acceptedOffersChartPanel.setOpaque(false);
+        
+        chartPanel2.add(acceptedOffersChartPanel);
+        lowerPanel.add(chartPanel2);
         
         // Chart 4
+        JPanel chartPanel4 = new JPanelWithBorder();
+        chartPanel4.setLayout(new FlowLayout(FlowLayout.CENTER, 0, 0));
+        chartPanel4.setPreferredSize(new Dimension(1495, 295));
+        chartPanel4.setMaximumSize(new Dimension(1495, 295));
+        chartPanel4.setBackground(new Color(255, 255, 255));
+        
         ChartPanel earningsTimeChartPanel = new ChartPanel(earningsTimeChart);
-        earningsTimeChartPanel.setPreferredSize(new Dimension(400, 200));
-        statsPanel.add(earningsTimeChartPanel);
+        earningsTimeChartPanel.setPreferredSize(new Dimension(1480, 290));
+        earningsTimeChartPanel.setMaximumSize(new Dimension(1480, 290));
+        earningsTimeChartPanel.setOpaque(false);
         
-        statsPanel.add(sentOffersChartPanel);
-        statsPanel.add(acceptedOffersChartPanel);
-        statsPanel.add(offersNumberChartPanel);
-        statsPanel.add(earningsTimeChartPanel);
-
-		 // --- SEZIONE GESTIONE  CREDENZIALE ---
-        JPanel settingsPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 40, 20));
-        settingsPanel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        contentPanel.add(settingsPanel, BorderLayout.SOUTH);
-
-       
-        JPanel credentialsPanel = new JPanel();
-        credentialsPanel.setBorder(BorderFactory.createTitledBorder("Gestione credenziali"));
-
-        JButtonWithBorder changeEmailButton = new JButtonWithBorder("Cambia email", Controller.APP_BLUE);
-        changeEmailButton.addMouseListener(new MouseAdapter() {
-        	public void mouseClicked(MouseEvent e) {
-        		openModificaEmailFrame();
-        	}
-        });
-        
-        JButtonWithBorder changeUsernameButton = new JButtonWithBorder("Cambia username", Controller.APP_BLUE);
-        changeUsernameButton.addMouseListener(new MouseAdapter() {
-        	public void mouseClicked(MouseEvent e) {
-        		openModificaUsernameFrame();
-        	}
-        });
-        
-        JButtonWithBorder changePasswordButton = new JButtonWithBorder("Cambia password", Controller.APP_BLUE);
-        changePasswordButton.addMouseListener(new MouseAdapter() {
-        	public void mouseClicked(MouseEvent e) {
-        		openModificaPasswordFrame();
-        	}
-        });
-
-        credentialsPanel.add(changeEmailButton);
-        credentialsPanel.add(changeUsernameButton);
-        credentialsPanel.add(changePasswordButton);
-        
-
-        // --- Sezione Azioni Importanti ---
-        JPanel actionsPanel = new JPanel();
-        actionsPanel.setLayout(new BoxLayout(actionsPanel, BoxLayout.Y_AXIS));
-        actionsPanel.setBorder(BorderFactory.createTitledBorder("Azioni importanti"));
-
-        JButtonWithBorder logoutButton = new JButtonWithBorder("Logout", Controller.APP_BLUE);
-        logoutButton.addMouseListener(new MouseAdapter() {
-        	public void mouseClicked(MouseEvent e) {
-        		onLogoutClicked();
-        	}
-        });
-        
-        JButtonWithBorder deleteButton = new JButtonWithBorder("Elimina account", Controller.APP_RED);
-        deleteButton.addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				onEliminaAccountClicked();
-			}
-		});
-
-        actionsPanel.add(logoutButton);
-        actionsPanel.add(Box.createVerticalStrut(10));
-        actionsPanel.add(deleteButton);
-
-        // Aggiunta pannelli bottoni al settingsPanel
-        settingsPanel.add(credentialsPanel);
-        settingsPanel.add(actionsPanel);
+        chartPanel4.add(earningsTimeChartPanel);
+        lowerPanel.add(chartPanel4);
+                
     }
 
-    // METODI
-	public void openModificaEmailFrame() {
-		controller.openModificaEmailFrame();
-	}
-	
-	public void openModificaUsernameFrame() {
-		controller.openModificaUsernameFrame();
-	}
-	
-	public void openModificaPasswordFrame() {
-		controller.openModificaPasswordFrame();
-	}
-	
-	public void onLogoutClicked() {
-		controller.onLogoutClicked();
-	}
-	
-	public void onEliminaAccountClicked() {
-		controller.onEliminaAccountClicked();
-	}
-	
 	
     private CategoryDataset sentOffers() {
         DefaultCategoryDataset dataset = new DefaultCategoryDataset();
