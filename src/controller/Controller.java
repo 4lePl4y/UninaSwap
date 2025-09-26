@@ -260,11 +260,9 @@ public class Controller {
 	public void onCreaOggettoClicked() {
 		String nome = newOggettoFrame.getNome();
 		Oggetto oggetto = creaOggetto(nome);
-		oggettoDAO.create(oggetto);
-		
+		oggettoDAO.create(oggetto);		
 		mainFrame.refreshMyObjects();
-		if((newAnnuncioFrame != null) && (newAnnuncioFrame.isVisible()))
-			newAnnuncioFrame.refreshOggettiEsistenti();
+
 	}
 	
 	public void onCancellaOggettoClicked(Oggetto oggetto) {

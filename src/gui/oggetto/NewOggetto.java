@@ -2,11 +2,13 @@ package gui.oggetto;
 
 import controller.Controller;
 import entities.enumerazioni.TipoOggetto;
+import gui.preset.JCustomComboBox;
 import gui.preset.presetJButton.JButtonWithBorder;
 import gui.preset.presetJTextField.JCustomTextField;
 import gui.preset.presetJTextField.JYearTextField;
 
 import java.awt.Component;
+import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 import java.time.Year;
@@ -60,7 +62,9 @@ public class NewOggetto extends JDialog {
         // Tipo Oggetto Panel
         JPanel tipoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         JLabel tipoLabel = new JLabel("Tipo Oggetto:");
-        tipoOggettoCombo = new JComboBox<>(TipoOggetto.values());
+        tipoOggettoCombo = new JCustomComboBox<>(TipoOggetto.values());
+        tipoOggettoCombo.setPreferredSize(new Dimension(170, 25));
+        tipoOggettoCombo.setMaximumSize(new Dimension(170, 25));
         tipoOggettoCombo.setFont(new Font("Times New Roman", Font.PLAIN, 15));
         tipoOggettoCombo.addActionListener(e -> aggiornaCampiPerComboBox());
         tipoPanel.add(tipoLabel);

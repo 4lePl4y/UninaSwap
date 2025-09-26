@@ -5,7 +5,9 @@ import entities.enumerazioni.Sede;
 import entities.enumerazioni.TipoAnnuncio;
 import entities.oggetto.Oggetto;
 import exception.CustomSQLException;
+import gui.preset.JCustomComboBox;
 import gui.preset.JCustomList;
+import gui.preset.JCustomScrollPane;
 import gui.preset.JCustomList.Mode;
 import gui.preset.JWritableTextArea;
 import gui.preset.presetJButton.JButtonWithBorder;
@@ -26,14 +28,15 @@ public class NewAnnuncio extends JDialog {
     private JPanel contentPane;
     private JCustomTextField titoloAnnuncioField;
     private JWritableTextArea descrTextArea;
-    private JComboBox<TipoAnnuncio> tipoAnnuncioCombo;
-    private JComboBox<Oggetto> oggettiEsistentiCombo;
-    private JComboBox<Sede> sedeCombo;
-    private JComboBox<String> orarioCombo;
+    private JCustomComboBox<TipoAnnuncio> tipoAnnuncioCombo;
+    private JCustomList<Oggetto> oggettiEsistentiList;
+    private JCustomComboBox<Sede> sedeCombo;
+    private JCustomComboBox<String> orarioCombo;
     private JPanel prezzoPanel;
     private JPriceTextField prezzoField;
     private JPanel aggiungiOggettoPanel;
     private JLabel oggettiEsistentiLabel;
+	private JPanel oggettoEsistentePanel;
 
     public NewAnnuncio(Controller controller) {
         super(controller.getMainFrame(), "Nuovo Annuncio", true);
@@ -94,7 +97,9 @@ public class NewAnnuncio extends JDialog {
         JPanel tipoAnnuncioPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         tipoAnnuncioPanel.setOpaque(false);
         JLabel tipoAnnuncioLabel = new JLabel("Tipo Annuncio:");
-        tipoAnnuncioCombo = new JComboBox<>(TipoAnnuncio.values());
+        tipoAnnuncioCombo = new JCustomComboBox<>(TipoAnnuncio.values());
+        tipoAnnuncioCombo.setPreferredSize(new Dimension(150, 25));
+        tipoAnnuncioCombo.setMaximumSize(new Dimension(150, 25));
         tipoAnnuncioPanel.add(tipoAnnuncioLabel);
         tipoAnnuncioPanel.add(tipoAnnuncioCombo);
         centerPanel.add(tipoAnnuncioPanel);
@@ -105,21 +110,21 @@ public class NewAnnuncio extends JDialog {
         aggiungiOggettoPanel.setLayout(new BoxLayout(aggiungiOggettoPanel, BoxLayout.Y_AXIS));
         
         // Oggetti esistenti
-        JPanel oggettoEsistentePanel = new JPanel();
+        oggettoEsistentePanel = new JPanel();
         oggettoEsistentePanel.setOpaque(false);
         oggettoEsistentePanel.setLayout(new BorderLayout(0, 0));
         oggettiEsistentiLabel = new JLabel("Scegli dai tuoi oggetti:");
-        JCustomList<Oggetto> list = new JCustomList<Oggetto>(controller.getMieiOggetti(), Mode.SINGLE_SELECTION,  500, 60);
-        list.setAlignmentX(Component.LEFT_ALIGNMENT);
+        oggettiEsistentiList = new JCustomList<Oggetto>(controller.getMieiOggetti(), Mode.SINGLE_SELECTION,  500, 60);
+        oggettiEsistentiList.setAlignmentX(Component.LEFT_ALIGNMENT);
         oggettoEsistentePanel.add(oggettiEsistentiLabel, BorderLayout.NORTH);
-        oggettoEsistentePanel.add(list, BorderLayout.CENTER);
+        oggettoEsistentePanel.add(oggettiEsistentiList, BorderLayout.CENTER);
         
         // Crea nuovo oggetto
         JPanel creaOggettoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         creaOggettoPanel.setOpaque(false);
         creaOggettoPanel.add(new JLabel("Oppure"));
         JButtonWithBorder creaOggettoBtn = new JButtonWithBorder("Crea Nuovo Oggetto", Controller.APP_BLUE);
-        creaOggettoBtn.addActionListener(e -> controller.onApriOggettoFrameClicked());
+        creaOggettoBtn.addActionListener(e -> onAggiungiNuovoOggettoClicked());
         creaOggettoPanel.add(creaOggettoBtn);
         
         aggiungiOggettoPanel.add(oggettoEsistentePanel);
@@ -132,7 +137,9 @@ public class NewAnnuncio extends JDialog {
         JPanel sedePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         sedePanel.setOpaque(false);
         JLabel sedeLabel = new JLabel("Luogo d'incontro:");
-        sedeCombo = new JComboBox<>(Sede.values());
+        sedeCombo = new JCustomComboBox<>(Sede.values());
+        sedeCombo.setPreferredSize(new Dimension(150, 25));
+        sedeCombo.setMaximumSize(new Dimension(150, 25));
         sedePanel.add(sedeLabel);
         sedePanel.add(sedeCombo);
         centerPanel.add(sedePanel);
@@ -141,7 +148,9 @@ public class NewAnnuncio extends JDialog {
         JPanel orarioPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         orarioPanel.setOpaque(false);
         JLabel orarioLabel = new JLabel("Orario:");
-        orarioCombo = new JComboBox<>(generaOrari());
+        orarioCombo = new JCustomComboBox<>(generaOrari());
+        orarioCombo.setPreferredSize(new Dimension(70, 25));
+        orarioCombo.setMaximumSize(new Dimension(70, 25));
         orarioPanel.add(orarioLabel);
         orarioPanel.add(orarioCombo);
         centerPanel.add(orarioPanel);
@@ -184,7 +193,7 @@ public class NewAnnuncio extends JDialog {
     }
 
     public Oggetto getOggettoSelezionato() {
-        return (Oggetto) oggettiEsistentiCombo.getSelectedItem();
+        return (Oggetto) oggettiEsistentiList.getSelectedValues().getFirst();
     }
 
     public String getDescrizione() {
@@ -244,10 +253,9 @@ public class NewAnnuncio extends JDialog {
             return false;
         }
 
-        // Se vuoi permettere creazione "senza scegliere oggetto" rimuovi questa verifica.
-        if (oggettiEsistentiCombo.getSelectedItem() == null) {
+        if (oggettiEsistentiList.getSelectedValues() == null) {
             JOptionPane.showMessageDialog(this, "Seleziona un oggetto esistente o crea un nuovo oggetto!");
-            oggettiEsistentiCombo.requestFocus();
+            oggettiEsistentiList.requestFocus();
             return false;
         }
 
@@ -283,11 +291,17 @@ public class NewAnnuncio extends JDialog {
         return orari.toArray(new String[0]);
     }
 
-    /**
-     * Metodo pubblico per forzare manualmente il refresh della lista oggetti (se serve).
-     * Puoi chiamarlo dal controller dopo aver creato un oggetto.
-     */
-    public void refreshOggettiEsistenti() {
-    	//	TODO: refreshOggettiEsistenti
+    private void refreshOggettiEsistenti() {
+    	oggettoEsistentePanel.remove(oggettiEsistentiList);
+    	oggettiEsistentiList = new JCustomList<Oggetto>(controller.getMieiOggetti(), Mode.SINGLE_SELECTION,  500, 60);
+        oggettoEsistentePanel.add(oggettiEsistentiList, BorderLayout.CENTER);
+        oggettoEsistentePanel.revalidate();
+        oggettoEsistentePanel.repaint();
     }
+    
+    private void onAggiungiNuovoOggettoClicked() {
+		controller.onApriOggettoFrameClicked();
+		refreshOggettiEsistenti();
+	}
+    
 }

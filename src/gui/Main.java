@@ -137,7 +137,7 @@ public class Main extends JFrame {
     }
 
 	//METODI
-	public ArrayList<Oggetto>getMieiOggetti() {
+	public ArrayList<Oggetto> getMieiOggetti() {
 		if (mieiOggetti == null) {
 			mieiOggetti = controller.getMieiOggetti(studenteLoggato.getUsername());
 		}

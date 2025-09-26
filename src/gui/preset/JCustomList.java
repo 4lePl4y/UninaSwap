@@ -87,6 +87,9 @@ public class JCustomList<T> extends JPanel {
     }
 
     public ArrayList<T> getSelectedValues() {
-        return new ArrayList<>(jList.getSelectedValuesList());
+    	if(jList.getSelectedValuesList().isEmpty())
+    		return null;
+    	else
+    		return new ArrayList<>(jList.getSelectedValuesList());
     }
 }

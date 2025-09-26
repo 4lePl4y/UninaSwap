@@ -3,6 +3,7 @@ package gui.annuncio;
 import controller.Controller;
 import entities.annuncio.*;
 import entities.enumerazioni.Sede;
+import gui.preset.JCustomComboBox;
 import gui.preset.JWritableTextArea;
 import gui.preset.presetJButton.JButtonWithBorder;
 import gui.preset.presetJTextField.JCustomTextField;
@@ -24,8 +25,8 @@ public class ModifyAnnuncio extends JDialog {
     private JPanel contentPane;
     private JCustomTextField titoloAnnuncioField;
     private JWritableTextArea descrTextArea;
-    private  JComboBox<Sede> sedeCombo;
-    private JComboBox<String> orarioCombo;
+    private  JCustomComboBox<Sede> sedeCombo;
+    private JCustomComboBox<String> orarioCombo;
     private JPanel prezzoPanel;
     private JPriceTextField prezzoField;
 
@@ -77,7 +78,9 @@ public class ModifyAnnuncio extends JDialog {
         JPanel sedePanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         sedePanel.setOpaque(false);
         JLabel sedeLabel = new JLabel("Luogo d'incontro:");
-        sedeCombo = new JComboBox<>(Sede.values());
+        sedeCombo = new JCustomComboBox<>(Sede.values());
+        sedeCombo.setPreferredSize(new Dimension(150, 25));
+        sedeCombo.setMaximumSize(new Dimension(150, 25));
         sedeCombo.setSelectedItem(annuncio.getLuogo());
         sedePanel.add(sedeLabel);
         sedePanel.add(sedeCombo);
@@ -87,7 +90,9 @@ public class ModifyAnnuncio extends JDialog {
         JPanel orarioPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         orarioPanel.setOpaque(false);
         JLabel orarioLabel = new JLabel("Orario:");
-        orarioCombo = new JComboBox<>(NewAnnuncio.generaOrari());
+        orarioCombo = new JCustomComboBox<>(NewAnnuncio.generaOrari());
+        orarioCombo.setPreferredSize(new Dimension(70, 25));
+        orarioCombo.setMaximumSize(new Dimension(70, 25));
         orarioCombo.setSelectedItem(annuncio.getOraIncontro().toString());
         orarioPanel.add(orarioLabel);
         orarioPanel.add(orarioCombo);
