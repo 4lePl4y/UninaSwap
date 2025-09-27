@@ -7,6 +7,7 @@ import gui.preset.presetJButton.JButtonWithBorder;
 import gui.preset.presetJTextField.JCustomTextField;
 import gui.preset.presetJTextField.JYearTextField;
 
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
@@ -49,18 +50,41 @@ public class NewOggetto extends JDialog {
     public NewOggetto(Controller controller) {
     	super(controller.getMainFrame(), "Nuovo Oggetto", true);
     	this.controller = controller;
-    	
-        this.setBounds(100, 100, 500, 500);
-        this.setResizable(false);
-        this.setFocusable(true);
+    	this.setSize(500, 500);
+    	super.setLocationRelativeTo(null);	// centra la finestra
+    	this.setResizable(false);
+    	this.setFocusable(true);
+    			
 
         contentPane = new JPanel();
+        contentPane.setBackground(new Color(255, 255, 255));
         contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
         setContentPane(contentPane);
 
+        // Welcoming panel
+        JPanel welcomingPanel = new JPanel();
+        welcomingPanel.setBackground(new Color(255, 255, 255));
+        welcomingPanel.setLayout(new BoxLayout(welcomingPanel, BoxLayout.Y_AXIS));
+        welcomingPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JLabel welcomingLabel = new JLabel("CREA NUOVO OGGETTO");
+        welcomingLabel.setFont(new Font("Times New Roman", Font.BOLD, 24)); //TODO: cambia font
+        welcomingLabel.setForeground(Controller.APP_BLUE);
+        welcomingLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        
+        JLabel riempiCampiLabel = new JLabel("Seleziona il tipo di oggetto e compila i campi ");
+        riempiCampiLabel.setFont(new Font("Times New Roman", Font.BOLD, 14)); //TODO: cambia font
+        riempiCampiLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        
+        welcomingPanel.add(welcomingLabel);
+        welcomingPanel.add(riempiCampiLabel);
+        contentPane.add(welcomingPanel);
+        
+        welcomingPanel.add(Box.createVerticalStrut(20)); 
         // Tipo Oggetto Panel
         JPanel tipoPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        tipoPanel.setBackground(new Color(255, 255, 255));
         JLabel tipoLabel = new JLabel("Tipo Oggetto:");
         tipoOggettoCombo = new JCustomComboBox<>(TipoOggetto.values());
         tipoOggettoCombo.setPreferredSize(new Dimension(170, 25));
@@ -100,7 +124,6 @@ public class NewOggetto extends JDialog {
         // Button
         JButtonWithBorder creaButton = new JButtonWithBorder("Crea Oggetto", Controller.APP_BLUE);
         creaButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        contentPane.add(Box.createVerticalStrut(20));
         creaButton.addActionListener(e -> onCreaOggettoClicked());
         contentPane.add(creaButton);
         
@@ -194,6 +217,7 @@ public class NewOggetto extends JDialog {
 
 	private JPanel creaFieldPanel(String label, JCustomTextField field) {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        panel.setBackground(new Color(255, 255, 255));
         JLabel jlabel = new JLabel(label);
         field.setColumns(20);
         panel.add(jlabel);

@@ -3,6 +3,7 @@ package gui.oggetto;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.FlowLayout;
+import java.awt.Font;
 import java.time.Year;
 import java.time.format.DateTimeParseException;
 
@@ -49,15 +50,36 @@ public class ModifyOggetto extends JDialog{
     	super(controller.getMainFrame(), "Modifica oggetto", true);
     	this.controller = controller;
     	this.oggetto = oggetto;
-        this.setBounds(100, 100, 500, 500);
-        this.setResizable(false);
+    	this.setSize(500, 500);
+    	super.setLocationRelativeTo(null);	// centra la finestra
+    	this.setResizable(false);
         this.setFocusable(true);
 
         contentPane = new JPanel();
+        contentPane.setBackground(new Color(255, 255, 255));
         contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
         setContentPane(contentPane);
         
+        // Welcoming panel
+        JPanel welcomingPanel = new JPanel();
+        welcomingPanel.setLayout(new BoxLayout(welcomingPanel, BoxLayout.Y_AXIS));
+        welcomingPanel.setBackground(new Color(255, 255, 255));
+        JLabel welcomingLabel = new JLabel("MODIFICA OGGETTO");
+        welcomingLabel.setFont(new Font("Times New Roman", Font.BOLD, 24)); //TODO: cambia font
+        welcomingLabel.setForeground(Controller.APP_BLUE);
+        welcomingLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+
+        JLabel riempiCampiLabel = new JLabel("Compila i campi ");
+        riempiCampiLabel.setFont(new Font("Times New Roman", Font.BOLD, 14)); //TODO: cambia font
+        riempiCampiLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        
+        welcomingPanel.add(welcomingLabel);
+        welcomingPanel.add(riempiCampiLabel);
+        contentPane.add(welcomingPanel);
+        
+        welcomingPanel.add(Box.createVerticalStrut(20));
+        // Riempi i fields con i dati dell'oggetto esistente
         nomeField.setText(oggetto.getNome());
         nomeField.setForeground(Color.BLACK);
         switch(oggetto) {
@@ -126,7 +148,6 @@ public class ModifyOggetto extends JDialog{
         // Button
         JButtonWithBorder creaButton = new JButtonWithBorder("Modifica Oggetto", Controller.APP_BLUE);
         creaButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        contentPane.add(Box.createVerticalStrut(20));
         creaButton.addActionListener(e -> onModificaOggettoClicked());
         contentPane.add(creaButton);
 
@@ -134,6 +155,7 @@ public class ModifyOggetto extends JDialog{
 
     private JPanel creaFieldPanel(String label, JCustomTextField field) {
         JPanel panel = new JPanel(new FlowLayout(FlowLayout.LEFT));
+        panel.setBackground(new Color(255, 255, 255));
         JLabel jlabel = new JLabel(label);
         field.setColumns(20);
         panel.add(jlabel);
