@@ -8,6 +8,7 @@ import java.awt.Font;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -37,10 +38,11 @@ public abstract class JAbstractListingCard extends JAbstractCard {
 		topPanel.setLayout(new BorderLayout());
 		this.add(topPanel);
 		
-//		ImageIcon icon = new ImageIcon(annuncio.getOggetto().getSourceImage()); 
-//		JLabel imageLabel = new JLabel(icon);
+		ImageIcon icon = new ImageIcon(annuncio.getOggetto().getSourceImage()); 
+		icon = new ImageIcon(icon.getImage().getScaledInstance(60, 60,  java.awt.Image.SCALE_SMOOTH));
+		JLabel imageLabel = new JLabel(icon);
 		
-		JLabel imageLabel = new JLabel("👕");
+		//JLabel imageLabel = new JLabel("👕");
 		imageLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 60));
 		imageLabel.setForeground(new Color(34, 155, 196));
 		imageLabel.setBorder(new EmptyBorder(0, 10, 0, 0));
