@@ -61,8 +61,8 @@ public class JProfilePane extends JPanel {
                 true, false, false);
                 
 		CategoryPlot sentOffersBarChartPlot = (CategoryPlot) sentOffersBarChart.getPlot();
-		NumberAxis rangeAxis = (NumberAxis) sentOffersBarChartPlot.getRangeAxis();
-		rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+		NumberAxis rangeAxis_sentOffersBarChart = (NumberAxis) sentOffersBarChartPlot.getRangeAxis();
+		rangeAxis_sentOffersBarChart.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
 
 		
         JFreeChart acceptedOffersBarChart = ChartFactory.createBarChart(
@@ -72,6 +72,9 @@ public class JProfilePane extends JPanel {
                 acceptedOffers(),
                 PlotOrientation.VERTICAL,
                 true, false, false);
+        CategoryPlot acceptedOffersBarChartPlot = (CategoryPlot) acceptedOffersBarChart.getPlot();
+        NumberAxis rangeAxis_acceptedOffersBarChart = (NumberAxis) acceptedOffersBarChartPlot.getRangeAxis();
+        rangeAxis_acceptedOffersBarChart.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
                
         JFreeChart offersNumberPieChart = ChartFactory.createPieChart("Totale delle offerte", offersNumber(), true, true, false);
         PiePlot<?> offersNumberPieChartPlot = (PiePlot<?>) offersNumberPieChart.getPlot();
@@ -92,6 +95,9 @@ public class JProfilePane extends JPanel {
         		true);
         
         XYPlot plot = earningsTimeChart.getXYPlot();
+        NumberAxis domain = (NumberAxis) plot.getDomainAxis();
+        domain.setTickLabelsVisible(false);
+
 	    XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
 	    plot.setSeriesRenderingOrder(org.jfree.chart.plot.SeriesRenderingOrder.FORWARD);
 
@@ -100,7 +106,7 @@ public class JProfilePane extends JPanel {
 	    renderer.setSeriesLinesVisible(0, false);   // niente linea
 	    renderer.setSeriesShapesVisible(0, true);   // solo punti
 	
-	    // Serie 1 = "media" → linea + punti (puoi personalizzare come vuoi)
+	    // Serie 1 = "media" → linea + punti
 	    renderer.setSeriesPaint(1, Color.GREEN);
 	    renderer.setSeriesLinesVisible(1, true);
 	    renderer.setSeriesShapesVisible(1, true);
@@ -271,39 +277,46 @@ public class JProfilePane extends JPanel {
         double min=9999.99, max=0;
         double minX=0, minY=0, maxX=0, maxY=0, pos=0;
         int totale = 0; 
+        boolean hasData = false;
     	
         // Min e max
         for (int i = 0; i < offerteRicevute.size(); i++) {
         	offerta = offerteRicevute.get(i);
             if(offerta instanceof OffertaDenaro o && o.getStato().equals(Stato.Accettata)) {
+            	hasData = true;
             	if(o.getOfferta()<min) {
             		min=o.getOfferta();
             		minX=pos;
             		minY=o.getOfferta();
             	}
-            	if(o.getOfferta()>max) {
+            	else if(o.getOfferta()>max) {
             		max=o.getOfferta();
             		maxX=pos;
             		maxY=o.getOfferta();
             	}
-            	allOffers.add(i, o.getOfferta());
             	pos++;
+            	
+            	allOffers.add(i, o.getOfferta());	
+            	totale += o.getOfferta();
+            	media.add(i, totale / (i+1));
             }
-        }    	
+        }    
+        
+        if(!hasData) {
+        	XYSeries dummy_allOffers = new XYSeries( "Tutte le offerte" );   
+        	XYSeries dummy_media = new XYSeries( "Media delle offerte" );                        
+        	XYSeries dummy_minimo = new XYSeries( "l'offerta più bassa" );                        
+        	XYSeries dummy_massimo = new XYSeries( "l'offerta più alta" );
+        	dataset.addSeries(dummy_allOffers);
+        	dataset.addSeries(dummy_media);
+        	dataset.addSeries(dummy_minimo);
+        	dataset.addSeries(dummy_massimo);
+            return dataset;
+        }
         
         minimo.add(minX, minY);
         massimo.add(maxX, maxY);
         
-        
-        // Media 
-		for(int i = 0; i < offerteRicevute.size(); i++){
-            offerta = offerteRicevute.get(i);
-            if(offerta instanceof OffertaDenaro o){
-            	totale += o.getOfferta();
-            	media.add(i, totale / (i+1));
-            }
-        }		
-		
 		dataset.addSeries(allOffers);
 		dataset.addSeries(media);
 		dataset.addSeries(minimo);
