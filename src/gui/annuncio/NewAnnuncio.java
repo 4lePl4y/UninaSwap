@@ -1,13 +1,14 @@
 package gui.annuncio;
 
+import exception.CustomSQLException;
 import controller.Controller;
+
 import entities.enumerazioni.Sede;
 import entities.enumerazioni.TipoAnnuncio;
 import entities.oggetto.Oggetto;
-import exception.CustomSQLException;
+
 import gui.preset.JCustomComboBox;
 import gui.preset.JCustomList;
-import gui.preset.JCustomScrollPane;
 import gui.preset.JCustomList.Mode;
 import gui.preset.JWritableTextArea;
 import gui.preset.presetJButton.JButtonWithBorder;
@@ -15,11 +16,12 @@ import gui.preset.presetJTextField.JCustomTextField;
 import gui.preset.presetJTextField.JPriceTextField;
 
 import java.awt.*;
-import java.sql.SQLException;
-import java.time.LocalTime;
-import java.util.ArrayList;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import java.util.List;
+import java.util.ArrayList;
+import java.time.LocalTime;
+import java.sql.SQLException;
 
 public class NewAnnuncio extends JDialog {
     private static final long serialVersionUID = 1L;
@@ -281,7 +283,7 @@ public class NewAnnuncio extends JDialog {
 
     public static String[] generaOrari() {
         // 8:00 .. 19:00 con step 15' (19:00 incluso)
-        java.util.List<String> orari = new ArrayList<>();
+        List<String> orari = new ArrayList<>();
         for (int hour = 8; hour <= 19; hour++) {
             for (int min = 0; min < 60; min += 15) {
                 if (hour == 19 && min > 0) break;
