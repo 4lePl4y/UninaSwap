@@ -10,6 +10,8 @@ import javax.swing.border.EmptyBorder;
 import controller.Controller;
 import gui.preset.presetJButton.JButtonWithBorder;
 import gui.preset.presetJTextField.JCustomTextField;
+
+import java.awt.Color;
 import java.awt.Font;
 
 
@@ -27,14 +29,16 @@ public class ModifyUsername extends JDialog {
         this.setSize(500, 300);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
+        this.setBackground(new Color(255,255,255));
         
         contentPane = new JPanel();
-        contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+        contentPane.setBackground(new Color (255,255,255));
         setContentPane(contentPane);
         
         JPanel cambiaUsernamePanel = new JPanel();
         cambiaUsernamePanel.setLayout(null);
+        cambiaUsernamePanel.setOpaque(false);
         
         usernameLabel = new JLabel("Inserici il nuovo username:");
         usernameLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
