@@ -1,18 +1,16 @@
 package gui.main_components.listings_pane;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-
 import javax.swing.SwingConstants;
 
 import controller.Controller;
@@ -20,54 +18,46 @@ import entities.studente.Studente;
 import gui.preset.presetJButton.JButtonWithBorder;
 
 public class JListingsUpperPanel extends JPanel {
-	private static final long serialVersionUID = 1L;
-	private Studente studenteLoggato;
-	
-	public JListingsUpperPanel(Controller controller) {
-		this.studenteLoggato = controller.getStudenteLoggato();
-		this.setBackground(new Color(255, 255, 255));
-		this.setPreferredSize(new Dimension(800, 85));
-		this.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		GridBagLayout gbl_listingsUpperPanel = new GridBagLayout();
-		gbl_listingsUpperPanel.columnWidths = new int[]{0, 0, 0};
-		gbl_listingsUpperPanel.rowHeights = new int[]{36, 0, 0};
-		gbl_listingsUpperPanel.columnWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
-		gbl_listingsUpperPanel.rowWeights = new double[]{1.0, 1.0, Double.MIN_VALUE};
-		this.setLayout(gbl_listingsUpperPanel);
-		
-		JLabel welcomingLabel = new JLabel("Ciao "+studenteLoggato.getUsername()+"! Liberati di quello che non usi più e connettiti con altri studenti della Federico II");
-		welcomingLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
-		GridBagConstraints gbc_welcomingLabel = new GridBagConstraints();
-		gbc_welcomingLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_welcomingLabel.gridx = 0;
-		gbc_welcomingLabel.gridy = 0;
-		this.add(welcomingLabel, gbc_welcomingLabel);
-		
-		JButton newListingButton = new JButtonWithBorder("Crea un nuovo annuncio +", Controller.APP_BLUE);
-		GridBagConstraints gbc_newListingButton = new GridBagConstraints();
-		gbc_newListingButton.insets = new Insets(0, 0, 5, 0);
-		gbc_newListingButton.gridx = 1;
-		gbc_newListingButton.gridy = 0;
-		this.add(newListingButton, gbc_newListingButton);
-		newListingButton.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				controller.onNuovoAnnuncioClicked();
-			}
-		});
-		
-		JLabel yourListingsLabel = new JLabel("Ecco qui i tuoi annunci:");
-		yourListingsLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		yourListingsLabel.setHorizontalTextPosition(SwingConstants.CENTER);
-		GridBagConstraints gbc_yourListingsLabel = new GridBagConstraints();
-		gbc_yourListingsLabel.anchor = GridBagConstraints.WEST;
-		gbc_yourListingsLabel.insets = new Insets(0, 10, 0, 0);
-		gbc_yourListingsLabel.gridx = 0;
-		gbc_yourListingsLabel.gridy = 1;
-		this.add(yourListingsLabel, gbc_yourListingsLabel);
-		
-	}
-	
+    private static final long serialVersionUID = 1L;
+    private Studente studenteLoggato;
+
+    public JListingsUpperPanel(Controller controller) {
+        this.studenteLoggato = controller.getStudenteLoggato();
+        setBackground(Color.WHITE);
+        setPreferredSize(new Dimension(800, 85));
+        setLayout(new BorderLayout(5, 0)); // margine orizzontale ridotto tra le sezioni
+
+        // WEST: logo
+        JPanel westPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 25)); 
+        westPanel.setBackground(Color.WHITE);
+        JLabel logo = new JLabel("UNINA SWAP");	//TODO: sostituire con logo vero (?)
+        logo.setFont(new Font("SansSerif", Font.BOLD, 20));
+        logo.setForeground(new Color(30, 30, 30));
+        westPanel.add(logo);
+        add(westPanel, BorderLayout.WEST);
+
+        // CENTER: label benvenuto
+        JPanel centerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 25)); 
+        centerPanel.setBackground(Color.WHITE);
+        String username = (studenteLoggato != null) ? studenteLoggato.getUsername() : "";
+        JLabel welcomingLabel = new JLabel("Ciao " + username + " 👋, Ecco i tuoi annunci", SwingConstants.CENTER);
+        welcomingLabel.setFont(new Font("SansSerif", Font.PLAIN, 16));
+        welcomingLabel.setForeground(new Color(80, 80, 80));
+        centerPanel.add(welcomingLabel);
+        add(centerPanel, BorderLayout.CENTER);
+
+        // EAST: pulsante nuovo annuncio
+        JPanel eastPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 25));
+        eastPanel.setBackground(Color.WHITE);
+        JButton newListingButton = new JButtonWithBorder("+ Nuovo Annuncio", Controller.APP_BLUE);
+        newListingButton.setFocusPainted(false);
+        newListingButton.setPreferredSize(new Dimension(170, 35));
+        newListingButton.addActionListener(e -> controller.onNuovoAnnuncioClicked());
+        eastPanel.add(newListingButton);
+        add(eastPanel, BorderLayout.EAST);
+    }
+
+
 
 
 }
