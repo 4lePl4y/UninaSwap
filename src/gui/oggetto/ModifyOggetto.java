@@ -82,8 +82,12 @@ public class ModifyOggetto extends JDialog{
         // Riempi i fields con i dati dell'oggetto esistente
         nomeField.setText(oggetto.getNome());
         nomeField.setForeground(Color.BLACK);
+        
         switch(oggetto) {
-        	case StrumentoMusicale sm -> {marchioField.setText(oggetto.getNome());}
+        	case StrumentoMusicale sm -> {
+        		marchioField.setText(sm.getMarchio());
+        		marchioField.setForeground(Color.BLACK);
+        		}
         	case Abbigliamento a -> {
         		marchioField.setText(a.getMarchio());
         		marchioField.setForeground(Color.BLACK);
