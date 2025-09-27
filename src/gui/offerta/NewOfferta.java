@@ -31,81 +31,91 @@ public class NewOfferta extends JDialog {
 
     public NewOfferta(Controller controller, Annuncio annuncio, Studente autore) {
     	super(controller.getMainFrame(), "Nuova Offerta", true);
+    	super.setLocationRelativeTo(null);
         this.controller = controller;
         this.annuncio = annuncio;
+        
 
-        this.setBounds(new Rectangle(0, 0, 420, 400));
+        this.setSize(530, 370);
         this.setFocusable(true);
         this.setResizable(false);
 
         contentPane = new JPanel();
-        contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));
         setContentPane(contentPane);
         contentPane.setLayout(null);
+        contentPane.setBackground(new Color(255, 255, 255));
 
         // Welcoming label
         welcomingLabel = new JLabel();
-        welcomingLabel.setBounds(10, 10, 386, 23);
+        welcomingLabel.setBounds(10, 10, 386, 30);
+        welcomingLabel.setHorizontalAlignment(SwingConstants.LEFT);
         welcomingLabel.setText("Fai un'offerta per: " + annuncio.getTitolo() + " di " + autore.getUsername());
         welcomingLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
         contentPane.add(welcomingLabel);
 
         // Description area
         messaggioArea = new JWritableTextArea("Aggiungi un messaggio alla tua offerta...");
-        messaggioArea.setBounds(10, 43, 386, 75);
+        messaggioArea.setBounds(10, 43, 390, 75);
         messaggioArea.setLineWrap(true);
         messaggioArea.setWrapStyleWord(true);
         messaggioArea.setMaximumSize(new Dimension(400, 80));
         contentPane.add(messaggioArea);
 
+        // Submit button
+        submitButton = new JButtonWithBorder("Fai Offerta", Controller.APP_BLUE);
+        submitButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+        submitButton.addActionListener(e -> onInviaOffertaClicked());
+        contentPane.add(submitButton);
+
         if(annuncio instanceof AnnuncioScambio) {		
         	JPanel barterPanel = new JPanel();
-        	barterPanel.setBounds(10, 144, 386, 150);
+        	barterPanel.setBounds(10, 130, 500, 150);
         	contentPane.add(barterPanel);
         	barterPanel.setLayout(null);
+        	barterPanel.setOpaque(false);
         	
         	JLabel chooseObjectLabel = new JLabel("Scegli gli oggetti da scambiare: ");
-        	chooseObjectLabel.setBounds(0, 0, 200, 21);
+        	chooseObjectLabel.setBounds(0, 0, 200, 30);
         	barterPanel.add(chooseObjectLabel);
         	
-        	objectsListPanel = new JCustomList<Oggetto>(controller.getMieiOggetti(), JCustomList.Mode.MULTIPLE_SELECTION, 205, 80);
-        	objectsListPanel.setBounds(0, 20, 205, 80);
+        	objectsListPanel = new JCustomList<Oggetto>(controller.getMieiOggetti(), JCustomList.Mode.MULTIPLE_SELECTION, 500, 80);
+        	objectsListPanel.setBounds(0, 30, 500, 80);
         	barterPanel.add(objectsListPanel);        	
         	
         	JLabel optionLabel = new JLabel("oppure");
         	optionLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        	optionLabel.setBounds(260, 30, 58, 21);
+        	optionLabel.setBounds(0, 120, 60, 30);
         	barterPanel.add(optionLabel);
         	
         	JButton addObjectButton = new JButtonWithBorder("Aggiungi un nuovo oggetto +", Controller.APP_BLUE);
-        	addObjectButton.setBounds(210, 60, 250, 30);
+        	addObjectButton.setBounds(100, 115, 250, 30);
         	addObjectButton.addActionListener(e -> {
 				controller.onApriOggettoFrameClicked();
 			});
-        	barterPanel.add(addObjectButton);			  
+        	barterPanel.add(addObjectButton);		
+        	
+        	submitButton.setBounds(180, 290, 133, 28);
         	
         } else {       	
         	JPanel moneyPanel = new JPanel();
-        	moneyPanel.setBounds(10, 144, 386, 28);
+        	moneyPanel.setBounds(10, 144, 386, 30);
         	contentPane.add(moneyPanel);
         	moneyPanel.setLayout(null);
+        	moneyPanel.setOpaque(false);
         	
         	JLabel moneyLabel = new JLabel("Aggiungi la tua offerta in denaro: ");
         	moneyLabel.setBounds(0, 0, 230, 23);
         	moneyPanel.add(moneyLabel);
         	
         	moneyTextField = new JPriceTextField("€");
-        	moneyTextField.setBounds(200, 2, 96, 19);
+        	moneyTextField.setBounds(200, 2, 96, 25);
         	moneyPanel.add(moneyTextField);
         	moneyTextField.setColumns(10);			
+
+        	submitButton.setBounds(130, 190, 133, 30);
+        	this.setSize(425, 280);
         }
 
-        // Submit button
-        submitButton = new JButtonWithBorder("Fai Offerta", Controller.APP_BLUE);
-        submitButton.setBounds(139, 296, 133, 28);
-        submitButton.setAlignmentX(Component.LEFT_ALIGNMENT);
-        submitButton.addActionListener(e -> onInviaOffertaClicked());
-        contentPane.add(submitButton);
         
     }
 
