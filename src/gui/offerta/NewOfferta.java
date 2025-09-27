@@ -34,8 +34,6 @@ public class NewOfferta extends JDialog {
     	super.setLocationRelativeTo(null);
         this.controller = controller;
         this.annuncio = annuncio;
-        
-
         this.setSize(530, 370);
         this.setFocusable(true);
         this.setResizable(false);
