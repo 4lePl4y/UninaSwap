@@ -47,26 +47,26 @@ public class ModifyOfferta extends JDialog{
         this.offerta = offerta;
         this.annuncio = offerta.getAnnuncio();
         this.autore = annuncio.getAutore();
-        
-        this.setBounds(100, 100, 500, 500);
+        this.setSize(530, 370);
         this.setFocusable(true);
         this.setResizable(false);
+        this.setLocationRelativeTo(null);
         
         contentPane = new JPanel();
-        contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));
         setContentPane(contentPane);
         contentPane.setLayout(null);
+        contentPane.setBackground(new Color(255, 255, 255));
 
         // Welcoming label
         welcomingLabel = new JLabel();
-        welcomingLabel.setBounds(10, 10, 386, 23);
+        welcomingLabel.setBounds(10, 10, 386, 30);
         welcomingLabel.setText("Modifica la tua offerta per: " + annuncio.getTitolo() + " di " + autore.getUsername());
         welcomingLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
         contentPane.add(welcomingLabel);
 
         // Description area
         messaggioArea = new JWritableTextArea("Inserisci un nuovo messaggio per la tua offerta...");
-        messaggioArea.setBounds(10, 43, 386, 75);
+        messaggioArea.setBounds(10, 43, 390, 75);
         messaggioArea.setMaximumSize(new Dimension(400, 80));
         if(!offerta.getMessaggio().isBlank()) {
         	messaggioArea.setText(offerta.getMessaggio());
@@ -74,39 +74,49 @@ public class ModifyOfferta extends JDialog{
         }
         contentPane.add(messaggioArea);
         
+        // Submit button
+        modifyButton = new JButtonWithBorder("Modifica Offerta", Controller.APP_BLUE);
+        modifyButton.setAlignmentX(Component.LEFT_ALIGNMENT);
+        modifyButton.addActionListener(e -> onModificaOffertaClicked());
+        contentPane.add(modifyButton);
         
         // Fields area
         if(annuncio instanceof AnnuncioScambio) {		
         	JPanel barterPanel = new JPanel();
-        	barterPanel.setBounds(10, 144, 386, 150);
-        	barterPanel.setLayout(null);
+        	barterPanel.setBounds(10, 130, 500, 150);
         	contentPane.add(barterPanel);
+        	barterPanel.setLayout(null);
+        	barterPanel.setOpaque(false);
         	
         	JLabel chooseObjectLabel = new JLabel("Scegli gli oggetti da scambiare: ");
-        	chooseObjectLabel.setBounds(0, 0, 200, 21);
+        	chooseObjectLabel.setBounds(0, 0, 200, 30);
         	barterPanel.add(chooseObjectLabel);
         	
-        	objectsListPanel = new JCustomList<Oggetto>(controller.getMieiOggetti(), JCustomList.Mode.MULTIPLE_SELECTION, 205, 80);
-        	objectsListPanel.setBounds(0, 20, 205, 80);
+        	objectsListPanel = new JCustomList<Oggetto>(controller.getMieiOggetti(), JCustomList.Mode.MULTIPLE_SELECTION, 500, 80);
+        	objectsListPanel.setBounds(0, 30, 500, 80);
         	barterPanel.add(objectsListPanel);        	
 
         	
         	JLabel optionLabel = new JLabel("oppure");
         	optionLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        	optionLabel.setBounds(260, 30, 58, 21);
+        	optionLabel.setBounds(0, 120, 60, 30);
         	barterPanel.add(optionLabel);
         	
         	JButton addObjectButton = new JButtonWithBorder("Aggiungi un nuovo oggetto +", Controller.APP_BLUE);
-        	addObjectButton.setBounds(210, 60, 250, 30);
+        	addObjectButton.setBounds(100, 115, 250, 30);
         	addObjectButton.addActionListener(e -> {
 				controller.onApriOggettoFrameClicked();
 			});
         	barterPanel.add(addObjectButton);			        
+        	
+        	modifyButton.setBounds(170, 290, 150, 30);
+        	
         } else {       	
         	JPanel moneyPanel = new JPanel();
-        	moneyPanel.setBounds(10, 144, 386, 28);
-        	contentPane.add(moneyPanel);
+        	moneyPanel.setBounds(10, 144, 386, 30);
         	moneyPanel.setLayout(null);
+        	moneyPanel.setOpaque(false);
+        	contentPane.add(moneyPanel);
         	
         	JLabel moneyLabel = new JLabel("Modifica la tua precedente offerta: ");
         	moneyLabel.setBounds(0, 0, 230, 23);
@@ -115,17 +125,14 @@ public class ModifyOfferta extends JDialog{
         	moneyTextField = new JPriceTextField("€");
         	moneyTextField.setText(String.valueOf( ((OffertaDenaro)offerta).getOfferta()) );
         	moneyTextField.setForeground(Color.BLACK);
-        	moneyTextField.setBounds(200, 2, 96, 19);
+        	moneyTextField.setBounds(200, 2, 96, 25);
         	moneyPanel.add(moneyTextField);
         	moneyTextField.setColumns(10);			
+        	
+        	modifyButton.setBounds(130, 190, 150, 30);
+        	this.setSize(425, 280);
         }
 
-        // Submit button
-        modifyButton = new JButtonWithBorder("Modifica Offerta", Controller.APP_BLUE);
-        modifyButton.setBounds(130, 296, 160, 28);
-        modifyButton.setAlignmentX(Component.LEFT_ALIGNMENT);
-        modifyButton.addActionListener(e -> onModificaOffertaClicked());
-        contentPane.add(modifyButton);
         
     }
 	

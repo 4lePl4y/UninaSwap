@@ -7,6 +7,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import java.awt.Color;
 import java.awt.Font;
 
 import controller.Controller;
@@ -29,12 +31,13 @@ public class ModifyEmail extends JDialog {
         this.setLocationRelativeTo(null);
         
         contentPane = new JPanel();
-        contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+        contentPane.setBackground(new Color(255, 255, 255));
         setContentPane(contentPane);
         
         JPanel cambiaEmailPanel = new JPanel();
         cambiaEmailPanel.setLayout(null);
+        cambiaEmailPanel.setOpaque(false);
         
         emailLabel = new JLabel("Inserici la nuova email:");
         emailLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));

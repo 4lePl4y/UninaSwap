@@ -1,5 +1,6 @@
 package gui.profilo;
 
+import java.awt.Color;
 import java.awt.Font;
 
 import javax.swing.BoxLayout;
@@ -32,12 +33,13 @@ public class ModifyPassword extends JDialog {
         this.setLocationRelativeTo(null);
         
         contentPane = new JPanel();
-        contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));
         contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+        contentPane.setBackground(new Color(255,255, 255));
         setContentPane(contentPane);
         
         JPanel cambiaPasswordPanel = new JPanel();
         cambiaPasswordPanel.setLayout(null);
+        cambiaPasswordPanel.setOpaque(false);
         
         oldPasswordLabel = new JLabel("Inserici la vecchia password:");
         oldPasswordLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
