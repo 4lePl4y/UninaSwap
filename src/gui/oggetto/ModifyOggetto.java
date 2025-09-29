@@ -63,22 +63,18 @@ public class ModifyOggetto extends JDialog{
         
         // Welcoming panel
         JPanel welcomingPanel = new JPanel();
+        welcomingPanel.setAlignmentX(Component.RIGHT_ALIGNMENT);
         welcomingPanel.setLayout(new BoxLayout(welcomingPanel, BoxLayout.Y_AXIS));
         welcomingPanel.setBackground(new Color(255, 255, 255));
-        JLabel welcomingLabel = new JLabel("MODIFICA OGGETTO");
-        welcomingLabel.setFont(new Font("Times New Roman", Font.BOLD, 24)); //TODO: cambia font
-        welcomingLabel.setForeground(Controller.APP_BLUE);
-        welcomingLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-
-        JLabel riempiCampiLabel = new JLabel("Compila i campi ");
-        riempiCampiLabel.setFont(new Font("Times New Roman", Font.BOLD, 14)); //TODO: cambia font
-        riempiCampiLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
         
-        welcomingPanel.add(welcomingLabel);
+        JLabel riempiCampiLabel = new JLabel("Compila i campi ");
+        riempiCampiLabel.setFont(new Font("Times New Roman", Font.BOLD, 18)); //TODO: cambia font
+        riempiCampiLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+        
         welcomingPanel.add(riempiCampiLabel);
         contentPane.add(welcomingPanel);
-        
         welcomingPanel.add(Box.createVerticalStrut(20));
+        
         // Riempi i fields con i dati dell'oggetto esistente
         nomeField.setText(oggetto.getNome());
         nomeField.setForeground(Color.BLACK);

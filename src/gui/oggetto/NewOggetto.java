@@ -68,16 +68,10 @@ public class NewOggetto extends JDialog {
         welcomingPanel.setLayout(new BoxLayout(welcomingPanel, BoxLayout.Y_AXIS));
         welcomingPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        JLabel welcomingLabel = new JLabel("CREA NUOVO OGGETTO");
-        welcomingLabel.setFont(new Font("Times New Roman", Font.BOLD, 24)); //TODO: cambia font
-        welcomingLabel.setForeground(Controller.APP_BLUE);
-        welcomingLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
-        
         JLabel riempiCampiLabel = new JLabel("Seleziona il tipo di oggetto e compila i campi ");
-        riempiCampiLabel.setFont(new Font("Times New Roman", Font.BOLD, 14)); //TODO: cambia font
-        riempiCampiLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        riempiCampiLabel.setFont(new Font("Times New Roman", Font.BOLD, 18)); //TODO: cambia font
+        riempiCampiLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         
-        welcomingPanel.add(welcomingLabel);
         welcomingPanel.add(riempiCampiLabel);
         contentPane.add(welcomingPanel);
         

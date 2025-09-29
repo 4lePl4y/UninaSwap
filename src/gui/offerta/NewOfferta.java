@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import controller.Controller;
 import entities.annuncio.*;
 import entities.oggetto.*;
@@ -31,10 +30,10 @@ public class NewOfferta extends JDialog {
 
     public NewOfferta(Controller controller, Annuncio annuncio, Studente autore) {
     	super(controller.getMainFrame(), "Nuova Offerta", true);
-    	super.setLocationRelativeTo(null);
         this.controller = controller;
         this.annuncio = annuncio;
-        this.setSize(530, 370);
+        this.setSize(500, 400);
+        super.setLocationRelativeTo(null);
         this.setFocusable(true);
         this.setResizable(false);
 
