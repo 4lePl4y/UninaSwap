@@ -22,10 +22,12 @@ public class ModifyUsername extends JDialog {
 	private JLabel usernameLabel;
     private JCustomTextField cambiaUsernameField;
     private JButtonWithBorder confermaButton;
+	private Controller controller;
 	
     // COSTRUTTORE
 	public ModifyUsername(JFrame mainFrame, Controller controller){
 		super(mainFrame, "Modifica Username", true);
+		this.controller = controller;
         this.setSize(500, 300);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
@@ -53,7 +55,7 @@ public class ModifyUsername extends JDialog {
         confermaButton = new JButtonWithBorder("Conferma", Controller.APP_BLUE);
         confermaButton.setBounds(150, 169, 200, 30);
         confermaButton.addActionListener(e -> {
-        	controller.onModificaUsernameClicked(controller.getStudenteLoggato());
+        	onModificaUsernameClicked();
         });
         
         cambiaUsernamePanel.add(confermaButton);
@@ -61,6 +63,9 @@ public class ModifyUsername extends JDialog {
 	}
 	
 	// METODI
+	public void onModificaUsernameClicked() {
+		controller.onModificaUsernameClicked(controller.getStudenteLoggato());
+	}
 	
 	// Getter
 	public String getUsername() {

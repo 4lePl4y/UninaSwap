@@ -22,10 +22,12 @@ public class ModifyEmail extends JDialog {
 	private JLabel emailLabel;
     private JMailTextField cambiaEmailField;
     private JButtonWithBorder confermaButton;
+	private Controller controller;
 	
     // COSTRUTTORE
 	public ModifyEmail(JFrame mainFrame, Controller controller){
 		super(mainFrame, "Modifica Email", true);
+		this.controller = controller;
         this.setSize(500, 300);
         this.setResizable(false);
         this.setLocationRelativeTo(null);
@@ -53,7 +55,7 @@ public class ModifyEmail extends JDialog {
         confermaButton.setBounds(150, 169, 160, 30);
         confermaButton.addActionListener(e -> {
         	if(cambiaEmailField.isValidInput()) {
-    			controller.onModificaEmailClicked(controller.getStudenteLoggato());
+    			onModificaEmailClicked();
     		} else {
     			JOptionPane.showMessageDialog(contentPane, "Inserisci un'email valida!");
     		}
@@ -64,6 +66,10 @@ public class ModifyEmail extends JDialog {
 	}
 	
 	// METODI
+	public void onModificaEmailClicked() {
+		controller.onModificaEmailClicked(controller.getStudenteLoggato());
+	}
+	
 	// Getter
 	public String getEmail() {
 		return cambiaEmailField.getText();
