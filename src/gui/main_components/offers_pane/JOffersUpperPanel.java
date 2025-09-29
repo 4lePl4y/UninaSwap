@@ -74,14 +74,14 @@ public class JOffersUpperPanel extends JPanel {
         lowerPanel.add(Box.createHorizontalStrut(20));
 
         JLabel offerteRicevuteLabel = new JLabel("OFFERTE RICEVUTE:");
-        offerteRicevuteLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        offerteRicevuteLabel.setFont(new Font("Arial", Font.BOLD, 14)); 	//TODO: cambiare font
         lowerPanel.add(offerteRicevuteLabel);
 
         // spazio flessibile in mezzo
         lowerPanel.add(Box.createHorizontalGlue());
 
         JLabel offerteFatteLabel = new JLabel("OFFERTE FATTE:");
-        offerteFatteLabel.setFont(new Font("Arial", Font.BOLD, 14));
+        offerteFatteLabel.setFont(new Font("Arial", Font.BOLD, 14));	//TODO: cambiare font
         lowerPanel.add(offerteFatteLabel);
 
         lowerPanel.add(Box.createHorizontalStrut(20));

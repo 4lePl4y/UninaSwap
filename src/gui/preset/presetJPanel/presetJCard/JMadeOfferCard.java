@@ -49,8 +49,7 @@ public class JMadeOfferCard extends JAbstractOfferCard {
 
     @Override
     protected String rightTitleLabel() {
-    	return "<html>Per l'annuncio: <b>" + offerta.getAnnuncio().getTitolo() + "</b> <br>" 
-    			+ "Pubblicato da:<b> " + offerta.getAnnuncio().getAutore().getUsername() + "</b> </html>";
+    	return "<html>Per l'annuncio: <b>" + offerta.getAnnuncio().getTitolo() + "</b> </html>";
     }
 
     public void onModificaOffertaFrameClicked() {
