@@ -65,7 +65,7 @@ public class JCardsPane<T> extends JPanel {
 	            GridBagConstraints gbc = new GridBagConstraints();
 	            gbc.gridx = i % cardsPerRow;  //Imposta la colonna della card
 	            gbc.gridy = i / cardsPerRow;  //Imposta la riga della card
-	            gbc.insets = new Insets(vGap / 2, hGap / 2, vGap / 2, hGap / 2);  // Margini tra le card
+	            gbc.insets = new Insets(10, 5, 5, 10);  // Margini tra le card
 	            add(card, gbc);
             }
         }
