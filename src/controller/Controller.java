@@ -266,10 +266,19 @@ public class Controller {
 	}
 	
 	public void onCancellaOggettoClicked(Oggetto oggetto) {
-		oggettoDAO.delete(String.valueOf(oggetto.getId()));
-		mainFrame.refreshMyObjects();
-		mainFrame.refreshAllOffers();
-		mainFrame.refreshListings();
+		int scelta = JOptionPane.showConfirmDialog(mainFrame,
+				"Sei sicuro di voler eliminare il tuo oggetto? \nL'operazione è irreversibile",
+				"Conferma Eliminazione oggetto",
+				JOptionPane.YES_NO_OPTION,
+				JOptionPane.PLAIN_MESSAGE);
+		if(scelta == JOptionPane.YES_OPTION) {			
+			oggettoDAO.delete(String.valueOf(oggetto.getId()));
+			mainFrame.refreshMyObjects();
+			mainFrame.refreshAllOffers();
+			mainFrame.refreshListings();
+		}else {
+			return;
+		}
 	}
 	
 	public void onModificaOggettoClicked(Oggetto oggetto) {
@@ -350,9 +359,18 @@ public class Controller {
 	
 	//**Metodo per cancellare un annuncio nel database*/
 	public void onCancellaAnnuncioClicked(Annuncio annuncio) {
-		annuncioDAO.delete(String.valueOf(annuncio.getId()));
-		mainFrame.refreshListings();
-		mainFrame.refreshReceivedOffers();
+		int scelta = JOptionPane.showConfirmDialog(mainFrame,
+				"Sei sicuro di voler eliminare il tuo annuncio? \nL'operazione è irreversibile",
+				"Conferma Eliminazione Offerta",
+				JOptionPane.YES_NO_OPTION,
+				JOptionPane.PLAIN_MESSAGE);
+		if(scelta == JOptionPane.YES_OPTION) {			
+			annuncioDAO.delete(String.valueOf(annuncio.getId()));
+			mainFrame.refreshListings();
+			mainFrame.refreshReceivedOffers();
+		}else {
+			return;
+		}
 	}
 	
 	//**Metodo per modificare un annuncio nel database*/
@@ -423,8 +441,17 @@ public class Controller {
 	
 	//**Metodo per cancellare un'offerta presente nel DB*/
 	public void onCancellaOffertaClicked(Offerta offerta) {
-		offertaDAO.delete(offerta);
-		mainFrame.refreshMadeOffers();
+		int scelta = JOptionPane.showConfirmDialog(mainFrame,
+				"Sei sicuro di voler ritirare la tua offerta? \nL'operazione è irreversibile",
+				"Conferma Ritiro Offerta",
+				JOptionPane.YES_NO_OPTION,
+				JOptionPane.PLAIN_MESSAGE);
+		if(scelta == JOptionPane.YES_OPTION) {			
+			offertaDAO.delete(offerta);
+			mainFrame.refreshMadeOffers();
+		}else {
+			return;
+		}
 	}
 	
 	

@@ -30,10 +30,11 @@ public class JOffersPane extends JPanel{
 		madeOffersScrollPane = new JCustomScrollPane<Offerta>(offerteFatte, controller);
 		scrollPanesContainer = new JSplitPane (JSplitPane.HORIZONTAL_SPLIT, receivedOffersScrollPane, madeOffersScrollPane);
 		scrollPanesContainer.setBounds(0, 0, this.getWidth(), this.getHeight());
-		scrollPanesContainer.setEnabled(true);
-		scrollPanesContainer.setDividerSize(5);
-		scrollPanesContainer.setDividerLocation(540);
-		scrollPanesContainer.setResizeWeight(0.5);
+		scrollPanesContainer.setEnabled(false);
+		scrollPanesContainer.setDividerSize(2); // nasconde la barra centrale
+		scrollPanesContainer.setDividerLocation(0.5);
+
+		
 		
 		this.add(offersUpperPanel, BorderLayout.NORTH);
 		this.add(scrollPanesContainer, BorderLayout.CENTER);
@@ -49,6 +50,8 @@ public class JOffersPane extends JPanel{
 		scrollPanesContainer.add(receivedOffersScrollPane);
 		scrollPanesContainer.revalidate();
 		scrollPanesContainer.repaint();
+		scrollPanesContainer.setDividerLocation(0.5);
+
 	}
 	
 	//**Metodo per aggiornare la lista di offerte fatte*/
@@ -58,6 +61,8 @@ public class JOffersPane extends JPanel{
 		scrollPanesContainer.add(madeOffersScrollPane);
 		scrollPanesContainer.revalidate();
 		scrollPanesContainer.repaint();
+		scrollPanesContainer.setDividerLocation(0.5);
+
 	}
 	
 	//**Metodo per aggiornare sia la lista di offerte ricevute che fatte*/
