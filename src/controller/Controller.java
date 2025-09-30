@@ -157,8 +157,8 @@ public class Controller {
 	//--NAVIGABILTY RELATED METHODS--//
 	
 	//**Apre il frame per fare una nuova offerta*/
-	public void onFaiOffertaClicked(Annuncio annuncio, Studente autore) {
-		newOffertaFrame = new NewOfferta(this, annuncio, autore);
+	public void onFaiOffertaClicked(Annuncio annuncio) {
+		newOffertaFrame = new NewOfferta(this, annuncio);
 		newOffertaFrame.setVisible(true);
 	}
 	
@@ -394,6 +394,19 @@ public class Controller {
 	
 	//--OFFERS RELATED METHODS--//
 
+	public void onAcquistaClicked(Annuncio annuncio) throws SQLException {
+		Offerta offerta = new OffertaDenaro("Accetto di acquistare il tuo oggetto!", studenteLoggato, annuncio, ((AnnuncioVendita)annuncio).getPrezzo());
+		try {
+		offertaDAO.create(offerta);
+		} catch (CustomSQLException e) {
+			throw e;
+		} catch (SQLException e) {
+			throw e;
+		}
+		
+		mainFrame.refreshMadeOffers();
+	}
+	
 	//**Metodo per inserire un'offerta nel database*/
 	public void onInviaOffertaClicked() throws SQLException {
 		Offerta offerta = null;
