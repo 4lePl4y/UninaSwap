@@ -62,7 +62,8 @@ public abstract class JAbstractOfferCard extends JAbstractCard {
         msgLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         centerPanel.add(msgLabel);
 
-        JDisplayTextArea msgArea = new JDisplayTextArea(offerta.getMessaggio());
+        String messaggio = (offerta.getMessaggio().isBlank()) ? "<Nessun messaggio>" : offerta.getMessaggio();
+        JDisplayTextArea msgArea = new JDisplayTextArea(messaggio);
         msgArea.setOpaque(false);
         msgArea.setFont(new Font("SansSerif", Font.PLAIN, 14));
 
