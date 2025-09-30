@@ -3,13 +3,12 @@ package gui.offerta;
 import java.awt.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
 import javax.swing.*;
+
 import controller.Controller;
+import exception.CustomSQLException;
 import entities.annuncio.*;
 import entities.oggetto.*;
-import entities.studente.*;
-import exception.CustomSQLException;
 import gui.preset.JCustomList;
 import gui.preset.JWritableTextArea;
 import gui.preset.presetJButton.JButtonWithBorder;
@@ -28,7 +27,7 @@ public class NewOfferta extends JDialog {
 	private JCustomList<Oggetto> objectsListPanel;
 	private ArrayList<Oggetto> oggettiSelezionati;
 
-    public NewOfferta(Controller controller, Annuncio annuncio, Studente autore) {
+    public NewOfferta(Controller controller, Annuncio annuncio) {
     	super(controller.getMainFrame(), "Nuova Offerta", true);
         this.controller = controller;
         this.annuncio = annuncio;
@@ -46,7 +45,7 @@ public class NewOfferta extends JDialog {
         welcomingLabel = new JLabel();
         welcomingLabel.setBounds(10, 10, 386, 30);
         welcomingLabel.setHorizontalAlignment(SwingConstants.LEFT);
-        welcomingLabel.setText("Fai un'offerta per: " + annuncio.getTitolo() + " di " + autore.getUsername());
+        welcomingLabel.setText("Fai un'offerta per: " + annuncio.getTitolo() + " di " + annuncio.getAutore().getUsername());
         welcomingLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
         contentPane.add(welcomingLabel);
 
