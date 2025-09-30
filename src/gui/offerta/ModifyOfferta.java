@@ -12,7 +12,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.border.EmptyBorder;
 
 import controller.Controller;
 import entities.annuncio.Annuncio;
@@ -164,8 +163,8 @@ public class ModifyOfferta extends JDialog{
     //TODO: Identico al metodo di newOfferta
 	private boolean areInputsValid() {
         if(annuncio instanceof AnnuncioScambio) {
-        	this.oggettiSelezionati = getOggettiSelezionati();
-			if(this.oggettiSelezionati.isEmpty()) {
+        	oggettiSelezionati = getOggettiSelezionati();
+			if(oggettiSelezionati == null) {
 				JOptionPane.showMessageDialog(this, "Devi selezionare almeno un oggetto da scambiare!");
 				return false;
 			}

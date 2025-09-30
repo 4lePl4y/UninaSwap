@@ -140,14 +140,13 @@ public class NewOfferta extends JDialog {
 	  boolean areInputsValid() {
         if(annuncio instanceof AnnuncioScambio) {
         	oggettiSelezionati = getOggettiSelezionati();
-			if(oggettiSelezionati.isEmpty()) {
+			if(oggettiSelezionati == null) {
 				JOptionPane.showMessageDialog(this, "Devi selezionare almeno un oggetto da scambiare!");
 				return false;
 			}
         } else {
 			String moneyText = moneyTextField.getText();
 			try {
-				//TODO: Verificare se l'offerta proposta è <= del prezzo dell'annuncio
 				Double.parseDouble(moneyText);
 			} catch (NumberFormatException e) {
 				JOptionPane.showMessageDialog(this, "Inserisci un importo valido in denaro!");
