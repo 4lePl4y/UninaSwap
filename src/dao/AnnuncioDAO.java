@@ -89,7 +89,7 @@ public class AnnuncioDAO implements DaoInterface<Annuncio> {
 		try(PreparedStatement pstmt = conn.prepareStatement(query)) {
 			pstmt.setString(1, annuncio.getTitolo());
 			pstmt.setString(2, annuncio.getDescrizione());
-			pstmt.setObject(3, annuncio.getLuogo(), java.sql.Types.OTHER);
+			pstmt.setObject(3, annuncio.getLuogo().name(), java.sql.Types.OTHER);
 			pstmt.setTime(4, Time.valueOf(annuncio.getOraIncontro()));
 			pstmt.setDate(5, Date.valueOf(annuncio.getDataPubblicazione()));
 			pstmt.setString(8, annuncio.getAutore().getUsername());
@@ -123,7 +123,7 @@ public class AnnuncioDAO implements DaoInterface<Annuncio> {
 		try(PreparedStatement pstmt = conn.prepareStatement(query)) {
 			pstmt.setString(1, annuncio.getTitolo());
 			pstmt.setString(2, annuncio.getDescrizione());
-			pstmt.setObject(3, annuncio.getLuogo(), java.sql.Types.OTHER);
+			pstmt.setObject(3, annuncio.getLuogo().name(), java.sql.Types.OTHER);
 			pstmt.setTime(4, Time.valueOf(annuncio.getOraIncontro()));
 			pstmt.setLong(7, annuncio.getId());
 			if (annuncio instanceof AnnuncioVendita) {
