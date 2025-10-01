@@ -42,14 +42,13 @@ public class JProfilePaneUpperPanel extends JPanel {
 		
 		JPanel bottomPanel = new JPanel();
 		bottomPanel.setOpaque(false);
-		bottomPanel.setLayout(new BorderLayout(0,0));
+		bottomPanel.setLayout(new BoxLayout(bottomPanel, BoxLayout.X_AXIS));
 		
 		// --- SEZIONE GESTIONE  CREDENZIALE ---
        
         JPanel credentialsPanel = new JPanel();
+        credentialsPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Gestione credenziali"));
         credentialsPanel.setLayout(new BoxLayout(credentialsPanel, BoxLayout.X_AXIS));
-        credentialsPanel.setPreferredSize(new Dimension(600, 45));
-        credentialsPanel.setMaximumSize(new Dimension(600, 45));
         credentialsPanel.setOpaque(false);
         
         
@@ -76,18 +75,18 @@ public class JProfilePaneUpperPanel extends JPanel {
         	}
         });
 
-        credentialsPanel.add(Box.createHorizontalStrut(35));
+        credentialsPanel.add(Box.createHorizontalStrut(10));
         credentialsPanel.add(changeEmailButton);
         credentialsPanel.add(Box.createHorizontalStrut(10));
         credentialsPanel.add(changeUsernameButton);
         credentialsPanel.add(Box.createHorizontalStrut(10));
         credentialsPanel.add(changePasswordButton);
+        credentialsPanel.add(Box.createHorizontalStrut(10));
         
         // --- Sezione Azioni Importanti ---
         JPanel actionsPanel = new JPanel();
+        actionsPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Azioni importanti"));
         actionsPanel.setLayout(new BoxLayout(actionsPanel, BoxLayout.X_AXIS));
-        actionsPanel.setPreferredSize(new Dimension(450, 45));
-        actionsPanel.setMaximumSize(new Dimension(450, 45));
         actionsPanel.setOpaque(false);
         
         JButtonWithBorder logoutButton = new JButtonWithBorder("Logout", Controller.APP_BLUE);
@@ -104,14 +103,17 @@ public class JProfilePaneUpperPanel extends JPanel {
 			}
 		});
 
-        actionsPanel.add(Box.createHorizontalStrut(60));
+        actionsPanel.add(Box.createHorizontalStrut(30));
         actionsPanel.add(logoutButton);
         actionsPanel.add(Box.createHorizontalStrut(30));
         actionsPanel.add(deleteButton);
+        actionsPanel.add(Box.createHorizontalStrut(20));
 
         // Aggiunta pannelli bottoni al settingsPanel
-        bottomPanel.add(credentialsPanel, BorderLayout.WEST);
-        bottomPanel.add(actionsPanel, BorderLayout.EAST);
+        bottomPanel.add(Box.createHorizontalStrut(20));
+        bottomPanel.add(credentialsPanel);
+        bottomPanel.add(Box.createHorizontalStrut(600));
+        bottomPanel.add(actionsPanel);
 		this.add(bottomPanel, BorderLayout.SOUTH);
 		
 	}
