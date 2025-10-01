@@ -1,6 +1,7 @@
 package gui.preset;
 
 import gui.preset.presetJPanel.JCardsPane;
+import gui.preset.presetJPanel.presetJCard.JAbstractCard;
 
 import java.awt.Graphics;
 import java.awt.Image;
@@ -43,6 +44,10 @@ public class JCustomScrollPane<T> extends JScrollPane {
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		g.drawImage(BACKGROUND_IMAGE, 0, 0, getWidth(), getHeight(), this);
+	}
+	
+	public ArrayList<JAbstractCard> getAllCards() {
+		return cardsPane.getAllCards();
 	}
 	
 }

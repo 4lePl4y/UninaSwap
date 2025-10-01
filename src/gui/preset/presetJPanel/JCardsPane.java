@@ -120,4 +120,14 @@ public class JCardsPane<T> extends JPanel {
 		}
 	}
     
+    public ArrayList<JAbstractCard> getAllCards() {
+        ArrayList<JAbstractCard> cards = new ArrayList<>();
+        for (var comp : getComponents()) {
+            if (comp instanceof JAbstractCard card) {
+                cards.add(card);
+            }
+        }
+        return cards;
+    }
+    
 }

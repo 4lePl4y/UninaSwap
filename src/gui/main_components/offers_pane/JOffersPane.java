@@ -17,7 +17,7 @@ public class JOffersPane extends JPanel{
 	private JOffersUpperPanel offersUpperPanel;
 	private JSplitPane scrollPanesContainer;
 	private JCustomScrollPane<Offerta> receivedOffersScrollPane;
-	private JCustomScrollPane<Offerta> madeOffersScrollPane;
+	public JCustomScrollPane<Offerta> madeOffersScrollPane;
 	
 	// COSTRUTTORE
 	public JOffersPane(ArrayList<Offerta> offerteRicevute, ArrayList<Offerta> offerteFatte, Controller controller) {
@@ -25,7 +25,7 @@ public class JOffersPane extends JPanel{
 		this.setLayout(new BorderLayout(0, 0)); 
 		this.setVisible(true);
 		
-		offersUpperPanel = new JOffersUpperPanel(controller);
+		offersUpperPanel = new JOffersUpperPanel(this, controller);
 		receivedOffersScrollPane = new JCustomScrollPane<Offerta>(offerteRicevute, controller);
 		madeOffersScrollPane = new JCustomScrollPane<Offerta>(offerteFatte, controller);
 		scrollPanesContainer = new JSplitPane (JSplitPane.HORIZONTAL_SPLIT, receivedOffersScrollPane, madeOffersScrollPane);
@@ -70,4 +70,6 @@ public class JOffersPane extends JPanel{
 		refreshOfferteRicevute(offerteRicevute);
 		refreshOfferteInviate(offerteFatte);
 	}
+	
+	
 }

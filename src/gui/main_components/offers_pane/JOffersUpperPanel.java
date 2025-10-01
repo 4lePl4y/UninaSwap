@@ -7,6 +7,7 @@ import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.AbstractButton;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
@@ -14,17 +15,24 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import controller.Controller;
+import entities.enumerazioni.Stato;
 import entities.studente.Studente;
+import gui.main_components.browse_pane.JCustomCheckBox;
 import gui.preset.presetJLabel.JInteractiveLabel;
+import gui.preset.presetJPanel.presetJCard.JAbstractCard;
+import gui.preset.presetJPanel.presetJCard.JAbstractOfferCard;
 
 public class JOffersUpperPanel extends JPanel {
     private static final long serialVersionUID = 1L;
     private Controller controller;
     private Studente studenteLoggato;
+	private AbstractButton showAllOffersCheckBox;
+	private JOffersPane parent;
     
-    public JOffersUpperPanel(Controller controller) {
+    public JOffersUpperPanel(JOffersPane parent, Controller controller) {
         this.controller = controller;
         this.studenteLoggato = controller.getStudenteLoggato();
+        this.parent = parent; 
         this.setBackground(Color.WHITE);
         this.setPreferredSize(new Dimension(800, 100));
         this.setLayout(new BorderLayout(0, 0));
@@ -80,6 +88,14 @@ public class JOffersUpperPanel extends JPanel {
         // spazio flessibile in mezzo
         lowerPanel.add(Box.createHorizontalGlue());
 
+        JCustomCheckBox showAllOffersCheckBox = new JCustomCheckBox("Mostra tutte le offerte");
+        showAllOffersCheckBox.setSelected(true);
+        showAllOffersCheckBox.addActionListener(e -> {
+				onShowAllOffersClicked(showAllOffersCheckBox.isSelected());
+		});
+        lowerPanel.add(showAllOffersCheckBox);
+        lowerPanel.add(Box.createHorizontalStrut(30));
+        
         JLabel offerteFatteLabel = new JLabel("OFFERTE FATTE:");
         offerteFatteLabel.setFont(new Font("Arial", Font.BOLD, 14));	//TODO: cambiare font
         lowerPanel.add(offerteFatteLabel);
@@ -94,5 +110,23 @@ public class JOffersUpperPanel extends JPanel {
     
     public void refresh() {
         controller.refreshAllOffers();
+    }
+    
+    public void onShowAllOffersClicked(boolean selected) {
+    	if(selected){
+    		for(int i=0; i<parent.madeOffersScrollPane.getAllCards().size(); i++) {
+    			JAbstractCard card = parent.madeOffersScrollPane.getAllCards().get(i);
+    			card.setVisible(true);    			
+    		}
+    	}else {
+    		for(int i=0; i<parent.madeOffersScrollPane.getAllCards().size(); i++) {
+    		JAbstractOfferCard card = (JAbstractOfferCard)parent.madeOffersScrollPane.getAllCards().get(i);
+    			if (!(card.getOfferta().getStato().equals(Stato.InAttesa)))
+					card.setVisible(false);
+    	}
+    		
+    	parent.madeOffersScrollPane.revalidate();
+    	parent.madeOffersScrollPane.repaint();
+    	}
     }
 }

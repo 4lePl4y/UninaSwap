@@ -123,4 +123,7 @@ public abstract class JAbstractOfferCard extends JAbstractCard {
 
     // METODI
     protected abstract String rightTitleLabel();
+    
+    public Offerta getOfferta() {return offerta;};
+    
 }
