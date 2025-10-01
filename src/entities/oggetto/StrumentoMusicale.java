@@ -27,7 +27,7 @@ public class StrumentoMusicale extends Oggetto {
 	}
 	
 	public String toString() {
-		return "StrumentoMusicale:"+ nome ;
+		return "Strumento Musicale: "+ nome ;
 	}
 
 	@Override

@@ -38,7 +38,7 @@ public class Misc extends Oggetto{
 	
 	@Override
 	public String toString() {
-		return "Misc: "+ nome;
+		return "Varie: "+ nome;
 	}
 
 	@Override
