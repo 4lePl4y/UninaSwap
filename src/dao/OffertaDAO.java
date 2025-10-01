@@ -108,51 +108,73 @@ public class OffertaDAO implements DaoInterface<Offerta> {
 	}
 	
 	public void update(Offerta offerta) {
-		String query = "";
-		if (offerta instanceof OffertaScambio) {
-			query = "UPDATE offerta_scambio SET messaggio = ? WHERE id = ?;";
-			try(PreparedStatement pstmt = conn.prepareStatement(query)) {
-				pstmt.setString(1, offerta.getMessaggio());
-				pstmt.setLong(2, offerta.getId());
-				pstmt.executeUpdate();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-			query = "DELETE FROM oggetto_per_scambio WHERE \"idOffertaScambio\" = ?";
-			try(PreparedStatement pstmt = conn.prepareStatement(query)){
-				pstmt.setLong(1, offerta.getId());
-				pstmt.executeUpdate();
-			}catch(SQLException e) {
-				e.printStackTrace();
-			}
-			Long idOfferta = offerta.getId();
-			ArrayList<Oggetto> oggettiOfferti = ((OffertaScambio) offerta).getOggettiOfferti();
-			query = "INSERT INTO oggetto_per_scambio (\"idOggetto\", \"idOffertaScambio\") VALUES";
-			for(int i=0; i<oggettiOfferti.size(); i++) {
-				query += "(?, ?),";
-			}
-			query = query.substring(0, query.length() - 1); // Rimuove l'ultima virgola
-			query += ";";
-			try(PreparedStatement pstmt = conn.prepareStatement(query)){
-				for(int i=0, p=1, s=2; i<oggettiOfferti.size(); i++, p+=2, s+=2) {
-					pstmt.setLong(p, oggettiOfferti.get(i).getId());
-					pstmt.setLong(s, idOfferta);
-				}
-				pstmt.executeUpdate();
-			}catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}else {
-			query = "UPDATE offerta_denaro SET messaggio = ?, offerta = ? WHERE id = ?;";
-			try(PreparedStatement pstmt = conn.prepareStatement(query)) {
-				pstmt.setString(1, offerta.getMessaggio());
-				pstmt.setDouble(2, ((OffertaDenaro)offerta).getOfferta());
-				pstmt.setLong(3, offerta.getId());
-				pstmt.executeUpdate();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
+	    String query = "";
+	    if (offerta instanceof OffertaScambio) {
+	        // 1. Aggiorno il messaggio
+	        query = "UPDATE offerta_scambio SET messaggio = ? WHERE id = ?;";
+	        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+	            pstmt.setString(1, offerta.getMessaggio());
+	            pstmt.setLong(2, offerta.getId());
+	            pstmt.executeUpdate();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+
+	        Long idOfferta = offerta.getId();
+	        ArrayList<Oggetto> oggettiOfferti = ((OffertaScambio) offerta).getOggettiOfferti();
+
+	        // 2. Insert selettivo: aggiungo solo i nuovi oggetti mancanti
+	        query = "INSERT INTO oggetto_per_scambio (\"idOggetto\", \"idOffertaScambio\") " +
+	                "SELECT ?, ? WHERE NOT EXISTS (" +
+	                "SELECT 1 FROM oggetto_per_scambio oo " +
+	                "WHERE oo.\"idOffertaScambio\" = ? AND oo.\"idOggetto\" = ?);";
+
+	        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+	            for (Oggetto obj : oggettiOfferti) {
+	                pstmt.setLong(1, obj.getId());
+	                pstmt.setLong(2, idOfferta);
+	                pstmt.setLong(3, idOfferta);
+	                pstmt.setLong(4, obj.getId());
+	                pstmt.addBatch();
+	            }
+	            pstmt.executeBatch();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+
+	        // 3. Delete selettivo: elimino solo quelli non più presenti
+	        StringBuilder placeholders = new StringBuilder();
+	        for (int i = 0; i < oggettiOfferti.size(); i++) {
+	            placeholders.append("?,");
+	        }
+	        placeholders.setLength(placeholders.length() - 1); // rimuove ultima virgola
+
+	        query = "DELETE FROM oggetto_per_scambio " +
+	                "WHERE \"idOffertaScambio\" = ? " +
+	                "AND \"idOggetto\" NOT IN (" + placeholders + ");";
+
+	        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+	            pstmt.setLong(1, idOfferta);
+	            for (int i = 0; i < oggettiOfferti.size(); i++) {
+	                pstmt.setLong(i + 2, oggettiOfferti.get(i).getId());
+	            }
+	            pstmt.executeUpdate();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+
+	    } else {
+	        // caso OffertaDenaro
+	        query = "UPDATE offerta_denaro SET messaggio = ?, offerta = ? WHERE id = ?;";
+	        try (PreparedStatement pstmt = conn.prepareStatement(query)) {
+	            pstmt.setString(1, offerta.getMessaggio());
+	            pstmt.setDouble(2, ((OffertaDenaro) offerta).getOfferta());
+	            pstmt.setLong(3, offerta.getId());
+	            pstmt.executeUpdate();
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
 	}
 	
 	public void updateOffertaRifiutata(Offerta offerta) {
