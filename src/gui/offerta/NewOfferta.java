@@ -31,7 +31,7 @@ public class NewOfferta extends JDialog {
     	super(controller.getMainFrame(), "Nuova Offerta", true);
         this.controller = controller;
         this.annuncio = annuncio;
-        this.setSize(500, 400);
+        this.setSize(530, 400);
         super.setLocationRelativeTo(null);
         this.setFocusable(true);
         this.setResizable(false);
@@ -84,13 +84,13 @@ public class NewOfferta extends JDialog {
         	barterPanel.add(optionLabel);
         	
         	JButton addObjectButton = new JButtonWithBorder("Aggiungi un nuovo oggetto +", Controller.APP_BLUE);
-        	addObjectButton.setBounds(100, 115, 250, 30);
+        	addObjectButton.setBounds(100, 120, 250, 30);
         	addObjectButton.addActionListener(e -> {
 				controller.onApriOggettoFrameClicked();
 			});
         	barterPanel.add(addObjectButton);		
         	
-        	submitButton.setBounds(180, 290, 133, 28);
+        	submitButton.setBounds(180, 320, 133, 28);
         	
         } else {       	
         	JPanel moneyPanel = new JPanel();
@@ -108,7 +108,7 @@ public class NewOfferta extends JDialog {
         	moneyPanel.add(moneyTextField);
         	moneyTextField.setColumns(10);			
 
-        	submitButton.setBounds(130, 190, 133, 30);
+        	submitButton.setBounds(130, 200, 133, 30);
         	this.setSize(425, 280);
         }
 
