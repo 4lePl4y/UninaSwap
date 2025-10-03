@@ -1,10 +1,9 @@
-package gui.main_components.browse_pane;
+package gui.preset.presetJTextField;
 
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
 import controller.Controller;
-import gui.preset.presetJTextField.JCustomTextField;
 
 public class JSearchTextField extends JCustomTextField {
 	//Attributi

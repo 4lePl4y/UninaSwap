@@ -1,4 +1,4 @@
-package gui.main_components.browse_pane;
+package gui.preset;
 
 import java.awt.BasicStroke;
 import java.awt.Color;

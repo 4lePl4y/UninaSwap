@@ -17,7 +17,7 @@ import javax.swing.SwingConstants;
 import controller.Controller;
 import entities.enumerazioni.Stato;
 import entities.studente.Studente;
-import gui.main_components.browse_pane.JCustomCheckBox;
+import gui.preset.JCustomCheckBox;
 import gui.preset.presetJLabel.JInteractiveLabel;
 import gui.preset.presetJPanel.presetJCard.JAbstractCard;
 import gui.preset.presetJPanel.presetJCard.JAbstractOfferCard;
