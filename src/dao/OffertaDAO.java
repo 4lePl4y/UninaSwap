@@ -219,7 +219,7 @@ public class OffertaDAO implements DaoInterface<Offerta> {
 		}
 	}
 	
-	public Offerta creaOffertaCorretta(ResultSet rs) throws SQLException {
+	private Offerta creaOffertaCorretta(ResultSet rs) throws SQLException {
 		long id = rs.getLong("id_offerta");
 		Stato stato = Stato.valueOf(rs.getString("stato"));
 		double offerta = rs.getDouble("offerta");
