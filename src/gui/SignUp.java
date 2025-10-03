@@ -149,11 +149,14 @@ public class SignUp extends JFrame {
   	}
   	
   	public void onRegisterClicked() {
-  		controller.onRegisterClicked();
+  		resetWarningLabel();
+		if(areInputsValid()) {
+			controller.onRegisterClicked();
+		}
   	}
   	
   	//method to mark easy and common errors in the input fields
-  	public boolean areInputsValid() {
+  	private boolean areInputsValid() {
   		String psw = new String(pswTxtField.getPassword());
   		String checkPsw = new String(checkPswTxtField.getPassword());
   		if(!nameTxtField.isValidInput() || nameTxtField.getText().equals("Nome")) {
@@ -186,7 +189,7 @@ public class SignUp extends JFrame {
   		return true;
   	}
   	
-  	public void resetWarningLabel() {
+  	private void resetWarningLabel() {
   		warningLabel.reset();
   	}
   	
