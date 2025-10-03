@@ -12,7 +12,7 @@ public class JWarningLabel extends JLabel{
 	public JWarningLabel(String text) {
 		super(text);
 		setForeground(Color.RED);
-        setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        setFont(new Font("Times New Roman", Font.PLAIN, 15));	//TODO: cambiare font
         setHorizontalAlignment(SwingConstants.CENTER);
         setVisible(false);
 	}
