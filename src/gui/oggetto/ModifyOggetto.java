@@ -146,10 +146,12 @@ public class ModifyOggetto extends JDialog{
         aggiornaCampi();
 
         // Button
-        JButtonWithBorder creaButton = new JButtonWithBorder("Modifica Oggetto", Controller.APP_BLUE);
-        creaButton.setAlignmentX(Component.CENTER_ALIGNMENT);
-        creaButton.addActionListener(e -> onModificaOggettoClicked());
-        contentPane.add(creaButton);
+        JButtonWithBorder modificaButton = new JButtonWithBorder("Modifica Oggetto", Controller.APP_BLUE);
+        modificaButton.addActionListener(e -> onModificaOggettoClicked());
+        JPanel buttonPanel = new JPanel(new FlowLayout(FlowLayout.CENTER));
+        buttonPanel.setBackground(new Color(255, 255, 255));
+        buttonPanel.add(modificaButton);
+        contentPane.add(buttonPanel);
 
     }
 
