@@ -123,11 +123,6 @@ public class Controller {
 
 	//**Metodo per la registrazione di un nuovo utente*/
 	public void onRegisterClicked() {
-		signUpFrame.resetWarningLabel();
-		if(!signUpFrame.areInputsValid()) {
-			return;
-		}
-		
 		String newName = signUpFrame.getName();
 		String newSurname = signUpFrame.getSurname();
 		String newUsername = signUpFrame.getUsername();
@@ -150,6 +145,7 @@ public class Controller {
 		
 		chkStudente = new Studente(newName, newSurname, newUsername, newEmail, newPassword); 
 		studenteDAO.create(chkStudente);
+		JOptionPane.showMessageDialog(signUpFrame, "Registrazione avvenuta con successo! Effettua il login.");
 		loginFrame.setVisible(true);
 		signUpFrame.setVisible(false);
 	}
