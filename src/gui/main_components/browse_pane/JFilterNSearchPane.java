@@ -20,7 +20,7 @@ import controller.Controller;
 import gui.preset.JCustomCheckBox;
 import gui.preset.presetJButton.JButtonWithBorder;
 import gui.preset.presetJLabel.JInteractiveLabel;
-import gui.preset.presetJTextField.JSearchTextField;
+import gui.preset.presetJTextField.JCustomTextField;
 
 public class JFilterNSearchPane extends JPanel {
     private static final long serialVersionUID = 1L;
@@ -29,7 +29,7 @@ public class JFilterNSearchPane extends JPanel {
     private boolean[] filtersAnnuncio = new boolean[3]; // Filtri per annuncio
     
     private JInteractiveLabel refreshButton;
-    private JSearchTextField searchTxtField;
+    private JCustomTextField searchTxtField;
     private JButtonWithBorder searchButton;
     private JCheckBox[] objectTypeCheckBoxes;
     private JCheckBox[] annuncioCheckBoxes;
@@ -64,7 +64,7 @@ public class JFilterNSearchPane extends JPanel {
         topPanel.add(refreshButton, gbc_top);
 
         // Search text field
-        searchTxtField = new JSearchTextField(controller, "Cerca il tuo prossimo articolo preferito...");
+        searchTxtField = new JCustomTextField("Cerca il tuo prossimo articolo preferito...");
         gbc_top.gridx = 1;
         gbc_top.weightx = 1;
         searchTxtField.addKeyListener(new KeyAdapter() {
