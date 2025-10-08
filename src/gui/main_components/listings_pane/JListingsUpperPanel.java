@@ -6,6 +6,7 @@ import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -23,14 +24,14 @@ public class JListingsUpperPanel extends JPanel {
         this.studenteLoggato = controller.getStudenteLoggato();
         setBackground(Color.WHITE);
         setPreferredSize(new Dimension(800, 85));
-        setLayout(new BorderLayout(5, 0)); // margine orizzontale ridotto tra le sezioni
+        setLayout(new BorderLayout(0, 0));
 
         // WEST: logo
-        JPanel westPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 25)); 
+        JPanel westPanel = new JPanel(new FlowLayout(FlowLayout.LEFT, 5, 10));
         westPanel.setBackground(Color.WHITE);
-        JLabel logo = new JLabel("UNINA SWAP");	//TODO: sostituire con logo vero (?)
-        logo.setFont(new Font("SansSerif", Font.BOLD, 20));
-        logo.setForeground(new Color(30, 30, 30));
+        ImageIcon logoIcon = new ImageIcon("src/img/logo.jpg");
+        logoIcon = new ImageIcon(logoIcon.getImage().getScaledInstance(250, 65, java.awt.Image.SCALE_SMOOTH));
+        JLabel logo = new JLabel(logoIcon);
         westPanel.add(logo);
         add(westPanel, BorderLayout.WEST);
 

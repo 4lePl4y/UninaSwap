@@ -114,7 +114,30 @@ public class NewOfferta extends JDialog {
 
         
     }
+    
+    // METODI 
+    // getter
+	public String getMessaggio() {
+		return messaggioArea.getText();
+	}
+	
+	public Annuncio getAnnuncio() {
+		return annuncio;
+	}
+	
+	public double getOfferta() {
+		return Double.valueOf(moneyTextField.getText());
+	}
+	
+	public ArrayList<Oggetto> getOggettiOfferti() {
+		return oggettiSelezionati;
+	}
+	
+	private ArrayList<Oggetto> getOggettiSelezionati() {
+		return objectsListPanel.getSelectedValues();
+	}
 
+	// altri metodi
     public void onInviaOffertaClicked() {
     	if(areInputsValid()) { 
     		try {
@@ -132,12 +155,8 @@ public class NewOfferta extends JDialog {
     	
     	return;
     }
-
-	private ArrayList<Oggetto> getOggettiSelezionati() {
-		return objectsListPanel.getSelectedValues();
-	}
 	
-	  boolean areInputsValid() {
+	private boolean areInputsValid() {
         if(annuncio instanceof AnnuncioScambio) {
         	oggettiSelezionati = getOggettiSelezionati();
 			if(oggettiSelezionati == null) {
@@ -156,20 +175,6 @@ public class NewOfferta extends JDialog {
         return true;
 	}
 	
-	public String getMessaggio() {
-		return messaggioArea.getText();
-	}
-	
-	public Annuncio getAnnuncio() {
-		return annuncio;
-	}
-	
-	public double getOfferta() {
-		return Double.valueOf(moneyTextField.getText());
-	}
-	
-	public ArrayList<Oggetto> getOggettiOfferti() {
-		return oggettiSelezionati;
-	}
+
 	
 }
