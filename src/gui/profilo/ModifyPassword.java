@@ -41,7 +41,7 @@ public class ModifyPassword extends JDialog {
         
         oldPasswordLabel = new JLabel("Inserici la vecchia password:");
         oldPasswordLabel.setFont(new Font("Montserrat", Font.PLAIN, 14));
-        oldPasswordLabel.setBounds(28, 11, 180, 17);
+        oldPasswordLabel.setBounds(28, 11, 189, 17);
         cambiaPasswordPanel.add(oldPasswordLabel);
         
         oldPasswordField = new JCustomPasswordField("");
