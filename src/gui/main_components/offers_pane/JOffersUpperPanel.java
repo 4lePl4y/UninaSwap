@@ -53,11 +53,10 @@ public class JOffersUpperPanel extends JPanel {
        upperPanel.add(Box.createHorizontalStrut(400));
 
         JLabel titleLabel = new JLabel("Ciao " + studenteLoggato.getUsername() + ", Ecco le tue offerte");
-        titleLabel.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, Color.LIGHT_GRAY));
         titleLabel.setFont(new Font("Montserrat", Font.BOLD, 20)); 
         upperPanel.add(titleLabel, BorderLayout.CENTER);
 
-        upperPanel.add(Box.createHorizontalStrut(600));
+        upperPanel.add(Box.createHorizontalStrut(550));
         
         JInteractiveLabel refreshButton = new JInteractiveLabel("⟳");
         refreshButton.setFont(refreshButton.getFont().deriveFont(30.0f));
@@ -67,9 +66,10 @@ public class JOffersUpperPanel extends JPanel {
                 refresh();
             }
         });
-        upperPanel.add(refreshButton, BorderLayout.EAST);
+        upperPanel.add(refreshButton);
+        upperPanel.add(Box.createHorizontalStrut(20));
 
-
+        
         // LOWER PANEL 
         JPanel lowerPanel = new JPanel();
         lowerPanel.setBackground(Color.WHITE);
