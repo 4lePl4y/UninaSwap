@@ -7,12 +7,11 @@ import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
-import javax.swing.AbstractButton;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingConstants;
 
 import controller.Controller;
 import entities.enumerazioni.Stato;
@@ -26,7 +25,6 @@ public class JOffersUpperPanel extends JPanel {
     private static final long serialVersionUID = 1L;
     private Controller controller;
     private Studente studenteLoggato;
-	private AbstractButton showAllOffersCheckBox;
 	private JOffersPane parent;
     
     public JOffersUpperPanel(JOffersPane parent, Controller controller) {
@@ -47,21 +45,18 @@ public class JOffersUpperPanel extends JPanel {
         upperPanel.setBackground(Color.WHITE);
         upperPanel.setLayout(new BoxLayout(upperPanel, BoxLayout.X_AXIS));
 
-        upperPanel.add(Box.createHorizontalStrut(20));
+        ImageIcon logoIcon = new ImageIcon("src/img/logo.jpg");
+        logoIcon = new ImageIcon(logoIcon.getImage().getScaledInstance(250, 65, java.awt.Image.SCALE_SMOOTH));
+        JLabel logo = new JLabel(logoIcon);
+        upperPanel.add(logo, BorderLayout.WEST);
 
-        JLabel logoLabel = new JLabel("LOGO");
-        logoLabel.setFont(new Font("Arial", Font.BOLD, 30));
-        upperPanel.add(logoLabel);
-
-        upperPanel.add(Box.createHorizontalGlue());
+       
 
         JLabel titleLabel = new JLabel("Ciao " + studenteLoggato.getUsername() + ", Ecco le tue offerte");
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 20));
-        titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-        upperPanel.add(titleLabel);
-
-        upperPanel.add(Box.createHorizontalGlue());
-
+        titleLabel.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, Color.LIGHT_GRAY));
+        titleLabel.setFont(new Font("Arial", Font.BOLD, 16));  //TODO: cambiare font
+        upperPanel.add(titleLabel, BorderLayout.CENTER);
+        
         JInteractiveLabel refreshButton = new JInteractiveLabel("⟳");
         refreshButton.setFont(refreshButton.getFont().deriveFont(30.0f));
         refreshButton.addMouseListener(new MouseAdapter() {
@@ -70,9 +65,8 @@ public class JOffersUpperPanel extends JPanel {
                 refresh();
             }
         });
-        upperPanel.add(refreshButton);
+        upperPanel.add(refreshButton, BorderLayout.EAST);
 
-        upperPanel.add(Box.createHorizontalStrut(20));
 
         // LOWER PANEL 
         JPanel lowerPanel = new JPanel();
