@@ -55,7 +55,7 @@ public class JObjectCard extends JAbstractCard {
 		
 		JLabel nameLabel = new JLabel("<html>" + oggetto.getNome() + "</html>");
 		nameLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		nameLabel.setFont(new Font("Tahoma", Font.BOLD, 16));  //TODO: cambiare font
+		nameLabel.setFont(new Font("Montserrat", Font.BOLD, 16));  
 		topPanel.add(nameLabel, BorderLayout.CENTER);
 		
 		//MIDDLE PANEL: contiene le info dell'oggetto
@@ -73,7 +73,6 @@ public class JObjectCard extends JAbstractCard {
 		middlePanel.add(infoPanel, BorderLayout.CENTER);
 		
 		JDisplayTextArea infoTextArea = new JDisplayTextArea(oggetto.getBasicInfo());
-		infoTextArea.setFont(new Font("Tahoma", Font.PLAIN, 14));  //TODO: cambiare font
 		infoTextArea.setPreferredSize(new Dimension(260, 150));
 		infoTextArea.setMaximumSize(new Dimension(260, 150));
 		infoTextArea.setAlignmentX(Component.LEFT_ALIGNMENT);

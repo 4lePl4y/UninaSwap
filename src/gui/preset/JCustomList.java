@@ -29,7 +29,7 @@ public class JCustomList<T> extends JPanel {
 
         jList = new JList<>(new Vector<>(elements));
         jList.setVisibleRowCount(5);
-        jList.setFont(new Font("Arial", Font.PLAIN, 14));
+        jList.setFont(new Font("Montserrat", Font.PLAIN, 14));
 
         switch (mode) {
             case DISPLAY_ONLY:

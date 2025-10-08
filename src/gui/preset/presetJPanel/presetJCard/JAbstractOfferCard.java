@@ -40,7 +40,7 @@ public abstract class JAbstractOfferCard extends JAbstractCard {
         Image scaledImage = originalIcon.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
         JLabel icon = new JLabel(new ImageIcon(scaledImage));
         JLabel title = new JLabel(rightTitleLabel());
-        title.setFont(new Font("SansSerif", Font.PLAIN, 18));
+        title.setFont(new Font("Montserrat", Font.PLAIN, 18));
         JLabel status = new JLabel("<html><h3> Stato: " + offerta.getStato().toString() + " </h3></html>");
         
 
@@ -57,7 +57,7 @@ public abstract class JAbstractOfferCard extends JAbstractCard {
 
         // Messaggio
         JLabel msgLabel = new JLabel("MESSAGGIO:");
-        msgLabel.setFont(new Font("SansSerif", Font.BOLD, 13));
+        msgLabel.setFont(new Font("Montserrat", Font.BOLD, 13));
         msgLabel.setBorder(new EmptyBorder(10, 0, 2, 0));
         msgLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         centerPanel.add(msgLabel);
@@ -65,7 +65,7 @@ public abstract class JAbstractOfferCard extends JAbstractCard {
         String messaggio = (offerta.getMessaggio().isBlank()) ? "<Nessun messaggio>" : offerta.getMessaggio();
         JDisplayTextArea msgArea = new JDisplayTextArea(messaggio);
         msgArea.setOpaque(false);
-        msgArea.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        msgArea.setFont(new Font("Montserrat", Font.PLAIN, 14));
 
         // Scroll con propagazione
         JScrollPane msgScroll = new JScrollPane(msgArea);
@@ -96,13 +96,13 @@ public abstract class JAbstractOfferCard extends JAbstractCard {
         // Denaro/Oggetti offerti
         if (offerta instanceof OffertaDenaro od) {
             JLabel money = new JLabel("Denaro offerto: " + od.getOfferta() + "€");
-            money.setFont(new Font("SansSerif", Font.PLAIN, 14));
+            money.setFont(new Font("Montserrat", Font.PLAIN, 14));
             money.setBorder(new EmptyBorder(10, 0, 0, 0));
             money.setAlignmentX(Component.LEFT_ALIGNMENT);
             centerPanel.add(money);
         } else if (offerta instanceof OffertaScambio os) {
             JLabel objLabel = new JLabel("Oggetti offerti in scambio:");
-            objLabel.setFont(new Font("SansSerif", Font.BOLD, 13));
+            objLabel.setFont(new Font("Montserrat", Font.BOLD, 13));
             objLabel.setBorder(new EmptyBorder(10, 0, 2, 0));
             objLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
             centerPanel.add(objLabel);

@@ -58,12 +58,12 @@ public class SignUp extends JFrame {
         
         // Presentation Labels 
         JLabel lblNewLabel = new JLabel("Registrati a UninaSwap");
-        lblNewLabel.setFont(new Font("Times New Roman", Font.BOLD, 20));
+        lblNewLabel.setFont(new Font("Montserrat", Font.BOLD, 20));
         lblNewLabel.setForeground(new Color(0, 51, 102));
         lblNewLabel.setBounds((panel.getWidth()-202)/2, 7, 202, 21);
         
         JLabel lblNewLabel_1 = new JLabel("Riempi i campi sottostanti");
-        lblNewLabel_1.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        lblNewLabel_1.setFont(new Font("Montserrat", Font.PLAIN, 15));
         lblNewLabel_1.setBounds((panel.getWidth()-161)/2, 38, 161, 23);
         
         
@@ -107,12 +107,11 @@ public class SignUp extends JFrame {
         
         
         JLabel lblNewLabel_2 = new JLabel("Hai già un account?");
-        lblNewLabel_2.setFont(new Font("Times New Roman", Font.PLAIN, 14));
+        lblNewLabel_2.setFont(new Font("Montserrat", Font.PLAIN, 14));
         lblNewLabel_2.setBounds(112, 461, 114, 22);
         
         
         loginLabel = new JInteractiveLabel("Accedi");
-        loginLabel.setFont(new Font("Times New Roman", Font.BOLD, 14));
         loginLabel.setBounds(236, 466, 45, 13);
         loginLabel.addMouseListener(new MouseAdapter() {
         	@Override

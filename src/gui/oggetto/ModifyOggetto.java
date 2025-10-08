@@ -68,7 +68,7 @@ public class ModifyOggetto extends JDialog{
         welcomingPanel.setBackground(new Color(255, 255, 255));
         
         JLabel riempiCampiLabel = new JLabel("Compila i campi ");
-        riempiCampiLabel.setFont(new Font("Times New Roman", Font.BOLD, 18)); //TODO: cambia font
+        riempiCampiLabel.setFont(new Font("Montserrat", Font.BOLD, 18)); 
         riempiCampiLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         
         welcomingPanel.add(riempiCampiLabel);
@@ -218,7 +218,6 @@ public class ModifyOggetto extends JDialog{
     	return;
 	}
     
-    //TODO Identico al metodo di NewOggetto; Alternativa rispetto al metodo usato in newAnnuncio perché aveva molti field (chiedo parare)
     private boolean areInputsValid() {
     	JCustomTextField[] fields = {
     			nomeField, marchioField, tagliaField, modelloField, annoUscitaField, titoloField, isbnField, autoreField, genereField, categoriaField

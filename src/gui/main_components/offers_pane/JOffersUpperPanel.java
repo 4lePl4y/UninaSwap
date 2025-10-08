@@ -50,12 +50,14 @@ public class JOffersUpperPanel extends JPanel {
         JLabel logo = new JLabel(logoIcon);
         upperPanel.add(logo, BorderLayout.WEST);
 
-       
+       upperPanel.add(Box.createHorizontalStrut(400));
 
         JLabel titleLabel = new JLabel("Ciao " + studenteLoggato.getUsername() + ", Ecco le tue offerte");
         titleLabel.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, Color.LIGHT_GRAY));
-        titleLabel.setFont(new Font("Arial", Font.BOLD, 16));  //TODO: cambiare font
+        titleLabel.setFont(new Font("Montserrat", Font.BOLD, 20)); 
         upperPanel.add(titleLabel, BorderLayout.CENTER);
+
+        upperPanel.add(Box.createHorizontalStrut(600));
         
         JInteractiveLabel refreshButton = new JInteractiveLabel("⟳");
         refreshButton.setFont(refreshButton.getFont().deriveFont(30.0f));
@@ -76,7 +78,7 @@ public class JOffersUpperPanel extends JPanel {
         lowerPanel.add(Box.createHorizontalStrut(20));
 
         JLabel offerteRicevuteLabel = new JLabel("OFFERTE RICEVUTE:");
-        offerteRicevuteLabel.setFont(new Font("Arial", Font.BOLD, 14)); 	//TODO: cambiare font
+        offerteRicevuteLabel.setFont(new Font("Montserrat", Font.BOLD, 14)); 	
         lowerPanel.add(offerteRicevuteLabel);
 
         // spazio flessibile in mezzo
@@ -91,7 +93,7 @@ public class JOffersUpperPanel extends JPanel {
         lowerPanel.add(Box.createHorizontalStrut(30));
         
         JLabel offerteFatteLabel = new JLabel("OFFERTE FATTE:");
-        offerteFatteLabel.setFont(new Font("Arial", Font.BOLD, 14));	//TODO: cambiare font
+        offerteFatteLabel.setFont(new Font("Montserrat", Font.BOLD, 14));
         lowerPanel.add(offerteFatteLabel);
 
         lowerPanel.add(Box.createHorizontalStrut(20));

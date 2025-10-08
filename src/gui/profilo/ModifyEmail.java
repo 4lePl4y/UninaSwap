@@ -40,7 +40,7 @@ public class ModifyEmail extends JDialog {
         cambiaEmailPanel.setOpaque(false);
         
         emailLabel = new JLabel("Inserici la nuova email:");
-        emailLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        emailLabel.setFont(new Font("Montserrat", Font.PLAIN, 14));
         emailLabel.setBounds(30, 81, 147, 13);
         cambiaEmailPanel.add(emailLabel);
         

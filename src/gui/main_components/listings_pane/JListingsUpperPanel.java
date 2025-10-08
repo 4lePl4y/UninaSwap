@@ -39,9 +39,8 @@ public class JListingsUpperPanel extends JPanel {
         JPanel centerPanel = new JPanel(new FlowLayout(FlowLayout.CENTER, 5, 25)); 
         centerPanel.setBackground(Color.WHITE);
         String username = (studenteLoggato != null) ? studenteLoggato.getUsername() : "";
-        JLabel welcomingLabel = new JLabel("Ciao " + username + " 👋, Ecco i tuoi annunci", SwingConstants.CENTER);
-        welcomingLabel.setFont(new Font("SansSerif", Font.PLAIN, 16));
-        welcomingLabel.setForeground(new Color(80, 80, 80));
+        JLabel welcomingLabel = new JLabel("Ciao " + username + ", Ecco i tuoi annunci", SwingConstants.CENTER);
+        welcomingLabel.setFont(new Font("Montserrat", Font.BOLD, 20));
         centerPanel.add(welcomingLabel);
         add(centerPanel, BorderLayout.CENTER);
 

@@ -73,10 +73,6 @@ public class StudenteDAO implements DaoInterface<Studente> {
 		}
 	}
 
-	@Override
-	public void update(Studente studente) {
-		//TODO: Quasi sicuramente non serve fare un update di studente in quanto modifico solo alcuni suoi campi
-	}
 	
 	public void updateEmail(Studente studente, String newEmail) throws SQLException, CustomSQLException {
 	    String query = "UPDATE studente SET email = ? WHERE username = ?";

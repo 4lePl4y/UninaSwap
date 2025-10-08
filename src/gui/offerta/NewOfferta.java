@@ -46,7 +46,7 @@ public class NewOfferta extends JDialog {
         welcomingLabel.setBounds(10, 10, 386, 30);
         welcomingLabel.setHorizontalAlignment(SwingConstants.LEFT);
         welcomingLabel.setText("Fai un'offerta per: " + annuncio.getTitolo() + " di " + annuncio.getAutore().getUsername());
-        welcomingLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        welcomingLabel.setFont(new Font("Montserrat", Font.PLAIN, 15));
         contentPane.add(welcomingLabel);
 
         // Description area

@@ -23,7 +23,7 @@ public class JWritableTextArea extends JTextArea{
 		super(placeholder);
 		this.placeholder = placeholder;
 		this.setForeground(Color.GRAY);
-		this.setFont(new Font("Times New Roman", Font.PLAIN, 15));	//TODO: cambiare font
+		this.setFont(new Font("Montserrat", Font.PLAIN, 15));	
 		this.setLineWrap(true);
 		this.setWrapStyleWord(true);
 		this.setOpaque(false); 

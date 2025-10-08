@@ -24,7 +24,7 @@ public class JCustomCheckBox extends JCheckBox {
 	public JCustomCheckBox(String item) {
 		super(item);
 		setOpaque(false); // rende il background trasparente
-        setFont(new Font("Arial", Font.PLAIN, 14));
+        setFont(new Font("Montserrat", Font.PLAIN, 14));
         
         addMouseListener(new MouseAdapter() {
             @Override

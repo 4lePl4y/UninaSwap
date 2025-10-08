@@ -40,8 +40,7 @@ public class JMyObjectsUpperPanel extends JPanel{
         centerPanel.setBackground(Color.WHITE);
         String username = (studenteLoggato != null) ? studenteLoggato.getUsername() : "";
         JLabel welcomingLabel = new JLabel("Ciao " + username + " 👋, Ecco i tuoi oggetti", SwingConstants.CENTER);
-        welcomingLabel.setFont(new Font("SansSerif", Font.PLAIN, 16));
-        welcomingLabel.setForeground(new Color(80, 80, 80));
+        welcomingLabel.setFont(new Font("Montserrat", Font.BOLD, 20));
         centerPanel.add(welcomingLabel);
         add(centerPanel, BorderLayout.CENTER);
 

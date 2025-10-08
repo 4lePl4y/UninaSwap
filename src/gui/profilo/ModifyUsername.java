@@ -41,7 +41,7 @@ public class ModifyUsername extends JDialog {
         cambiaUsernamePanel.setOpaque(false);
         
         usernameLabel = new JLabel("Inserici il nuovo username:");
-        usernameLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        usernameLabel.setFont(new Font("Montserrat", Font.PLAIN, 14));
         usernameLabel.setBounds(30, 81, 170, 13);
         cambiaUsernamePanel.add(usernameLabel);
         

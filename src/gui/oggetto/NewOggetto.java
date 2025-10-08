@@ -69,7 +69,7 @@ public class NewOggetto extends JDialog {
         welcomingPanel.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         JLabel riempiCampiLabel = new JLabel("Seleziona il tipo di oggetto e compila i campi ");
-        riempiCampiLabel.setFont(new Font("Times New Roman", Font.BOLD, 18)); //TODO: cambia font
+        riempiCampiLabel.setFont(new Font("Montserrat", Font.BOLD, 18)); 
         riempiCampiLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
         
         welcomingPanel.add(riempiCampiLabel);
@@ -83,7 +83,7 @@ public class NewOggetto extends JDialog {
         tipoOggettoCombo = new JCustomComboBox<>(TipoOggetto.values());
         tipoOggettoCombo.setPreferredSize(new Dimension(170, 25));
         tipoOggettoCombo.setMaximumSize(new Dimension(170, 25));
-        tipoOggettoCombo.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        tipoOggettoCombo.setFont(new Font("Montserrat", Font.PLAIN, 15));
         tipoOggettoCombo.addActionListener(e -> aggiornaCampiPerComboBox());
         tipoPanel.add(tipoLabel);
         tipoPanel.add(tipoOggettoCombo);

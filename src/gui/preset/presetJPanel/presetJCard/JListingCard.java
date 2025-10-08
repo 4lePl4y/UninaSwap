@@ -35,7 +35,7 @@ public class JListingCard extends JAbstractListingCard {
 		
 		
 		JLabel sellerLabel = new JLabel("<html>Pubblicato da: <b>" + annuncio.getAutore().getUsername() + "</b></html>");
-		sellerLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));  //TODO: cambiare font
+		sellerLabel.setFont(new Font("Montserrat", Font.PLAIN, 14));  
 		sellerLabel.setAlignmentY(Component.BOTTOM_ALIGNMENT);
 		middlePanel.add(sellerLabel, BorderLayout.NORTH);
 		

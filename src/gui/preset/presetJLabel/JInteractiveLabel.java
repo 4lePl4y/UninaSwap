@@ -16,7 +16,7 @@ public class JInteractiveLabel extends JLabel {
 	public JInteractiveLabel(String text) {
 		super(text);
 		this.setForeground(Color.DARK_GRAY);
-		this.setFont(new Font("Noto Color Emoji", Font.BOLD, 15));	//TODO: cambiare font
+		this.setFont(new Font("Noto Color Emoji", Font.BOLD, 15));
 		
 		this.addMouseListener(new MouseAdapter() {
 			@Override

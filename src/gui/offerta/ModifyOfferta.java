@@ -60,7 +60,7 @@ public class ModifyOfferta extends JDialog{
         welcomingLabel = new JLabel();
         welcomingLabel.setBounds(10, 10, 386, 30);
         welcomingLabel.setText("Modifica la tua offerta per: " + annuncio.getTitolo() + " di " + autore.getUsername());
-        welcomingLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+        welcomingLabel.setFont(new Font("Montserrat", Font.PLAIN, 15));
         contentPane.add(welcomingLabel);
 
         // Description area
@@ -160,7 +160,6 @@ public class ModifyOfferta extends JDialog{
     	return;
     }
 
-    //TODO: Identico al metodo di newOfferta
 	private boolean areInputsValid() {
         if(annuncio instanceof AnnuncioScambio) {
         	oggettiSelezionati = getOggettiSelezionati();
@@ -171,7 +170,6 @@ public class ModifyOfferta extends JDialog{
 
         } else {
         	try {
-        		//TODO: Verificare se l'offerta proposta è <= del prezzo dell'annuncio
         		Double.parseDouble(moneyTextField.getText());
 			} catch (NumberFormatException e) {
 				JOptionPane.showMessageDialog(this, "Inserisci un importo valido in denaro!");

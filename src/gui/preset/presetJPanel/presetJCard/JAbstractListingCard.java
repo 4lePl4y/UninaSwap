@@ -43,15 +43,12 @@ public abstract class JAbstractListingCard extends JAbstractCard {
 		JLabel imageLabel = new JLabel(icon);
 		
 		//JLabel imageLabel = new JLabel("👕");
-		imageLabel.setFont(new Font("Segoe UI Emoji", Font.PLAIN, 60));
-		imageLabel.setForeground(new Color(34, 155, 196));
-		imageLabel.setBorder(new EmptyBorder(0, 10, 0, 0));
 		topPanel.add(imageLabel, BorderLayout.WEST);
 
 		
 		JLabel titleLabel = new JLabel("<html>" + annuncio.getTipoAnnuncio() + "<br>" + annuncio.getTitolo() + "</html>");
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		titleLabel.setFont(new Font("Tahoma", Font.BOLD, 16));  //TODO: cambiare font
+		titleLabel.setFont(new Font("Montserrat", Font.BOLD, 16));
 		topPanel.add(titleLabel, BorderLayout.CENTER);
 		
 		
@@ -71,7 +68,7 @@ public abstract class JAbstractListingCard extends JAbstractCard {
 		middlePanel.add(infoPanel, BorderLayout.CENTER);
 		
 		JDisplayTextArea descriptionTextArea = new JDisplayTextArea(annuncio.getDescrizione() + "\n\n" + annuncio.getOggetto().getBasicInfo());
-		descriptionTextArea.setFont(new Font("Tahoma", Font.PLAIN, 14));  //TODO: cambiare font
+		descriptionTextArea.setFont(new Font("Montserrat", Font.PLAIN, 14));  
 		descriptionTextArea.setPreferredSize(new Dimension(260, 150));
 		descriptionTextArea.setMaximumSize(new Dimension(260, 150));
 		descriptionTextArea.setAlignmentX(Component.LEFT_ALIGNMENT);
@@ -87,7 +84,7 @@ public abstract class JAbstractListingCard extends JAbstractCard {
 		
 		if(annuncio instanceof AnnuncioVendita annuncioVendita){
 			JLabel priceLabel = new JLabel("Prezzo: " + String.valueOf(annuncioVendita.getPrezzo() + "€"));
-			priceLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));  //TODO: cambiare font
+			priceLabel.setFont(new Font("Montserrat", Font.PLAIN, 14));  
 			priceLabel.setForeground(new Color(0, 119, 130));
 			priceLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
 			infoPanel.add(priceLabel);

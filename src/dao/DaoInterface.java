@@ -11,7 +11,11 @@ public interface DaoInterface<T> {
 	}
 	
 	public void create(T object) throws SQLException;
-	public void update(T object);
+	
+	default public void update(T object) {
+		throw new UnsupportedOperationException("Method not implemented");
+	}
+	
 	default public void delete(String id) {
 		throw new UnsupportedOperationException("Method not implemented");
 	}

@@ -40,7 +40,7 @@ public class ModifyPassword extends JDialog {
         cambiaPasswordPanel.setOpaque(false);
         
         oldPasswordLabel = new JLabel("Inserici la vecchia password:");
-        oldPasswordLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        oldPasswordLabel.setFont(new Font("Montserrat", Font.PLAIN, 14));
         oldPasswordLabel.setBounds(28, 11, 180, 17);
         cambiaPasswordPanel.add(oldPasswordLabel);
         
@@ -50,7 +50,7 @@ public class ModifyPassword extends JDialog {
         cambiaPasswordPanel.add(oldPasswordField);
         
         newPasswordLabel = new JLabel("Inserici la nuova password:");
-        newPasswordLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+        newPasswordLabel.setFont(new Font("Montserrat", Font.PLAIN, 14));
         newPasswordLabel.setBounds(28, 106, 180, 17);
         cambiaPasswordPanel.add(newPasswordLabel);
         

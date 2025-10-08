@@ -13,16 +13,17 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Dimension;
+import javax.swing.SwingConstants;
 
 public class Login extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -45,41 +46,52 @@ public class Login extends JFrame {
 		contentPane = new JPanelWithBackground("src/img/LoginBackground.png");
 		contentPane.setForeground(new Color(0, 0, 0));
 		contentPane.setBackground(new Color(255, 255, 255));
+		contentPane.setLayout(null);
 		setContentPane(contentPane);
-		GridBagLayout gbl_contentPane = new GridBagLayout();
-		gbl_contentPane.columnWidths = new int[]{200, 100, 300, 0};
-		gbl_contentPane.rowHeights = new int[]{275, 350, 0};
-		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 0.0, Double.MIN_VALUE};
-		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, Double.MIN_VALUE};
-		contentPane.setLayout(gbl_contentPane);
 		
+		int panelWidth=290;
+		int panelHeight=350;
 		
 		JPanel panel = new JPanelWithBorder();
 		panel.setBackground(new Color(255, 255, 255));
-		panel.setPreferredSize(new Dimension(282, 350));
+		panel.setPreferredSize(new Dimension(panelWidth + 10, panelHeight));
+		panel.setMaximumSize(new Dimension (panelWidth + 10, panelHeight));
+		panel.setBounds(250, 280, panelWidth + 10, panelHeight);
+		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		
         
 		JLabel titleLabel = new JLabel("Accedi a UninaSwap");
-		titleLabel.setBounds(24, 10, 234, 26);
+		titleLabel.setHorizontalAlignment(SwingConstants.LEFT);
+		titleLabel.setPreferredSize(new Dimension(panelWidth, 30));
+		titleLabel.setMaximumSize(new Dimension(panelWidth, 30));
 		titleLabel.setForeground(new Color(0, 51, 102));
-		titleLabel.setFont(new Font("Times New Roman", Font.BOLD, 25));
+		titleLabel.setFont(new Font("Montserrat", Font.BOLD, 25));
+		titleLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
 		
 		
 		JDisplayTextArea descTxtPane = new JDisplayTextArea("Scambia, vendi o regala oggetti con altri studenti della Federico II");
-		descTxtPane.setBounds(24, 48, 234, 41);
+		descTxtPane.setPreferredSize(new Dimension(panelWidth, 40));
+		descTxtPane.setMaximumSize(new Dimension(panelWidth, 40));
 		
 										
 		userTxtField = new JCustomTextField("4le ");
-		userTxtField.setBounds(10, 113, 262, 33);
+		userTxtField.setPreferredSize(new Dimension(panelWidth, 35));
+		userTxtField.setMaximumSize(new Dimension(panelWidth, 35));
 		userTxtField.setColumns(10);
 		
 		
 		pswTxtField = new JCustomPasswordField("1234");
-		pswTxtField.setBounds(10, 178, 262, 33);
+		pswTxtField.setPreferredSize(new Dimension(panelWidth, 35));
+		pswTxtField.setMaximumSize(new Dimension(panelWidth, 35));
 		
 										
 		JButton lgnButton = new JButtonWithBorder("Login", Controller.APP_BLUE);
-		lgnButton.setBounds(51, 251, 183, 33);
+		lgnButton.setPreferredSize(new Dimension(panelWidth, 35));
+		lgnButton.setMaximumSize(new Dimension(panelWidth, 35));
+		lgnButton.setAlignmentX(Component.CENTER_ALIGNMENT);
+		lgnButton.setHorizontalAlignment(SwingConstants.CENTER);
 		
 										
 		lgnButton.addMouseListener(new MouseAdapter() {			
@@ -89,13 +101,28 @@ public class Login extends JFrame {
 			}
 		});
 		
+		JPanel altPanel = new JPanel();
+		altPanel.setLayout(new BoxLayout(altPanel, BoxLayout.X_AXIS));
+		altPanel.setOpaque(false);
+		
 		JLabel questionLabel = new JLabel("Non hai un account?");
-		questionLabel.setBounds(24, 307, 130, 33);
-		questionLabel.setFont(new Font("Times New Roman", Font.PLAIN, 15));
+		questionLabel.setPreferredSize(new Dimension(150, 35));
+		questionLabel.setMaximumSize(new Dimension(150, 35));
+		questionLabel.setFont(new Font("Montserrat", Font.PLAIN, 15));
 		questionLabel.setForeground(Color.DARK_GRAY);
+		questionLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+		questionLabel.setHorizontalAlignment(SwingConstants.LEFT);
 		
 		JLabel signUpLabel = new JInteractiveLabel("Registrati");
-		signUpLabel.setBounds(151, 315, 70, 17);
+		signUpLabel.setPreferredSize(new Dimension(70, 20));
+		signUpLabel.setMaximumSize(new Dimension(70, 20));
+		signUpLabel.setAlignmentX(Component.LEFT_ALIGNMENT);
+		signUpLabel.setHorizontalAlignment(SwingConstants.LEFT);
+
+		altPanel.add(Box.createHorizontalStrut(30));
+		altPanel.add(questionLabel);
+		altPanel.add(signUpLabel);
+		altPanel.add(Box.createHorizontalStrut(40));
 		
 		signUpLabel.addMouseListener(new MouseAdapter() {
 			@Override
@@ -105,23 +132,31 @@ public class Login extends JFrame {
 		});
 		
 		warningLabel = new JWarningLabel("");
-		warningLabel.setBounds(51, 294, 183, 17);
+		warningLabel.setPreferredSize(new Dimension(250, 20));
+		warningLabel.setMaximumSize(new Dimension(250, 20));
+		warningLabel.setAlignmentX(Component.CENTER_ALIGNMENT);
+		warningLabel.setHorizontalAlignment(SwingConstants.CENTER);
+
 		
-		GridBagConstraints gbc_panel = new GridBagConstraints();
-		gbc_panel.insets = new Insets(0, 0, 0, 5);
-		gbc_panel.gridx = 1;
-		gbc_panel.gridy = 1;
-		contentPane.add(panel, gbc_panel);
-		panel.setLayout(null);
+		
+		contentPane.add(panel);
+		// After each panel.add(component), add a vertical strut for spacing
+		panel.add(Box.createVerticalStrut(10));
 		panel.add(titleLabel);
+		panel.add(Box.createVerticalStrut(10));
 		panel.add(descTxtPane);
+		panel.add(Box.createVerticalStrut(20));
 		panel.add(userTxtField);
+		panel.add(Box.createVerticalStrut(10));
 		panel.add(pswTxtField);
+		panel.add(Box.createVerticalStrut(30));
 		panel.add(lgnButton);
-		panel.add(questionLabel);
-		panel.add(signUpLabel);		
+		panel.add(Box.createVerticalStrut(20));
+		panel.add(altPanel);
+		panel.add(Box.createVerticalStrut(20));
 		panel.add(warningLabel);
-				
+		panel.add(Box.createVerticalStrut(20));
+
 	}
 	
 	//METODI
