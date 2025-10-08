@@ -92,9 +92,9 @@ public class JOffersUpperPanel extends JPanel {
         lowerPanel.add(showAllOffersCheckBox);
         lowerPanel.add(Box.createHorizontalStrut(30));
         
-        JLabel offerteFatteLabel = new JLabel("OFFERTE FATTE:");
-        offerteFatteLabel.setFont(new Font("Montserrat", Font.BOLD, 14));
-        lowerPanel.add(offerteFatteLabel);
+        JLabel offerteInviateLabel = new JLabel("OFFERTE INVIATE:");
+        offerteInviateLabel.setFont(new Font("Montserrat", Font.BOLD, 14));
+        lowerPanel.add(offerteInviateLabel);
 
         lowerPanel.add(Box.createHorizontalStrut(20));
 
