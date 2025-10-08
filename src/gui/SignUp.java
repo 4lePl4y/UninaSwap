@@ -42,7 +42,6 @@ public class SignUp extends JFrame {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         setBounds(0, 0, 1080, 650);
     
-        
         contentPane = new JPanelWithBackground("src/img/SignUpBackground.png");
         contentPane.setForeground(new Color(0, 0, 0));
         contentPane.setBackground(new Color(255, 255, 255));
@@ -52,7 +51,7 @@ public class SignUp extends JFrame {
         // Create the panel for input fields
         JPanel panel = new JPanelWithBorder();
         panel.setBackground(new Color(255, 255, 255));
-        panel.setBounds(560, 150, 400, 500);
+        panel.setBounds(590, 150, 400, 500);
         panel.setLayout(null);
           
         
@@ -60,11 +59,11 @@ public class SignUp extends JFrame {
         JLabel lblNewLabel = new JLabel("Registrati a UninaSwap");
         lblNewLabel.setFont(new Font("Montserrat", Font.BOLD, 20));
         lblNewLabel.setForeground(new Color(0, 51, 102));
-        lblNewLabel.setBounds((panel.getWidth()-202)/2, 7, 202, 21);
+        lblNewLabel.setBounds(86, 7, 222, 33);
         
         JLabel lblNewLabel_1 = new JLabel("Riempi i campi sottostanti");
         lblNewLabel_1.setFont(new Font("Montserrat", Font.PLAIN, 15));
-        lblNewLabel_1.setBounds((panel.getWidth()-161)/2, 38, 161, 23);
+        lblNewLabel_1.setBounds(108, 38, 173, 23);
         
         
         // Name text field
@@ -97,7 +96,7 @@ public class SignUp extends JFrame {
 
         // Registrati Button
         JButton registerButton = new JButtonWithBorder("Registrati", Controller.APP_BLUE);
-        registerButton.setBounds((panel.getWidth()-216)/2, 397, 216, 33);
+        registerButton.setBounds(24, 397, 354, 33);
         registerButton.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -108,11 +107,11 @@ public class SignUp extends JFrame {
         
         JLabel lblNewLabel_2 = new JLabel("Hai già un account?");
         lblNewLabel_2.setFont(new Font("Montserrat", Font.PLAIN, 14));
-        lblNewLabel_2.setBounds(112, 461, 114, 22);
+        lblNewLabel_2.setBounds(86, 461, 140, 22);
         
         
         loginLabel = new JInteractiveLabel("Accedi");
-        loginLabel.setBounds(236, 466, 45, 13);
+        loginLabel.setBounds(236, 466, 50, 13);
         loginLabel.addMouseListener(new MouseAdapter() {
         	@Override
         	public void mouseClicked(MouseEvent e) {

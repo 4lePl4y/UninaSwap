@@ -14,6 +14,7 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import java.awt.Font;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
@@ -24,6 +25,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.Dimension;
 import javax.swing.SwingConstants;
+import javax.swing.border.LineBorder;
 
 public class Login extends JFrame {
 	private static final long serialVersionUID = 1L;
@@ -50,13 +52,16 @@ public class Login extends JFrame {
 		setContentPane(contentPane);
 		
 		int panelWidth=290;
-		int panelHeight=350;
+		int panelHeight=360;
 		
 		JPanel panel = new JPanelWithBorder();
+		panel.setBorder(BorderFactory.createCompoundBorder(
+			    new LineBorder(Color.WHITE, 0, true),
+			    new javax.swing.border.EmptyBorder(10, 10, 10, 10) // top, left, bottom, right
+			));
+
 		panel.setBackground(new Color(255, 255, 255));
-		panel.setPreferredSize(new Dimension(panelWidth + 10, panelHeight));
-		panel.setMaximumSize(new Dimension (panelWidth + 10, panelHeight));
-		panel.setBounds(250, 280, panelWidth + 10, panelHeight);
+		panel.setBounds(230, 280, panelWidth + 30, panelHeight);
 		panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 		
         
