@@ -194,7 +194,7 @@ public class JProfilePane extends JPanel {
                 "Numero",
                 acceptedOffers(),
                 PlotOrientation.VERTICAL,
-                false, false, false
+                true, false, false
         );
         CategoryPlot plot = chart.getCategoryPlot();
         NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
@@ -220,7 +220,7 @@ public class JProfilePane extends JPanel {
                 "offerta in denaro",
                 earningsDataset(),
                 PlotOrientation.VERTICAL,
-                false, true, true
+                true, true, true
         );
 
         XYPlot plot = chart.getXYPlot();
