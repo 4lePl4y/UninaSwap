@@ -33,11 +33,13 @@ import org.jfree.data.xy.XYSeriesCollection;
 
 public class JProfilePane extends JPanel {
     private static final long serialVersionUID = 1L;
+    private Controller controller;
     private ArrayList<Offerta> offerteInviate;
     private ArrayList<Offerta> offerteRicevute;
     private JProfilePaneUpperPanel upperPanel;
 
     public JProfilePane(ArrayList<Offerta> offerteInviate, ArrayList<Offerta> offerteRicevute, Controller controller) {
+    	this.controller = controller;
         this.offerteInviate = offerteInviate;
         this.offerteRicevute = offerteRicevute;
         setLayout(new BorderLayout());
@@ -84,11 +86,11 @@ public class JProfilePane extends JPanel {
         }
         
         // Bottoni -> funzioni del controller
-        changeEmail.addActionListener(e -> controller.openModificaEmailFrame());
-        changeUsername.addActionListener(e -> controller.openModificaUsernameFrame());
-        changePassword.addActionListener(e -> controller.openModificaPasswordFrame());
-        deleteAccount.addActionListener(e -> controller.onEliminaAccountClicked());
-        logout.addActionListener(e -> controller.onLogoutClicked());
+        changeEmail.addActionListener(e -> openModificaEmailFrame());
+        changeUsername.addActionListener(e -> openModificaUsernameFrame());
+        changePassword.addActionListener(e -> openModificaPasswordFrame());
+        deleteAccount.addActionListener(e -> onEliminaAccountClicked());
+        logout.addActionListener(e -> onLogoutClicked());
 
         
         // Aggiunta bottoni
@@ -131,7 +133,33 @@ public class JProfilePane extends JPanel {
         mainPanel.add(rightPanel, BorderLayout.CENTER);
     }
 
-    // Funzione ausiliaria per creare pannello grafico con titolo
+    // METODI BOTTONI
+    
+    private void openModificaEmailFrame() {
+    	controller.openModificaEmailFrame();
+    }
+    
+    private void openModificaUsernameFrame() {
+    	controller.openModificaUsernameFrame();
+	}
+    
+    private void openModificaPasswordFrame() {
+    	controller.openModificaPasswordFrame();
+	}
+    
+    private void onEliminaAccountClicked() {
+		controller.onEliminaAccountClicked();
+	}
+    
+    private void onLogoutClicked() {
+		controller.onLogoutClicked();
+	}
+
+    
+
+    // METODI GRAFICI
+    
+	// Funzione ausiliaria per creare pannello grafico con titolo
     private JPanel createChartPanel(JFreeChart chart, String title) {
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBackground(Color.WHITE);
