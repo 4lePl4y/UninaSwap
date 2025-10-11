@@ -49,7 +49,7 @@ public class AnnuncioDAO implements DaoInterface<Annuncio> {
 	
 	public ArrayList<Annuncio> retrieveByAutore(String usernameAutore) {
 		ArrayList<Annuncio> annunci = new ArrayList<>();
-		String query = "SELECT * FROM annuncio WHERE autore = ?;";
+		String query = "SELECT * FROM annuncio WHERE autore = ? AND attivo = TRUE;";
 		try(PreparedStatement pstmt = conn.prepareStatement(query)) {
 			pstmt.setString(1, usernameAutore);
 			ResultSet rs = pstmt.executeQuery();
@@ -188,7 +188,7 @@ public class AnnuncioDAO implements DaoInterface<Annuncio> {
 
 	public ArrayList<Annuncio> getAltriAnnunci(int numeroAnnunci, String username) {
 		ArrayList<Annuncio> annunci = new ArrayList<>();
-		String query = "SELECT * FROM annuncio WHERE autore <> ? LIMIT ?;";
+		String query = "SELECT * FROM annuncio WHERE autore <> ? AND attivo = TRUE LIMIT ?;";
 		
 		try(PreparedStatement pstmt = conn.prepareStatement(query)) {
 			pstmt.setString(1, username);
@@ -272,7 +272,7 @@ public class AnnuncioDAO implements DaoInterface<Annuncio> {
 		}
 		
 		if (count > 0) {
-		    query.append("WHERE o.\"tipoOggetto\" IN (");
+		    query.append("WHERE a.attivo = TRUE AND o.\"tipoOggetto\" IN (");
 		    query.append("?,".repeat(count));
 		    query.setLength(query.length() - 1);
 		    query.append(") ");

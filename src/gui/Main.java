@@ -79,10 +79,10 @@ public class Main extends JFrame {
 		this.myObjectsPane = new JMyObjectsPane(this.mieiOggetti, controller);
 		contentPane.add(myObjectsPane, "MYOBJECTS");
 		
-		refreshAllOffers();
 		this.profilePane = new JProfilePane(this.offerteInviate, this.offerteRicevute, controller);
 		contentPane.add(profilePane, "PROFILE");
 		
+		refreshAllOffers();
 		// Button panel per scegliere le finestre
         buttonPane = new JPanel();
         buttonPane.setBackground(new Color(255, 255, 255));
@@ -123,7 +123,7 @@ public class Main extends JFrame {
         
         JButton profileButton = new JButtonWithBorder("👤 Profilo", Controller.APP_BLUE);
         profileButton.addActionListener(e -> {
-        	//TODO: refreshStats(); 
+        	refreshAllOffers();
 			CardLayout cl = (CardLayout)(contentPane.getLayout());
 			cl.show(contentPane, "PROFILE");
 		});
@@ -171,6 +171,7 @@ public class Main extends JFrame {
 		this.offerteRicevute = controller.getOfferteRicevute(studenteLoggato.getUsername());
 		this.offerteInviate = controller.getOfferteInviate(studenteLoggato.getUsername());
 		offersPane.refresh(offerteRicevute, offerteInviate);
+		profilePane.refresh(offerteInviate, offerteRicevute);
 	}
 	
 	public void refreshReceivedOffers() {

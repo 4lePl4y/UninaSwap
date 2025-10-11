@@ -673,4 +673,6 @@ public class Controller {
 			return null;
 	}
 	
+	//FIXME: quando l'affre è concluso, l'utente autore dell'annuncio non deve vedere più il suo annuncio nella sezione "miei annunci" 
+	
 }

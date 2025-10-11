@@ -31,7 +31,7 @@ public class OffertaDAO implements DaoInterface<Offerta> {
 	
 	public ArrayList<Offerta> retrieveByOfferente(String usernameOfferente) {
 		ArrayList<Offerta> offerte = new ArrayList<>();
-		String query = "SELECT * FROM offerte_unificate WHERE offerente = ? ;";
+		String query = "SELECT * FROM cancellami WHERE offerente = ?;";
 		try(PreparedStatement pstmt = conn.prepareStatement(query)) {
 			pstmt.setString(1, usernameOfferente);
 			ResultSet rs = pstmt.executeQuery();
@@ -47,7 +47,7 @@ public class OffertaDAO implements DaoInterface<Offerta> {
 	
 	public ArrayList<Offerta> retrieveByRicevente(String usernameRicevente) {
 		ArrayList<Offerta> offerte = new ArrayList<>();
-		String query = "SELECT * FROM offerte_unificate WHERE \"idAnnuncio\" IN (SELECT id FROM annuncio WHERE autore = ?);";
+		String query = "SELECT * FROM cancellami WHERE \"idAnnuncio\" IN (SELECT id FROM annuncio WHERE autore = ?);";
 		try(PreparedStatement pstmt = conn.prepareStatement(query)) {
 			pstmt.setString(1, usernameRicevente);
 			ResultSet rs = pstmt.executeQuery();

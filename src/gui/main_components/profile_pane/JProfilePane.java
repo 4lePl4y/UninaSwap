@@ -36,7 +36,9 @@ public class JProfilePane extends JPanel {
     private Controller controller;
     private ArrayList<Offerta> offerteInviate;
     private ArrayList<Offerta> offerteRicevute;
+    
     private JProfilePaneUpperPanel upperPanel;
+    private JPanel chartsGrid;
 
     public JProfilePane(ArrayList<Offerta> offerteInviate, ArrayList<Offerta> offerteRicevute, Controller controller) {
     	this.controller = controller;
@@ -116,7 +118,7 @@ public class JProfilePane extends JPanel {
         statsLabel.setFont(new Font("Montserrat", Font.BOLD, 20));
         rightPanel.add(statsLabel, BorderLayout.NORTH);
 
-        JPanel chartsGrid = new JPanel(new GridLayout(2, 2, 10, 10));
+        chartsGrid = new JPanel(new GridLayout(2, 2, 10, 10));
         chartsGrid.setBackground(Color.WHITE);
         chartsGrid.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
 
@@ -351,4 +353,18 @@ public class JProfilePane extends JPanel {
         dataset.addSeries(massimo);
         return dataset;
     }
+
+    public void refresh(ArrayList<Offerta> offerteInviate, ArrayList<Offerta> offerteRicevute) {
+    	this.offerteInviate = offerteInviate;
+    	this.offerteRicevute = offerteRicevute;
+    	
+    	chartsGrid.removeAll();
+    	chartsGrid.add(createChartPanel(sentOffersBarChart(), "Offerte inviate"));
+        chartsGrid.add(createChartPanel(acceptedOffersBarChart(), "Offerta accettate"));
+        chartsGrid.add(createChartPanel(offersNumberPieChart(), "Totale delle offerte"));
+        chartsGrid.add(createChartPanel(earningsTimeChart(), "Guadagni"));
+		chartsGrid.revalidate();
+		chartsGrid.repaint();
+								
+	}
 }
