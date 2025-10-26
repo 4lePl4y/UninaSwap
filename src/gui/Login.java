@@ -81,13 +81,13 @@ public class Login extends JFrame {
 		descTxtPane.setMaximumSize(new Dimension(panelWidth, 40));
 		
 										
-		userTxtField = new JCustomTextField("4le ");
+		userTxtField = new JCustomTextField("Username");
 		userTxtField.setPreferredSize(new Dimension(panelWidth, 35));
 		userTxtField.setMaximumSize(new Dimension(panelWidth, 35));
 		userTxtField.setColumns(10);
 		
 		
-		pswTxtField = new JCustomPasswordField("1234");
+		pswTxtField = new JCustomPasswordField("Password");
 		pswTxtField.setPreferredSize(new Dimension(panelWidth, 35));
 		pswTxtField.setMaximumSize(new Dimension(panelWidth, 35));
 		
@@ -145,7 +145,7 @@ public class Login extends JFrame {
 		
 		
 		contentPane.add(panel);
-		// After each panel.add(component), add a vertical strut for spacing
+		
 		panel.add(Box.createVerticalStrut(10));
 		panel.add(titleLabel);
 		panel.add(Box.createVerticalStrut(10));
